@@ -11,8 +11,10 @@ export class UsersService {
       ) {}
 
 
-    async findOne(userId: number): Promise<User> {
-        return await this.usersRepository.findOne({ where: { id: userId } })
+    async findOne(userId?: number, username?: string): Promise<User> {
+        if (userId) return await this.usersRepository.findOne({ where: { id: userId } })
+        else if (username) return await this.usersRepository.findOne({ where: { username: username } })
+        else return null
     }
 
     async findAll(): Promise<User[]> {

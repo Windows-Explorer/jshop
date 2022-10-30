@@ -13,7 +13,7 @@ import { User } from './users/entities/user.entity'
       port: 3306,
       username: "root",
       password: "",
-      database: "saga_ob_orlah_i_kanareikah",
+      database: "jshop",
       entities: [User],
       synchronize: true,
     })

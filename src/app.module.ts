@@ -9,10 +9,10 @@ import { User } from './users/entities/user.entity'
     AuthModule,
     TypeOrmModule.forRoot({
       type: "mysql",
-      host: "localhost",
+      host: "172.30.47.151",
       port: 3306,
-      username: "root",
-      password: "",
+      username: "server",
+      password: "Q1qqqqqq",
       database: "jshop",
       entities: [User],
       synchronize: true,

@@ -13,9 +13,9 @@ import { User } from './users/entities/user.entity'
       port: 3306,
       username: "root",
       password: "",
-      database: "teh",
+      database: "jshop",
       entities: [User],
-      synchronize: true,
+      synchronize: true
     })
   ],
   controllers: [AppController]

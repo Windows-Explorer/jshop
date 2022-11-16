@@ -13,7 +13,7 @@ export class AuthService {
     ) {}
 
 
-    async signUp(userDto: UserCreateDto): Promise<string> {
+    async signUp(userDto: UserCreateDto): Promise<any> {
 
         // const passwordHash = bcrypt.hashSync(userDto.password, 10)
         const passwordHash = userDto.password
@@ -24,14 +24,13 @@ export class AuthService {
             passwordHash: passwordHash,
             role: "user"
         })
-        
 
         return await this.signUser(user)
     }
 
 
     async signIn(userDto: UserCreateDto): Promise<any> {
-        const user = await this.usersService.findOne(null, userDto.email)
+        const user = await this.usersService.findByEmail(userDto.email)
 
         if(user && (await bcrypt.compare(userDto.password, user.passwordHash))) {
             return await this.signUser(user)
@@ -54,8 +53,8 @@ export class AuthService {
     }
 
 
-    private async generateToken(data: ITokenPayload, options?: JwtSignOptions): Promise<string> {
-        return await this.jwtService.signAsync(data, options)
+    private async generateToken(data: ITokenPayload): Promise<string> {
+        return await this.jwtService.signAsync(data, { secret: "123" })
     }
 
 

@@ -10,6 +10,6 @@ export class AppController {
     @UseGuards(JwtAuthGuard)
     @Get("/")
     async testJWT(@Body() user: User): Promise<any> {
-        return await this.AuthService.login(user)
+        return user
     }
 }

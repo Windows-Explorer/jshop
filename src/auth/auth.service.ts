@@ -2,7 +2,7 @@ import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/
 import { JwtService, JwtSignOptions } from '@nestjs/jwt'
 import { UsersService } from 'src/users/users.service'
 import { UserCreateDto } from './dto/user-create.dto'
-import bcrypt from "bcrypt"
+import * as bcrypt from "bcrypt"
 import { User } from 'src/users/entities/user.entity'
 import { ITokenPayload } from './interfaces/jwt-payload.interface'
 
@@ -15,8 +15,7 @@ export class AuthService {
 
     async signUp(userDto: UserCreateDto): Promise<any> {
 
-        // const passwordHash = bcrypt.hashSync(userDto.password, 10)
-        const passwordHash = userDto.password
+        const passwordHash = await bcrypt.hash(userDto.password, 10)
 
         const user = await this.usersService.create({
             username: userDto.username,

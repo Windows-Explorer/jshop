@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common'
 import { InjectRepository } from "@nestjs/typeorm"
 import { Repository, UpdateResult } from 'typeorm'
 import { User } from './entities/user.entity'
+import { Validate } from "class-validator"
 
 @Injectable()
 export class UsersService {
@@ -11,10 +12,12 @@ export class UsersService {
       ) {}
 
 
-    async findOne(userId?: number, email?: string): Promise<User> {
-        if (userId) return await this.usersRepository.findOne({ where: { id: userId } })
-        else if (email) return await this.usersRepository.findOne({ where: { email: email } })
-        else return null
+    async findById(userId: number, ): Promise<User> {
+        return await this.usersRepository.findOne({ where: { id: userId } })
+    }
+
+    async findByEmail(email: string): Promise<User> {
+        return await this.usersRepository.findOne({ where: { email: email } })
     }
 
     async findAll(): Promise<User[]> {
@@ -22,6 +25,7 @@ export class UsersService {
     }
 
     async create(user: User): Promise<User> {
+        console.log(user)
         return await this.usersRepository.create(user)
     }
 

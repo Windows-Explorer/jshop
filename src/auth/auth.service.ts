@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common'
+import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common'
 import { JwtService, JwtSignOptions } from '@nestjs/jwt'
 import { UsersService } from 'src/users/users.service'
 import { UserCreateDto } from './dto/user-create.dto'
@@ -13,9 +13,10 @@ export class AuthService {
     ) {}
 
 
-    async signUp(userDto: UserCreateDto): Promise<User> {
+    async signUp(userDto: UserCreateDto): Promise<string> {
 
-        const passwordHash = await bcrypt.hash(userDto.password, 10)
+        // const passwordHash = bcrypt.hashSync(userDto.password, 10)
+        const passwordHash = userDto.password
 
         const user = await this.usersService.create({
             username: userDto.username,
@@ -23,8 +24,9 @@ export class AuthService {
             passwordHash: passwordHash,
             role: "user"
         })
+        
 
-        return user
+        return await this.signUser(user)
     }
 
 
@@ -34,6 +36,8 @@ export class AuthService {
         if(user && (await bcrypt.compare(userDto.password, user.passwordHash))) {
             return await this.signUser(user)
         }
+
+        throw new BadRequestException("Invalid credentials")
     }
 
 

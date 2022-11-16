@@ -1,15 +1,15 @@
-import { Controller, Get, Body, UseGuards } from '@nestjs/common'
+import { Controller, Get, Post, Body, UseGuards } from '@nestjs/common'
 import { AuthService } from './auth/auth.service'
+import { UserCreateDto } from './auth/dto/user-create.dto'
 import { JwtAuthGuard } from './auth/guards/jwt.guard'
-import { User } from './users/entities/user.entity'
 
 @Controller("/")
 export class AppController {
-    constructor(private readonly AuthService: AuthService) {}
+    constructor(private readonly authService: AuthService) {}
 
-    @UseGuards(JwtAuthGuard)
-    @Get("/")
-    async testJWT(@Body() user: User): Promise<any> {
-        return user
+    
+    @Post("/signup")
+    async signUp(@Body() userDto: UserCreateDto): Promise<any> {
+        return await this.authService.signUp(userDto)
     }
 }

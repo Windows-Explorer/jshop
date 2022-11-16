@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm'
-import { IsNumber, IsString, IsEmail, IsHash } from "class-validator"
+import { IsNumber, IsString, IsEmail, Length } from "class-validator"
 
 @Entity()
 export class User {
@@ -9,15 +9,16 @@ export class User {
 
     @IsString()
     @Column({ length: 255, type: "varchar" })
-    username: string
+    @Length(4, 32)
+    username!: string
 
     @IsEmail()
     @Column({ length: 255, type: "varchar" })
-    email: string
+    email!: string
 
     @Column({ length: 255, type: "varchar" })
-    passwordHash: string
+    passwordHash!: string
 
     @Column({ length: 4, type: "varchar"})
-    role: string
+    role!: string
 }

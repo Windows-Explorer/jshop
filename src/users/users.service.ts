@@ -11,9 +11,9 @@ export class UsersService {
       ) {}
 
 
-    async findOne(userId?: number, username?: string): Promise<User> {
+    async findOne(userId?: number, email?: string): Promise<User> {
         if (userId) return await this.usersRepository.findOne({ where: { id: userId } })
-        else if (username) return await this.usersRepository.findOne({ where: { username: username } })
+        else if (email) return await this.usersRepository.findOne({ where: { email: email } })
         else return null
     }
 

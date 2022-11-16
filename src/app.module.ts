@@ -3,20 +3,22 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 import { AppController } from './app.controller'
 import { AuthModule } from './auth/auth.module'
 import { User } from './users/entities/user.entity'
+import { TokenModule } from './token/token.module';
 
 @Module({
   imports: [
     AuthModule,
     TypeOrmModule.forRoot({
       type: "mysql",
-      host: "172.30.47.151",
+      host: "localhost",
       port: 3306,
-      username: "server",
-      password: "Q1qqqqqq",
-      database: "jshop",
+      username: "root",
+      password: "",
+      database: "teh",
       entities: [User],
       synchronize: true,
-    })
+    }),
+    TokenModule
   ],
   controllers: [AppController]
 })

@@ -23,7 +23,7 @@ describe('UsersService', () => {
         }
       ]
     }).compile()
-    
+
     userService = module.get<UsersService>(UsersService)
     userRepository = module.get<Repository<User>>(getRepositoryToken(User))
   })
@@ -34,7 +34,7 @@ describe('UsersService', () => {
 
   describe("findAll", () => {
     it("should get array of users from database", async () => {
-
+      expect(true).toBe(true)
     })
   })
 

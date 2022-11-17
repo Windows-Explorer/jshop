@@ -11,26 +11,25 @@ export class UsersService {
       ) {}
 
 
-    async findById(userId: number, ): Promise<User> {
+    async findById(userId: number): Promise<User> {
         return await this.usersRepository.findOne({ where: { id: userId } })
     }
+
 
     async findByEmail(email: string): Promise<User> {
         return await this.usersRepository.findOne({ where: { email: email } })
     }
 
+
     async findAll(): Promise<User[]> {
         return await this.usersRepository.find()
     }
 
+
     async create(user: User): Promise<User> {
-        try {
-            return this.usersRepository.save(user)
-        }
-        catch(error) {
-            console.log(error.message)
-        }
+        return this.usersRepository.save(user)
     }
+
 
     async update(user: User): Promise<User> {
         return await this.usersRepository.save(user)

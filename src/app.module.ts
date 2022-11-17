@@ -10,14 +10,17 @@ import { UsersModule } from './users/users.module'
   imports: [
     UsersModule,
     AuthModule,
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({
+      envFilePath: '.dev.env',
+      isGlobal: true
+    }),
     TypeOrmModule.forRoot({
       type: "mysql",
-      host: "localhost",
+      host: process.env.DATABASE_HOST,
       port: 3306,
-      username: "root",
-      password: "",
-      database: "jshop",
+      username: process.env.DATABASE_USERNAME,
+      password: process.env.DATABASE_PASSWORD,
+      database: process.env.DATABASE_NAME,
       entities: [User],
       synchronize: true
     })

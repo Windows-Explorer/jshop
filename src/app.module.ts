@@ -4,9 +4,11 @@ import { AppController } from './app.controller'
 import { AuthModule } from './auth/auth.module'
 import { User } from './users/entities/user.entity'
 import { ConfigModule } from "@nestjs/config"
+import { UsersModule } from './users/users.module'
 
 @Module({
   imports: [
+    UsersModule,
     AuthModule,
     ConfigModule.forRoot(),
     TypeOrmModule.forRoot({

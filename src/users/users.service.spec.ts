@@ -1,24 +1,41 @@
-import { Test, TestingModule } from '@nestjs/testing'
+import { MockFactory, Test, TestingModule } from '@nestjs/testing'
+import { getRepositoryToken } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import { User } from './entities/user.entity'
 import { UsersService } from './users.service'
 
+
 describe('UsersService', () => {
-  let service: UsersService
-  let repository: Repository<User>
+  let userService: UsersService
+  let userRepository: Repository<User>
 
-
-  beforeEach(() => {
-    service = new UsersService(repository)
+  beforeEach(async () => {
+    const module: TestingModule = await Test.createTestingModule({
+      providers: [
+        UsersService,
+        {
+          provide: getRepositoryToken(User),
+          useValue: {
+            create: jest.fn(),
+            save: jest.fn(),
+            find: jest.fn()
+          }
+        }
+      ]
+    }).compile()
+    
+    userService = module.get<UsersService>(UsersService)
+    userRepository = module.get<Repository<User>>(getRepositoryToken(User))
   })
 
-  describe('findAll', () => {
-    it('should return an array of users', async () => {
-      const result: Promise<User[]> = new Promise()
 
-      jest.spyOn(service, 'findAll').mockImplementation(() => result)
+  it('userService should be defined', () => expect(userService).toBeDefined())
+  it("userRepository should be defined", () => expect(userRepository).toBeDefined())
 
-      expect(await service.findAll()).toBe(result)
+  describe("findAll", () => {
+    it("should get array of users from database", async () => {
+
     })
   })
+
 })

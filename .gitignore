@@ -12,7 +12,6 @@ frontend/dist
 ################################
 
 
-# compiled output
 authentification-service/dist
 authentification-service/node_modules
 
@@ -22,6 +21,5 @@ authentification-service/node_modules
 ###############
 
 
-# compiled output
 gateway/dist
 gateway/node_modules

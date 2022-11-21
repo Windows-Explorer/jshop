@@ -1,30 +1,41 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+  <section>
+    <div>
+      <span v-for="user in allUsers" :key="user">
+        {{ user }}
+      </span>
+    </div>
+  </section>
 </template>
 
+<script setup lang="ts">
+import { computed } from "@vue/runtime-core"
+
+  const allUsers = computed({
+    get(): string[] {
+      return ["123", "123421"]
+    },
+    set () {
+      return "ass"
+    }
+  })
+
+</script>
+
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
 
-nav {
-  padding: 30px;
-}
+  html, body {
+    margin: 0 auto;
+  }
+  #app {
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
+  }
 
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
-}
+  span{
+    margin: 10px;
+  }
 </style>

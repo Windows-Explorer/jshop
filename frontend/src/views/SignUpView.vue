@@ -1,6 +1,5 @@
 <template>
     <section>
-        <p>{{"AFSAFASF"}}</p>
     </section>
 </template>
 

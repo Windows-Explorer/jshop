@@ -2,10 +2,14 @@ import { Controller, Get, Post, Body, UseGuards } from '@nestjs/common'
 import { AuthService } from './auth/auth.service'
 import { UserCreateDto } from './auth/dto/user-create.dto'
 import { JwtAuthGuard } from './auth/guards/jwt.guard'
+import { UsersService } from './users/users.service'
 
 @Controller("/")
 export class AppController {
-    constructor(private readonly authService: AuthService) {}
+    constructor(
+        private readonly authService: AuthService,
+        private readonly userService: UsersService
+    ) {}
 
     
     @Post("/signup")
@@ -15,12 +19,12 @@ export class AppController {
 
     @Post("/signin")
     async signIn(@Body() userDto: UserCreateDto): Promise<string> {
-        return this.authService.signIn(userDto)
+        return await this.authService.signIn(userDto)
     }
 
-    @UseGuards(JwtAuthGuard)
+    // @UseGuards(JwtAuthGuard)
     @Get("/")
     async index(){
-        return "hello there"
+        return await this.userService.findAll()
     }
 }

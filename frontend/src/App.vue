@@ -1,24 +1,24 @@
 <template>
   <section>
     <div>
-      <span v-for="user in allUsers" :key="user">
-        {{ user }}
-      </span>
+        {{ users }}
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
-import { computed } from "@vue/runtime-core"
 
-  const allUsers = computed({
-    get(): string[] {
-      return ["123", "123421"]
-    },
-    set () {
-      return "ass"
-    }
-  })
+import { computed, onMounted } from "@vue/runtime-core"
+import { useStore } from "./store"
+import { ActionTypes } from "./store/actions"
+
+
+const store = useStore()
+
+const loading = computed(() => store.state.loading)
+const users = computed(() => store.state.users)
+
+onMounted(() => store.dispatch(ActionTypes.GetUsers))
 
 </script>
 

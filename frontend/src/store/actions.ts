@@ -1,6 +1,6 @@
 import { ActionContext, ActionTree } from "vuex";
 import { Mutations, MutationType } from "./mutations";
-import { State } from "./state";
+import { State, User } from "./state";
 
 export enum ActionTypes {
     GetUsers = "GET_USERS"
@@ -21,7 +21,7 @@ export const actions: ActionTree<State, State> & Actions = {
     async [ActionTypes.GetUsers]({ commit }) {
         commit(MutationType.SetLoading, true)
 
-        const users = await (await fetch("https://localhost:3000", { method: "GET" })).json()
+        const users: User[] = await (await fetch("http://localhost:3000")).json()
 
         commit(MutationType.GetUsers, users)
     }

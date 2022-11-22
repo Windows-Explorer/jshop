@@ -1,7 +1,8 @@
-import { createStore } from 'vuex'
-import users from "./modules/users"
+import { createLogger, createStore } from 'vuex'
+// import users from "./modules/users"
 
 export default createStore({
+  plugins: process.env.NODE_ENV === "development" ? [createLogger()] : [],
   state: {
   },
   getters: {
@@ -11,6 +12,6 @@ export default createStore({
   actions: {
   },
   modules: {
-    users
+    // users
   }
 })

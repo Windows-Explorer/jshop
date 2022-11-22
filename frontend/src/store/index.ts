@@ -1,5 +1,5 @@
 import { createStore } from "vuex"
-import { TokenStoreModule } from "./token"
+import { TokenStoreModule } from "./modules/token"
 
 
 export const store = createStore({

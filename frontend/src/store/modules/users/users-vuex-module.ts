@@ -13,11 +13,11 @@ export class UsersStoreModule extends VuexModule {
 
 
   @Action({ commit: "getTokenMutation" })
-  async getUsers(): Promise<IUser[]> {
+  async getUsersAction(): Promise<IUser[]> {
     return await (await fetch("http://localhost:3000")).json()
   }
 
-  get getToken(): IUser[] {
+  get getUsers(): IUser[] {
     return this.usersState
   }
 }

@@ -7,6 +7,15 @@ frontend/node_modules
 frontend/dist
 
 
+###############
+####gateway####
+###############
+
+
+gateway/dist
+gateway/node_modules
+
+
 ################################
 ####authentification-service####
 ################################
@@ -16,10 +25,10 @@ authentification-service/dist
 authentification-service/node_modules
 
 
-###############
-####gateway####
-###############
+################################
+####product-service####
+################################
 
 
-gateway/dist
-gateway/node_modules
+product-service/dist
+product-service/node_modules

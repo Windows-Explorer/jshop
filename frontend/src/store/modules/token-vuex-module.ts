@@ -13,8 +13,13 @@ export class TokenStoreModule extends VuexModule {
 
 
   @Action({ commit: "getTokenMutation" })
-  async getTokenFromCookieAction(): Promise<void> {
+  async getTokenFromCookieAction(): Promise<string> {
     return await VueCookieNext.getCookie("token")
+  }
+
+  @Action({ commit: "getTokenMutation"})
+  async getTokenAction(): Promise<string> {
+    return await (await fetch("http://localhost:3000/token")).json()
   }
 
 

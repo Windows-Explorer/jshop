@@ -1,6 +1,7 @@
 <template>
   <section>
     <div>
+      {{ token }}
     </div>
   </section>
 </template>
@@ -8,7 +9,15 @@
 <script setup lang="ts">
 
 import { computed, onMounted } from "@vue/runtime-core"
+import { useStore } from "vuex"
 
+const store = useStore()
+
+const token = computed(() => store.state.TokenStoreModule.tokenState)
+
+onMounted(() => {
+  store.dispatch("getTokenAction")
+})
 
 </script>
 

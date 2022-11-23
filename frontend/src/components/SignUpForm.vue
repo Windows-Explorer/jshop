@@ -1,28 +1,82 @@
 <template>
     <div class="form">
-        <span>Username</span>
-        <input v-model="username" type="login">
-        <span>Email</span>
-        <input v-model="email" type="email">
-        <span>Password</span>
-        <input v-model="password" type="password">
-        <span>Confirm password</span>
-        <input v-model="confirmPassword" type="password">
+        <span class="input-label">Username</span>
+        <input v-model="user.username" type="text">
+
+        <span class="input-label">Email</span>
+        <input v-model="user.email" type="email">
+
+        <span class="input-label">Password</span>
+        <input v-model="user.password" type="password" minlength="8" maxlength="16">
+
+        <span class="input-label">Confirm password</span>
+        <input v-model="user.confirmPassword" type="password" minlength="8" maxlength="16">
+
+
+        <span class="validation-error" v-for="(error, index) of validator.$errors" :key="index">
+            <small>{{ error.$property.charAt(0).toUpperCase() + error.$property.slice(1) }}: </small>
+            <small>{{ error.$message }}</small>
+        </span>
+
         <button class="button-submit">Sign Up</button>
     </div>
 </template>
 
 <script setup lang="ts">
 
-import { ref, Ref } from "@vue/reactivity"
-import { useStore } from "vuex"
+import { reactive } from "@vue/reactivity"
+import { Store, useStore } from "vuex"
+import { useVuelidate } from "@vuelidate/core"
+import { required, email, helpers, minLength, maxLength } from "@vuelidate/validators"
+import { isEmailUnique, isUsernameUnique } from "./validators-unique"
+import { onUpdated } from "vue-demi"
 
 const store = useStore()
 
-const email: Ref<string> = ref("")
-const username: Ref<string> = ref("")
-const password: Ref<string> = ref("")
-const confirmPassword: Ref<string> = ref("")
+const user = reactive({
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: ""
+})
+
+const confirmPassword = async (value: string) => {
+    if(value === user.password) return true
+} 
+
+const validationRules = {
+    username: {
+        required: helpers.withAsync(required),
+        minLength: helpers.withAsync(minLength(4)),
+        maxLength: helpers.withAsync(maxLength(32)),
+        isUnique: helpers.withMessage("Value is not unique", helpers.withAsync(isUsernameUnique))
+    },
+    email: {
+        required: helpers.withAsync(required),
+        email: helpers.withAsync(email),
+        isUnique: helpers.withMessage("Value is not unique", helpers.withAsync(isEmailUnique))
+        
+    },
+    password: {
+        required: helpers.withAsync(required),
+        minLength: helpers.withAsync(minLength(8)),
+        maxLength: helpers.withAsync(maxLength(16))
+    },
+    confirmPassword: {
+        required: helpers.withAsync(required),
+        sameAsPassword: helpers.withMessage("Value is not equal to password", helpers.withAsync(confirmPassword))
+    }
+}
+
+
+const validator = useVuelidate(validationRules, user, { $lazy: true })
+
+onUpdated(() => {
+    console.log(user)
+})
+
+validator.value.$validate()
+
 
 </script>
 
@@ -62,6 +116,7 @@ const confirmPassword: Ref<string> = ref("")
 }
 
 .form button {
+    font-family: FuturaDemi;
     font-size: 22px;
     border: 0px solid black;
     border-radius: 4px;
@@ -74,7 +129,7 @@ const confirmPassword: Ref<string> = ref("")
     cursor: pointer;
 }
 
-.form span {
+.form .input-label {
     color: rgb(87, 87, 87);
     font-family: FuturaMedium;
 }

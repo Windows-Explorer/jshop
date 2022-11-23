@@ -1,5 +1,5 @@
 import { Module, VuexModule, Mutation, Action } from 'vuex-module-decorators'
-import { IUser } from './user-interface'
+import { IUser } from './user.interface'
 
 @Module
 export class UsersStoreModule extends VuexModule {

@@ -2,21 +2,35 @@
     <div class="form">
         <span class="input-label">Username</span>
         <input v-model="user.username" type="text">
-
+        <transition name="validation-error-transition">
+            <span class="validation-error" v-if="validator.username.$errors.length > 0">
+                {{ validator.username.$errors[0].$message }}
+            </span>
+        </transition>
+        
         <span class="input-label">Email</span>
         <input v-model="user.email" type="email">
+        <transition name="validation-error-transition">
+            <span class="validation-error" v-if="validator.email.$errors.length > 0">
+                {{ validator.email.$errors[0].$message }}
+            </span>
+        </transition>
 
         <span class="input-label">Password</span>
         <input v-model="user.password" type="password" minlength="8" maxlength="16">
+        <transition name="validation-error-transition">
+            <span class="validation-error" v-if="validator.password.$errors.length > 0">
+                {{ validator.password.$errors[0].$message }}
+            </span>
+        </transition>
 
         <span class="input-label">Confirm password</span>
         <input v-model="user.confirmPassword" type="password" minlength="8" maxlength="16">
-
-
-        <span class="validation-error" v-for="(error, index) of validator.$errors" :key="index">
-            <small>{{ error.$property.charAt(0).toUpperCase() + error.$property.slice(1) }}: </small>
-            <small>{{ error.$message }}</small>
-        </span>
+        <transition name="validation-error-transition">
+            <span class="validation-error" v-if="validator.confirmPassword.$errors.length > 0">
+                {{ validator.confirmPassword.$errors[0].$message }}
+            </span>
+        </transition>
 
         <button class="button-submit">Sign Up</button>
     </div>
@@ -25,10 +39,10 @@
 <script setup lang="ts">
 
 import { reactive } from "@vue/reactivity"
-import { Store, useStore } from "vuex"
+import { useStore } from "vuex"
 import { useVuelidate } from "@vuelidate/core"
 import { required, email, helpers, minLength, maxLength } from "@vuelidate/validators"
-import { isEmailUnique, isUsernameUnique } from "./validators-unique"
+import { isEmailUnique, isUsernameUnique } from "./validations"
 import { onUpdated } from "vue-demi"
 
 const store = useStore()
@@ -40,8 +54,10 @@ const user = reactive({
     confirmPassword: ""
 })
 
-const confirmPassword = async (value: string) => {
+const confirmPassword = async (value: string, equalTo: string): Promise<Boolean> => {
     if(value === user.password) return true
+
+    return false
 } 
 
 const validationRules = {
@@ -71,10 +87,6 @@ const validationRules = {
 
 const validator = useVuelidate(validationRules, user, { $lazy: true })
 
-onUpdated(() => {
-    console.log(user)
-})
-
 validator.value.$validate()
 
 
@@ -87,9 +99,11 @@ validator.value.$validate()
     flex-direction: column;
     align-items: stretch;
     width: 300px;
+    height: 500px;
     padding-block: 30px;
     padding-inline: 20px;
     background-color: white;
+    transition: 0.5s ease;
 }
 
 .form input {
@@ -127,11 +141,36 @@ validator.value.$validate()
     color: white;
     align-self: flex-start;
     cursor: pointer;
+    transition: 0.5s ease;
 }
 
 .form .input-label {
     color: rgb(87, 87, 87);
     font-family: FuturaMedium;
+}
+
+.validation-error {
+    font-family: FuturaMedium;
+    font-size: 16px;
+    color: rgb(228, 41, 34);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    overflow: hidden;
+    height: 20px;
+}
+
+.validation-error-transition-enter-active, .validation-error-transition-leave-active {
+  transition: 0.5s ease;
+}
+.validation-error-transition-enter-from, .validation-error-transition-leave-to {
+    height: 0;
+}
+
+.validation-error-transition-enter-to, .validation-error-transition-leave-from {
+    height: 20px;
 }
 
 </style>

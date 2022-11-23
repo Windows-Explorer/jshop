@@ -11,7 +11,7 @@
         </transition>
         
         <span class="input-label">Email</span>
-        <input v-model="user.email" type="email" @focus="validator.email.$validate()">
+        <input v-model="user.email" type="email" @focus="validator.email.$validate()"  ref="emailRef">
         <transition name="validation-error-transition">
             <span class="validation-error" v-if="validator.email.$errors.length > 0">
                 {{ validator.email.$errors[0].$message }}
@@ -19,7 +19,7 @@
         </transition>
 
         <span class="input-label">Password</span>
-        <input v-model="user.password" type="password" minlength="8" maxlength="16" @focus="validator.password.$validate()">
+        <input v-model="user.password" type="password" minlength="8" maxlength="16" @focus="validator.password.$validate()" ref="passwordRef">
         <transition name="validation-error-transition">
             <span class="validation-error" v-if="validator.password.$errors.length > 0">
                 {{ validator.password.$errors[0].$message }}
@@ -27,14 +27,14 @@
         </transition>
 
         <span class="input-label">Confirm password</span>
-        <input v-model="user.confirmPassword" type="password" minlength="8" maxlength="16" @focus="validator.confirmPassword.$validate()">
+        <input v-model="user.confirmPassword" type="password" minlength="8" maxlength="16" @focus="validator.confirmPassword.$validate()" ref="confirmPasswordRef">
         <transition name="validation-error-transition">
             <span class="validation-error" v-if="validator.confirmPassword.$errors.length > 0">
                 {{ validator.confirmPassword.$errors[0].$message }}
             </span>
         </transition>
         
-        <button @click="validator.$validate()" class="button-submit">Sign Up</button>
+        <button ref="buttonSubmitRef" @click="submit()" class="button-submit">Sign Up</button>
     </div>
 </template>
 
@@ -45,6 +45,7 @@ import { useStore } from "vuex"
 import { useVuelidate } from "@vuelidate/core"
 import { required, email, helpers, minLength, maxLength } from "@vuelidate/validators"
 import { isEmailUnique, isUsernameUnique } from "./validations"
+import { onUpdated } from "vue-demi"
 
 const store = useStore()
 
@@ -69,7 +70,7 @@ const validationRules = {
         isUnique: helpers.withMessage("Username is not unique", helpers.withAsync(isUsernameUnique))
     },
     email: {
-        required: helpers.withMessage("Username should be not empty", helpers.withAsync(required)),
+        required: helpers.withMessage("Email should be not empty", helpers.withAsync(required)),
         email: helpers.withAsync(email),
         isUnique: helpers.withMessage("Email is not unique", helpers.withAsync(isEmailUnique))
         
@@ -87,14 +88,35 @@ const validationRules = {
 
 const validator = useVuelidate(validationRules, user, { $lazy: true })
 
-const sendForm = async () => {
-
+const submit = async () => {
+    await validator.value.$validate()
 }
 
+const usernameRef = ref()
+const emailRef = ref()
+const passwordRef = ref()
+const confirmPasswordRef = ref()
+
+const validationPainting = async () => {
+    if(await validator.value.username.$validate()) {
+        usernameRef.value.classList = null
+    }
+    else{
+        usernameRef.value.classList = "invalid"
+    }
+}
+
+onUpdated(async () => {
+    validationPainting()
+})
 
 </script>
 
 <style>
+
+.invalid {
+    box-shadow: 0px 0px 0px 2px rgba(255, 0, 0, 0.6) !important;
+}
 
 .form h2 {
     font-family: FuturaDemi;
@@ -156,21 +178,13 @@ const sendForm = async () => {
     transition: 0.5s ease;
     user-select: none;
     height: 64px;
+    animation-play-state: running;
+    transition: 0.5s ease-in-out;
 }
 
 .form button:hover {
     cursor: pointer;
     background-color: rgb(49, 153, 82);
-    animation: confirm 1s cubic-bezier(0.73, -1.2, 0, 2.62);
-}
-
-@keyframes confirm {
-    0% {}
-    50% {
-        transform: rotateZ(-16deg) translateY(-16px) scaleY(1.4) scaleX(0.8);
-    }
-    100% {
-    }
 }
 
 .form .input-label {

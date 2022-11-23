@@ -163,7 +163,7 @@ validator.value.$validate()
 }
 
 .validation-error-transition-enter-active, .validation-error-transition-leave-active {
-  transition: 0.5s ease;
+  transition: 0.5s cubic-bezier(0.69, 0.26, 0.34, 1.76);
 }
 .validation-error-transition-enter-from, .validation-error-transition-leave-to {
     height: 0;

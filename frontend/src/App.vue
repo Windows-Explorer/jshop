@@ -7,7 +7,8 @@
 
 <style>
 
-  html, body {
+  html, body, #app {
+    height: 100%;
     margin: 0 auto;
     background-color: rgb(27, 27, 29);
   }

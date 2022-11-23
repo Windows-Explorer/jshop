@@ -1,7 +1,9 @@
 <template>
     <div class="form">
+        <h2>sign up</h2>
+
         <span class="input-label">Username</span>
-        <input v-model="user.username" type="text">
+        <input v-model="user.username" type="text" @focus="validator.username.$validate()" ref="usernameRef">
         <transition name="validation-error-transition">
             <span class="validation-error" v-if="validator.username.$errors.length > 0">
                 {{ validator.username.$errors[0].$message }}
@@ -9,7 +11,7 @@
         </transition>
         
         <span class="input-label">Email</span>
-        <input v-model="user.email" type="email">
+        <input v-model="user.email" type="email" @focus="validator.email.$validate()">
         <transition name="validation-error-transition">
             <span class="validation-error" v-if="validator.email.$errors.length > 0">
                 {{ validator.email.$errors[0].$message }}
@@ -17,7 +19,7 @@
         </transition>
 
         <span class="input-label">Password</span>
-        <input v-model="user.password" type="password" minlength="8" maxlength="16">
+        <input v-model="user.password" type="password" minlength="8" maxlength="16" @focus="validator.password.$validate()">
         <transition name="validation-error-transition">
             <span class="validation-error" v-if="validator.password.$errors.length > 0">
                 {{ validator.password.$errors[0].$message }}
@@ -25,25 +27,24 @@
         </transition>
 
         <span class="input-label">Confirm password</span>
-        <input v-model="user.confirmPassword" type="password" minlength="8" maxlength="16">
+        <input v-model="user.confirmPassword" type="password" minlength="8" maxlength="16" @focus="validator.confirmPassword.$validate()">
         <transition name="validation-error-transition">
             <span class="validation-error" v-if="validator.confirmPassword.$errors.length > 0">
                 {{ validator.confirmPassword.$errors[0].$message }}
             </span>
         </transition>
-
-        <button class="button-submit">Sign Up</button>
+        
+        <button @click="validator.$validate()" class="button-submit">Sign Up</button>
     </div>
 </template>
 
 <script setup lang="ts">
 
-import { reactive } from "@vue/reactivity"
+import { reactive, ref, Ref } from "@vue/reactivity"
 import { useStore } from "vuex"
 import { useVuelidate } from "@vuelidate/core"
 import { required, email, helpers, minLength, maxLength } from "@vuelidate/validators"
 import { isEmailUnique, isUsernameUnique } from "./validations"
-import { onUpdated } from "vue-demi"
 
 const store = useStore()
 
@@ -54,7 +55,7 @@ const user = reactive({
     confirmPassword: ""
 })
 
-const confirmPassword = async (value: string, equalTo: string): Promise<Boolean> => {
+const confirmPassword = async (value: string): Promise<Boolean> => {
     if(value === user.password) return true
 
     return false
@@ -62,37 +63,47 @@ const confirmPassword = async (value: string, equalTo: string): Promise<Boolean>
 
 const validationRules = {
     username: {
-        required: helpers.withAsync(required),
+        required: helpers.withMessage("Username should be not empty", helpers.withAsync(required)),
         minLength: helpers.withAsync(minLength(4)),
         maxLength: helpers.withAsync(maxLength(32)),
-        isUnique: helpers.withMessage("Value is not unique", helpers.withAsync(isUsernameUnique))
+        isUnique: helpers.withMessage("Username is not unique", helpers.withAsync(isUsernameUnique))
     },
     email: {
-        required: helpers.withAsync(required),
+        required: helpers.withMessage("Username should be not empty", helpers.withAsync(required)),
         email: helpers.withAsync(email),
-        isUnique: helpers.withMessage("Value is not unique", helpers.withAsync(isEmailUnique))
+        isUnique: helpers.withMessage("Email is not unique", helpers.withAsync(isEmailUnique))
         
     },
     password: {
-        required: helpers.withAsync(required),
+        required: helpers.withMessage("Password should be not empty", helpers.withAsync(required)),
         minLength: helpers.withAsync(minLength(8)),
         maxLength: helpers.withAsync(maxLength(16))
     },
     confirmPassword: {
-        required: helpers.withAsync(required),
+        required: helpers.withMessage("Please, confirm your password", helpers.withAsync(required)),
         sameAsPassword: helpers.withMessage("Value is not equal to password", helpers.withAsync(confirmPassword))
     }
 }
 
-
 const validator = useVuelidate(validationRules, user, { $lazy: true })
 
-validator.value.$validate()
+const sendForm = async () => {
+
+}
 
 
 </script>
 
 <style>
+
+.form h2 {
+    font-family: FuturaDemi;
+    font-size: 28px;
+    margin-top: 0px;
+    align-self: center;
+    color: rgb(53, 53, 53);
+    text-transform: uppercase;
+}
 
 .form {
     display: flex;
@@ -102,6 +113,7 @@ validator.value.$validate()
     height: 500px;
     padding-block: 30px;
     padding-inline: 20px;
+    border-radius: 4px;
     background-color: white;
     transition: 0.5s ease;
 }
@@ -139,9 +151,26 @@ validator.value.$validate()
     box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.29);
     background-color: rgb(66 201 109);
     color: white;
-    align-self: flex-start;
+    align-self: flex-end;
     cursor: pointer;
     transition: 0.5s ease;
+    user-select: none;
+    height: 64px;
+}
+
+.form button:hover {
+    cursor: pointer;
+    background-color: rgb(49, 153, 82);
+    animation: confirm 1s cubic-bezier(0.73, -1.2, 0, 2.62);
+}
+
+@keyframes confirm {
+    0% {}
+    50% {
+        transform: rotateZ(-16deg) translateY(-16px) scaleY(1.4) scaleX(0.8);
+    }
+    100% {
+    }
 }
 
 .form .input-label {
@@ -166,7 +195,7 @@ validator.value.$validate()
     transition: 0.5s cubic-bezier(0.69, 0.26, 0.34, 1.76);
 }
 .validation-error-transition-leave-active {
-    transition: 0.3s ease;
+    transition: 0.5s ease;
 }
 .validation-error-transition-enter-from, .validation-error-transition-leave-to {
     height: 0;

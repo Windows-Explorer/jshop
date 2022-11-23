@@ -20,6 +20,10 @@ export class UsersService {
         return await this.usersRepository.findOne({ where: { email: email } })
     }
 
+    async findByUsername(username: string): Promise<User> {
+        return await this.usersRepository.findOne({ where: { username: username } })
+    }
+
 
     async findAll(): Promise<User[]> {
         return await this.usersRepository.find()

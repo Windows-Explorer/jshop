@@ -1,6 +1,7 @@
 <template>
     <section>
         <signUpForm/>
+        <signUpFormVuetify/>
     </section>
 </template>
 
@@ -8,7 +9,8 @@
 
 import { defineAsyncComponent } from "@vue/runtime-core"
 
-const signUpForm = defineAsyncComponent(() => import("../components/SignUpForm.vue"))
+const signUpForm = defineAsyncComponent(async () => import("../components/SignUpForm.vue"))
+const signUpFormVuetify = defineAsyncComponent(async () => import("../components/SignUpFormQuasar.vue"))
 
 </script>
 
@@ -17,9 +19,9 @@ const signUpForm = defineAsyncComponent(() => import("../components/SignUpForm.v
         height: 100%;
         width: 100%;
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         align-content: center;
-        justify-content: center;
+        justify-content: space-evenly;
         align-items: center;
     }
 </style>

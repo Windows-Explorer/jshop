@@ -112,7 +112,7 @@ onUpdated(async () => {
 
 </script>
 
-<style>
+<style scoped>
 
 .invalid {
     box-shadow: 0px 0px 0px 2px rgba(255, 0, 0, 0.6) !important;
@@ -138,6 +138,7 @@ onUpdated(async () => {
     border-radius: 4px;
     background-color: white;
     transition: 0.5s ease;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
 }
 
 .form input {

@@ -1,7 +1,6 @@
 <template>
     <section>
         <signUpForm/>
-        <signUpFormVuetify/>
     </section>
 </template>
 
@@ -10,7 +9,6 @@
 import { defineAsyncComponent } from "@vue/runtime-core"
 
 const signUpForm = defineAsyncComponent(async () => import("../components/SignUpForm.vue"))
-const signUpFormVuetify = defineAsyncComponent(async () => import("../components/SignUpFormQuasar.vue"))
 
 </script>
 

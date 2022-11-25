@@ -11,7 +11,7 @@
   html, body, #app {
     height: 100%;
     margin: 0 auto;
-    background-color: rgb(27, 27, 29);
+    background-color: #111111
   }
   @font-face {
     font-family: FuturaBook;

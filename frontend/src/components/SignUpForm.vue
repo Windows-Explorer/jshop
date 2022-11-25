@@ -39,7 +39,7 @@
             :no-error-icon="true"
         />
 
-        <q-btn label="Sign Up" type="submit" color="primary" style="align-self: left" :size="'18px'" />
+        <q-btn label="Sign Up" type="submit" color="primary" style="align-self: center" :size="'18px'" />
     </q-form>
 </template>
 
@@ -50,7 +50,6 @@ import { useStore } from "vuex"
 import { useQuasar } from "quasar"
 import { rules } from "../validation"
 import { withMessage } from "../validation/helpers"
-import { defineAsyncComponent } from "@vue/runtime-core"
 
 
 const store = useStore()

@@ -50,6 +50,7 @@ import { useStore } from "vuex"
 import { useQuasar } from "quasar"
 import { rules } from "../validation"
 import { withMessage } from "../validation/helpers"
+import { defineAsyncComponent } from "@vue/runtime-core"
 
 
 const store = useStore()
@@ -70,18 +71,17 @@ const validationRules = {
     ],
     password: [
         async (value: string) => await withMessage("Field is required", rules.isRequired(value)),
-        async (value: string) => await withMessage("Password it too short", rules.minLength(value, 4)),
+        async (value: string) => await withMessage("Password it too short", rules.minLength(value, 8)),
     ],
     confirmPassword: [
         async (value: string) => await withMessage("Field is required", rules.isRequired(value)),
-        async (value: string) => await withMessage("min is min", rules.minLength(value, 4)),
         async (value: string) => await withMessage("It's not equal, fuck you", rules.isEqual(value, user.password)),
     ]
 }
 
 
 const onSubmit = async () => {
-    quasar.loading.show({message: "Ооо, ты думал здесь что-то будет?"})
+    quasar.loading.show()
     setTimeout( async () => {
         window.location.href ="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
     }, 3000)

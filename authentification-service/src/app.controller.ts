@@ -15,7 +15,7 @@ export class AppController {
             return result
         }
         catch(error) {
-            const result: IResult = { error: new HttpException("Invalid credentials", HttpStatus.UNAUTHORIZED) } 
+            const result: IResult = { error: { message: "Invalid credentials", statusCode: HttpStatus.UNAUTHORIZED } } 
             return result
         }
     }

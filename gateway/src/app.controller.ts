@@ -31,7 +31,10 @@ export class AppController {
     @Post("/signup")
     async signUp(@Body() message: any, @Res() response: Response) {
         const result: IResult = await this.client.send("post.auth.signUp", message).toPromise()
-        response.status(result.error.getStatus() ?? result.data)
+
+        if(result.data) response.status(200).send(result)
+        else if(result.error) response.status(result.error.statusCode).send(result)
+
     }
 
     @Post("/signin")

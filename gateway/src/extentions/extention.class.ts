@@ -1,4 +1,4 @@
 export interface Exception {
-  code: number
+  statusCode: number
   message: string
 }

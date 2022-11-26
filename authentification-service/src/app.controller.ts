@@ -21,7 +21,7 @@ export class AppController {
         }
     }
 
-    @MessagePattern("post.auth.singIn")
+    @MessagePattern("post.auth.signIn")
     async signIn(@Payload() userDto: UserCreateDto): Promise<IResult> {
         console.log(userDto)
         try {

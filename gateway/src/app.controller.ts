@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, UseGuards } from '@nestjs/common'
+import { Controller, Get, Post, Body } from '@nestjs/common'
 import { Client, ClientKafka, Transport } from '@nestjs/microservices'
 
 @Controller('auth')
@@ -9,7 +9,7 @@ export class AppController {
         options: {
             client: {
                 clientId: "gateway-producer",
-                brokers: [`192.168.43.74:9092`],
+                brokers: [`${"192.168.43.74"}:${9092}`],
             },
             consumer: {
                 groupId: "auth-consumer"

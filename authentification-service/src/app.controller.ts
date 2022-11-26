@@ -10,6 +10,7 @@ export class AppController {
 
     @MessagePattern("post.auth.signUp")
     async signUp(@Payload() userDto: UserCreateDto): Promise<IResult> {
+        console.log(userDto)
         try {
             const result: IResult = { data: await this.authService.signUp(userDto) }
             return result
@@ -22,6 +23,7 @@ export class AppController {
 
     @MessagePattern("post.auth.singIn")
     async signIn(@Payload() userDto: UserCreateDto): Promise<IResult> {
+        console.log(userDto)
         try {
             const result: IResult = { data: await this.authService.signIn(userDto) }
             return result

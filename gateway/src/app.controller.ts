@@ -30,6 +30,8 @@ export class AppController {
 
     @Post("/signup")
     async signUp(@Body() message: any, @Res() response: Response): Promise<void> {
+        console.log(message)
+
         const result: IResult = await this.client.send("post.auth.signUp", message).toPromise()
 
         if(result.data) response.status(200).send(result)
@@ -39,6 +41,8 @@ export class AppController {
 
     @Post("/signin")
     async signIn(@Body() message: any, @Res() response: Response): Promise<void> {
+        console.log(message)
+
         const result: IResult = await this.client.send("post.auth.signIn", message).toPromise()
 
         if(result.data) response.status(200).send(result)

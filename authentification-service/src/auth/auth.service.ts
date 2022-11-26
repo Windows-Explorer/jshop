@@ -34,7 +34,7 @@ export class AuthService {
             return await this.signUser(user)
         }
 
-        throw new BadRequestException("Invalid credentials")
+        return new BadRequestException("Invalid credentials")
 
     }
 

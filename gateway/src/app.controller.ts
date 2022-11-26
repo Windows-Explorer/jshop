@@ -1,5 +1,6 @@
-import { Controller, Get, Post, Body } from '@nestjs/common'
+import { Controller, Get, Post, Body, HttpCode, Res, HttpStatus } from '@nestjs/common'
 import { Client, ClientKafka, Transport } from '@nestjs/microservices'
+import { Response } from 'express'
 
 @Controller('auth')
 export class AppController {
@@ -14,7 +15,6 @@ export class AppController {
             consumer: {
                 groupId: "auth-consumer"
             },
-            
         }
     })
 
@@ -27,14 +27,16 @@ export class AppController {
         await this.client.connect()
     }
 
-    @Get("/signup")
-    async signUp(@Body() message: any): Promise<any> {
-        return this.client.send("get.products.findAll", message)
+    @Post("/signup")
+    async signUp(@Body() message: any, @Res() response: Response) {
+        const result = await this.client.send("post.auth.signUp", message).toPromise()
+        console.log(result)
+        response.status(result.error.code).send(result.data)
     }
 
     @Post("/signin")
     async signIn(@Body() message: any): Promise<any> {
-        return this.client.send("post.products.create", message)
+        return this.client.send("post.auth.signIn", message)
     }
     
 }

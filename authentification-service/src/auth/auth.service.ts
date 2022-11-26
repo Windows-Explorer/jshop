@@ -14,7 +14,6 @@ export class AuthService {
 
 
     async signUp(userDto: UserCreateDto): Promise<any> {
-
         const passwordHash = await bcrypt.hash(userDto.password, 10)
 
         const user = await this.usersService.create({
@@ -36,6 +35,7 @@ export class AuthService {
         }
 
         throw new BadRequestException("Invalid credentials")
+
     }
 
 

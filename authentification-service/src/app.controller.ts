@@ -1,26 +1,24 @@
-import { Controller, Get, Post, Body, UseGuards } from '@nestjs/common'
+import { Controller, Get, Post, Body, UseGuards, BadRequestException, HttpStatus, HttpException, HttpCode } from '@nestjs/common'
+import { MessagePattern, Payload } from '@nestjs/microservices'
 import { AuthService } from './auth/auth.service'
 import { UserCreateDto } from './auth/dto/user-create.dto'
-import { JwtAuthGuard } from './auth/guards/jwt.guard'
+import { IResult } from './extentions/result.interface'
+
 
 @Controller("/")
 export class AppController {
     constructor(private readonly authService: AuthService) {}
 
-    
-    @Post("/signup")
-    async signUp(@Body() userDto: UserCreateDto): Promise<string> {
-        return await this.authService.signUp(userDto)
+    @MessagePattern("post.auth.signUp")
+    async signUp(@Payload() userDto: UserCreateDto): Promise<string | any> {
+        if(userDto instanceof UserCreateDto) return await this.authService.signUp(userDto)
+
+        const result: IResult = { data: null, error: { code: HttpStatus.UNAUTHORIZED, message: "Invalid creditionals" } }
+        return result
     }
 
-    @Post("/signin")
-    async signIn(@Body() userDto: UserCreateDto): Promise<string> {
-        return this.authService.signIn(userDto)
-    }
-
-    @UseGuards(JwtAuthGuard)
-    @Get("/")
-    async index(){
-        return "hello there"
+    @MessagePattern("post.auth.singIn")
+    async signIn(@Payload() userDto: UserCreateDto): Promise<string> {
+        return await this.authService.signIn(userDto)
     }
 }

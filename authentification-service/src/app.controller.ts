@@ -9,7 +9,7 @@ export class AppController {
     constructor(private readonly authService: AuthService) {}
 
     @MessagePattern("post.auth.signUp")
-    async signUp(@Payload() userDto: UserCreateDto): Promise<any> {
+    async signUp(@Payload() userDto: UserCreateDto): Promise<IResult> {
         try {
             const result: IResult = { data: await this.authService.signUp(userDto) }
             return result
@@ -21,7 +21,14 @@ export class AppController {
     }
 
     @MessagePattern("post.auth.singIn")
-    async signIn(@Payload() userDto: UserCreateDto): Promise<string> {
-        return await this.authService.signIn(userDto)
+    async signIn(@Payload() userDto: UserCreateDto): Promise<IResult> {
+        try {
+            const result: IResult = { data: await this.authService.signIn(userDto) }
+            return result
+        }
+        catch(error) {
+            const result: IResult = { error: { message: "Unauthorized", statusCode: HttpStatus.UNAUTHORIZED } } 
+            return result
+        }
     }
 }

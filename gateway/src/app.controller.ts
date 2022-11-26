@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, HttpCode, Res, HttpStatus } from '@nestjs/common'
 import { Client, ClientKafka, Transport } from '@nestjs/microservices'
-import { Response } from 'express'
+import { response, Response } from 'express'
 import { IResult } from './extentions/result.interface'
 
 @Controller('auth')
@@ -29,7 +29,7 @@ export class AppController {
     }
 
     @Post("/signup")
-    async signUp(@Body() message: any, @Res() response: Response) {
+    async signUp(@Body() message: any, @Res() response: Response): Promise<void> {
         const result: IResult = await this.client.send("post.auth.signUp", message).toPromise()
 
         if(result.data) response.status(200).send(result)
@@ -38,8 +38,11 @@ export class AppController {
     }
 
     @Post("/signin")
-    async signIn(@Body() message: any): Promise<any> {
-        return this.client.send("post.auth.signIn", message)
+    async signIn(@Body() message: any, @Res() response: Response): Promise<void> {
+        const result: IResult = await this.client.send("post.auth.signIn", message).toPromise()
+
+        if(result.data) response.status(200).send(result)
+        else if(result.error) response.status(result.error.statusCode).send(result)
     }
     
 }

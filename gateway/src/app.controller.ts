@@ -29,13 +29,10 @@ export class AppController {
     }
 
     @Post("/signup")
-    async signUp(@Body() message: any, @Res() response: Response): Promise<void> {
+    async signUp(@Body() message: any): Promise<any> {
         console.log(message)
 
-        const result: IResult = await this.client.send("post.auth.signUp", message).toPromise()
-
-        if(result.data) response.status(200).send(result)
-        else if(result.error) response.status(result.error.statusCode).send(result)
+        return this.client.send("post.auth.signUp", message)
 
     }
 

@@ -10,8 +10,8 @@ export class AuthGuard implements CanActivate {
 
     async canActivate(context: ExecutionContext) {
         const request: Request = context.switchToHttp().getRequest()
+        
         const token = request.headers.authorization.replace("Bearer ", "")
-        console.log(token)
 
         const result: IResult = await this.client.send("get.auth.verify", token).toPromise()
         console.log(result)

@@ -1,5 +1,5 @@
 <template>
-    <q-form @submit="onSubmit()" class="form">
+    <q-form @submit="onSubmit()" class="form" ref="signUpForm">
         <h2>sign up</h2>
         <q-input
             v-model="user.username"
@@ -45,11 +45,12 @@
 
 <script setup lang="ts">
 
-import { reactive } from "@vue/reactivity"
+import { reactive, Ref } from "@vue/reactivity"
 import { useStore } from "vuex"
 import { useQuasar } from "quasar"
 import { rules } from "../validation"
 import { withMessage } from "../validation/helpers"
+import { ref } from "vue"
 
 
 const store = useStore()
@@ -78,12 +79,25 @@ const validationRules = {
     ]
 }
 
+const signUpForm: Ref = ref(null)
 
 const onSubmit = async () => {
     quasar.loading.show()
-    setTimeout( async () => {
-        window.location.href ="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-    }, 3000)
+    const result = await fetch("http://localhost:3000/auth/signup", {
+        headers: { "Content-Type": "application/json" },
+        method: "POST",
+        body: JSON.stringify(user)
+    })
+    quasar.loading.hide()
+    quasar.dialog({
+        title: result.status+"",
+        message: await result.text(),
+    })
+
+    user.password = ""
+    user.confirmPassword = ""
+    user.email = ""
+    user.username = ""
 }
 
 

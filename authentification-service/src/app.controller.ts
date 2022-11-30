@@ -12,6 +12,7 @@ export class AppController {
 
     @MessagePattern("post.auth.signUp")
     async signUp(@Payload() userDto: UserCreateDto): Promise<IResult> {
+        console.log(userDto)
         const result: IResult = { data: await this.authService.signUp(userDto), error: { statusCode: HttpStatus.OK, message: "OK" }}
         return result
     }

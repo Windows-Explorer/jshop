@@ -2,6 +2,7 @@ import { Controller, HttpException, HttpStatus, UseFilters } from '@nestjs/commo
 import { MessagePattern, Payload, RpcException } from '@nestjs/microservices'
 import { AuthService } from './auth/auth.service'
 import { UserCreateDto } from './auth/dto/user-create.dto'
+import { IResult } from './dto/result.dto'
 import { AllExceptionsFilter } from './extentions/all.exception-filter'
 
 @Controller("/")
@@ -12,7 +13,10 @@ export class AppController {
     @MessagePattern("post.auth.signUp")
     async signUp(@Payload() userDto: UserCreateDto): Promise<any> {
         console.log(userDto)
-        return await this.authService.signUp(userDto)
+        const user = await this.authService.signUp(userDto)
+
+        const result: IResult = { data: await this.authService.signUp(userDto), error: { statusCode: HttpStatus.OK, message: "OK" }}
+        return result
     }
 
     @MessagePattern("post.auth.signIn")

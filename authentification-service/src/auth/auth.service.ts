@@ -5,6 +5,7 @@ import { UserCreateDto } from './dto/user-create.dto'
 import * as bcrypt from "bcrypt"
 import { User } from 'src/users/entities/user.entity'
 import { ITokenPayload } from './interfaces/jwt-payload.interface'
+import { RpcException } from '@nestjs/microservices'
 
 @Injectable()
 export class AuthService {
@@ -14,17 +15,20 @@ export class AuthService {
 
 
     async signUp(userDto: UserCreateDto): Promise<any> {
-
-        const passwordHash = await bcrypt.hash(userDto.password, 10)
-
-        const user = await this.usersService.create({
-            username: userDto.username,
-            email: userDto.email,
-            passwordHash: passwordHash,
-            role: "user"
-        })
-
-        return await this.signUser(user)
+        try {
+            const passwordHash = await bcrypt.hash(userDto.password, 10)
+            const user = await this.usersService.create({
+                username: userDto.username,
+                email: userDto.email,
+                passwordHash: passwordHash,
+                role: "user"
+            })
+    
+            return await this.signUser(user)
+        }
+        catch(error) {
+            throw new RpcException(error)
+        }
     }
 
 
@@ -35,7 +39,8 @@ export class AuthService {
             return await this.signUser(user)
         }
 
-        throw new BadRequestException("Invalid credentials")
+        throw new RpcException("ERROR")
+
     }
 
 

@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, UseGuards, Param } from '@nestjs/common'
+import { Controller, HttpException, HttpStatus, UseFilters, Param, Get } from '@nestjs/common'
+import { MessagePattern, Payload, RpcException } from '@nestjs/microservices'
 import { AuthService } from './auth/auth.service'
 import { UserCreateDto } from './auth/dto/user-create.dto'
-import { JwtAuthGuard } from './auth/guards/jwt.guard'
+import { IResult } from './dto/result.dto'
 import { User } from './users/entities/user.entity'
 import { UsersService } from './users/users.service'
 
@@ -12,6 +13,18 @@ export class AppController {
         private readonly userService: UsersService
     ) {}
 
+    @MessagePattern("post.auth.signUp")
+    async signUp(@Payload() userDto: UserCreateDto): Promise<any> {
+        const user = await this.authService.signUp(userDto)
+
+        const result: IResult = { data: await this.authService.signUp(userDto), error: { statusCode: HttpStatus.OK, message: "OK" }}
+        return result
+    }
+
+    @MessagePattern("post.auth.signIn")
+    async signIn(@Payload() userDto: UserCreateDto): Promise<any> {
+        return await this.authService.signIn(userDto)
+    }
     @Get("/unique/email/:email")
     async getUniqueEmail(@Param("email") email: string) {
         try {
@@ -30,20 +43,5 @@ export class AppController {
             return null
         }
     }
-    
-    @Post("/signup")
-    async signUp(@Body() userDto: UserCreateDto): Promise<string> {
-        return await this.authService.signUp(userDto)
-    }
-
-    @Post("/signin")
-    async signIn(@Body() userDto: UserCreateDto): Promise<string> {
-        return await this.authService.signIn(userDto)
-    }
-
-    // @UseGuards(JwtAuthGuard)
-    @Get("/")
-    async index(): Promise<User[]> {
-        return await this.userService.findAll()
-    }
 }
+

@@ -8,10 +8,7 @@ import { UniqueDto } from './dto/unique.dto'
 
 @Controller("/")
 export class AppController {
-    constructor(
-        private readonly authService: AuthService,
-        private readonly userService: UsersService
-        ) {}
+    constructor(private readonly authService: AuthService){}
 
     @MessagePattern("post.auth.signUp")
     async signUp(@Payload() userDto: UserCreateDto): Promise<IResult> {
@@ -25,9 +22,7 @@ export class AppController {
     }
 
     @MessagePattern("get.auth.verify")
-    async verifyToken(@Payload() request: any): Promise<IResult> {
-        const token = request.headers.authorization
-
+    async verifyToken(@Payload() token: any): Promise<any> {
         const result: IResult = { data: await this.authService.verifyToken(token), error: { statusCode: HttpStatus.OK, message: "OK" }}
         return result
     }

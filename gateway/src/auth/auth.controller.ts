@@ -1,5 +1,5 @@
-import { Body, Controller, Get, Inject, Injectable, Param, Post, Res } from '@nestjs/common'
-import { Client, ClientKafka, Transport } from '@nestjs/microservices'
+import { Body, Controller, Inject, Injectable, Post, Res } from '@nestjs/common'
+import { ClientKafka } from '@nestjs/microservices'
 import { Response } from 'express'
 import { IResult } from 'src/dto/result.dto'
 

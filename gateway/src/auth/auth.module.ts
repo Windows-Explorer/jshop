@@ -1,4 +1,4 @@
-import { Inject, Injectable, Module } from '@nestjs/common'
+import { Inject, Module } from '@nestjs/common'
 import { ClientKafka, ClientsModule, Transport } from '@nestjs/microservices'
 import { AuthController } from './auth.controller'
 import { UniqueController } from './unique.controller'

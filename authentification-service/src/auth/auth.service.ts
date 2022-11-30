@@ -9,9 +9,7 @@ import { RpcException } from '@nestjs/microservices'
 
 @Injectable()
 export class AuthService {
-    constructor(
-        private readonly usersService: UsersService, private jwtService: JwtService
-    ) {}
+    constructor(private readonly usersService: UsersService, private jwtService: JwtService){}
 
 
     async signUp(userDto: UserCreateDto): Promise<any> {
@@ -64,10 +62,11 @@ export class AuthService {
 
     async verifyToken(token: string): Promise<any> {
         try {
-            const data = await this.jwtService.verifyAsync(token)
-            if(data) return data
-        } catch (error) {
-            throw new UnauthorizedException()
+            const result = await this.jwtService.verifyAsync(token, { secret: "123" })
+            return true
+        }
+        catch {
+            return false
         }
     }
 }

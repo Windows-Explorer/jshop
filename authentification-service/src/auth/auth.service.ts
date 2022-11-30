@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common'
 import { JwtService, JwtSignOptions } from '@nestjs/jwt'
 import { UsersService } from 'src/users/users.service'
-import { UserCreateDto } from './dto/user-create.dto'
+import { UserCreateDto } from '../dto/user-create.dto'
 import * as bcrypt from "bcrypt"
 import { User } from 'src/users/entities/user.entity'
 import { ITokenPayload } from './interfaces/jwt-payload.interface'

@@ -5,6 +5,8 @@ import { AuthModule } from './auth/auth.module'
 import { User } from './users/entities/user.entity'
 import { ConfigModule } from "@nestjs/config"
 import { UsersModule } from './users/users.module'
+import { UniqueController } from './unique/unique.controller'
+import { UniqueModule } from './unique/unique.module';
 
 @Module({
   imports: [
@@ -23,7 +25,8 @@ import { UsersModule } from './users/users.module'
       database: process.env.DATABASE_NAME,
       entities: [User],
       synchronize: true
-    })
+    }),
+    UniqueModule,
   ],
   controllers: [AppController]
 })

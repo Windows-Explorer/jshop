@@ -1,6 +1,6 @@
 import { User } from "src/users/entities/user.entity"
 
 export interface IResult {
-    data?: string | User
+    data?: any
     error?: { statusCode: number, message: string}
 }

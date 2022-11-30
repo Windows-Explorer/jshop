@@ -1,4 +1,4 @@
 export interface IResult {
-    data?: string
+    data?: any
     error?: { statusCode: number, message: string}
 }

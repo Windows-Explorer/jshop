@@ -1,6 +1,5 @@
-import { Module } from '@nestjs/common'
-import { ClientsModule, Transport } from '@nestjs/microservices'
-import { AppModule } from 'src/app.module'
+import { Inject, Injectable, Module } from '@nestjs/common'
+import { ClientKafka, ClientsModule, Transport } from '@nestjs/microservices'
 import { AuthController } from './auth.controller'
 import { UniqueController } from './unique.controller'
 
@@ -22,6 +21,24 @@ import { UniqueController } from './unique.controller'
       }
     ])
   ],
-  controllers: [ AuthController, UniqueController ]
+  controllers: [ AuthController, UniqueController ],
+  exports: [ClientsModule]
 })
-export class AuthModule {}
+
+export class AuthModule {
+  constructor(@Inject("AUTH_GATEWAY") private readonly client: ClientKafka) {}
+
+  async onModuleInit() {
+    this.client.subscribeToResponseOf("get.auth.verify")
+    this.client.subscribeToResponseOf("get.unique.email")
+    this.client.subscribeToResponseOf("get.unique.username")
+    this.client.subscribeToResponseOf("post.auth.signUp")
+    this.client.subscribeToResponseOf("post.auth.signIn")
+
+    await this.client.connect()
+  }
+
+  async onModuleDestroy() {
+    await this.client.connect()
+  }
+}

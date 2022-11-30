@@ -62,7 +62,7 @@ export class AuthService {
     }
 
 
-    private async verifyToken(token: string): Promise<any> {
+    async verifyToken(token: string): Promise<any> {
         try {
             const data = await this.jwtService.verifyAsync(token)
             if(data) return data

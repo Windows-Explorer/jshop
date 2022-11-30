@@ -7,18 +7,6 @@ import { IResult } from 'src/dto/result.dto'
 @Controller('unique')
 export class UniqueController {
     constructor(@Inject("AUTH_GATEWAY") private readonly client: ClientKafka) {}
-    
-    async onModuleInit() {
-        this.client.subscribeToResponseOf("get.unique.email")
-        this.client.subscribeToResponseOf("get.unique.username")
-
-        await this.client.connect()
-        console.log("Unique inited")
-    }
-
-    async onModuleDestroy() {
-        await this.client.close()
-    }
 
     @Get("/email/:email")
     async getUniqueEmail(@Param("email") email: string, @Res() response: Response): Promise<any> {

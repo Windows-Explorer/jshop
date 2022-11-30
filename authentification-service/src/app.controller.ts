@@ -24,5 +24,13 @@ export class AppController {
         return await this.authService.signIn(userDto)
     }
 
+    @MessagePattern("get.auth.verify")
+    async verifyToken(@Payload() request: any): Promise<IResult> {
+        const token = request.headers.authorization
+
+        const result: IResult = { data: await this.authService.verifyToken(token), error: { statusCode: HttpStatus.OK, message: "OK" }}
+        return result
+    }
+
 }
 

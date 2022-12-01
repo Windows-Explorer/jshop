@@ -1,14 +1,10 @@
 <template>
     <section>
-        <signUpForm/>
+        HomePage
     </section>
 </template>
 
 <script setup lang="ts">
-
-import { defineAsyncComponent } from "@vue/runtime-core"
-
-const signUpForm = defineAsyncComponent(async () => import("../components/SignUpForm.vue"))
 
 </script>
 

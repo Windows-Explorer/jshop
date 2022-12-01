@@ -1,6 +1,6 @@
 <template>
     <section>
-        <signUpForm/>
+        <signInForm/>
     </section>
 </template>
 
@@ -11,7 +11,7 @@ import { defineAsyncComponent } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
-const signUpForm = defineAsyncComponent(async () => import("../components/SignUpForm.vue"))
+const signInForm = defineAsyncComponent(async () => import("../components/SignInForm.vue"))
 
 
 </script>

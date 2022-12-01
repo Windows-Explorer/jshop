@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common'
 import { UsersModule } from 'src/users/users.module'
 import { AuthService } from './auth.service'
 import { JwtModule, JwtModuleOptions } from "@nestjs/jwt"
-import { JwtStrategy } from './strategies/jwt.strategy'
 import { PassportModule } from '@nestjs/passport'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 
@@ -20,7 +19,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config'
       })
     })
   ],
-  providers: [AuthService, JwtStrategy],
+  providers: [AuthService],
   exports: [AuthService]
 })
 

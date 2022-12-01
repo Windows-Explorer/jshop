@@ -20,6 +20,16 @@
             :no-error-icon="true"
         />
         <q-input
+            v-model="user.number"
+            label="Phone"
+            :filled="true"
+            :type="'tel'"
+            :rules="validationRules.phoneNumber"
+            :maxlength="11"
+            :no-error-icon="true"
+        />
+        {{ user.number}}
+        <q-input
             v-model="user.password"
             label="Password"
             :filled="true"
@@ -56,7 +66,7 @@ import { ref } from "vue"
 const store = useStore()
 const quasar = useQuasar()
 
-const user = reactive({ username: "", email: "", password: "", confirmPassword: "" })
+const user = reactive({ username: "", email: "", number: "", password: "", confirmPassword: "" })
 
 const validationRules = {
     username: [
@@ -76,6 +86,10 @@ const validationRules = {
     confirmPassword: [
         async (value: string) => await withMessage("Field is required", rules.isRequired(value)),
         async (value: string) => await withMessage("It's not equal, fuck you", rules.isEqual(value, user.password)),
+    ],
+    phoneNumber: [
+        async (value: string) => await withMessage("Field is required", rules.isRequired(value)),
+        async (value: string) => await withMessage("Phone number is invalid", rules.isPhoneNumber(value)),
     ]
 }
 

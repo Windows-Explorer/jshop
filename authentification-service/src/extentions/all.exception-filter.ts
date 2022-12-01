@@ -7,7 +7,7 @@ import { IResult } from 'src/dto/result.dto'
 export class AllExceptionsFilter implements RpcExceptionFilter<any> {
   catch(exception: RpcException, host: ArgumentsHost): any {
     console.log(exception)
-    const result: IResult = { data: exception.message, error: { statusCode: 401, message: exception.message }}
+    const result: IResult = { data: exception.message, error: { statusCode: 401, message: "Unauthorized" }}
 
     return result
   }

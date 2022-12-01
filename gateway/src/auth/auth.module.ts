@@ -1,23 +1,28 @@
 import { Inject, Module } from '@nestjs/common'
+import { ConfigModule, ConfigService } from '@nestjs/config'
 import { ClientKafka, ClientsModule, Transport } from '@nestjs/microservices'
 import { AuthController } from './auth.controller'
 import { UniqueController } from './unique.controller'
 
 @Module({
   imports: [
-    ClientsModule.register([
+    ClientsModule.registerAsync([
       {
         name: "AUTH_GATEWAY",
-        transport: Transport.KAFKA,
-        options: {
-          client: {
-            clientId: "auth-producer",
-            brokers: ['192.168.43.74:9092']
-          },
-          consumer: {
-            groupId: "auth-consumer"
+        imports: [ConfigModule],
+        inject: [ConfigService],
+        useFactory: async (configService: ConfigService) => ({
+          transport: Transport.KAFKA,
+          options: {
+            client: {
+              clientId: "auth-producer",
+              brokers: [`${configService.get<string>("BROKER_HOST")}:${configService.get<number>("BROKER_PORT")}`]
+            },
+            consumer: {
+              groupId: "auth-consumer"
+            }
           }
-        }
+        })
       }
     ])
   ],

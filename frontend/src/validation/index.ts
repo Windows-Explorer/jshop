@@ -9,6 +9,11 @@ export const rules = {
         return emailPattern.test(value) || false
     },
 
+    isPhoneNumber: async (value: string): Promise<string | boolean> => {
+        const phonePattern = /^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/
+        return phonePattern.test(value) || false 
+    },
+
     isEmailUnique : async (value: string | number): Promise<string | boolean> => {
         if(value === "") return true
 

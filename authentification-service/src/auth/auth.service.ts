@@ -37,7 +37,7 @@ export class AuthService {
             return await this.signUser(user)
         }
 
-        throw new RpcException("ERROR")
+        throw new RpcException("Unauthorized")
 
     }
 

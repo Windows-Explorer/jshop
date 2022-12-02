@@ -108,6 +108,20 @@ const onLogout = async () => {
     margin-bottom: 10px;
   }
 
+  .form .redirect-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: flex-end;
+    gap: 10px;
+  }
+  .form .redirect-container .redirect {
+      cursor: pointer;
+      text-decoration: none;
+      color: white;
+  }
+
   .header-enter-active,
   .header-leave-active {
     transition: transform 0.7s cubic-bezier(1,-0.26,.12,1.33);

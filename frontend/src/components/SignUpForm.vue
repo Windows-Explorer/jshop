@@ -58,6 +58,10 @@
             <q-btn label="Назад" type="reset" dark color="primary" :size="'18px'"/>
             <q-btn label="Регистрация" type="submit" dark color="primary" :size="'18px'" />
         </span>
+
+        <div class="redirect-container">
+            <router-link class="redirect" :to="{name: 'signin'}">Уже есть аккаунт</router-link>
+        </div>
         
         
     </q-form>

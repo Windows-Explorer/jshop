@@ -26,7 +26,7 @@
             <q-btn label="Войти" type="submit" dark color="primary" :size="'18px'" />
         </span>
 
-        <div class="redirects">
+        <div class="redirect-container">
             <router-link class="redirect" :to="{name: 'signup'}">Зарегистрироваться</router-link>
             <span class="redirect" @click="quasar.dialog({message:'Вспоминайте', title:'Забыли пароль?'})">Забыли пароль?</span>
         </div>
@@ -75,20 +75,3 @@ const onReset = async () => router.back()
 
 
 </script>
-
-<style scoped>
-.redirects {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-    align-items: flex-end;
-    gap: 10px;
-}
-.redirect {
-    cursor: pointer;
-    text-decoration: none;
-    color: white;
-}
-
-</style>

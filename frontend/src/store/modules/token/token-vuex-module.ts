@@ -1,3 +1,4 @@
+import { Dialog } from 'quasar'
 import { VueCookieNext } from 'vue-cookie-next'
 import { Module, VuexModule, Mutation, Action } from 'vuex-module-decorators'
 
@@ -24,7 +25,11 @@ export class TokenStoreModule extends VuexModule {
       VueCookieNext.setCookie("token", token)
       return token
     }
-    else{
+    else {
+      Dialog.create({
+        title: "Unauthorized",
+        message: "Some is invalid"
+      })
       VueCookieNext.removeCookie("token")
       return ""
     }
@@ -44,6 +49,10 @@ export class TokenStoreModule extends VuexModule {
       return token
     }
     else{
+      Dialog.create({
+        title: "Unauthorized",
+        message: "Email or password is invalid"
+      })
       VueCookieNext.removeCookie("token")
       return ""
     }

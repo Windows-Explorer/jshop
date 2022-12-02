@@ -8,6 +8,8 @@ export class UserCreateDto {
     @IsEmail()
     email: string
 
+    phoneNumber: string
+
     @IsString()
     @Length(8, 16)
     password: string

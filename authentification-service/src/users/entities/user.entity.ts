@@ -19,6 +19,9 @@ export class User {
     @Column({ length: 255, type: "varchar" })
     passwordHash: string
 
+    @Column({ length: 255, type: "varchar" })
+    phoneNumber: string
+
     @Column({ length: 4, type: "varchar", default: "user"})
     role: string
 

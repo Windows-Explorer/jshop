@@ -24,6 +24,7 @@ export class AuthService {
             const user = await this.usersService.create({
                 username: userDto.username,
                 email: userDto.email,
+                phoneNumber: userDto.phoneNumber,
                 passwordHash: passwordHash,
                 role: "user"
             })

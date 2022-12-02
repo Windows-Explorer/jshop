@@ -1,5 +1,5 @@
 <template>
-    <q-form @submit="onSubmit()" class="form" ref="signUpForm">
+    <q-form @submit="onSubmit()" class="form">
         <h2>sign in</h2>
         <q-input
             v-model="user.email"
@@ -49,7 +49,6 @@ const validationRules = {
     ]
 }
 
-const signUpForm: Ref = ref(null)
 
 const onSubmit = async () => {
     quasar.loading.show()
@@ -57,9 +56,6 @@ const onSubmit = async () => {
     await store.dispatch("signIn", user)
 
     quasar.loading.hide()
-    quasar.dialog({
-        message: await store.getters.getToken
-    })
 }
 
 

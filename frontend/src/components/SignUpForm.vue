@@ -99,9 +99,6 @@ const onSubmit = async () => {
     await store.dispatch("signUp", user)
 
     quasar.loading.hide()
-    quasar.dialog({
-        message: await store.getters.getToken
-    })
 }
 
 

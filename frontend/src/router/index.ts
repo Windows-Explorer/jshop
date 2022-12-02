@@ -1,9 +1,11 @@
 import { Loading, LoadingBar, Notify } from 'quasar'
 import { VueCookieNext } from 'vue-cookie-next'
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
+import { createRouter, createWebHistory, RouteLocation, RouteRecord, RouteRecordRaw } from 'vue-router'
 import { useStore } from 'vuex'
 
 const store = useStore()
+
+const defaultTitle = "Континуум"
 
 const isAuthorized = (): boolean => {
   const token = VueCookieNext.getCookie("token")
@@ -36,12 +38,14 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/signup',
     name: 'signup',
-    component: async () => await import("../views/SignUpView.vue")
+    component: async () => await import("../views/SignUpView.vue"),
+    meta: { title: "Регистрация"}
   },
   {
     path: '/signin',
     name: 'signin',
-    component: async () => await import("../views/SignInView.vue")
+    component: async () => await import("../views/SignInView.vue"),
+    meta: { title: "Авторизация"}
   },
   {
     path: "/onlyauthed",
@@ -56,14 +60,19 @@ const router = createRouter({
   routes
 })
 
-router.beforeResolve((to: any, from: any, next: any) => {
+
+router.beforeResolve( async (to: any, from: any, next: any) => {
   if(to.name) {
     LoadingBar.start()
   }
   next()
 })
-router.afterEach((to: any, from: any, next: any) => {
+router.afterEach(async (to: any, from: any, next: any) => {
   LoadingBar.stop()
+})
+
+router.afterEach(async (to: any, from: any) => {
+  document.title = to.meta.title || defaultTitle
 })
 
 export default router

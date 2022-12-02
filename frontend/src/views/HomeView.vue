@@ -9,14 +9,4 @@
 </script>
 
 <style scoped>
-    section {
-        color: white;
-        height: 100%;
-        width: 100%;
-        display: flex;
-        flex-direction: row;
-        align-content: center;
-        justify-content: space-evenly;
-        align-items: center;
-    }
 </style>

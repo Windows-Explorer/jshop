@@ -1,4 +1,4 @@
-import { Loading, LoadingBar } from 'quasar'
+import { Loading, LoadingBar, Notify } from 'quasar'
 import { VueCookieNext } from 'vue-cookie-next'
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import { useStore } from 'vuex'
@@ -13,6 +13,13 @@ const isAuthorized = (): boolean => {
 
 const authGuard = async (to: any, from: any, next: any) => {
   if(to.name !== 'signin' && !isAuthorized()) {
+    Notify.create({
+      position: "top",
+      message: "Only authorized users",
+      timeout: 500,
+      type: "info",
+      textColor: "primary"
+    })
     next({ name: "signin" })
   }
   else {
@@ -24,18 +31,23 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'home',
-    component: () => import("../views/HomeView.vue"),
-    beforeEnter: authGuard
+    component: async () => await import("../views/HomeView.vue")
   },
   {
     path: '/signup',
     name: 'signup',
-    component: () => import("../views/SignUpView.vue")
+    component: async () => await import("../views/SignUpView.vue")
   },
   {
     path: '/signin',
     name: 'signin',
-    component: () => import("../views/SignInView.vue")
+    component: async () => await import("../views/SignInView.vue")
+  },
+  {
+    path: "/onlyauthed",
+    name: "onlyauthed",
+    component: async () => await import("../views/OnlyAuthedView.vue"),
+    beforeEnter: authGuard
   }
 ]
 

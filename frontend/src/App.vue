@@ -5,6 +5,7 @@
 
     <q-tabs :align="'left'">
       <q-route-tab to="/" label="Home" />
+      <q-route-tab to="onlyauthed" label="OnlyAuthed" />
       <q-route-tab v-if="!store.getters.isAuthorized" to="signup" label="SignUp" />
       <q-route-tab v-if="!store.getters.isAuthorized" to="signin" label="SignIn" />
       <q-route-tab v-if="store.getters.isAuthorized" @click="onLogout()" label="Logout"/>
@@ -40,9 +41,17 @@ const onLogout = async () => {
 </script>
 
 <style>
-section {
-  padding-top: 32px;
-}
+  section {
+    padding-top: 8px;
+    color: white;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: space-evenly;
+    align-items: center;
+  }
 
   html, body, #app {
     height: 100%;

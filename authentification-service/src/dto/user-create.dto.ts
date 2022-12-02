@@ -8,6 +8,7 @@ export class UserCreateDto {
     @IsEmail()
     email: string
 
+    @IsString()
     phoneNumber: string
 
     @IsString()

@@ -8,21 +8,24 @@ export class User {
     id?: number
 
     @IsString()
-    @Column({ length: 255, type: "varchar", unique: true })
+    @Column({ length: 255, type: "varchar", unique: true, nullable: false })
     @Length(4, 32)
     username: string
 
     @IsEmail()
-    @Column({ length: 255, type: "varchar", unique: true })
+    @Column({ length: 255, type: "varchar", unique: true, nullable: false })
     email: string
 
-    @Column({ length: 255, type: "varchar" })
+    @IsString()
+    @Column({ length: 255, type: "varchar", nullable: false })
     passwordHash: string
 
-    @Column({ length: 255, type: "varchar" })
+    @IsString()
+    @Column({ length: 255, type: "varchar", nullable: false })
     phoneNumber: string
 
-    @Column({ length: 4, type: "varchar", default: "user"})
+    @IsString()
+    @Column({ length: 4, type: "varchar", default: "user", nullable: false})
     role: string
 
 }

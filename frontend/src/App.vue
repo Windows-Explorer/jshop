@@ -1,20 +1,24 @@
 <template>
   <q-layout view="hhh Lpr fFf">
 
-  <q-header v-if="(route.name !=='signup' && route.name !=='signin')" :reveal="true" :elevated="true">
+  <transition name="header">
+    <q-header v-if="(route.name !=='signup' && route.name !=='signin')" :reveal="true" :elevated="true">
 
-    <q-tabs :align="'left'">
-      <q-route-tab to="/" label="Home" />
-      <q-route-tab to="onlyauthed" label="OnlyAuthed" />
-      <q-route-tab v-if="!store.getters.isAuthorized" to="signup" label="SignUp" />
-      <q-route-tab v-if="!store.getters.isAuthorized" to="signin" label="SignIn" />
-      <q-route-tab v-if="store.getters.isAuthorized" @click="onLogout()" label="Logout"/>
-    </q-tabs>
+      <q-tabs :align="'left'">
+        <q-route-tab to="/" label="Home" />
+        <q-route-tab to="onlyauthed" label="OnlyAuthed" />
+        <q-route-tab v-if="!store.getters.isAuthorized" to="signup" label="SignUp" />
+        <q-route-tab v-if="!store.getters.isAuthorized" to="signin" label="SignIn" />
+        <q-route-tab v-if="store.getters.isAuthorized" @click="onLogout()" label="Logout"/>
+      </q-tabs>
 
-  </q-header>
+    </q-header>
+  </transition>
 
   <q-page-container :align="'center'">
-    <router-view />
+    <transition name="content">
+      <router-view />
+    </transition>
   </q-page-container>
 
   </q-layout>
@@ -103,5 +107,25 @@ const onLogout = async () => {
     justify-content: flex-end;
     gap: 10px;
     margin-bottom: 10px;
+  }
+
+  .header-enter-active,
+  .header-leave-active {
+    transition: transform 0.7s cubic-bezier(1,-0.26,.12,1.33);
+  }
+
+  .header-enter-from,
+  .header-leave-to {
+    transform: translateY(-100%);
+  }
+
+  .content-enter-active,
+  .content-leave-active {
+    transition: transform 0.7s cubic-bezier(1,-0.26,.12,1.33);
+  }
+
+  .content-enter-from,
+  .content-leave-to {
+    transform: translateY(-100%);
   }
 </style>

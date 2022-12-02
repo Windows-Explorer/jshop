@@ -109,16 +109,11 @@ const validationRules = {
 
 const onSubmit = async () => {
     quasar.loading.show()
-    
     await store.dispatch("signUp", user)
-
     quasar.loading.hide()
 }
 
-const onReset = async () => {
-    
-    router.back()
-}
+const onReset = async () => router.back()
 
 
 </script>

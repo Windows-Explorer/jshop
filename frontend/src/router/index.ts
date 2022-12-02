@@ -14,7 +14,7 @@ const isAuthorized = (): boolean => {
 const authGuard = async (to: any, from: any, next: any) => {
   if(to.name !== 'signin' && !isAuthorized()) {
     Notify.create({
-      position: "top",
+      position: "bottom",
       message: "Only authorized users",
       timeout: 500,
       type: "info",

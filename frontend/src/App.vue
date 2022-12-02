@@ -3,7 +3,6 @@
 
   <transition name="header">
     <q-header v-if="(route.name !=='signup' && route.name !=='signin')" :reveal="true" :elevated="true">
-
       <q-tabs :align="'left'">
         <q-route-tab to="/" label="Home" />
         <q-route-tab to="onlyauthed" label="OnlyAuthed" />
@@ -11,7 +10,6 @@
         <q-route-tab v-if="!store.getters.isAuthorized" to="signin" label="SignIn" />
         <q-route-tab v-if="store.getters.isAuthorized" @click="onLogout()" label="Logout"/>
       </q-tabs>
-
     </q-header>
   </transition>
 
@@ -27,6 +25,7 @@
 
 <script lang="ts" setup>
 
+import { onMounted } from '@vue/runtime-core'
 import { useQuasar } from 'quasar'
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'

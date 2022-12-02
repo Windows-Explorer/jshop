@@ -1,5 +1,5 @@
 <template>
-    <q-form @submit="onSubmit()" class="form">
+    <q-form @submit="onSubmit()" @reset="onReset()" class="form">
         <logo/>
         <q-input
             v-model="user.email"
@@ -21,11 +21,16 @@
             :counter="true"
             no-error-icon
         />
-
-        <span>
+        <span class="buttons">
             <q-btn label="Назад" type="reset" dark color="primary" :size="'18px'"/>
             <q-btn label="Войти" type="submit" dark color="primary" :size="'18px'" />
         </span>
+
+        <div class="redirects">
+            <router-link class="redirect" :to="{name: 'signup'}">Зарегистрироваться</router-link>
+            <span class="redirect" @click="quasar.dialog({message:'Вспоминайте', title:'Забыли пароль?'})">Забыли пароль?</span>
+        </div>
+        
     </q-form>
 </template>
 
@@ -76,3 +81,20 @@ const onReset = async () => {
 
 
 </script>
+
+<style scoped>
+.redirects {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: flex-end;
+    gap: 10px;
+}
+.redirect {
+    cursor: pointer;
+    text-decoration: none;
+    color: white;
+}
+
+</style>

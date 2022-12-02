@@ -54,7 +54,7 @@
             no-error-icon
         />
         
-        <span>
+        <span class="buttons">
             <q-btn label="Назад" type="reset" dark color="primary" :size="'18px'"/>
             <q-btn label="Регистрация" type="submit" dark color="primary" :size="'18px'" />
         </span>

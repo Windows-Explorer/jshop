@@ -85,7 +85,7 @@ const onLogout = async () => {
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    width: 300px;
+    width: 360px;
     padding-block: 30px;
     padding-inline: 20px;
     border-radius: 4px;
@@ -94,13 +94,14 @@ const onLogout = async () => {
     gap: 8px;
   }
   
-  .form span {
+  .form .buttons {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     align-content: center;
     align-items: flex-start;
-    justify-content: flex-start;
+    justify-content: flex-end;
     gap: 10px;
+    margin-bottom: 10px;
   }
 </style>

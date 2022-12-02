@@ -40,6 +40,9 @@ const onLogout = async () => {
 </script>
 
 <style>
+section {
+  padding-top: 32px;
+}
 
   html, body, #app {
     height: 100%;

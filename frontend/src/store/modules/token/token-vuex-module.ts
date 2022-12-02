@@ -3,7 +3,7 @@ import { Module, VuexModule, Mutation, Action } from 'vuex-module-decorators'
 
 @Module
 export class TokenStoreModule extends VuexModule {
-  tokenState: string = ""
+  tokenState: string = VueCookieNext.getCookie("token") || ""
 
 
   @Mutation
@@ -19,11 +19,15 @@ export class TokenStoreModule extends VuexModule {
         method: "POST",
         body: JSON.stringify(user)
     })
-    const token: string = await result.text()
-
-    VueCookieNext.setCookie("token", token)
-
-    return token
+    if(result.status === 200) {
+      const token: string = await result.text()
+      VueCookieNext.setCookie("token", token)
+      return token
+    }
+    else{
+      VueCookieNext.removeCookie("token")
+      return ""
+    }
   }
 
 
@@ -34,19 +38,29 @@ export class TokenStoreModule extends VuexModule {
         method: "POST",
         body: JSON.stringify(user)
     })
-    const token: string = await result.text()
-
-    VueCookieNext.setCookie("token", token)
-
-    return token
+    if(result.status === 200) {
+      const token: string = await result.text()
+      VueCookieNext.setCookie("token", token)
+      return token
+    }
+    else{
+      VueCookieNext.removeCookie("token")
+      return ""
+    }
   }
 
   @Action({ commit: "tokenMutation" })
-  async getTokenFromCookieAction(): Promise<string> {
-    return await VueCookieNext.getCookie("token")
+  async signOut(): Promise<string> {
+    VueCookieNext.removeCookie("token")
+    return ""
   }
 
   get getToken(): string {
     return this.tokenState
+  }
+
+  get isAuthorized(): boolean {
+    if (this.tokenState !== "") return true
+    else return false
   }
 }

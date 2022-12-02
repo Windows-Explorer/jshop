@@ -60,9 +60,11 @@ import { useQuasar } from "quasar"
 import { rules } from "../validation"
 import { withMessage } from "../validation/helpers"
 import { ref } from "vue"
+import { useRouter } from "vue-router"
 
 
 const store = useStore()
+const router = useRouter()
 const quasar = useQuasar()
 
 const user = reactive({ username: "", email: "", number: "", password: "", confirmPassword: "" })
@@ -99,6 +101,7 @@ const onSubmit = async () => {
     await store.dispatch("signUp", user)
 
     quasar.loading.hide()
+    router.push("home")
 }
 
 

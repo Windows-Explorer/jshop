@@ -5,9 +5,11 @@
 
     <q-tabs :align="'left'">
       <q-route-tab to="/" label="Home" />
-      <q-route-tab to="signup" label="SignUp" />
-      <q-route-tab to="signin" label="SignIn" />
+      <q-route-tab v-if="!store.getters.isAuthorized" to="signup" label="SignUp" />
+      <q-route-tab v-if="!store.getters.isAuthorized" to="signin" label="SignIn" />
+      <q-route-tab v-if="store.getters.isAuthorized" @click="onLogout()" label="Logout"/>
     </q-tabs>
+
   </q-header>
 
   <q-page-container :align="'center'">
@@ -17,6 +19,25 @@
   </q-layout>
   
 </template>
+
+<script lang="ts" setup>
+
+import { useQuasar } from 'quasar'
+import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
+
+const store = useStore()
+const router = useRouter()
+const quasar = useQuasar()
+
+const onLogout = async () => {
+  quasar.loading.show()
+  await store.dispatch('signOut')
+  quasar.loading.hide()
+  router.push("/")
+}
+
+</script>
 
 <style>
 

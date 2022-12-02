@@ -2,13 +2,11 @@
     <q-form @submit="onSubmit()" class="form" ref="signUpForm">
         <h2>sign in</h2>
         <q-input
-            v-model="user.username"
-            label="Username"
+            v-model="user.email"
+            label="Email"
             :filled="true"
-            :type="'text'"
-            :rules="validationRules.username"
-            :maxlength="32"
-            :counter="true"
+            :type="'email'"
+            :rules="validationRules.email"
             :no-error-icon="true"
         />
         <q-input
@@ -42,14 +40,12 @@ const quasar = useQuasar()
 const user = reactive({ username: "", email: "", password: "", confirmPassword: "" })
 
 const validationRules = {
-    username: [
+    email: [
         async (value: string) => await withMessage("Field is required", rules.isRequired(value)),
-        async (value: string) => await withMessage("Username is too short", rules.minLength(value, 4)),
-        async (value: string) => await withMessage("Username is not unique", rules.isUsernameUnique(value))
+        async (value: string) => await withMessage("Email is invalid", rules.isEmail(value))
     ],
     password: [
         async (value: string) => await withMessage("Field is required", rules.isRequired(value)),
-        async (value: string) => await withMessage("Password it too short", rules.minLength(value, 8)),
     ]
 }
 
@@ -57,21 +53,13 @@ const signUpForm: Ref = ref(null)
 
 const onSubmit = async () => {
     quasar.loading.show()
-    const result = await fetch("http://localhost:3000/auth/signup", {
-        headers: { "Content-Type": "application/json" },
-        method: "POST",
-        body: JSON.stringify(user)
-    })
+    
+    await store.dispatch("signIn", user)
+
     quasar.loading.hide()
     quasar.dialog({
-        title: result.status+"",
-        message: await result.text(),
+        message: await store.getters.getToken
     })
-
-    user.password = ""
-    user.confirmPassword = ""
-    user.email = ""
-    user.username = ""
 }
 
 

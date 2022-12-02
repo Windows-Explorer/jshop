@@ -7,21 +7,44 @@ export class TokenStoreModule extends VuexModule {
 
 
   @Mutation
-  getTokenMutation(token: string): void {
+  tokenMutation(token: string): void {
     this.tokenState = token
   }
 
 
-  @Action({ commit: "getTokenMutation" })
+  @Action({ commit: "tokenMutation" })
+  async signUp(user: { username: string, email: string, password: string}): Promise<string> {
+    const result = await fetch("http://localhost:3000/auth/signup", {
+        headers: { "Content-Type": "application/json" },
+        method: "POST",
+        body: JSON.stringify(user)
+    })
+    const token: string = await result.text()
+
+    VueCookieNext.setCookie("token", token)
+
+    return token
+  }
+
+
+  @Action({ commit: "tokenMutation" })
+  async signIn(user: { email: string, password: string}): Promise<string> {
+    const result = await fetch("http://localhost:3000/auth/signin", {
+        headers: { "Content-Type": "application/json" },
+        method: "POST",
+        body: JSON.stringify(user)
+    })
+    const token: string = await result.text()
+
+    VueCookieNext.setCookie("token", token)
+
+    return token
+  }
+
+  @Action({ commit: "tokenMutation" })
   async getTokenFromCookieAction(): Promise<string> {
     return await VueCookieNext.getCookie("token")
   }
-
-  @Action({ commit: "getTokenMutation"})
-  async getTokenAction(): Promise<string> {
-    return await (await fetch("http://localhost:3000/token")).json()
-  }
-
 
   get getToken(): string {
     return this.tokenState

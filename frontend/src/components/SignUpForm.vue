@@ -1,5 +1,5 @@
 <template>
-    <q-form @submit="onSubmit()" class="form" ref="signUpForm">
+    <q-form @submit="onSubmit()" class="form">
         <h2>sign up</h2>
         <q-input
             v-model="user.username"
@@ -28,7 +28,6 @@
             :maxlength="11"
             :no-error-icon="true"
         />
-        {{ user.number}}
         <q-input
             v-model="user.password"
             label="Password"
@@ -93,25 +92,16 @@ const validationRules = {
     ]
 }
 
-const signUpForm: Ref = ref(null)
 
 const onSubmit = async () => {
     quasar.loading.show()
-    const result = await fetch("http://localhost:3000/auth/signup", {
-        headers: { "Content-Type": "application/json" },
-        method: "POST",
-        body: JSON.stringify(user)
-    })
+    
+    await store.dispatch("signUp", user)
+
     quasar.loading.hide()
     quasar.dialog({
-        title: result.status+"",
-        message: await result.text(),
+        message: await store.getters.getToken
     })
-
-    user.password = ""
-    user.confirmPassword = ""
-    user.email = ""
-    user.username = ""
 }
 
 

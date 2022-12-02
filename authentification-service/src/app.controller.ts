@@ -3,6 +3,7 @@ import { MessagePattern, Payload, RpcException } from '@nestjs/microservices'
 import { AuthService } from './auth/auth.service'
 import { UserCreateDto } from './dto/user-create.dto'
 import { IResult } from './dto/result.dto'
+import { UserSignInDto } from './dto/user-signin.dto'
 
 @Controller("/")
 export class AppController {
@@ -15,7 +16,7 @@ export class AppController {
     }
 
     @MessagePattern("post.auth.signIn")
-    async signIn(@Payload() userDto: UserCreateDto): Promise<IResult> {
+    async signIn(@Payload() userDto: UserSignInDto): Promise<IResult> {
         const result: IResult = { data: await this.authService.signIn(userDto), error: { statusCode: HttpStatus.OK, message: "OK" }}
         return result
     }

@@ -1,7 +1,6 @@
 import { Controller, HttpStatus } from '@nestjs/common'
 import { MessagePattern, Payload } from '@nestjs/microservices'
 import { IResult } from 'src/dto/result.dto'
-import { UniqueDto } from 'src/dto/unique.dto'
 import { UsersService } from 'src/users/users.service'
 
 @Controller('')

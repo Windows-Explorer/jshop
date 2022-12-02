@@ -1,54 +1,65 @@
 <template>
-    <q-form @submit="onSubmit()" class="form">
-        <h2>sign up</h2>
+    <q-form @submit="onSubmit()" @reset="onReset()" class="form">
+        <logo/>
         <q-input
             v-model="user.username"
-            label="Username"
-            :filled="true"
+            label="Имя пользователя"
+            standout
+            :dark="true"
             :type="'text'"
             :rules="validationRules.username"
             :maxlength="32"
             :counter="true"
-            :no-error-icon="true"
+            no-error-icon
         />
         <q-input
             v-model="user.email"
-            label="Email"
-            :filled="true"
+            label="Электронная почта"
+            standout
+            :dark="true"
             :type="'email'"
             :rules="validationRules.email"
-            :no-error-icon="true"
+            no-error-icon
         />
         <q-input
             v-model="user.number"
-            label="Phone"
-            :filled="true"
+            label="Номер телефона"
+            :mask="'+7 (###) ###-##-##'"
+            standout
+            :dark="true"
             :type="'tel'"
             :rules="validationRules.phoneNumber"
-            :maxlength="11"
-            :no-error-icon="true"
+            :maxlength="18"
+            no-error-icon
         />
         <q-input
             v-model="user.password"
-            label="Password"
-            :filled="true"
+            label="Пароль"
+            standout
+            :dark="true"
             :type="'password'"
             :rules="validationRules.password"
             :maxlength="16"
             :counter="true"
-            :no-error-icon="true"
+            no-error-icon
         />
         <q-input
             v-model="user.confirmPassword"
-            label="Confirm password"
-            :filled="true"
+            label="Подтверждение пароля"
+            standout
+            :dark="true"
             :type="'password'"
             :rules="validationRules.confirmPassword"
             :maxlength="16"
-            :no-error-icon="true"
+            no-error-icon
         />
-
-        <q-btn label="Sign Up" type="submit" color="primary" style="align-self: center" :size="'18px'" />
+        
+        <span>
+            <q-btn label="Назад" type="reset" dark color="primary" :size="'18px'"/>
+            <q-btn label="Регистрация" type="submit" dark color="primary" :size="'18px'" />
+        </span>
+        
+        
     </q-form>
 </template>
 
@@ -59,9 +70,10 @@ import { useStore } from "vuex"
 import { useQuasar } from "quasar"
 import { rules } from "../validation"
 import { withMessage } from "../validation/helpers"
-import { ref } from "vue"
 import { useRouter } from "vue-router"
+import { defineAsyncComponent } from "@vue/runtime-core"
 
+const logo = defineAsyncComponent(async () => import("./icons/LogoDarkIcon.vue"))
 
 const store = useStore()
 const router = useRouter()
@@ -71,26 +83,26 @@ const user = reactive({ username: "", email: "", number: "", password: "", confi
 
 const validationRules = {
     username: [
-        async (value: string) => await withMessage("Field is required", rules.isRequired(value)),
-        async (value: string) => await withMessage("Username is too short", rules.minLength(value, 4)),
-        async (value: string) => await withMessage("Username is not unique", rules.isUsernameUnique(value))
+        async (value: string) => await withMessage("", rules.isRequired(value)),
+        async (value: string) => await withMessage("", rules.minLength(value, 4)),
+        async (value: string) => await withMessage("", rules.isUsernameUnique(value))
     ],
     email: [
-        async (value: string) => await withMessage("Field is required", rules.isRequired(value)),
-        async (value: string) => await withMessage("Email is invalid", rules.isEmail(value)),
-        async (value: string) => await withMessage("Email is not unique", rules.isEmailUnique(value))
+        async (value: string) => await withMessage("", rules.isRequired(value)),
+        async (value: string) => await withMessage("", rules.isEmail(value)),
+        async (value: string) => await withMessage("", rules.isEmailUnique(value))
     ],
     password: [
-        async (value: string) => await withMessage("Field is required", rules.isRequired(value)),
-        async (value: string) => await withMessage("Password it too short", rules.minLength(value, 8)),
+        async (value: string) => await withMessage("", rules.isRequired(value)),
+        async (value: string) => await withMessage("", rules.minLength(value, 8)),
     ],
     confirmPassword: [
-        async (value: string) => await withMessage("Field is required", rules.isRequired(value)),
-        async (value: string) => await withMessage("It's not equal, fuck you", rules.isEqual(value, user.password)),
+        async (value: string) => await withMessage("", rules.isRequired(value)),
+        async (value: string) => await withMessage("", rules.isEqual(value, user.password)),
     ],
     phoneNumber: [
-        async (value: string) => await withMessage("Field is required", rules.isRequired(value)),
-        async (value: string) => await withMessage("Phone number is invalid", rules.isPhoneNumber(value)),
+        async (value: string) => await withMessage("", rules.isRequired(value)),
+        async (value: string) => await withMessage("", rules.isPhoneNumber(value)),
     ]
 }
 
@@ -101,7 +113,12 @@ const onSubmit = async () => {
     await store.dispatch("signUp", user)
 
     quasar.loading.hide()
-    router.push({ name: "home"})
+}
+
+const onReset = async () => {
+    
+    // router.push({ name: "home"})
+    window.location.href = "https://www.youtube.com/watch?v=DJsn1QivbKM"
 }
 
 

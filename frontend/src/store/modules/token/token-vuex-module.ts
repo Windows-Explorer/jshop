@@ -1,6 +1,8 @@
 import { Dialog } from 'quasar'
 import { VueCookieNext } from 'vue-cookie-next'
+import { Router } from 'vue-router'
 import { Module, VuexModule, Mutation, Action } from 'vuex-module-decorators'
+import { AuthPayload } from './user.interface'
 
 @Module
 export class TokenStoreModule extends VuexModule {
@@ -14,7 +16,10 @@ export class TokenStoreModule extends VuexModule {
 
 
   @Action({ commit: "tokenMutation" })
-  async signUp(user: { username: string, email: string, password: string}): Promise<string> {
+  async signUp(payload: AuthPayload): Promise<string> {
+    const user = payload.user
+    const router = payload.router!
+
     const result = await fetch("http://localhost:3000/auth/signup", {
         headers: { "Content-Type": "application/json" },
         method: "POST",
@@ -23,6 +28,7 @@ export class TokenStoreModule extends VuexModule {
     if(result.status === 200) {
       const token: string = await result.text()
       VueCookieNext.setCookie("token", token)
+      router.push({ name: "home"})
       return token
     }
     else {
@@ -37,7 +43,10 @@ export class TokenStoreModule extends VuexModule {
 
 
   @Action({ commit: "tokenMutation" })
-  async signIn(user: { email: string, password: string}): Promise<string> {
+  async signIn(payload: AuthPayload): Promise<string> {
+    const user = payload.user
+    const router: Router = payload.router!
+
     const result = await fetch("http://localhost:3000/auth/signin", {
         headers: { "Content-Type": "application/json" },
         method: "POST",
@@ -46,6 +55,7 @@ export class TokenStoreModule extends VuexModule {
     if(result.status === 200) {
       const token: string = await result.text()
       VueCookieNext.setCookie("token", token)
+      router.push({ name: "home"})
       return token
     }
     else{

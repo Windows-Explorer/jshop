@@ -1,7 +1,7 @@
 <template>
   <q-layout view="hhh Lpr fFf">
 
-  <q-header :reveal="true" :elevated="true">
+  <q-header v-if="(route.name !=='signup' && route.name !=='signin')" :reveal="true" :elevated="true">
 
     <q-tabs :align="'left'">
       <q-route-tab to="/" label="Home" />
@@ -24,12 +24,14 @@
 <script lang="ts" setup>
 
 import { useQuasar } from 'quasar'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 
 const store = useStore()
 const router = useRouter()
 const quasar = useQuasar()
+const route = useRoute()
+
 
 const onLogout = async () => {
   quasar.loading.show()
@@ -41,7 +43,7 @@ const onLogout = async () => {
 </script>
 
 <style>
-  section {
+  section {    
     padding-top: 8px;
     color: white;
     height: 100%;
@@ -51,6 +53,9 @@ const onLogout = async () => {
     align-content: center;
     justify-content: space-evenly;
     align-items: center;
+  }
+  html::-webkit-scrollbar {
+    display: none;
   }
 
   html, body, #app {
@@ -84,20 +89,18 @@ const onLogout = async () => {
     padding-block: 30px;
     padding-inline: 20px;
     border-radius: 4px;
-    background-color: white;
+    background-color: transparent;
     transition: 0.5s ease;
-    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
-    gap: 6px;
+    gap: 8px;
   }
   
-  .form h2 {
-    font-family: FuturaDemi;
-    font-size: 28px;
-    margin: 0px;
-    align-self: center;
-    color: rgb(53, 53, 53);
-    text-transform: uppercase;
-    user-select: none;
+  .form span {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 10px;
   }
-
 </style>

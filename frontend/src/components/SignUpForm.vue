@@ -101,7 +101,7 @@ const onSubmit = async () => {
     await store.dispatch("signUp", user)
 
     quasar.loading.hide()
-    router.push("home")
+    router.push({ name: "home"})
 }
 
 

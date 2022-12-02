@@ -117,8 +117,7 @@ const onSubmit = async () => {
 
 const onReset = async () => {
     
-    // router.push({ name: "home"})
-    window.location.href = "https://www.youtube.com/watch?v=DJsn1QivbKM"
+    router.back()
 }
 
 

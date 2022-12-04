@@ -1,23 +1,37 @@
 <template>
-  <q-layout view="hhh Lpr fFf">
+  <q-layout>
 
   <transition name="header">
     <q-header v-if="(route.name !=='signup' && route.name !=='signin')" :reveal="true" :elevated="true">
       <q-tabs :align="'left'">
-        <q-route-tab to="/" label="Home" />
-        <q-route-tab to="onlyauthed" label="OnlyAuthed" />
-        <q-route-tab v-if="!store.getters.isAuthorized" to="signup" label="SignUp" />
-        <q-route-tab v-if="!store.getters.isAuthorized" to="signin" label="SignIn" />
-        <q-route-tab v-if="store.getters.isAuthorized" @click="onLogout()" label="Logout"/>
+        <LogoDarkIcon :style="'height:36px; margin-inline:28px; cursor:pointer'" @click="router.push({ name: 'home'})" />
+        
+        <q-route-tab  to="/" label="Игры" />
+
+        <q-route-tab  to="/" label="Книги" />
+
+        <q-route-tab label="Учетная запись">
+          <q-menu :transition-show="'jump-up'" :transition-hide="'jump-down'">
+            <div class="menu ">
+              <q-btn flat v-if="!store.getters.isAuthorized" to="signin" label="Войти" />
+              <q-btn flat v-if="!store.getters.isAuthorized" to="signup" label="Регистрация" />
+              <q-btn flat v-if="store.getters.isAuthorized" label="Выйти" v-close-popup @click="onLogout()" />
+            </div>
+          </q-menu>
+        </q-route-tab>
       </q-tabs>
     </q-header>
   </transition>
 
-  <q-page-container :align="'center'">
+  <q-page-container class="page-container">
+    
     <transition name="content">
       <router-view />
     </transition>
+
   </q-page-container>
+
+  
 
   </q-layout>
   
@@ -25,10 +39,12 @@
 
 <script lang="ts" setup>
 
-import { onMounted } from '@vue/runtime-core'
+import { defineAsyncComponent } from '@vue/runtime-core'
 import { useQuasar } from 'quasar'
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
+
+const LogoDarkIcon = defineAsyncComponent(async () => import("./components/icons/LogoDarkIcon.vue"))
 
 const store = useStore()
 const router = useRouter()
@@ -46,16 +62,41 @@ const onLogout = async () => {
 </script>
 
 <style>
-  section {    
-    padding-top: 8px;
-    color: white;
+
+  .page-container {
     height: 100%;
-    width: 100%;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-content: center;
-    justify-content: space-evenly;
-    align-items: center;
+    align-items: stretch;
+    justify-content: flex-start;
+  }
+
+  .footer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    font-size: 18px;
+    padding: 16px;
+  }
+
+  .footer a {
+    cursor: pointer;
+  }
+
+  .menu {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: center;
+    align-items: stretch;
+    padding: 12px;
+    gap: 10px;
+  }
+
+  section {
+    align-self: center;
   }
   html::-webkit-scrollbar {
     display: none;
@@ -124,7 +165,7 @@ const onLogout = async () => {
 
   .header-enter-active,
   .header-leave-active {
-    transition: transform 0.7s cubic-bezier(1,-0.26,.12,1.33);
+    transition: transform 0.7s ease;
   }
 
   .header-enter-from,
@@ -134,11 +175,21 @@ const onLogout = async () => {
 
   .content-enter-active,
   .content-leave-active {
-    transition: transform 0.7s cubic-bezier(1,-0.26,.12,1.33);
+    transition: transform 0.7s ease;
   }
 
   .content-enter-from,
   .content-leave-to {
     transform: translateY(-100%);
+  }
+
+  .footer-enter-active,
+  .footer-leave-active {
+    transition: transform 0.7s ease;
+  }
+
+  .footer-enter-from,
+  .footer-leave-to {
+    transform: translateY(100%);
   }
 </style>

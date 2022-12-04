@@ -3,6 +3,7 @@
 
   <transition name="header">
     <q-header v-if="(route.name !=='signup' && route.name !=='signin')" :reveal="true" :elevated="true">
+    <admin-layout />
       <q-tabs :dense="false" :align="'left'">
         <LogoDarkIcon :style="'height:36px; margin-inline:28px; cursor:pointer;'" @click="router.push({ name: 'home'})" />
 
@@ -12,7 +13,7 @@
 
         <q-route-tab label="Учетная запись">
           <q-menu :transition-show="'jump-up'" :transition-hide="'jump-down'">
-            <div class="menu ">
+            <div class="menu">
               <q-btn flat v-if="!store.getters.isAuthorized" to="signin" label="Войти" />
               <q-btn flat v-if="!store.getters.isAuthorized" to="signup" label="Регистрация" />
               <q-btn flat v-if="store.getters.isAuthorized" label="Выйти" v-close-popup @click="onLogout()" />
@@ -45,6 +46,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 
 const LogoDarkIcon = defineAsyncComponent(async () => import("./components/icons/LogoDarkIcon.vue"))
+const AdminLayout = defineAsyncComponent(async () => import("./components/AdminLayout.vue"))
 
 const store = useStore()
 const router = useRouter()

@@ -117,7 +117,7 @@ const onSubmit = async () => {
     quasar.loading.hide()
 }
 
-const onReset = async () => router.back()
+const onReset = async () => router.push({name: "home"})
 
 
 </script>

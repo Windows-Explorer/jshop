@@ -7,6 +7,7 @@ import quasarUserOptions from './quasar-user-options'
 
 const app = createApp(App)
 
+
 app.use(Quasar, quasarUserOptions)
 app.use(store)
 app.use(router)

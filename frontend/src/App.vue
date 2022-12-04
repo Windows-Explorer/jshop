@@ -3,12 +3,12 @@
 
   <transition name="header">
     <q-header v-if="(route.name !=='signup' && route.name !=='signin')" :reveal="true" :elevated="true">
-      <q-tabs :align="'left'">
-        <LogoDarkIcon :style="'height:36px; margin-inline:28px; cursor:pointer'" @click="router.push({ name: 'home'})" />
-        
-        <q-route-tab  to="/" label="Игры" />
+      <q-tabs :dense="false" :align="'left'">
+        <LogoDarkIcon :style="'height:36px; margin-inline:28px; cursor:pointer;'" @click="router.push({ name: 'home'})" />
 
-        <q-route-tab  to="/" label="Книги" />
+        <q-route-tab to="/" label="Игры" />
+
+        <q-route-tab to="/" label="Книги" />
 
         <q-route-tab label="Учетная запись">
           <q-menu :transition-show="'jump-up'" :transition-hide="'jump-down'">
@@ -23,7 +23,7 @@
     </q-header>
   </transition>
 
-  <q-page-container class="page-container">
+  <q-page-container class="page-container" :style="myTweak">
     
     <transition name="content">
       <router-view />
@@ -39,7 +39,7 @@
 
 <script lang="ts" setup>
 
-import { defineAsyncComponent } from '@vue/runtime-core'
+import { defineAsyncComponent, onMounted } from '@vue/runtime-core'
 import { useQuasar } from 'quasar'
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
@@ -51,6 +51,7 @@ const router = useRouter()
 const quasar = useQuasar()
 const route = useRoute()
 
+const myTweak = async (offset: number) => { minHeight: offset ? `calc(100vh - ${offset}px)` : '100vh' }
 
 const onLogout = async () => {
   quasar.loading.show()
@@ -59,12 +60,14 @@ const onLogout = async () => {
   router.push("/")
 }
 
+onMounted(() => {quasar.loadingBar.setDefaults({ color: "negative"})} )
+
 </script>
 
 <style>
 
   .page-container {
-    height: 100%;
+    height: calc(100vh - 50px);
     display: flex;
     flex-direction: column;
     align-content: center;
@@ -72,17 +75,8 @@ const onLogout = async () => {
     justify-content: flex-start;
   }
 
-  .footer {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
-    font-size: 18px;
-    padding: 16px;
-  }
-
-  .footer a {
-    cursor: pointer;
+  header {
+    font-family: Colus;
   }
 
   .menu {
@@ -93,6 +87,7 @@ const onLogout = async () => {
     align-items: stretch;
     padding: 12px;
     gap: 10px;
+    font-family: Colus;
   }
 
   section {
@@ -109,23 +104,16 @@ const onLogout = async () => {
   }
   
   @font-face {
-    font-family: FuturaBook;
-    src: url("../src/assets/futurabook.otf") format("opentype");
+    font-family: SpectralRegular;
+    src: url("../src/assets/Spectral-Regular.ttf") format("truetype");
   }
   @font-face {
-    font-family: FuturaDemi;
-    src: url("../src/assets/futurademi.otf") format("opentype");
-  }
-  @font-face {
-    font-family: FuturaLight;
-    src: url("../src/assets/futuralight.otf") format("opentype");
-  }
-  @font-face {
-    font-family: FuturaMedium;
-    src: url("../src/assets/futuramedium.otf") format("opentype");
+    font-family: Colus;
+    src: url("../src/assets/Colus.ttf") format("truetype");
   }
 
   .form {
+    font-family: SpectralRegular;
     display: flex;
     flex-direction: column;
     align-items: stretch;
@@ -139,22 +127,24 @@ const onLogout = async () => {
   }
   
   .form .buttons {
+    font-family: Colus;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     align-content: center;
     align-items: flex-start;
-    justify-content: flex-end;
+    justify-content: space-between;
     gap: 10px;
     margin-bottom: 10px;
   }
 
   .form .redirect-container {
+    font-family: SpectralRegular;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: flex-end;
-    align-items: flex-end;
+    justify-content: center;
+    align-items: flex-start;
     gap: 10px;
   }
   .form .redirect-container .redirect {

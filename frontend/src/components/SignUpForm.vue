@@ -113,7 +113,7 @@ const validationRules = {
 
 const onSubmit = async () => {
     quasar.loading.show()
-    await store.dispatch("signUp", user)
+    await store.dispatch("signUp", { user: user, router: router})
     quasar.loading.hide()
 }
 

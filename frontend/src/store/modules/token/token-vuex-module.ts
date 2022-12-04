@@ -1,4 +1,4 @@
-import { Dialog } from 'quasar'
+import { Dialog, Loading } from 'quasar'
 import { VueCookieNext } from 'vue-cookie-next'
 import { Router } from 'vue-router'
 import { Module, VuexModule, Mutation, Action } from 'vuex-module-decorators'
@@ -47,7 +47,7 @@ export class TokenStoreModule extends VuexModule {
     const user = payload.user
     const router: Router = payload.router!
 
-    const result = await fetch("http://localhost:3000/auth/signin", {
+    const result = await fetch("http://localhost:3000/auth/signup", {
         headers: { "Content-Type": "application/json" },
         method: "POST",
         body: JSON.stringify(user)

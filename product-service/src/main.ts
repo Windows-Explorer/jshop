@@ -15,7 +15,7 @@ async function bootstrap() {
             brokers: [`${process.env.BROKER_HOST}:${process.env.BROKER_PORT}`],
         },
         consumer: {
-            groupId: 'auth-consumer',
+            groupId: 'products-consumer',
             allowAutoTopicCreation: true
         }
     }

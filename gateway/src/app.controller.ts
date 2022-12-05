@@ -1,5 +1,5 @@
 import { Controller, Get, Post, Body, HttpCode, Res, HttpStatus, UseGuards } from '@nestjs/common'
-import { AuthGuard } from './auth/guards/auth.guard'
+import { AuthGuard } from './guards/auth.guard'
 
 @Controller('')
 export class AppController {

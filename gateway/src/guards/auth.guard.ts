@@ -13,7 +13,7 @@ export class AuthGuard implements CanActivate {
         
         const token = request.headers.authorization.replace("Bearer ", "")
 
-        const result: IResult = await this.client.send("get.auth.verify", token).toPromise()
+        const result: IResult<any> = await this.client.send("get.auth.verify", token).toPromise()
         console.log(result)
         return result.data
     }

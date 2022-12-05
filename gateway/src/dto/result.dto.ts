@@ -1,4 +1,4 @@
-export interface IResult {
-    data?: any
+export interface IResult<T> {
+    data?: T
     error?: { statusCode: number, message: string}
 }

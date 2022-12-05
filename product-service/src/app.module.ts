@@ -1,29 +1,34 @@
 import { Module } from '@nestjs/common'
-import { TypeOrmModule } from '@nestjs/typeorm'
-import { AppController } from './app.controller'
-import { AuthModule } from './auth/auth.module'
-import { User } from './users/entities/user.entity'
-import { ConfigModule } from "@nestjs/config"
-import { UsersModule } from './users/users.module'
+import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm'
+import { ConfigModule, ConfigService } from "@nestjs/config"
+import { ProductsModule } from './products/products.module';
+import { Book } from './products/entities/book.entity';
+import { Game } from './products/entities/game.entity';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: '.dev.env',
-      isGlobal: true
+      isGlobal: true,
+      cache: false
     }),
-    TypeOrmModule.forRoot({
-      type: "mysql",
-      host: process.env.DATABASE_HOST,
-      port: 3306,
-      username: process.env.DATABASE_USERNAME,
-      password: process.env.DATABASE_PASSWORD,
-      database: process.env.DATABASE_NAME,
-      entities: [User],
-      synchronize: true
-    })
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService): Promise<TypeOrmModuleOptions> => ({
+        type: "mysql",
+        port: configService.get<number>("DATABASE_PORT"),
+        host: configService.get<string>("DATABASE_HOST"),
+        database: configService.get<string>("DATABASE_DATABASE"),
+        password: configService.get<string>("DATABASE_PASSWORD"),
+        username: configService.get<string>("DATABASE_USERNAME"),
+        entities: [Book, Game],
+        synchronize: true
+      })
+    }),
+    ProductsModule,
   ],
-  controllers: [AppController]
+  controllers: [],
+  providers: [],
 })
 
 export class AppModule {}

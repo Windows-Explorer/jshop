@@ -1,7 +1,12 @@
-import { Controller, Get, Post, Body, UseGuards } from '@nestjs/common'
+import { Controller, Get, Post, Body, HttpCode, Res, HttpStatus, UseGuards } from '@nestjs/common'
+import { AuthGuard } from './auth/guards/auth.guard'
 
-@Controller("/")
+@Controller('')
 export class AppController {
-    constructor() {}
-    
+
+    @UseGuards(AuthGuard)
+    @Get("/")
+    async index(): Promise<any> {
+        return { data: "data" }
+    }
 }

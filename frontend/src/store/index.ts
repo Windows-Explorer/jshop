@@ -1,14 +1,8 @@
-import { createStore } from 'vuex'
+import { createStore } from "vuex"
+import { TokenStoreModule } from "./modules/token/token-vuex-module"
 
-export default createStore({
-  state: {
-  },
-  getters: {
-  },
-  mutations: {
-  },
-  actions: {
-  },
-  modules: {
-  }
+
+export const store = createStore({
+    state: {},
+    modules: { TokenStoreModule }
 })

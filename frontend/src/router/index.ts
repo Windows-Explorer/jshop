@@ -1,25 +1,78 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import { Loading, LoadingBar, Notify } from 'quasar'
+import { VueCookieNext } from 'vue-cookie-next'
+import { createRouter, createWebHistory, RouteLocation, RouteRecord, RouteRecordRaw } from 'vue-router'
+import { useStore } from 'vuex'
+
+const store = useStore()
+
+const defaultTitle = "Континуум"
+
+const isAuthorized = (): boolean => {
+  const token = VueCookieNext.getCookie("token")
+  if(token && token !== "") return true
+  else return false
+}
+
+const authGuard = async (to: any, from: any, next: any) => {
+  if(to.name !== 'signin' && !isAuthorized()) {
+    Notify.create({
+      position: "bottom",
+      message: "Only authorized users",
+      timeout: 500,
+      type: "info",
+      textColor: "primary"
+    })
+    next({ name: "signin" })
+  }
+  else {
+    next()
+  }
+}
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'home',
-    component: HomeView
+    component: async () => await import("../views/HomeView.vue")
   },
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+    path: '/signup',
+    name: 'signup',
+    component: async () => await import("../views/SignUpView.vue"),
+    meta: { title: "Регистрация"}
+  },
+  {
+    path: '/signin',
+    name: 'signin',
+    component: async () => await import("../views/SignInView.vue"),
+    meta: { title: "Авторизация"}
+  },
+  {
+    path: "/onlyauthed",
+    name: "onlyauthed",
+    component: async () => await import("../views/OnlyAuthedView.vue"),
+    beforeEnter: authGuard
   }
 ]
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
+})
+
+
+router.beforeResolve( async (to: any, from: any, next: any) => {
+  if(to.name) {
+    LoadingBar.start()
+  }
+  next()
+})
+router.afterEach(async (to: any, from: any, next: any) => {
+  LoadingBar.stop()
+})
+
+router.afterEach(async (to: any, from: any) => {
+  document.title = to.meta.title || defaultTitle
 })
 
 export default router

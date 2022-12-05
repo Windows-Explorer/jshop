@@ -1,30 +1,187 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+  <q-layout>
+
+  <transition name="header">
+    <q-header v-if="(route.name !=='signup' && route.name !=='signin')" :reveal="true" :elevated="true">
+    <admin-layout />
+      <q-tabs :dense="false" :align="'left'">
+        <LogoDarkIcon :style="'height:36px; margin-inline:28px; cursor:pointer;'" @click="router.push({ name: 'home'})" />
+
+        <q-route-tab to="/" label="Игры" />
+
+        <q-route-tab to="/" label="Книги" />
+
+        <q-route-tab label="Учетная запись">
+          <q-menu :transition-show="'jump-up'" :transition-hide="'jump-down'">
+            <div class="menu">
+              <q-btn flat v-if="!store.getters.isAuthorized" to="signin" label="Войти" />
+              <q-btn flat v-if="!store.getters.isAuthorized" to="signup" label="Регистрация" />
+              <q-btn flat v-if="store.getters.isAuthorized" label="Выйти" v-close-popup @click="onLogout()" />
+            </div>
+          </q-menu>
+        </q-route-tab>
+      </q-tabs>
+    </q-header>
+  </transition>
+
+  <q-page-container class="page-container" :style="myTweak">
+    
+    <transition name="content">
+      <router-view />
+    </transition>
+
+  </q-page-container>
+
+  
+
+  </q-layout>
+  
 </template>
 
+<script lang="ts" setup>
+
+import { defineAsyncComponent, onMounted } from '@vue/runtime-core'
+import { useQuasar } from 'quasar'
+import { useRoute, useRouter } from 'vue-router'
+import { useStore } from 'vuex'
+
+const LogoDarkIcon = defineAsyncComponent(async () => import("./components/icons/LogoDarkIcon.vue"))
+const AdminLayout = defineAsyncComponent(async () => import("./components/AdminLayout.vue"))
+
+const store = useStore()
+const router = useRouter()
+const quasar = useQuasar()
+const route = useRoute()
+
+const myTweak = async (offset: number) => { minHeight: offset ? `calc(100vh - ${offset}px)` : '100vh' }
+
+const onLogout = async () => {
+  quasar.loading.show()
+  await store.dispatch('signOut')
+  quasar.loading.hide()
+  router.push("/")
+}
+
+onMounted(() => {quasar.loadingBar.setDefaults({ color: "negative"})} )
+
+</script>
+
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
 
-nav {
-  padding: 30px;
-}
+  .page-container {
+    height: calc(100vh - 50px);
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: stretch;
+    justify-content: flex-start;
+  }
 
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
+  header {
+    font-family: Colus;
+  }
 
-nav a.router-link-exact-active {
-  color: #42b983;
-}
+  .menu {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: center;
+    align-items: stretch;
+    padding: 12px;
+    gap: 10px;
+    font-family: Colus;
+  }
+
+  section {
+    align-self: center;
+  }
+  html::-webkit-scrollbar {
+    display: none;
+  }
+
+  html, body, #app {
+    height: 100%;
+    margin: 0 auto;
+    background-color: #111111;
+  }
+  
+  @font-face {
+    font-family: SpectralRegular;
+    src: url("../src/assets/Spectral-Regular.ttf") format("truetype");
+  }
+  @font-face {
+    font-family: Colus;
+    src: url("../src/assets/Colus.ttf") format("truetype");
+  }
+
+  .form {
+    font-family: SpectralRegular;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 360px;
+    padding-block: 30px;
+    padding-inline: 20px;
+    border-radius: 4px;
+    background-color: transparent;
+    transition: 0.5s ease;
+    gap: 8px;
+  }
+  
+  .form .buttons {
+    font-family: Colus;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .form .redirect-container {
+    font-family: SpectralRegular;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .form .redirect-container .redirect {
+      cursor: pointer;
+      text-decoration: none;
+      color: white;
+  }
+
+  .header-enter-active,
+  .header-leave-active {
+    transition: transform 0.7s ease;
+  }
+
+  .header-enter-from,
+  .header-leave-to {
+    transform: translateY(-100%);
+  }
+
+  .content-enter-active,
+  .content-leave-active {
+    transition: transform 0.7s ease;
+  }
+
+  .content-enter-from,
+  .content-leave-to {
+    transform: translateY(-100%);
+  }
+
+  .footer-enter-active,
+  .footer-leave-active {
+    transition: transform 0.7s ease;
+  }
+
+  .footer-enter-from,
+  .footer-leave-to {
+    transform: translateY(100%);
+  }
 </style>

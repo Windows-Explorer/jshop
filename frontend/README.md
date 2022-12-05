@@ -1,24 +1,20 @@
-# frontend
-
-## Project setup
-```
-npm install
+## Установка зависимостей
+```bash
+$ npm install
 ```
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
+## Запуск приложения
+```bash
+# Watch mode
+$ npm run serve
 ```
 
-### Run your unit tests
+## Сборка приложения
+```bash
+$ npm run build
 ```
+
+## Тестирование
+```bash
 npm run test:unit
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).

@@ -4,12 +4,13 @@ import { IResult } from 'src/dto/result.dto'
 import { Book } from './entities/book.entity'
 import { Game } from './entities/game.entity'
 import { BooksService } from './services/books.service'
+import { GamesService } from './services/games.service'
 
 @Controller('products')
 export class ProductsController {
     constructor(
         private readonly booksService: BooksService,
-        private readonly gamesService: BooksService
+        private readonly gamesService: GamesService
     ){}
 
     @MessagePattern("get.books.findAll")

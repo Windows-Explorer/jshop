@@ -6,23 +6,23 @@ import { Game } from '../entities/game.entity'
 @Injectable()
 export class GamesService {
     constructor(
-        @InjectRepository(Game) private readonly booksRepository: Repository<Game>,
+        @InjectRepository(Game) private readonly gamesRepository: Repository<Game>,
     ){}
 
 
     async findById(gameId: number): Promise<Game> {
-        return await this.booksRepository.findOne({ where: { id: gameId } })
+        return await this.gamesRepository.findOne({ where: { id: gameId } })
     }
 
     async findAll(): Promise<Game[]> {
-        return await this.booksRepository.find()
+        return await this.gamesRepository.find()
     }
 
     async create(game: Game): Promise<Game> {
-        return await this.booksRepository.save(game)
+        return await this.gamesRepository.save(game)
     }
 
     async update(game: Game): Promise<Game> {
-        return await this.booksRepository.save(game)
+        return await this.gamesRepository.save(game)
     }
 }

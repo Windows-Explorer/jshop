@@ -52,6 +52,16 @@ const routes: Array<RouteRecordRaw> = [
     name: "onlyauthed",
     component: async () => await import("../views/OnlyAuthedView.vue"),
     beforeEnter: authGuard
+  },
+  {
+    path: "/games",
+    name: "games",
+    component: async () => await import ("../views/GamesView.vue")
+  },
+  {
+    path: "/books",
+    name: "books",
+    component: async () => await import ("../views/BooksView.vue")
   }
 ]
 

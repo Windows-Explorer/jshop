@@ -22,6 +22,7 @@ export class ProductsController {
     @MessagePattern("get.games.findAll")
     async gamesFindAll(): Promise<IResult<Game[]>> {
         const result: IResult<Game[]> = { data: await this.gamesService.findAll(), error: { statusCode: HttpStatus.OK, message: "OK" }}
+        console.log(result)
         return result
     }
 }

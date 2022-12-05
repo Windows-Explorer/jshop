@@ -7,9 +7,9 @@
       <q-tabs :dense="false" :align="'left'">
         <LogoDarkIcon :style="'height:36px; margin-inline:28px; cursor:pointer;'" @click="router.push({ name: 'home'})" />
 
-        <q-route-tab to="/" label="Игры" />
+        <q-route-tab to="/games" label="Игры" />
 
-        <q-route-tab to="/" label="Книги" />
+        <q-route-tab to="/books" label="Книги" />
 
         <q-route-tab label="Учетная запись">
           <q-menu :transition-show="'jump-up'" :transition-hide="'jump-down'">
@@ -69,7 +69,7 @@ onMounted(() => {quasar.loadingBar.setDefaults({ color: "negative"})} )
 <style>
 
   .page-container {
-    height: calc(100vh - 50px);
+    height: calc(100vh);
     display: flex;
     flex-direction: column;
     align-content: center;
@@ -103,6 +103,7 @@ onMounted(() => {quasar.loadingBar.setDefaults({ color: "negative"})} )
     height: 100%;
     margin: 0 auto;
     background-color: #111111;
+    box-sizing: border-box;
   }
   
   @font-face {

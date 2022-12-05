@@ -1,0 +1,41 @@
+<template>
+    <section>
+        <game-card :game="game" v-for="(game, index) in games" :key="index"/>
+    </section>
+</template>
+
+<script setup lang="ts">
+import { IGame } from "../store/modules/games/game.interface";
+import { Ref, ref } from "@vue/reactivity"
+import { defineAsyncComponent, onMounted } from "@vue/runtime-core"
+
+
+const GameCard = defineAsyncComponent(async () => import("../components/GameCard.vue"))
+
+const games: Ref<IGame[]> = ref<IGame[]>([])
+
+const getGames = async () => {
+    const result = await fetch("http://localhost:3000/products/games")
+    games.value = await result.json()
+}
+
+onMounted(async () => getGames())
+
+</script>
+
+<style scoped>
+    section {
+        width: 100%;
+        color: white;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-content: center;
+        justify-content: center;
+        align-items: flex-start;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+    }
+</style>

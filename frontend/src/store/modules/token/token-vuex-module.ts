@@ -32,10 +32,7 @@ export class TokenStoreModule extends VuexModule {
       return token
     }
     else {
-      Dialog.create({
-        title: "Unauthorized",
-        message: "Some is invalid"
-      })
+      Dialog.create({ title: "Unauthorized", message: "Some is invalid" })
       VueCookieNext.removeCookie("token")
       return ""
     }

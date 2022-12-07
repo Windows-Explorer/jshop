@@ -16,5 +16,6 @@ export class Book {
     @Column({ length: 255, type: "varchar", unique: true })
     @Length(0, 255)
     description: string
+    
 
 }

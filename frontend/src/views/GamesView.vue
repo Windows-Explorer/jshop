@@ -1,5 +1,6 @@
 <template>
     <section>
+        <q-inner-loading :showing="loading" dark />
         <game-card :game="game" v-for="(game, index) in games" :key="index"/>
         <h5 v-if="(games.length === 0)">Пусто</h5>
     </section>
@@ -16,12 +17,15 @@ const store = useStore()
 const GameCard = defineAsyncComponent(async () => import("../components/GameCard.vue"))
 
 const games: Ref<IGame[]> = ref<IGame[]>([])
+const loading: Ref<boolean> = ref(false)
 
-const getGames = async () => {
+const getContent = async () => {
+    loading.value = true
     games.value = await store.dispatch("getGames")
+    loading.value = false
 }
 
-onMounted(async () => getGames())
+onMounted(async () => getContent())
 
 </script>
 

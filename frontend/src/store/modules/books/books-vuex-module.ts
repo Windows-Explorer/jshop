@@ -15,20 +15,14 @@ export class BooksStoreModule extends VuexModule {
 
   @Action({ commit: "booksMutation" })
   async getBooks(): Promise<IBook[]> {
-    Loading.show()
     const result = await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/products/books`)
 
     if(result.status === 200) {
       const books: IBook[] = await result.json()
-      Loading.hide()
       return books
     }
     else {
-      Dialog.create({
-        title: "Не удалось",
-        message: "Some is invalid"
-      })
-      Loading.hide()
+      Dialog.create({ title: "Не удалось", message: "Some is invalid" })
       return []
     }
   }

@@ -1,6 +1,7 @@
 <template>
     <section>
         <game-card :game="game" v-for="(game, index) in games" :key="index"/>
+        <h5 v-if="(games.length === 0)">Пусто</h5>
     </section>
 </template>
 

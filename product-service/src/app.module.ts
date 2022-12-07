@@ -2,8 +2,7 @@ import { Module } from '@nestjs/common'
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm'
 import { ConfigModule, ConfigService } from "@nestjs/config"
 import { ProductsModule } from './products/products.module'
-import { Book } from './products/entities/book.entity'
-import { Game } from './products/entities/game.entity'
+import { Product } from './products/entities/product.entity'
 
 @Module({
   imports: [
@@ -21,7 +20,7 @@ import { Game } from './products/entities/game.entity'
         database: configService.get<string>("DATABASE_DATABASE"),
         password: configService.get<string>("DATABASE_PASSWORD"),
         username: configService.get<string>("DATABASE_USERNAME"),
-        entities: [Book, Game],
+        entities: [Product],
         synchronize: true
       })
     }),

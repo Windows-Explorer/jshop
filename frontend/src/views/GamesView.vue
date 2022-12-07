@@ -5,18 +5,19 @@
 </template>
 
 <script setup lang="ts">
-import { IGame } from "../store/modules/games/game.interface";
+import { IGame } from "../store/modules/games/game.interface"
 import { Ref, ref } from "@vue/reactivity"
 import { defineAsyncComponent, onMounted } from "@vue/runtime-core"
+import { useStore } from "vuex"
 
+const store = useStore()
 
 const GameCard = defineAsyncComponent(async () => import("../components/GameCard.vue"))
 
 const games: Ref<IGame[]> = ref<IGame[]>([])
 
 const getGames = async () => {
-    const result = await fetch("http://localhost:3000/products/games")
-    games.value = await result.json()
+    games.value = await store.dispatch("getGames")
 }
 
 onMounted(async () => getGames())

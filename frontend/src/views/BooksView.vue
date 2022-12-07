@@ -2,7 +2,6 @@
     <section>
         <q-inner-loading :showing="loading" dark/>
         <game-card :game="book" v-for="(book, index) in books" :key="index"/>
-        <h5 v-if="(books.length === 0)">Пусто</h5>
     </section>
 </template>
 

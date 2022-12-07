@@ -1,16 +1,21 @@
 <template>
     <div class="card">
         <q-card-section>
-            <div class="text-h6">{{ props.game.title }}</div>
+            <h5>{{ props.game.title }}</h5>
         </q-card-section>
         <q-card-section>
-            <q-img :height="'300px'" :src="'https://www.textures.com/736be980dc8791f53c18b23382330dbd.jpg'" />
+            <q-parallax :src="props.game.image" :speed="0.5" :height="300">
+            </q-parallax>
+            
         </q-card-section>
         
         <q-card-section>
-            {{ props.game.description }}
+            <p>
+                {{ props.game.description }}
+            </p>
+           
         </q-card-section>
-        <q-btn label="Подробнее" @click="onRedirect(props.game.id)"/>
+        <q-btn :style="'font-family: Colus'" label="Подробнее" @click="onRedirect(props.game.id)"/>
     </div>
 </template>
 
@@ -50,4 +55,14 @@ const onRedirect = async (id: number) => {
     align-items: stretch
     justify-content: space-between
 
+p
+    margin: 0px
+    font-size: 20px
+    font-family: SpectralRegular
+
+h5
+    font-family: Colus
+    margin: 0px
+    width: 100%
+    text-align: left
 </style>

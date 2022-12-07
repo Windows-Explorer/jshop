@@ -16,7 +16,7 @@ export class GamesStoreModule extends VuexModule {
   @Action({ commit: "gamesMutation" })
   async getGames(): Promise<IGame[]> {
     Loading.show()
-    const result = await fetch("http://localhost:3000/products/games")
+    const result = await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/products/games`)
 
     if(result.status === 200) {
       const games: IGame[] = await result.json()

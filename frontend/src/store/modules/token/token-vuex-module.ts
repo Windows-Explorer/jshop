@@ -20,7 +20,7 @@ export class TokenStoreModule extends VuexModule {
     const user = payload.user
     const router = payload.router!
 
-    const result = await fetch("http://localhost:3000/auth/signup", {
+    const result = await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/auth/signup`, {
         headers: { "Content-Type": "application/json" },
         method: "POST",
         body: JSON.stringify(user)
@@ -47,7 +47,7 @@ export class TokenStoreModule extends VuexModule {
     const user = payload.user
     const router: Router = payload.router!
 
-    const result = await fetch("http://localhost:3000/auth/signup", {
+    const result = await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/auth/signup`, {
         headers: { "Content-Type": "application/json" },
         method: "POST",
         body: JSON.stringify(user)

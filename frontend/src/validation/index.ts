@@ -17,7 +17,7 @@ export const rules = {
     isEmailUnique : async (value: string | number): Promise<string | boolean> => {
         if(value === "") return true
 
-        const response = await (await fetch(`http://localhost:3000/unique/email/${value}`)).text()
+        const response = await (await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/unique/email/${value}`)).text()
         if(value !== response) return true
 
         return false
@@ -26,7 +26,7 @@ export const rules = {
     isUsernameUnique : async (value: string | number): Promise<string | boolean> => {
         if(value === "") return true
 
-        const response = await (await fetch(`http://localhost:3000/unique/username/${value}`)).text()
+        const response = await (await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/unique/username/${value}`)).text()
         if(value !== response) return true
 
         return false

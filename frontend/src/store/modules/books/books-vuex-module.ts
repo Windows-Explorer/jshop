@@ -16,7 +16,7 @@ export class BooksStoreModule extends VuexModule {
   @Action({ commit: "booksMutation" })
   async getBooks(): Promise<IBook[]> {
     Loading.show()
-    const result = await fetch("http://localhost:3000/products/books")
+    const result = await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/products/books`)
 
     if(result.status === 200) {
       const books: IBook[] = await result.json()

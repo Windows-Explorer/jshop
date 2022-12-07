@@ -59,8 +59,18 @@ const routes: Array<RouteRecordRaw> = [
     component: async () => await import ("../views/GamesView.vue")
   },
   {
+    path: "/games/:id",
+    name: "game",
+    component: async () => await import ("../views/GameProductView.vue")
+  },
+  {
     path: "/books",
     name: "books",
+    component: async () => await import ("../views/BooksView.vue")
+  },
+  {
+    path: "/books/:id",
+    name: "book",
     component: async () => await import ("../views/BooksView.vue")
   }
 ]

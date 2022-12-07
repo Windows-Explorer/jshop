@@ -10,15 +10,16 @@
         <q-card-section>
             {{ props.game.description }}
         </q-card-section>
-        <q-btn label="Подробнее" />
+        <q-btn label="Подробнее" @click="onRedirect(props.game.id)"/>
     </div>
 </template>
 
 <script setup lang="ts">
+import { PropType } from "@vue/runtime-core"
+import { useRouter } from "vue-router"
+import { IGame } from "../store/modules/games/game.interface"
 
-
-import { PropType } from "@vue/runtime-core";
-import { IGame } from "../store/modules/games/game.interface";
+const router = useRouter()
 
 const props = defineProps({
     game: {
@@ -26,6 +27,10 @@ const props = defineProps({
         required: true
     }
 })
+
+const onRedirect = async (id: number) => {
+    router.push({ name: "game", params: { id: id }})
+}
 
 </script>
 

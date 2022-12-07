@@ -1,5 +1,5 @@
-import { Controller, HttpStatus } from '@nestjs/common'
-import { MessagePattern } from '@nestjs/microservices'
+import { Controller, HttpStatus, Param } from '@nestjs/common'
+import { MessagePattern, Payload } from '@nestjs/microservices'
 import { IResult } from 'src/dto/result.dto'
 import { Book } from './entities/book.entity'
 import { Game } from './entities/game.entity'
@@ -22,7 +22,18 @@ export class ProductsController {
     @MessagePattern("get.games.findAll")
     async gamesFindAll(): Promise<IResult<Game[]>> {
         const result: IResult<Game[]> = { data: await this.gamesService.findAll(), error: { statusCode: HttpStatus.OK, message: "OK" }}
-        console.log(result)
+        return result
+    }
+
+    @MessagePattern("get.books.findById")
+    async booksFindById(@Payload() id: number): Promise<IResult<Book>> {
+        const result: IResult<Book> = { data: await this.booksService.findById(id), error: { statusCode: HttpStatus.OK, message: "OK" }}
+        return result
+    }
+
+    @MessagePattern("get.games.findById")
+    async gamesFindById(@Payload() id: number): Promise<IResult<Game>> {
+        const result: IResult<Game> = { data: await this.gamesService.findById(id), error: { statusCode: HttpStatus.OK, message: "OK" }}
         return result
     }
 }

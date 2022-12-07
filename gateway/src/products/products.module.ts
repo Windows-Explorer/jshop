@@ -32,7 +32,9 @@ export class ProductsModule {
 
   async onModuleInit() {
     this.client.subscribeToResponseOf("get.books.findAll")
+    this.client.subscribeToResponseOf("get.books.findById")
     this.client.subscribeToResponseOf("get.games.findAll")
+    this.client.subscribeToResponseOf("get.games.findById")
 
     await this.client.connect()
   }

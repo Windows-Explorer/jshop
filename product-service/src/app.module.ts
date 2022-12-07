@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common'
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm'
 import { ConfigModule, ConfigService } from "@nestjs/config"
-import { ProductsModule } from './products/products.module';
-import { Book } from './products/entities/book.entity';
-import { Game } from './products/entities/game.entity';
+import { ProductsModule } from './products/products.module'
+import { Book } from './products/entities/book.entity'
+import { Game } from './products/entities/game.entity'
 
 @Module({
   imports: [

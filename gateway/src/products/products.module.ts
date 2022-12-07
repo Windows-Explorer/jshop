@@ -1,7 +1,7 @@
-import { Inject, Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { ClientKafka, ClientsModule, Transport } from '@nestjs/microservices';
-import { ProductsController } from './products.controller';
+import { Inject, Module } from '@nestjs/common'
+import { ConfigModule, ConfigService } from '@nestjs/config'
+import { ClientKafka, ClientsModule, Transport } from '@nestjs/microservices'
+import { ProductsController } from './products.controller'
 
 @Module({
   imports: [

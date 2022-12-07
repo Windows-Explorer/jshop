@@ -1,6 +1,5 @@
 import { Catch, RpcExceptionFilter, ArgumentsHost } from '@nestjs/common'
-import { Observable, throwError } from 'rxjs'
-import { BaseRpcExceptionFilter, RpcException } from '@nestjs/microservices'
+import { RpcException } from '@nestjs/microservices'
 import { IResult } from 'src/dto/result.dto'
 
 @Catch()

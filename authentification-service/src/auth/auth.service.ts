@@ -1,5 +1,5 @@
-import { BadRequestException, Inject, Injectable, UnauthorizedException } from '@nestjs/common'
-import { JwtService, JwtSignOptions } from '@nestjs/jwt'
+import { Injectable } from '@nestjs/common'
+import { JwtService } from '@nestjs/jwt'
 import { UsersService } from 'src/users/users.service'
 import { UserCreateDto } from '../dto/user-create.dto'
 import * as bcrypt from "bcrypt"
@@ -15,7 +15,7 @@ export class AuthService {
         private readonly usersService: UsersService,
         private readonly jwtService: JwtService,
         private readonly configService: ConfigService
-        ){}
+    ) {}
 
 
     async signUp(userDto: UserCreateDto): Promise<any> {
@@ -37,11 +37,7 @@ export class AuthService {
 
 
     async signIn(userDto: UserSignInDto): Promise<any> {
-        console.log("UserDto:")
-        console.log(userDto)
         const user = await this.usersService.findByEmail(userDto.email)
-        console.log("User")
-        console.log(user)
 
         if(user && (await bcrypt.compare(userDto.password, user.passwordHash))) {
             return await this.signUser(user)
@@ -70,7 +66,7 @@ export class AuthService {
     }
 
 
-    async verifyToken(token: string): Promise<any> {
+    async verifyToken(token: string): Promise<boolean> {
         try {
             await this.jwtService.verifyAsync(token, { secret: this.configService.get<string>("JWT_SECRET") })
             return true

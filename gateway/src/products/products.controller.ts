@@ -1,7 +1,7 @@
-import { Controller, Get, Inject, Res } from '@nestjs/common';
-import { ClientKafka } from '@nestjs/microservices';
-import { Response } from 'express';
-import { IResult } from 'src/dto/result.dto';
+import { Controller, Get, Inject, Res } from '@nestjs/common'
+import { ClientKafka } from '@nestjs/microservices'
+import { Response } from 'express'
+import { IResult } from 'src/dto/result.dto'
 
 @Controller('products')
 export class ProductsController {

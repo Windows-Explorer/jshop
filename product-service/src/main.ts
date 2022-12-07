@@ -1,9 +1,9 @@
-import { ValidationPipe } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
+import { ValidationPipe } from '@nestjs/common'
+import { ConfigService } from '@nestjs/config'
 import { NestFactory } from '@nestjs/core'
 import { MicroserviceOptions, Transport } from '@nestjs/microservices'
 import { AppModule } from './app.module'
-import { AllExceptionsFilter } from './extentions/all.exception-filter';
+import { AllExceptionsFilter } from './extentions/all.exception-filter'
 
 
 

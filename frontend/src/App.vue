@@ -7,9 +7,8 @@
       <q-tabs :dense="false" :align="'left'">
         <LogoDarkIcon :style="'height:36px; margin-inline:28px; cursor:pointer;'" @click="router.push({ name: 'home'})" />
 
-        <q-route-tab to="/games" label="Игры" />
-
-        <q-route-tab to="/books" label="Книги" />
+        <q-route-tab to="/products" label="Продукты" />
+        <q-route-tab to="/cart" label="Корзина" />
 
         <q-route-tab label="Учетная запись">
           <q-menu :transition-show="'jump-up'" :transition-hide="'jump-down'">
@@ -44,6 +43,7 @@ import { defineAsyncComponent, onMounted } from '@vue/runtime-core'
 import { useQuasar } from 'quasar'
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
+import { IProduct } from './store/modules/products/product.interface'
 
 const LogoDarkIcon = defineAsyncComponent(async () => import("./components/icons/LogoDarkIcon.vue"))
 const AdminLayout = defineAsyncComponent(async () => import("./components/AdminLayout.vue"))
@@ -62,7 +62,12 @@ const onLogout = async () => {
   router.push("/")
 }
 
-onMounted(() => {quasar.loadingBar.setDefaults({ color: "negative"})} )
+const test: IProduct = { cost: 123, description: "sadasd", id: 1, image: "sdas", title: "12312"}
+
+onMounted(async () => {
+  quasar.loadingBar.setDefaults({ color: "negative"})
+  store.dispatch("getCart")
+})
 
 </script>
 

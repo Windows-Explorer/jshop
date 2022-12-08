@@ -1,7 +1,7 @@
 <template>
     <section>
         <q-inner-loading :showing="loading" dark/>
-        {{ game }}
+        {{ product }}
     </section>
 </template>
 
@@ -13,11 +13,11 @@ const router = useRouter()
 
 const loading: Ref<boolean> = ref(false)
 
-const game: Ref<any> = ref()
+const product: Ref<any> = ref()
 
 const getContent = async () => {
     loading.value = true
-    game.value = await (await fetch(`http://95.163.243.175:3000/products/games/${router.currentRoute.value.params.id}`)).json()
+    product.value = await (await fetch(`http://localhost:3000/products/games/${router.currentRoute.value.params.id}`)).json()
     loading.value = false
 }
 
@@ -28,6 +28,7 @@ onMounted(async () => getContent() )
 <style scoped>
     section {
         width: 100%;
+        padding-top: 10px;
         color: white;
         display: flex;
         flex-direction: row;

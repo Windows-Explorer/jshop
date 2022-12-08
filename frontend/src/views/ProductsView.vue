@@ -1,26 +1,26 @@
 <template>
     <section>
-        <q-inner-loading :showing="loading" dark/>
-        <game-card :game="book" v-for="(book, index) in books" :key="index"/>
+        <q-inner-loading :showing="loading" dark />
+        <product :product="product" v-for="(product, index) in products" :key="index"/>
     </section>
 </template>
 
 <script setup lang="ts">
-import { IBook } from "../store/modules/books/book.interface"
 import { Ref, ref } from "@vue/reactivity"
 import { defineAsyncComponent, onMounted } from "@vue/runtime-core"
 import { useStore } from "vuex"
+import { IProduct } from "../store/modules/products/product.interface"
 
 const store = useStore()
 
-const GameCard = defineAsyncComponent(async () => import("../components/GameCard.vue"))
+const Product = defineAsyncComponent(async () => import("../components/Product.vue"))
 
-const books: Ref<IBook[]> = ref<IBook[]>([])
+const products: Ref<IProduct[]> = ref<IProduct[]>([])
 const loading: Ref<boolean> = ref(false)
 
 const getContent = async () => {
     loading.value = true
-    books.value = await store.dispatch("getBooks")
+    products.value = await store.dispatch("getGames")
     loading.value = false
 }
 
@@ -31,6 +31,7 @@ onMounted(async () => getContent())
 <style scoped>
     section {
         width: 100%;
+        padding-top: 10px;
         color: white;
         display: flex;
         flex-direction: row;

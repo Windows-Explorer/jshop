@@ -1,6 +1,6 @@
-import { Loading, LoadingBar, Notify } from 'quasar'
+import { LoadingBar, Notify } from 'quasar'
 import { VueCookieNext } from 'vue-cookie-next'
-import { createRouter, createWebHistory, RouteLocation, RouteRecord, RouteRecordRaw } from 'vue-router'
+import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import { useStore } from 'vuex'
 
 const store = useStore()
@@ -54,24 +54,19 @@ const routes: Array<RouteRecordRaw> = [
     beforeEnter: authGuard
   },
   {
-    path: "/games",
-    name: "games",
-    component: async () => await import ("../views/GamesView.vue")
+    path: "/products",
+    name: "products",
+    component: async () => await import("../views/ProductsView.vue")
   },
   {
-    path: "/games/:id",
-    name: "game",
-    component: async () => await import ("../views/GameProductView.vue")
+    path: "/products/:id",
+    name: "product",
+    component: async () => await import("../views/ProductView.vue")
   },
   {
-    path: "/books",
-    name: "books",
-    component: async () => await import ("../views/BooksView.vue")
-  },
-  {
-    path: "/books/:id",
-    name: "book",
-    component: async () => await import ("../views/BooksView.vue")
+    path: "/cart",
+    name: "cart",
+    component: async () => await import("../views/CartView.vue")
   }
 ]
 

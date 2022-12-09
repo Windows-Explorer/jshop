@@ -66,7 +66,6 @@ const test: IProduct = { cost: 123, description: "sadasd", id: 1, image: "sdas",
 
 onMounted(async () => {
   quasar.loadingBar.setDefaults({ color: "negative"})
-  store.dispatch("getCart")
 })
 
 </script>

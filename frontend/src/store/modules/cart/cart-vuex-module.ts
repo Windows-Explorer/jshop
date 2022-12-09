@@ -25,17 +25,16 @@ export class CartStoreModule extends VuexModule {
     const cart = this.cartState || []
     
     cart.push(cartObject)
-    VueCookieNext.setCookie("cart", JSON.stringify(cart), { expire: 3600 })
+    VueCookieNext.setCookie("cart", JSON.stringify(cart), { expire: 36000 })
     Loading.hide()
     return cart
   }
 
-  // @Action({ commit: "cartMutation" })
-  // async saveCart(products: IProduct[]): Promise<ICartObject[]> {
-  //   const cart = async () => products.map(product => product.id)
-  //   VueCookieNext.setCookie("cart", JSON.stringify(cart), { expire: 3600 })
-  //   return await cart()
-  // }
+  @Action({ commit: "cartMutation" })
+  async updateCart(cart: ICartObject[]): Promise<ICartObject[]> {
+    VueCookieNext.setCookie("cart", JSON.stringify(cart), { expire: 36000 })
+    return cart
+  }
 
   get cart(): IProduct[] {
     return this.cartState

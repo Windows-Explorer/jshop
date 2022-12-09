@@ -41,18 +41,14 @@ const props = defineProps({
 
 const inCart: Ref<boolean> = ref<boolean>(false)
 
-const toProduct = async (id: number) => {
-    router.push({ name: "product", params: { id: id }})
-}
-const toCart = async () => {
-    router.push({ name: "cart" })
-}
+const toProduct = async (id: number) => router.push({ name: "product", params: { id: id }})
+const toCart = async () => router.push({ name: "cart" })
 
 const onCart = async (product: IProduct) => {
     quasar.loading.show()
     const cartObject: ICartObject = {
         id: product.id, title: product.title, description: product.description,
-        image: product.image, cost: product.cost, count: 0
+        image: product.image, cost: product.cost, count: 1
     }
 
     await store.dispatch("pushIntoCart", cartObject)

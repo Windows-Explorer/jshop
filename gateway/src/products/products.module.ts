@@ -31,10 +31,8 @@ export class ProductsModule {
   constructor(@Inject("PRODUCTS_GATEWAY") private readonly client: ClientKafka) {}
 
   async onModuleInit() {
-    this.client.subscribeToResponseOf("get.books.findAll")
-    this.client.subscribeToResponseOf("get.books.findById")
-    this.client.subscribeToResponseOf("get.games.findAll")
-    this.client.subscribeToResponseOf("get.games.findById")
+    this.client.subscribeToResponseOf("get.products.findAll")
+    this.client.subscribeToResponseOf("get.products.findById")
 
     await this.client.connect()
   }

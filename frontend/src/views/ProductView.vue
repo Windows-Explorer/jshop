@@ -8,8 +8,10 @@
 <script setup lang="ts">
 import { onMounted, ref, Ref } from "@vue/runtime-core"
 import { useRouter } from "vue-router"
+import { useStore } from "vuex"
 
 const router = useRouter()
+const store = useStore()
 
 const loading: Ref<boolean> = ref(false)
 
@@ -17,7 +19,7 @@ const product: Ref<any> = ref()
 
 const getContent = async () => {
     loading.value = true
-    product.value = await (await fetch(`http://localhost:3000/products/games/${router.currentRoute.value.params.id}`)).json()
+    product.value = await store.dispatch("getOneProduct", router.currentRoute.value.params.id)
     loading.value = false
 }
 

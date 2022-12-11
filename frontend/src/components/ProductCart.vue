@@ -6,7 +6,7 @@
         <div class="info">
             <h3 @click="toProduct(props.product.id)">{{ props.product.title }}</h3>
             <div>
-                <q-btn round color="primary" icon="arrow_left" @click="(props.product.count -= 1)"/>
+                <!-- <q-btn round color="primary" icon="arrow_left" @click="(props.product.count -= 1)"/> -->
                 <q-input
                     @update:model-value="$emit('updateCount', $event)"
                     standout
@@ -14,7 +14,7 @@
                     type="number"
                     v-model="props.product.count"
                 />
-                <q-btn round color="primary" icon="arrow_right" @click="(props.product.count += 1)"/>
+                <!-- <q-btn round color="primary" icon="arrow_right" @click="(props.product.count += 1)"/> -->
             </div>
             <span class="price">{{ props.product.cost }}<small> ₽</small></span>
         </div>
@@ -56,23 +56,30 @@ h3
     cursor: pointer
 .product
     min-width: 300px
-    width: 40%
-    background-color: $primary
+    width: 100%
+    background-color: #181818
     display: flex
-    flex-direction: column
+    flex-direction: row
     align-items: center
     align-content: center
     padding: 16px
     gap: 16px
+    justify-content: center
+    flex-wrap: nowrap
 .image
     margin-bottom: 0px
 
 .info h3
     font-size: 21px
-    margin-bottom: 0px
+    margin: 0px
 
 .info
     width: 100%
+    height: 100%
+    display: flex
+    flex-direction: column
+    justify-content: space-between
+    align-items: flex-start
 .info div
     display: flex
     flex-direction: row

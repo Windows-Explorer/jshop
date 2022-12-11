@@ -20,7 +20,7 @@ const loading: Ref<boolean> = ref(false)
 
 const getContent = async () => {
     loading.value = true
-    products.value = await store.dispatch("getGames")
+    products.value = await store.dispatch("getProducts")
     loading.value = false
 }
 onMounted(async () => getContent())

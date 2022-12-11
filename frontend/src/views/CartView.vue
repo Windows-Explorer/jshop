@@ -1,6 +1,6 @@
 <template>
     <section>
-        <!-- <div class="cart-header">
+        <div class="cart-header">
             <h5>Корзина</h5>
             <h5>Итого: {{ finalCost }}<small> ₽</small></h5>
         </div>
@@ -14,11 +14,7 @@
                     @update-count="onUpdateCount(index, $event)"
                 />
             </div>
-            <div class="accept-card">
-                Тут типа оформление заказа
-            </div>
-        </div> -->
-        {{ finalCost }} {{cart}}
+        </div>
         
     </section>
 </template>
@@ -85,7 +81,7 @@ section
 
 .cart-container
     display: flex
-    flex-direction: row
+    flex-direction: column
     flex-wrap: wrap
     justify-content: flex-start
     align-items: center
@@ -93,10 +89,15 @@ section
 
 .main-container
     display: flex
-    flex-direction: row
-    flex-wrap: nowrap
+    flex-direction: column
+    align-items: stretch
 
 .accept-card
-    width: 50%
+    top: 40px
+    position: sticky
+    width: 100%
+    height: 30%
+    padding: 10px
     background-color: $primary
+
 </style>

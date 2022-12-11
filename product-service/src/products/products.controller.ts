@@ -1,38 +1,22 @@
 import { Controller, HttpStatus, Param } from '@nestjs/common'
 import { MessagePattern, Payload } from '@nestjs/microservices'
 import { IResult } from 'src/dto/result.dto'
-import { BooksService } from './books.service'
-import { GamesService } from './games.service'
 import { Product } from './entities/product.entity'
+import { ProductsService } from './products.service'
 
 @Controller('products')
 export class ProductsController {
-    constructor(
-        private readonly booksService: BooksService,
-        private readonly gamesService: GamesService
-    ) {}
+    constructor( private readonly productsService: ProductsService ) {}
 
-    @MessagePattern("get.books.findAll")
-    async booksFindAll(): Promise<IResult<Product[]>> {
-        const result: IResult<Product[]> = { data: await this.booksService.findAll(), error: { statusCode: HttpStatus.OK, message: "OK" }}
-        return result
-    }
-
-    @MessagePattern("get.games.findAll")
+    @MessagePattern("get.products.findAll")
     async gamesFindAll(): Promise<IResult<Product[]>> {
-        const result: IResult<Product[]> = { data: await this.gamesService.findAll(), error: { statusCode: HttpStatus.OK, message: "OK" }}
+        const result: IResult<Product[]> = { data: await this.productsService.findAll(), error: { statusCode: HttpStatus.OK, message: "OK" }}
         return result
     }
 
-    @MessagePattern("get.books.findById")
-    async booksFindById(@Payload() id: number): Promise<IResult<Product>> {
-        const result: IResult<Product> = { data: await this.booksService.findById(id), error: { statusCode: HttpStatus.OK, message: "OK" }}
-        return result
-    }
-
-    @MessagePattern("get.games.findById")
+    @MessagePattern("get.products.findById")
     async gamesFindById(@Payload() id: number): Promise<IResult<Product>> {
-        const result: IResult<Product> = { data: await this.gamesService.findById(id), error: { statusCode: HttpStatus.OK, message: "OK" }}
+        const result: IResult<Product> = { data: await this.productsService.findById(id), error: { statusCode: HttpStatus.OK, message: "OK" }}
         return result
     }
 }

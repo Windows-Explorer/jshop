@@ -1,10 +1,12 @@
 import { Inject, Module } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { ClientKafka, ClientsModule, Transport } from '@nestjs/microservices'
+import { AuthModule } from 'src/auth/auth.module'
 import { ProductsController } from './products.controller'
 
 @Module({
   imports: [
+    AuthModule,
     ClientsModule.registerAsync([
       {
         name: "PRODUCTS_GATEWAY",

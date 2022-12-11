@@ -27,5 +27,11 @@ export class AppController {
         return result
     }
 
+    @MessagePattern("get.auth.verify.admin")
+    async verifyAdminToken(@Payload() token: any): Promise<any> {
+        const result: IResult = { data: await this.authService.verifyAdminToken(token), error: { statusCode: HttpStatus.OK, message: "OK" }}
+        return result
+    }
+
 }
 

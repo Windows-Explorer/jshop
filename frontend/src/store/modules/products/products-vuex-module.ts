@@ -20,7 +20,9 @@ export class ProductsStoreModule extends VuexModule {
 
   @Action({ commit: "productsMutation" })
   async getProducts(): Promise<IProduct[]> {
-    const result = await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/products`)
+    const result = await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/products`, {
+      headers: { 'Authorization': "124512" }
+    })
 
     if(result.status === 200) {
       const books: IProduct[] = await result.json()
@@ -34,7 +36,9 @@ export class ProductsStoreModule extends VuexModule {
 
   @Action({ commit: "currentProductMutation" })
   async getOneProduct(id: number): Promise<IProduct | null> {
-    const result = await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/products/${id}`)
+    const result = await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/products/${id}`, {
+      headers: { "Authorization": "1243124" }
+    })
 
     if(result.status === 200) {
       const product: IProduct = await result.json()

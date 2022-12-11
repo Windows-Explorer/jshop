@@ -75,4 +75,14 @@ export class AuthService {
             return false
         }
     }
+
+    async verifyAdminToken(token: string): Promise<boolean> {
+            await this.jwtService.verifyAsync(token, { secret: this.configService.get<string>("JWT_SECRET") })
+            const decodedToken = await this.jwtService.decode(token)
+            if (typeof(decodedToken) !== "string" && decodedToken.role === "admin" ){
+                return true
+            }
+            return false
+        
+    }
 }

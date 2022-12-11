@@ -35,6 +35,7 @@ export class AuthModule {
 
   async onModuleInit() {
     this.client.subscribeToResponseOf("get.auth.verify")
+    this.client.subscribeToResponseOf("get.auth.verify.admin")
     this.client.subscribeToResponseOf("get.unique.email")
     this.client.subscribeToResponseOf("get.unique.username")
     this.client.subscribeToResponseOf("post.auth.signUp")

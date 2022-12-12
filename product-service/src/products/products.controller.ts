@@ -9,14 +9,20 @@ export class ProductsController {
     constructor( private readonly productsService: ProductsService ) {}
 
     @MessagePattern("get.products.findAll")
-    async gamesFindAll(): Promise<IResult<Product[]>> {
+    async findAll(): Promise<IResult<Product[]>> {
         const result: IResult<Product[]> = { data: await this.productsService.findAll(), error: { statusCode: HttpStatus.OK, message: "OK" }}
         return result
     }
 
     @MessagePattern("get.products.findById")
-    async gamesFindById(@Payload() id: number): Promise<IResult<Product>> {
+    async findById(@Payload() id: number): Promise<IResult<Product>> {
         const result: IResult<Product> = { data: await this.productsService.findById(id), error: { statusCode: HttpStatus.OK, message: "OK" }}
+        return result
+    }
+
+    @MessagePattern("post.products.save")
+    async save(@Payload() product: Product): Promise<IResult<Product>> {
+        const result: IResult<Product> = { data: await this.productsService.save(product), error: { statusCode: HttpStatus.OK, message: "OK" }}
         return result
     }
 }

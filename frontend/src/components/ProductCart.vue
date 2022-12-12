@@ -14,6 +14,7 @@
                     type="number"
                     v-model="props.product.count"
                 />
+                <q-btn label="remove" @click="$emit('updateCount', $event), onRemove(props.product)"/>
                 <!-- <q-btn round color="primary" icon="arrow_right" @click="(props.product.count += 1)"/> -->
             </div>
             <span class="price">{{ props.product.cost }}<small> ₽</small></span>
@@ -27,6 +28,7 @@ import { onMounted, onUpdated, PropType, ref, Ref } from "@vue/runtime-core"
 import { QBtn, QImg, QTooltip, useQuasar } from "quasar"
 import { useRouter } from "vue-router"
 import { useStore } from "vuex"
+import { IProduct } from "../store/modules/products/product.interface"
 
 const router = useRouter()
 const store = useStore()
@@ -38,8 +40,8 @@ const props = defineProps({
     }
 })
 
-const onRemove = async () => {
-
+const onRemove = async (product: IProduct) => {
+    store.dispatch("removeFromCart", product)
 }
 
 const toProduct = async (id: number) => router.push({ name: "product", params: { id: id }})

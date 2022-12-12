@@ -13,20 +13,24 @@ export class CartStoreModule extends VuexModule {
     this.cartState = products
   }
 
-  // @Action({ commit: "cartMutation" })
-  // async getCart(): Promise<ICartObject[]> {
-  //   const cart = await JSON.parse(VueCookieNext.getCookie("cart"))
-  //   return cart
-  // }
+  @Action({ commit: "cartMutation" })
+  async removeFromCart(product: IProduct): Promise<IProduct[]> {
+    const cart: IProduct[] = this.cartState || []
+    console.log(cart)
+    const index = cart.indexOf(product)
+    if (index > -1) {
+      cart.splice(index, 1)
+    }
+    VueCookieNext.setCookie("cart", JSON.stringify(cart), { expire: 36000 })
+    return cart
+  }
 
   @Action({ commit: "cartMutation" })
   async pushIntoCart(cartObject: IProduct): Promise<IProduct[]> {
-    Loading.show()
-    const cart = this.cartState || []
+    const cart: IProduct[] = await JSON.parse(VueCookieNext.getCookie("cart")) || []
     
     cart.push(cartObject)
     VueCookieNext.setCookie("cart", JSON.stringify(cart), { expire: 36000 })
-    Loading.hide()
     return cart
   }
 

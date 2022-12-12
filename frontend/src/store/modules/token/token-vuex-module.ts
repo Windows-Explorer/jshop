@@ -4,7 +4,6 @@ import { VueCookieNext } from 'vue-cookie-next'
 import { Router } from 'vue-router'
 import { Module, VuexModule, Mutation, Action } from 'vuex-module-decorators'
 import { AuthPayload } from './user.interface'
-import * as jwt from "ts-jwt"
 
 @Module
 export class TokenStoreModule extends VuexModule {
@@ -84,8 +83,9 @@ export class TokenStoreModule extends VuexModule {
 
 
   @Action({ commit: "tokenMutation" })
-  async signOut(): Promise<string> {
+  async signOut(router: Router): Promise<string> {
     VueCookieNext.removeCookie("token")
+    router.go(0)
     return ""
   }
 

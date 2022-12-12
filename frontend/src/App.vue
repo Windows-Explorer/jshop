@@ -53,9 +53,8 @@ const myTweak = async (offset: number) => { minHeight: offset ? `calc(100vh - ${
 
 const onLogout = async () => {
   quasar.loading.show()
-  await store.dispatch('signOut')
+  await store.dispatch('signOut', router)
   quasar.loading.hide()
-  router.push("/")
 }
 
 

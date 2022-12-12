@@ -1,6 +1,5 @@
 import { store } from '@/store'
-import { LoadingBar, Notify } from 'quasar'
-import { VueCookieNext } from 'vue-cookie-next'
+import { LoadingBar } from 'quasar'
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import { authRoutes } from './modules/auth.router.module'
 import { productsRoutes } from './modules/products.roter.module'

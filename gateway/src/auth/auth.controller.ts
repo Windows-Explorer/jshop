@@ -1,7 +1,6 @@
 import { Body, Controller, Get, Headers, Inject, Injectable, Post, Req, Res } from '@nestjs/common'
 import { ClientKafka } from '@nestjs/microservices'
 import { Request, Response } from 'express'
-import { IncomingHttpHeaders } from 'http'
 import { IResult } from 'src/dto/result.dto'
 
 @Injectable()

@@ -36,11 +36,10 @@
 
 <script lang="ts" setup>
 
-import { defineAsyncComponent, onMounted, onUpdated } from '@vue/runtime-core'
+import { defineAsyncComponent, onMounted } from '@vue/runtime-core'
 import { useQuasar } from 'quasar'
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
-import { IProduct } from './store/modules/products/product.interface'
 
 const LogoDarkIcon = defineAsyncComponent(async () => import("./components/icons/LogoDarkIcon.vue"))
 const AdminLayout = defineAsyncComponent(async () => import("./components/AdminLayout.vue"))
@@ -59,7 +58,6 @@ const onLogout = async () => {
   router.push("/")
 }
 
-const test: IProduct = { cost: 123, description: "sadasd", id: 1, image: "sdas", title: "12312"}
 
 onMounted(async () => {
   quasar.loadingBar.setDefaults({
@@ -68,6 +66,8 @@ onMounted(async () => {
       return /^http:\/\/\./.test(url)
     }
   })
+
+  store.dispatch("getRoleFromJwt")
 })
 
 

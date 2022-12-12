@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { Dialog, Loading } from 'quasar'
 import { Module, VuexModule, Mutation, Action } from 'vuex-module-decorators'
 import { IProduct } from './product.interface'
@@ -20,12 +21,10 @@ export class ProductsStoreModule extends VuexModule {
 
   @Action({ commit: "productsMutation" })
   async getProducts(): Promise<IProduct[]> {
-    const result = await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/products`, {
-      headers: { 'Authorization': "124512" }
-    })
+    const result = await axios.get(`${process.env.VUE_APP_GATEMAY_ADDRESS}/products`)
 
     if(result.status === 200) {
-      const books: IProduct[] = await result.json()
+      const books: IProduct[] = await result.data
       return books
     }
     else {
@@ -36,12 +35,10 @@ export class ProductsStoreModule extends VuexModule {
 
   @Action({ commit: "currentProductMutation" })
   async getOneProduct(id: number): Promise<IProduct | null> {
-    const result = await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/products/${id}`, {
-      headers: { "Authorization": "1243124" }
-    })
+    const result = await axios.get(`${process.env.VUE_APP_GATEMAY_ADDRESS}/products/${id}`)
 
     if(result.status === 200) {
-      const product: IProduct = await result.json()
+      const product: IProduct = await result.data
       return product
     }
     else {

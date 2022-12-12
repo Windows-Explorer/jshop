@@ -8,7 +8,7 @@ import { AdminGuard } from 'src/guards/admin.guard'
 export class ProductsController {
     constructor(@Inject("PRODUCTS_GATEWAY") private readonly client: ClientKafka) {}
 
-    @UseGuards(AdminGuard)
+    // @UseGuards(AdminGuard)
     @Get("/")
     async gamesFindAll(@Res() response: Response): Promise<void> {
         const result: IResult<any> = await this.client.send("get.products.findAll", "").toPromise()

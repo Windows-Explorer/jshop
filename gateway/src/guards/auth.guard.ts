@@ -11,14 +11,12 @@ export class AuthGuard implements CanActivate {
     async canActivate(context: ExecutionContext) {
         try {
             const request: Request = context.switchToHttp().getRequest()
-            
             const token = request.headers.authorization.replace("Bearer ", "")
-
             const result: IResult<any> = await this.client.send("get.auth.verify", token).toPromise()
-            console.log(result)
             return result.data
         }
-        catch {
+        catch (error) {
+            console.log(error)
             return false
         }
     }

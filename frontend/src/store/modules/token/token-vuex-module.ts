@@ -107,6 +107,9 @@ export class TokenStoreModule extends VuexModule {
     }
   }
 
+  get role(): string {
+    return this.roleState
+  }
 
   get getToken(): string {
     return this.tokenState

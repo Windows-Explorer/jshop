@@ -5,7 +5,7 @@
         reveal
         elevated
       >
-      <admin-layout />
+      <admin-layout v-if="store.getters.role === 'admin'" />
         <q-tabs :dense="false" :align="'left'">
           <LogoDarkIcon :style="'height:36px; margin-inline:28px; cursor:pointer;'" @click="router.push({ name: 'home'})" />
 

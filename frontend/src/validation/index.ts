@@ -1,3 +1,4 @@
+import axios from "axios"
 
 export const rules = {
     isRequired : async (value: string | number): Promise<string | boolean> => {
@@ -17,7 +18,7 @@ export const rules = {
     isEmailUnique : async (value: string | number): Promise<string | boolean> => {
         if(value === "") return true
 
-        const response = await (await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/unique/email/${value}`)).text()
+        const response = await (await axios.get(`${process.env.VUE_APP_GATEMAY_ADDRESS}/unique/email/${value}`)).data
         if(value !== response) return true
 
         return false
@@ -26,7 +27,7 @@ export const rules = {
     isUsernameUnique : async (value: string | number): Promise<string | boolean> => {
         if(value === "") return true
 
-        const response = await (await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/unique/username/${value}`)).text()
+        const response = await (await axios.get(`${process.env.VUE_APP_GATEMAY_ADDRESS}/unique/username/${value}`)).data
         if(value !== response) return true
 
         return false

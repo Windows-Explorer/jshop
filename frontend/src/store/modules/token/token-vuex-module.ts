@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { Dialog, Loading } from 'quasar'
 import { VueCookieNext } from 'vue-cookie-next'
 import { Router } from 'vue-router'
@@ -20,13 +21,11 @@ export class TokenStoreModule extends VuexModule {
     const user = payload.user
     const router = payload.router!
 
-    const result = await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/auth/signup`, {
-        headers: { "Content-Type": "application/json" },
-        method: "POST",
-        body: JSON.stringify(user)
-    })
+    const result = await axios.post(`${process.env.VUE_APP_GATEMAY_ADDRESS}/auth/signup`, user)
+
+    
     if(result.status === 200) {
-      const token: string = await result.text()
+      const token: string = await result.data
       VueCookieNext.setCookie("token", token)
       router.push({ name: "home"})
       return token
@@ -44,13 +43,10 @@ export class TokenStoreModule extends VuexModule {
     const user = payload.user
     const router: Router = payload.router!
 
-    const result = await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/auth/signin`, {
-        headers: { "Content-Type": "application/json" },
-        method: "POST",
-        body: JSON.stringify(user)
-    })
+    const result = await axios.post(`${process.env.VUE_APP_GATEMAY_ADDRESS}/auth/signin`, user)
+
     if(result.status === 200) {
-      const token: string = await result.text()
+      const token: string = await result.data
       VueCookieNext.setCookie("token", token)
       router.push({ name: "home"})
       return token
@@ -63,6 +59,19 @@ export class TokenStoreModule extends VuexModule {
       VueCookieNext.removeCookie("token")
       return ""
     }
+  }
+
+  @Action({ commit: "tokenMutation"})
+  async verifyToken(): Promise<string> {
+
+    const result = await axios.get(`${process.env.VUE_APP_GATEMAY_ADDRESS}/auth/verify`, {
+      headers: {
+        "Authorization": `Bearer ${this.tokenState}`
+      }
+    })
+    if (result.data === true) return this.tokenState
+
+    return ""
   }
 
   @Action({ commit: "tokenMutation" })

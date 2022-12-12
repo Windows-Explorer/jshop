@@ -1,9 +1,7 @@
+import { store } from '@/store'
 import { LoadingBar, Notify } from 'quasar'
 import { VueCookieNext } from 'vue-cookie-next'
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import { useStore } from 'vuex'
-
-const store = useStore()
 
 const defaultTitle = "Континуум"
 
@@ -79,12 +77,14 @@ const router = createRouter({
 router.beforeResolve( async (to: any, from: any, next: any) => {
   if(to.name) {
     LoadingBar.start()
+    await store.dispatch("verifyToken")
   }
   next()
 })
 router.afterEach(async (to: any, from: any, next: any) => {
   LoadingBar.stop()
 })
+
 
 router.afterEach(async (to: any, from: any) => {
   document.title = to.meta.title || defaultTitle

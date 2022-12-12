@@ -62,7 +62,12 @@ const onLogout = async () => {
 const test: IProduct = { cost: 123, description: "sadasd", id: 1, image: "sdas", title: "12312"}
 
 onMounted(async () => {
-  quasar.loadingBar.setDefaults({ color: "negative"})
+  quasar.loadingBar.setDefaults({
+    color: "negative",
+    hijackFilter (url: any) {
+      return /^http:\/\/\./.test(url)
+    }
+  })
 })
 
 

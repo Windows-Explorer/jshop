@@ -101,9 +101,11 @@ export class TokenStoreModule extends VuexModule {
       }).join(''))
 
       const result = await JSON.parse(jsonPayload)
+      VueCookieNext.setCookie("role", result.role)
       return result.role
     }
     catch {
+      VueCookieNext.setCookie("role", "guest")
       return "guest"
     }
   }

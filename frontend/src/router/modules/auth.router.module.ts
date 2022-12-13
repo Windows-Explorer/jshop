@@ -2,14 +2,14 @@ import { Notify } from "quasar"
 import { VueCookieNext } from "vue-cookie-next"
 import { RouteRecordRaw } from "vue-router"
 
-export const isAuthorized = (): boolean => {
-  const token = VueCookieNext.getCookie("token")
+export const isAuthorized = async (): Promise<boolean> => {
+  const token = await VueCookieNext.getCookie("token")
   if(token && token !== "") return true
   else return false
 }
 
 export const authGuard = async (to: any, from: any, next: any) => {
-  if(to.name !== 'signin' && !isAuthorized()) {
+  if(to.name !== 'signin' && !await isAuthorized()) {
     Notify.create({
       position: "bottom",
       message: "Only authorized users",
@@ -45,7 +45,7 @@ export const authRoutes: RouteRecordRaw[] = [
   {
     path: "/onlyauthed",
     name: "onlyauthed",
-    component: async () => await import("../../views/OnlyAuthedView.vue"),
+    component: async () => await import("../../views/admin/OnlyAuthedView.vue"),
     beforeEnter: authGuard
   }
 ]

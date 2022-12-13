@@ -68,13 +68,14 @@ export class TokenStoreModule extends VuexModule {
 
   @Action({ commit: "tokenMutation"})
   async verifyToken(): Promise<string> {
-    const result = await axios.get(`${process.env.VUE_APP_GATEMAY_ADDRESS}/auth/verify`, {
-      headers: {
-        "Authorization": `Bearer ${this.tokenState}`
+    if (this.tokenState !== "") {
+      const result = await axios.get(`${process.env.VUE_APP_GATEMAY_ADDRESS}/auth/verify`, {
+        headers: { "Authorization": `Bearer ${this.tokenState}` }
+      })
+    
+      if (typeof(result.data) === "string" && result.data) {
+        return result.data
       }
-    })
-    if (result.data === true) {
-      return this.tokenState
     }
 
     VueCookieNext.removeCookie("token")

@@ -66,10 +66,14 @@ export class AuthService {
     }
 
 
-    async verifyToken(token: string): Promise<boolean> {
+    async verifyToken(token: string): Promise<boolean | string> {
         try {
-            await this.jwtService.verifyAsync(token, { secret: this.configService.get<string>("JWT_SECRET") })
-            return true
+            const data = await this.jwtService.verifyAsync(token, { secret: this.configService.get<string>("JWT_SECRET") })
+            return await this.generateToken({
+                id: data.id,
+                email: data.email,
+                role: data.role
+            })
         }
         catch {
             return false

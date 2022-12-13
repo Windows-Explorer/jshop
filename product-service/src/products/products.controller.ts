@@ -25,4 +25,10 @@ export class ProductsController {
         const result: IResult<Product> = { data: await this.productsService.save(product), error: { statusCode: HttpStatus.OK, message: "OK" }}
         return result
     }
+
+    @MessagePattern("post.products.saveMany")
+    async saveMany(@Payload() product: Product[]): Promise<IResult<Product[]>> {
+        const result: IResult<Product[]> = { data: await this.productsService.saveMany(product), error: { statusCode: HttpStatus.OK, message: "OK" }}
+        return result
+    }
 }

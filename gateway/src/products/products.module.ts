@@ -36,6 +36,7 @@ export class ProductsModule {
     this.client.subscribeToResponseOf("get.products.findAll")
     this.client.subscribeToResponseOf("get.products.findById")
     this.client.subscribeToResponseOf("post.products.save")
+    this.client.subscribeToResponseOf("post.products.saveMany")
 
     await this.client.connect()
   }

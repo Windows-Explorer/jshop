@@ -18,4 +18,8 @@ export class ProductsService {
     async save(product: Product): Promise<Product> {
         return await this.productsRepository.save(product)
     }
+
+    async saveMany(product: Product[]): Promise<Product[]> {
+        return await this.productsRepository.save(product)
+    }
 }

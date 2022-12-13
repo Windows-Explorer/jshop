@@ -27,7 +27,7 @@ export const adminRoutes: RouteRecordRaw[] = [
   {
     path: "/admin/edit/products",
     name: "onlyauthed",
-    component: async () => await import("../../views/admin/OnlyAuthedView.vue"),
+    component: async () => await import("../../views/admin/ProductEditView.vue"),
     beforeEnter: adminGuard
   }
 ]

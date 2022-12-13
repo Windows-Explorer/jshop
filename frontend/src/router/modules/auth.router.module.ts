@@ -45,7 +45,7 @@ export const authRoutes: RouteRecordRaw[] = [
   {
     path: "/onlyauthed",
     name: "onlyauthed",
-    component: async () => await import("../../views/admin/OnlyAuthedView.vue"),
+    component: async () => await import("../../views/admin/ProductEditView.vue"),
     beforeEnter: authGuard
   }
 ]

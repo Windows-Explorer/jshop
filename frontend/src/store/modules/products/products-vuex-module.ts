@@ -1,6 +1,8 @@
+import { store } from '@/store'
 import axios from 'axios'
 import { Dialog, Loading } from 'quasar'
 import { Module, VuexModule, Mutation, Action } from 'vuex-module-decorators'
+import { TokenStoreModule } from '../token/token-vuex-module'
 import { IProduct } from './product.interface'
 
 @Module
@@ -24,8 +26,8 @@ export class ProductsStoreModule extends VuexModule {
     const result = await axios.get(`${process.env.VUE_APP_GATEMAY_ADDRESS}/products`)
 
     if(result.status === 200) {
-      const books: IProduct[] = await result.data
-      return books
+      const products: IProduct[] = await result.data
+      return products
     }
     else {
       Dialog.create({ title: "Не удалось", message: "Some is invalid" })
@@ -42,8 +44,28 @@ export class ProductsStoreModule extends VuexModule {
       return product
     }
     else {
-      Dialog.create({ title: "Не удалось", message: "Some is invalid" })
+      Dialog.create({ title: "Не удалось", message: result.statusText })
       return null
     }
+  }
+
+  @Action({ commit: "productsMutation" })
+  async saveManyProducts(payload: IProduct[]): Promise<IProduct[]> {
+    const result = await axios.post(`${process.env.VUE_APP_GATEMAY_ADDRESS}/products/savemany`, payload, {
+      headers: { "Authorization": `Bearer ${store.getters.token}` }
+    })
+
+    if(result.status === 200) {
+      const products: IProduct[] = await result.data
+      return products
+    }
+    else {
+      Dialog.create({ title: "Не удалось", message: result.statusText })
+      return this.productsState
+    }
+  }
+
+  get products(): IProduct[] {
+    return this.productsState
   }
 }

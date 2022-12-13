@@ -21,9 +21,16 @@ export class ProductsController {
     }
     
     @UseGuards(AdminGuard)
-    @Post("/")
+    @Post("/save")
     async save(@Body() product: any, @Res() response: Response): Promise<void> {
         const result: IResult<any> = await this.client.send("post.products.save", product).toPromise()
+        response.status(result.error.statusCode).send(result.data)
+    }
+
+    @UseGuards(AdminGuard)
+    @Post("/savemany")
+    async saveMany(@Body() product: any, @Res() response: Response): Promise<void> {
+        const result: IResult<any> = await this.client.send("post.products.saveMany", product).toPromise()
         response.status(result.error.statusCode).send(result.data)
     }
 }

@@ -54,8 +54,10 @@ const currentProduct: Ref<IProduct> = ref<IProduct>({
 const currentFile: Ref<File | null> = ref<File | null>(null)
 
 const onSubmit = async () => {
-    const result = await store.dispatch("saveOneProduct", { product: currentProduct.value, file: currentFile.value })
-    console.log(result)
+    quasar.loading.show()
+    await store.dispatch("saveOneProduct", { product: currentProduct.value, file: currentFile.value })
+    await store.dispatch("getProducts")
+    quasar.loading.hide()
 }
 
 

@@ -17,6 +17,7 @@ frontend/src/assets/images
 gateway/node_modules
 gateway/dist
 gateway/.env
+gateway/public/images
 
 
 ################################

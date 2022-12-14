@@ -1,10 +1,8 @@
-import { Controller, Get, UseGuards } from '@nestjs/common'
-import { AuthGuard } from './guards/auth.guard'
+import { Controller, Get } from '@nestjs/common'
 
 @Controller('')
 export class AppController {
 
-    @UseGuards(AuthGuard)
     @Get("/")
     async index(): Promise<any> {
         return { data: "data" }

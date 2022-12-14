@@ -95,9 +95,7 @@ const onCreate = async () => {
 }
 
 const onRemove = async (id: number) => {
-    loading.value = true
     products.value = await store.dispatch("removeOneProduct", id)
-    loading.value = false
 }
 
 const onSubmit = async () => {

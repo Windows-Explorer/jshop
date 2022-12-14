@@ -5,6 +5,7 @@ import { IResult } from 'src/dto/result.dto'
 import { AdminGuard } from 'src/guards/admin.guard'
 import { FileInterceptor} from "@nestjs/platform-express"
 import { diskStorage } from 'multer'
+import { extname } from 'path'
 
 @Controller('products')
 export class ProductsController {
@@ -24,16 +25,22 @@ export class ProductsController {
     
     @UseGuards(AdminGuard)
     @UseInterceptors(FileInterceptor('file', {
-        storage: diskStorage({
-            destination: "./public/images"
-        })
-    }))
-    @Post("/save")
-    async save(@UploadedFile() file: Express.Multer.File, @Body() product: any, @Res() response: Response): Promise<void> {
-        const result: IResult<any> = await this.client.send("post.products.save", product).toPromise()
-        if(result.error.statusCode === 200) {
-            console.log(file.path)
+       storage: diskStorage({
+        destination: "./public/images",
+        filename: (req, file, callback) => {
+          callback(null, file.originalname)
         }
+      })
+    }))
+    @Post("/save/image")
+    async saveImage(@UploadedFile() file: Express.Multer.File, @Res() response: Response): Promise<void> {
+        console.log(file)
+        response.send(file)
+    }
+
+    @Post("/save")
+    async save(@Body() product: any, @Res() response: Response): Promise<void> {
+        const result: IResult<any> = await this.client.send("post.products.save", product).toPromise()
         response.status(result.error.statusCode).send(result.data)
     }
 

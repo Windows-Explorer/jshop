@@ -26,7 +26,7 @@
                 v-model="currentFile"
                 :label="'Image'"
             />
-            
+
             <span class="buttons">
                 <q-btn label="Submit" type="submit" dark color="primary" :size="'18px'" />
             </span>
@@ -35,19 +35,25 @@
 </template>
 
 <script setup lang="ts">
+
+
+import { useQuasar } from "quasar"
 import { ref, Ref } from "vue"
 import { useStore } from "vuex"
 import { IProduct } from "../../store/modules/products/product.interface"
 
 const store = useStore()
+const quasar = useQuasar()
 
 const currentProduct: Ref<IProduct> = ref<IProduct>({
-    id: 0, description: "", cost: 0, title: "", image: ""
+    id: 0, description: "", cost: 0, title: "", image: "", type: "product"
 })
 const currentFile: Ref<File | null> = ref<File | null>(null)
 
 const onSubmit = async () => {
-    await store.dispatch("saveOne", currentProduct.value)
+    const result = await store.dispatch("saveOneProduct", { product: currentProduct.value, file: currentFile.value })
+    console.log(result)
 }
+
 
 </script>

@@ -14,8 +14,7 @@ import { join } from 'path'
     AuthModule,
     ProductsModule,
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'public'),
-      exclude: ["/images/*"]
+      rootPath: join(__dirname, '..', 'public')
     }),
   ],
   controllers: [AppController],

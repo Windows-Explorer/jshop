@@ -7,8 +7,13 @@
             :columns="columns"
             :rows-per-page-options="[]"
             row-key="name"
+            :loading="loading"
         >
+            <template v-slot:top>
+                <q-btn color="primary" :disable="loading" label="Add product" ></q-btn>
+            </template>
             <template v-slot:body="props">
+                
                 <q-tr :props="props">
                     <q-td key="id" :props="props">
                         {{ props.row.id }}
@@ -34,6 +39,17 @@
                         <q-popup-edit v-model="props.row.type" buttons v-slot="scope">
                             <q-input type="text" v-model.trim="scope.value" dense autofocus @keyup.enter="scope.set"></q-input>
                         </q-popup-edit>
+                    </q-td>
+                    <q-td key="image" :props="props">
+                        <p>
+                            {{ props.row.image }}
+                        </p>
+                        <q-popup-edit v-model="props.row.image" buttons v-slot="scope">
+                            <q-input type="text" v-model.trim="scope.value" dense autofocus @keyup.enter="scope.set"></q-input>
+                        </q-popup-edit>
+                    </q-td>
+                    <q-td key="removeBtn" :props="props">
+                        <q-btn color="negative" label="Remove" @click="onRemove(props.row.id)" />
                     </q-td>
                 </q-tr>
             </template>
@@ -61,9 +77,18 @@ const columns: any[] = [
   { name: "title", align: "left", label: "Title", field: "title" },
   { name: "description", align: "left", label: "Description", field: "description" },
   { name: "type", align: "left", label: "Type", field: "type" },
+  { name: "image", align: "left", label: "Image", field: "image" },
+  { name: "removeBtn", align: "left", label: "Actions", field: "type" },
 ]
 
 const products: Ref<IProduct[]> = ref<IProduct[]>([])
+const loading: Ref<boolean> = ref<boolean>(false)
+
+const onRemove = async (id: number) => {
+    loading.value = true
+    products.value = await store.dispatch("removeOneProduct", id)
+    loading.value = false
+}
 
 const onSubmit = async () => {
     await store.dispatch("saveManyProducts", products.value)

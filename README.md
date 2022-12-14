@@ -58,6 +58,7 @@
 "get.products.findById" - не принимает данных, высылает единичный объекта товара
 "post.products.save" - принимает payload с единичным объектом товара
 "post.products.saveMany" - принимает payload с массивом товаров
+"post.products.removeOne" - принимает число
 ```
 
 

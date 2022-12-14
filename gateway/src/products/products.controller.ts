@@ -33,4 +33,11 @@ export class ProductsController {
         const result: IResult<any> = await this.client.send("post.products.saveMany", product).toPromise()
         response.status(result.error.statusCode).send(result.data)
     }
+
+    @UseGuards(AdminGuard)
+    @Get("/remove/:id")
+    async removeOne(@Param("id") id: number, @Res() response: Response): Promise<void> {
+        const result: IResult<any> = await this.client.send("post.products.removeOne", id).toPromise()
+        response.status(result.error.statusCode).send(result.data)
+    }
 }

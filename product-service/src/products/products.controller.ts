@@ -31,4 +31,10 @@ export class ProductsController {
         const result: IResult<Product[]> = { data: await this.productsService.saveMany(product), error: { statusCode: HttpStatus.OK, message: "OK" }}
         return result
     }
+
+    @MessagePattern("post.products.removeOne")
+    async removeOne(@Payload() id: number): Promise<IResult<Product[]>> {
+        const result: IResult<Product[]> = { data: await this.productsService.removeOne(id), error: { statusCode: HttpStatus.OK, message: "OK" }}
+        return result
+    }
 }

@@ -22,4 +22,9 @@ export class ProductsService {
     async saveMany(product: Product[]): Promise<Product[]> {
         return await this.productsRepository.save(product)
     }
+
+    async removeOne(id: number): Promise<Product[]> {
+        await this.productsRepository.delete(id)
+        return await this.findAll()
+    }
 }

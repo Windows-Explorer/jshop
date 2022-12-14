@@ -6,18 +6,21 @@
                 standout
                 dark
                 v-model="currentProduct.title"
+                type="text"
                 :label="'Title'"
             />
             <q-input
                 standout
                 dark
                 v-model="currentProduct.description"
+                type="textarea"
                 :label="'Description'"
             />
             <q-input
                 standout
                 dark
                 v-model="currentProduct.cost"
+                type="number"
                 :label="'Cost'"
             />
             <q-file

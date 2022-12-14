@@ -42,7 +42,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 
 const LogoDarkIcon = defineAsyncComponent(async () => import("./components/icons/LogoDarkIcon.vue"))
-const AdminLayout = defineAsyncComponent(async () => import("./components/AdminLayout.vue"))
+const AdminLayout = defineAsyncComponent(async () => import("./components/admin/AdminLayout.vue"))
 
 const store = useStore()
 const router = useRouter()

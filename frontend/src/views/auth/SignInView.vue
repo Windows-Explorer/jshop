@@ -11,7 +11,7 @@ import { defineAsyncComponent } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
-const signInForm = defineAsyncComponent(async () => import("../components/SignInForm.vue"))
+const signInForm = defineAsyncComponent(async () => import("../../components/auth/SignInForm.vue"))
 
 
 </script>

@@ -72,12 +72,12 @@
 import { reactive, Ref } from "@vue/reactivity"
 import { useStore } from "vuex"
 import { useQuasar } from "quasar"
-import { rules } from "../validation"
-import { withMessage } from "../validation/helpers"
+import { rules } from "../../validation"
+import { withMessage } from "../../validation/helpers"
 import { useRouter } from "vue-router"
 import { defineAsyncComponent } from "@vue/runtime-core"
 
-const logo = defineAsyncComponent(async () => import("./icons/LogoDarkIcon.vue"))
+const logo = defineAsyncComponent(async () => import("../icons/LogoDarkIcon.vue"))
 
 const store = useStore()
 const router = useRouter()

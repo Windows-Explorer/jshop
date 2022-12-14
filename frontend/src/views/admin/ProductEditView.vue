@@ -10,7 +10,10 @@
             :loading="loading"
         >
             <template v-slot:top>
-                <q-btn color="primary" :disable="loading" label="Add product" ></q-btn>
+                <q-btn color="primary" :disable="loading" label="Add product" @click="onCreate()" />
+                <q-dialog v-model="dialog">
+                    <create-product />
+                </q-dialog>
             </template>
             <template v-slot:body="props">
                 
@@ -62,11 +65,13 @@
 
 <script setup lang="ts">
 
-import { onMounted, Ref, ref } from "@vue/runtime-core"
+import { defineAsyncComponent, onMounted, Ref, ref } from "@vue/runtime-core"
 import { useQuasar } from "quasar"
 import { useRouter } from "vue-router"
 import { useStore } from "vuex"
 import { IProduct } from "../../store/modules/products/product.interface"
+
+const CreateProduct = defineAsyncComponent(async () => import("../../components/admin/CreateProduct.vue"))
 
 const router = useRouter()
 const quasar = useQuasar()
@@ -83,6 +88,11 @@ const columns: any[] = [
 
 const products: Ref<IProduct[]> = ref<IProduct[]>([])
 const loading: Ref<boolean> = ref<boolean>(false)
+const dialog: Ref<boolean> = ref<boolean>(false)
+
+const onCreate = async () => {
+    dialog.value = true
+}
 
 const onRemove = async (id: number) => {
     loading.value = true

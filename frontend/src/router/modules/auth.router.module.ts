@@ -33,19 +33,13 @@ export const authRoutes: RouteRecordRaw[] = [
   {
     path: '/signup',
     name: 'signup',
-    component: async () => await import("../../views/SignUpView.vue"),
+    component: async () => await import("../../views/auth/SignUpView.vue"),
     meta: { title: "Регистрация"}
   },
   {
     path: '/signin',
     name: 'signin',
-    component: async () => await import("../../views/SignInView.vue"),
+    component: async () => await import("../../views/auth/SignInView.vue"),
     meta: { title: "Авторизация"}
-  },
-  {
-    path: "/onlyauthed",
-    name: "onlyauthed",
-    component: async () => await import("../../views/admin/ProductEditView.vue"),
-    beforeEnter: authGuard
   }
 ]

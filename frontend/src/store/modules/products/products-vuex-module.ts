@@ -58,6 +58,7 @@ export class ProductsStoreModule extends VuexModule {
 
     if(result.status === 200) {
       const products: IProduct[] = await result.data
+      customNotifies.positiveNotify()
       return products
     }
     else {
@@ -87,7 +88,10 @@ export class ProductsStoreModule extends VuexModule {
           }
       })
 
-      if(imageUploadResult.status === 200 || imageUploadResult.status === 201) return products
+      if(imageUploadResult.status === 200 || imageUploadResult.status === 201) {
+        customNotifies.positiveNotify()
+        return products
+      }
     }
     
     customNotifies.negativeNotify()
@@ -103,6 +107,7 @@ export class ProductsStoreModule extends VuexModule {
 
     if(result.status === 200) {
       const products: IProduct[] = await result.data
+      customNotifies.positiveNotify()
       return products
     }
     else {

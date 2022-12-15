@@ -37,7 +37,7 @@
                             <q-btn color="negative" label="Изменить" :disable="loading" @click="onShowEdit()" />
                         </div>
                     </q-td>
-                    <q-dialog v-model="showEdit">
+                    <q-dialog v-model="showEdit" :transition-show="'jump-down'" :transition-hide="'jump-up'">
                         <edit-product :product="props.row" @product-edited="onProductEdited()"/>
                     </q-dialog>
                 </q-tr>

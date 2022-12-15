@@ -1,6 +1,7 @@
 import { store } from '@/store'
+import { customNotifies } from '@/store/notifies'
 import axios from 'axios'
-import { Dialog, Loading } from 'quasar'
+import { Dialog, Loading, Notify } from 'quasar'
 import { Ref } from 'vue'
 import { Module, VuexModule, Mutation, Action } from 'vuex-module-decorators'
 import { IProduct } from './product.interface'
@@ -30,7 +31,7 @@ export class ProductsStoreModule extends VuexModule {
       return products
     }
     else {
-      Dialog.create({ title: "Не удалось", message: result.statusText })
+      customNotifies.negativeNotify()
       return []
     }
   }
@@ -44,7 +45,7 @@ export class ProductsStoreModule extends VuexModule {
       return product
     }
     else {
-      Dialog.create({ title: "Не удалось", message: result.statusText })
+      customNotifies.negativeNotify()
       return null
     }
   }
@@ -60,7 +61,7 @@ export class ProductsStoreModule extends VuexModule {
       return products
     }
     else {
-      Dialog.create({ title: "Не удалось", message: result.statusText })
+      customNotifies.negativeNotify()
       return this.productsState
     }
   }
@@ -89,7 +90,7 @@ export class ProductsStoreModule extends VuexModule {
       if(imageUploadResult.status === 200 || imageUploadResult.status === 201) return products
     }
     
-    Dialog.create({ title: "Не удалось", message: result.statusText })
+    customNotifies.negativeNotify()
     return this.productsState
   }
 
@@ -105,7 +106,7 @@ export class ProductsStoreModule extends VuexModule {
       return products
     }
     else {
-      Dialog.create({ title: "Не удалось", message: result.statusText })
+      customNotifies.negativeNotify()
       return this.productsState
     }
   }

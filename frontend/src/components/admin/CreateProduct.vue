@@ -2,6 +2,7 @@
     <q-card dark :style="'padding-block: 20px'">
         <q-form @submit="onSubmit()" class="form">
             <h5>Создание</h5>
+            <small style="color: red">валидаций нет</small>
             <q-input
                 standout
                 dark
@@ -26,8 +27,8 @@
             <q-input
                 standout
                 dark
-                v-model="currentProduct.cost"
-                type="number"
+                v-model="currentProduct.type"
+                type="text"
                 :label="'Тип (book/game, потом что-нибудь умнее придумаю)'"
             />
             <q-file

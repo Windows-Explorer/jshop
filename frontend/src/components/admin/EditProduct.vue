@@ -2,6 +2,7 @@
     <q-card dark :style="'padding-block: 20px'">
         <q-form @submit="onSubmit()" class="form">
             <h5>Изменение</h5>
+            <small style="color: red">валидаций нет</small>
             <q-input
                 standout
                 dark

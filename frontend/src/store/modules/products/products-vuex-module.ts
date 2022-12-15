@@ -69,7 +69,7 @@ export class ProductsStoreModule extends VuexModule {
   @Action({ commit: "productsMutation" })
   async saveOneProduct(payload: { product: IProduct, file: File }): Promise<IProduct[]> {
 
-    // payload.product.image = payload.file.name
+    payload.product.image = payload.file.name
 
     const result = await axios.post(`${process.env.VUE_APP_GATEMAY_ADDRESS}/products/save`, payload.product, {
       headers: { "Authorization": `Bearer ${store.getters.token}` }

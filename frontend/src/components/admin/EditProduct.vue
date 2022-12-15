@@ -1,33 +1,33 @@
 <template>
     <q-card dark :style="'padding-block: 20px'">
         <q-form @submit="onSubmit()" class="form">
-            <h5>Создание</h5>
+            <h5>Изменение</h5>
             <q-input
                 standout
                 dark
-                v-model="currentProduct.title"
+                v-model="props.product.title"
                 type="text"
                 :label="'Заголовок товара'"
             />
             <q-input
                 standout
                 dark
-                v-model="currentProduct.description"
+                v-model="props.product.description"
                 type="textarea"
                 :label="'Описание'"
             />
             <q-input
                 standout
                 dark
-                v-model="currentProduct.cost"
-                type="number"
+                v-model="props.product.cost"
+                type="text"
                 :label="'Цена'"
             />
             <q-input
                 standout
                 dark
-                v-model="currentProduct.cost"
-                type="number"
+                v-model="props.product.type"
+                type="text"
                 :label="'Тип (book/game, потом что-нибудь умнее придумаю)'"
             />
             <q-file
@@ -50,28 +50,32 @@
 
 <script setup lang="ts">
 
-import { ref, Ref } from "vue"
+
+import { PropType, ref, Ref } from "vue"
 import { useStore } from "vuex"
 import { IProduct } from "../../store/modules/products/product.interface"
 
 const store = useStore()
 
+const props = defineProps({
+    product: {
+        type: Object as PropType<IProduct>,
+        required: true
+    }
+})
 const emits = defineEmits<{
-    (event: "productCreated"): void
+    (event: "productEdited"): void
 }>()
 
 const loading: Ref<boolean> = ref<boolean>(false)
 
-const currentProduct: Ref<IProduct> = ref<IProduct>({
-    id: 0, description: "", cost: 0, title: "", image: "", type: "product"
-})
 const currentFile: Ref<File | null> = ref<File | null>(null)
 
 const onSubmit = async () => {
     loading.value = true
-    await store.dispatch("saveOneProduct", { product: currentProduct.value, file: currentFile.value })
+    await store.dispatch("saveOneProduct", { product: props.product, file: currentFile.value })
     loading.value = false
-    emits("productCreated")
+    emits("productEdited")
 }
 
 

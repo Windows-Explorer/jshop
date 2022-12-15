@@ -132,12 +132,14 @@ onMounted(async () => {
     flex-direction: column;
     align-items: stretch;
     width: 360px;
-    padding-block: 30px;
     padding-inline: 20px;
     border-radius: 4px;
     background-color: transparent;
     transition: 0.5s ease;
     gap: 8px;
+  }
+  .form h5 {
+    font-family: Colus;
   }
   
   .form .buttons {

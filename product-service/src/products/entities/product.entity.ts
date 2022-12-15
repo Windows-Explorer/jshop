@@ -20,7 +20,6 @@ export class Product {
     image: string
 
     @Column({ type: "float", unique: false, nullable: false })
-    @Length(0, 255)
     cost: number
 
     @Column({ length: 255, type: "varchar", unique: false, nullable: false, default: "product" })

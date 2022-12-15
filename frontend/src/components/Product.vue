@@ -47,8 +47,13 @@ const toCart = async () => router.push({ name: "cart" })
 const onCart = async (product: IProduct) => {
     quasar.loading.show()
     const cartObject: ICartObject = {
-        id: product.id, title: product.title, description: product.description,
-        image: product.image, cost: product.cost, count: 1
+        id: product.id,
+        title: product.title,
+        description: product.description,
+        image: product.image,
+        cost: product.cost,
+        count: 1,
+        type: "product"
     }
 
     await store.dispatch("pushIntoCart", cartObject)

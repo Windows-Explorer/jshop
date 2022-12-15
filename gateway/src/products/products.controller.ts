@@ -34,7 +34,6 @@ export class ProductsController {
     }))
     @Post("/save/image")
     async saveImage(@UploadedFile() file: Express.Multer.File, @Res() response: Response): Promise<void> {
-        console.log(file)
         response.send(file)
     }
 

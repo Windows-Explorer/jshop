@@ -8,56 +8,45 @@
             :rows-per-page-options="[]"
             row-key="name"
             :loading="loading"
+            class="table"
         >
             <template v-slot:top>
-                <q-btn color="primary" :disable="loading" label="Add product" @click="onCreate()" />
-                <q-dialog v-model="dialog">
-                    <create-product />
-                </q-dialog>
+                <q-btn color="primary" :disable="loading" label="Создать" @click="onShowCreate()" />
             </template>
+
             <template v-slot:body="props">
-                
                 <q-tr :props="props">
                     <q-td key="id" :props="props">
                         {{ props.row.id }}
                     </q-td>
                     <q-td key="title" :props="props">
                         {{ props.row.title }}
-                        <q-popup-edit v-model="props.row.title" buttons v-slot="scope">
-                            <q-input type="text" v-model.number="scope.value" dense autofocus @keyup.enter="scope.set"></q-input>
-                        </q-popup-edit>
                     </q-td>
                     <q-td key="description" :props="props">
-                        <p>
-                            {{ props.row.description }}
-                        </p>
-                        <q-popup-edit v-model="props.row.description" buttons v-slot="scope">
-                            <q-input type="textarea" v-model.trim="scope.value" dense autofocus @keyup.enter="scope.set"></q-input>
-                        </q-popup-edit>
+                        {{ props.row.description }}
                     </q-td>
                     <q-td key="type" :props="props">
-                        <p>
-                            {{ props.row.type }}
-                        </p>
-                        <q-popup-edit v-model="props.row.type" buttons v-slot="scope">
-                            <q-input type="text" v-model.trim="scope.value" dense autofocus @keyup.enter="scope.set"></q-input>
-                        </q-popup-edit>
+                        {{ props.row.type }}
                     </q-td>
                     <q-td key="image" :props="props">
-                        <p>
-                            {{ props.row.image }}
-                        </p>
-                        <q-popup-edit v-model="props.row.image" buttons v-slot="scope">
-                            <q-input type="text" v-model.trim="scope.value" dense autofocus @keyup.enter="scope.set"></q-input>
-                        </q-popup-edit>
+                        <q-img :src="props.row.image" />
                     </q-td>
                     <q-td key="removeBtn" :props="props">
-                        <q-btn color="negative" label="Remove" @click="onRemove(props.row.id)" />
+                        <div class="actionsContainer">
+                            <q-btn color="negative" label="Удалить" :disable="loading" @click="onRemove(props.row.id)" />
+                            <q-btn color="negative" label="Изменить" :disable="loading" @click="onShowEdit()" />
+                        </div>
                     </q-td>
+                    <q-dialog v-model="showEdit">
+                        <edit-product :product="props.row" @product-edited="onProductEdited()"/>
+                    </q-dialog>
                 </q-tr>
             </template>
         </q-table>
-        <q-btn label="Submit" color="positive" :style="'width: 100px'" @click="onSubmit()"/>
+
+        <q-dialog v-model="showCreate" :transition-show="'jump-down'" :transition-hide="'jump-up'">
+            <create-product @product-created="onProductCreated()" />
+        </q-dialog>
     </section>
     
 </template>
@@ -72,52 +61,71 @@ import { useStore } from "vuex"
 import { IProduct } from "../../store/modules/products/product.interface"
 
 const CreateProduct = defineAsyncComponent(async () => import("../../components/admin/CreateProduct.vue"))
+const EditProduct = defineAsyncComponent(async () => import("../../components/admin/EditProduct.vue"))
 
 const router = useRouter()
 const quasar = useQuasar()
 const store = useStore()
 
 const columns: any[] = [
-  { name: "id", align: "left", label: "id", field: "id" },
-  { name: "title", align: "left", label: "Title", field: "title" },
-  { name: "description", align: "left", label: "Description", field: "description" },
-  { name: "type", align: "left", label: "Type", field: "type" },
-  { name: "image", align: "left", label: "Image", field: "image" },
-  { name: "removeBtn", align: "left", label: "Actions", field: "type" },
+  { name: "id", align: "center", label: "ID", field: "id" },
+  { name: "title", align: "center", label: "Заголовок", field: "title" },
+  { name: "description", align: "center", label: "Описание", field: "description" },
+  { name: "type", align: "center", label: "Тип товара", field: "type" },
+  { name: "image", align: "center", label: "Изображение", field: "image" },
+  { name: "removeBtn", align: "center", label: "Действия", field: "type" },
 ]
 
 const products: Ref<IProduct[]> = ref<IProduct[]>([])
 const loading: Ref<boolean> = ref<boolean>(false)
-const dialog: Ref<boolean> = ref<boolean>(false)
 
-const onCreate = async () => {
-    dialog.value = true
+const showCreate: Ref<boolean> = ref<boolean>(false)
+const showEdit: Ref<boolean> = ref<boolean>(false)
+
+const onShowCreate = async () => {
+    showCreate.value = true
+}
+const onShowEdit = async () => {
+    showEdit.value = true
 }
 
 const onRemove = async (id: number) => {
+    loading.value = true
     products.value = await store.dispatch("removeOneProduct", id)
+    loading.value = false
 }
 
-const onSubmit = async () => {
-    await store.dispatch("saveManyProducts", products.value)
+const onProductCreated = async () => {
+    showCreate.value = false
+    loading.value = true
+    products.value = await store.dispatch("getProducts")
+    loading.value = false
+}
+
+const onProductEdited = async () => {
+    showEdit.value = false
+    loading.value = true
+    products.value = await store.dispatch("getProducts")
+    loading.value = false
 }
 
 onMounted(async () => {
+    loading.value = true
     products.value = await store.dispatch("getProducts")
+    loading.value = false
 })
 
 </script>
 
-<style scoped>
-p {
-    width: 300px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-   }
-</style>
 
 <style lang="sass" scoped>
+
+.table
+    font-family: SpectralRegular
+
+button
+    font-family: Colus
+
 section
     width: 100%
     height: 100%
@@ -129,4 +137,20 @@ section
     flex-direction: column
     align-items: stretch
     flex-wrap: nowrap
+
+p
+    width: 300px
+    white-space: nowrap
+    overflow: hidden
+    text-overflow: ellipsis
+
+.actionsContainer
+    width: 100%
+    display: flex
+    flex-direction: row
+    flex-wrap: nowrap
+    align-content: center
+    justify-content: center
+    align-items: center
+    gap: 10px
 </style>

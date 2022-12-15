@@ -6,7 +6,6 @@
         <div class="info">
             <h3 @click="toProduct(props.product.id)">{{ props.product.title }}</h3>
             <div>
-                <!-- <q-btn round color="primary" icon="arrow_left" @click="(props.product.count -= 1)"/> -->
                 <q-input
                     @update:model-value="$emit('updateCount', $event)"
                     standout
@@ -15,7 +14,6 @@
                     v-model="props.product.count"
                 />
                 <q-btn label="remove" @click="$emit('updateCount', $event), onRemove(props.product)"/>
-                <!-- <q-btn round color="primary" icon="arrow_right" @click="(props.product.count += 1)"/> -->
             </div>
             <span class="price">{{ props.product.cost }}<small> ₽</small></span>
         </div>
@@ -39,6 +37,9 @@ const props = defineProps({
         required: true
     }
 })
+const emits = defineEmits<{
+    (event: "updateCount", count: number ): void
+}>()
 
 const onRemove = async (product: IProduct) => {
     store.dispatch("removeFromCart", product)
@@ -46,9 +47,6 @@ const onRemove = async (product: IProduct) => {
 
 const toProduct = async (id: number) => router.push({ name: "product", params: { id: id }})
 
-const emits = defineEmits<{
-    (event: "updateCount", count: number ): void
-}>()
 
 </script>
 

@@ -69,7 +69,7 @@ export class ProductsStoreModule extends VuexModule {
   @Action({ commit: "productsMutation" })
   async saveOneProduct(payload: { product: IProduct, file: File }): Promise<IProduct[]> {
 
-    payload.product.image = payload.file.name
+    payload.product.image = `${process.env.VUE_APP_GATEMAY_ADDRESS}/images/${payload.file.name}`
 
     const result = await axios.post(`${process.env.VUE_APP_GATEMAY_ADDRESS}/products/save`, payload.product, {
       headers: { "Authorization": `Bearer ${store.getters.token}` }
@@ -86,7 +86,7 @@ export class ProductsStoreModule extends VuexModule {
           }
       })
 
-      if(imageUploadResult.status === 200) return products
+      if(imageUploadResult.status === 200 || imageUploadResult.status === 201) return products
     }
     
     Dialog.create({ title: "Не удалось", message: result.statusText })

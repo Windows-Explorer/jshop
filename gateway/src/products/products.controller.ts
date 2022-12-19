@@ -32,11 +32,14 @@ export class ProductsController {
         }
       })
     }))
+
+    @UseGuards(AdminGuard)
     @Post("/save/image")
     async saveImage(@UploadedFile() file: Express.Multer.File, @Res() response: Response): Promise<void> {
         response.send(file)
     }
 
+    @UseGuards(AdminGuard)
     @Post("/save")
     async save(@Body() product: any, @Res() response: Response): Promise<void> {
         const result: IResult<any> = await this.client.send("post.products.save", product).toPromise()

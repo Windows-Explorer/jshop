@@ -29,5 +29,11 @@ export const adminRoutes: RouteRecordRaw[] = [
     name: "onlyauthed",
     component: async () => await import("../../views/admin/ProductEditView.vue"),
     beforeEnter: adminGuard
+  },
+  {
+    path: "/admin/image",
+    name: "imageUpload",
+    component: async () => await import("../../views/admin/ImageUploadView.vue"),
+    beforeEnter: adminGuard
   }
 ]

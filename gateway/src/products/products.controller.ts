@@ -1,9 +1,9 @@
-import { Body, Controller, Get, Inject, Param, Post, Res, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common'
+import { Body, Controller, Get, Inject, Param, Post, Res, UploadedFile, UploadedFiles, UseGuards, UseInterceptors } from '@nestjs/common'
 import { ClientKafka } from '@nestjs/microservices'
 import { Response } from 'express'
 import { IResult } from 'src/dto/result.dto'
 import { AdminGuard } from 'src/guards/admin.guard'
-import { FileInterceptor} from "@nestjs/platform-express"
+import { AnyFilesInterceptor, FileInterceptor, FilesInterceptor} from "@nestjs/platform-express"
 import { diskStorage } from 'multer'
 import { extname } from 'path'
 
@@ -23,7 +23,6 @@ export class ProductsController {
         response.status(result.error.statusCode).send(result.data)
     }
     
-    @UseGuards(AdminGuard)
     @UseInterceptors(FileInterceptor('file', {
        storage: diskStorage({
         destination: "./public/images",
@@ -32,12 +31,27 @@ export class ProductsController {
         }
       })
     }))
-
     @UseGuards(AdminGuard)
     @Post("/save/image")
     async saveImage(@UploadedFile() file: Express.Multer.File, @Res() response: Response): Promise<void> {
         response.send(file)
     }
+
+
+    @UseInterceptors(AnyFilesInterceptor({
+        storage: diskStorage({
+            destination: "./public/images",
+            filename: (req, file, callback) => {
+                callback(null, file.originalname)
+            }
+        })
+    }))
+    @UseGuards(AdminGuard)
+    @Post("/save/images")
+    async saveMultipleImages(@UploadedFiles() files: Express.Multer.File[], @Res() response: Response): Promise<void> {
+        response.send(files)
+    }
+    
 
     @UseGuards(AdminGuard)
     @Post("/save")

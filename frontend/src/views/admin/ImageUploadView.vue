@@ -2,6 +2,7 @@
     <section>
         <q-uploader
             url="http://localhost:3000/products/save/images"
+            :headers="[{name: 'Authorization', value: token}]"
             label="Upload"
             multiple
             style="width: 600px; height: 500px"

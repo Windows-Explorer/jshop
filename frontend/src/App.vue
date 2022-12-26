@@ -25,7 +25,7 @@
       </q-header>
     </transition>
 
-    <q-page-container class="page-container" :style="myTweak">
+    <q-page-container class="page-container" :style-fn="myTweak(0)">
       <transition name="content">
         <router-view />
       </transition>
@@ -49,7 +49,7 @@ const router = useRouter()
 const quasar = useQuasar()
 const route = useRoute()
 
-const myTweak = async (offset: number) => { minHeight: offset ? `calc(100vh - ${offset}px)` : '100vh' }
+const myTweak = (offset: number) => { height: offset ? `calc(100vh - ${offset}px)` : '200vh' }
 
 const onLogout = async () => {
   quasar.loading.show()
@@ -80,7 +80,7 @@ onMounted(async () => {
   }
 
   .page-container {
-    height: calc(100vh);
+    height: 100vh;
     display: flex;
     flex-direction: column;
     align-content: center;

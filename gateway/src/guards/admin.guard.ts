@@ -16,7 +16,6 @@ export class AdminGuard implements CanActivate {
             return result.data
         }
         catch (error) {
-            console.log(error)
             return false
         }
     }

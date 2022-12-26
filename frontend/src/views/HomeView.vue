@@ -1,75 +1,62 @@
 <template>
-    <q-carousel style="height: 100%;"
-        swipeable
-        dark
-        animated
-        :transition-duration="800"
-        v-model="slide"
-        navigation
-        infinite
-        arrows
-        :autoplay="7000"
-        :transition-next="'slide-left'"
-        :transition-prev="'slide-right'"
-        >
-        
-        <q-carousel-slide style="padding: 0" :name="1">
-            <q-img no-native-menu  loading="eager" src="@/assets/images/ascent.png" fit="cover" key="cover" style="height:100%" position="50% 25%">
-                <div class="absolute-full carousel-content ">
-                    <h3>ВОСХОЖДЕНИЕ</h3>
-                    <span>Нанимайте могущественные отряды, проводите древние ритуалы, воссоздавайте реликвии прошлого! Победа на поле боя будет за вами.</span>
-                </div>
-            </q-img>
-        </q-carousel-slide>
-        <q-carousel-slide style="padding: 0;" :name="2">
-            <q-img no-native-menu  loading="eager" src="@/assets/images/dust.png" fit="cover" key="cover" style="height:100%" position="50% 25%">
-                <div class="absolute-full carousel-content ">
-                    <h3>ИМЯ ПЫЛИ</h3>
-                    <span>Роман о судьбах оскорбленных богов, коварных лжецов и беспомощных смертных.</span>
-                </div>
-            </q-img>
-        </q-carousel-slide>
-        <q-carousel-slide style="padding: 0;" :name="3">
-            <q-img no-native-menu  loading="eager" src="@/assets/images/dragons.png" fit="cover" key="cover" style="height:100%" position="50% 25%" contenteditable="false">
-                <div class="absolute-full carousel-content ">
-                    <h3>ДОЛИНА ДРАКОНОВ</h3>
-                    <span>Возглавьте одну из восьми могущественных фракций и сразитесь за сокровища неизведанных земель!</span>
-                </div>
-            </q-img>
-        </q-carousel-slide>
-    </q-carousel>
+    <section>
+        <product-carousel class="section_item" style="height: calc(100vh - 48px); width: 100%; z-index: 1000;" />
+        <div class="page">
+            <div class="darker"></div>
+            <q-card class="card">
+                Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text 
+            </q-card>
+        </div>
+    </section>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 
-import { ref } from "vue"
+import { defineAsyncComponent } from "@vue/runtime-core"
 
-const slide = ref(1)
+
+const ProductCarousel = defineAsyncComponent(async () => import("../components/ProductCarousel.vue"))
 
 </script>
 
 <style scoped>
-    .carousel-content {
+    section {
+        width: 100%;
+        height: auto;
+        color: white;
         display: flex;
         flex-direction: column;
-        align-items: center;
-        align-content: center;
-        justify-content: center;
         flex-wrap: nowrap;
-        user-select: none;
+        align-content: center;
+        justify-content: flex-start;
+        align-items: stretch;
     }
+    .page {
+        height: 100vh;
+        background: url("../assets/images/1.jpg");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        align-content: flex-end;
+        justify-content: center;
+        align-items: stretch;
+    }
+    .darker {
+        position: absolute;
+        background: linear-gradient(180deg, rgba(0,0,0,0.9) 12%, rgba(0,0,0,0) 95%);
+        height: 100%;
+        width: 100%;
+    }
+</style>
 
-    span {
-        text-shadow: 0px 0px 20px black;
-        font-size: 20px;
-        width: 50%;
-        text-align: center;
-        font-family: SpectralRegular;
-    }
+<style lang="sass" scoped>
+.card
+    margin-right: 200px
+    color: $primary
+    padding: 10px
+    height: 400px
 
-    h3 {
-        text-shadow: 0px 0px 20px black;
-        font-family: Colus;
-        margin: 10px;
-    }
 </style>

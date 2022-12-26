@@ -1,7 +1,7 @@
-import { Injectable, CanActivate, ExecutionContext, Inject, Global } from '@nestjs/common'
-import { ClientKafka } from '@nestjs/microservices'
-import { Request } from 'express'
-import { IResult } from 'src/dto/result.dto'
+import { Injectable, CanActivate, ExecutionContext, Inject, Global } from "@nestjs/common"
+import { ClientKafka } from "@nestjs/microservices"
+import { Request } from "express"
+import { IResult } from "src/dto/result.dto"
 
 @Global()
 @Injectable()
@@ -13,7 +13,7 @@ export class AdminGuard implements CanActivate {
             const request: Request = context.switchToHttp().getRequest()
             const token = request.headers.authorization.replace("Bearer ", "")
             const result: IResult<any> = await this.client.send("get.auth.verify.admin", token).toPromise()
-            return result.data
+            return result.message
         }
         catch (error) {
             return false

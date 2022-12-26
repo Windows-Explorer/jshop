@@ -1,8 +1,8 @@
-import { Inject, Module } from '@nestjs/common'
-import { ConfigModule, ConfigService } from '@nestjs/config'
-import { ClientKafka, ClientsModule, Transport } from '@nestjs/microservices'
-import { AuthController } from './auth.controller'
-import { UniqueController } from './unique.controller'
+import { Inject, Module } from "@nestjs/common"
+import { ConfigModule, ConfigService } from "@nestjs/config"
+import { ClientKafka, ClientsModule, Transport } from "@nestjs/microservices"
+import { AuthController } from "./auth.controller"
+import { UniqueController } from "./unique.controller"
 
 @Module({
   imports: [
@@ -45,6 +45,6 @@ export class AuthModule {
   }
 
   async onModuleDestroy() {
-    await this.client.connect()
+    await this.client.close()
   }
 }

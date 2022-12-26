@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm'
+import { Entity, Column, PrimaryGeneratedColumn } from "typeorm"
 import { IsNumber, IsString, IsEmail, Length } from "class-validator"
 
 @Entity()

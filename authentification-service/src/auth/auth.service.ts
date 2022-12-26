@@ -1,13 +1,13 @@
-import { Injectable } from '@nestjs/common'
-import { JwtService } from '@nestjs/jwt'
-import { UsersService } from 'src/users/users.service'
-import { UserCreateDto } from '../dto/user-create.dto'
+import { Injectable } from "@nestjs/common"
+import { JwtService } from "@nestjs/jwt"
+import { UsersService } from "src/users/users.service"
+import { UserCreateDto } from "../dto/user-create.dto"
 import * as bcrypt from "bcrypt"
-import { User } from 'src/users/entities/user.entity'
-import { ITokenPayload } from './interfaces/jwt-payload.interface'
-import { RpcException } from '@nestjs/microservices'
-import { UserSignInDto } from 'src/dto/user-signin.dto'
-import { ConfigService } from '@nestjs/config'
+import { User } from "src/users/entities/user.entity"
+import { ITokenPayload } from "./interfaces/jwt-payload.interface"
+import { RpcException } from "@nestjs/microservices"
+import { UserSignInDto } from "src/dto/user-signin.dto"
+import { ConfigService } from "@nestjs/config"
 
 @Injectable()
 export class AuthService {

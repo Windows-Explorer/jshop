@@ -1,11 +1,11 @@
-import { Module } from '@nestjs/common'
-import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm'
-import { AppController } from './app.controller'
-import { AuthModule } from './auth/auth.module'
-import { User } from './users/entities/user.entity'
+import { Module } from "@nestjs/common"
+import { TypeOrmModule, TypeOrmModuleOptions } from "@nestjs/typeorm"
+import { AppController } from "./app.controller"
+import { AuthModule } from "./auth/auth.module"
+import { User } from "./users/entities/user.entity"
 import { ConfigModule, ConfigService } from "@nestjs/config"
-import { UsersModule } from './users/users.module'
-import { UniqueModule } from './unique/unique.module'
+import { UsersModule } from "./users/users.module"
+import { UniqueModule } from "./unique/unique.module"
 
 @Module({
   imports: [

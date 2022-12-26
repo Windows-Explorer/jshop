@@ -1,10 +1,10 @@
-import { Module } from '@nestjs/common'
-import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm'
+import { Module } from "@nestjs/common"
+import { TypeOrmModule, TypeOrmModuleOptions } from "@nestjs/typeorm"
 import { ConfigModule, ConfigService } from "@nestjs/config"
-import { ProductsModule } from './products/products.module'
-import { Product } from './products/entities/product.entity'
-import { PaymentController } from './payment/payment.controller';
-import { PaymentModule } from './payment/payment.module'
+import { ProductsModule } from "./products/products.module"
+import { Product } from "./products/entities/product.entity"
+import { PaymentController } from "./payment/payment.controller";
+import { PaymentModule } from "./payment/payment.module"
 
 @Module({
   imports: [

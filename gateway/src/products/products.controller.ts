@@ -5,7 +5,6 @@ import { IResult } from 'src/dto/result.dto'
 import { AdminGuard } from 'src/guards/admin.guard'
 import { AnyFilesInterceptor, FileInterceptor, FilesInterceptor} from "@nestjs/platform-express"
 import { diskStorage } from 'multer'
-import { extname } from 'path'
 
 @Controller('products')
 export class ProductsController {
@@ -22,6 +21,7 @@ export class ProductsController {
         const result: IResult<any> = await this.client.send("get.products.findById", id).toPromise()
         response.status(result.error.statusCode).send(result.data)
     }
+
     
     @UseInterceptors(FileInterceptor('file', {
        storage: diskStorage({

@@ -27,7 +27,7 @@ import { PaymentModule } from './payment/payment.module'
       })
     }),
     ProductsModule,
-    PaymentModule
+    // PaymentModule
   ],
   controllers: [],
   providers: [],

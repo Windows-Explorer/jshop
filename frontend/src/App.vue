@@ -25,7 +25,7 @@
       </q-header>
     </transition>
 
-    <q-page-container class="page-container" :style-fn="myTweak(0)">
+    <q-page-container class="page-container" :style="myTweak">
       <transition name="content">
         <router-view />
       </transition>

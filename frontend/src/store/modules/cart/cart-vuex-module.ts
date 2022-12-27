@@ -1,4 +1,3 @@
-import { Dialog, Loading } from 'quasar'
 import { VueCookieNext } from 'vue-cookie-next'
 import { Module, VuexModule, Mutation, Action } from 'vuex-module-decorators'
 import { IProduct } from '../products/product.interface'

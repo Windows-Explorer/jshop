@@ -58,7 +58,6 @@ const slide = ref(1)
         flex-wrap: nowrap;
         user-select: none;
     }
-
     span {
         text-shadow: 0px 0px 20px black;
         font-size: 20px;
@@ -66,7 +65,6 @@ const slide = ref(1)
         text-align: center;
         font-family: SpectralRegular;
     }
-
     h3 {
         text-shadow: 0px 0px 20px black;
         font-family: Colus;

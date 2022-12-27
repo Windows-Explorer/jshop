@@ -17,14 +17,12 @@ const router = createRouter({
 
 router.beforeResolve( async (to: any, from: any, next: any) => {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
   if(to.name) {
-    // LoadingBar.start()
     store.dispatch("verifyToken")
     store.dispatch("getRoleFromJwt")
   }
   next()
 })
 router.afterEach(async (to: any, from: any, next: any) => {
-  // LoadingBar.stop()
 })
 
 

@@ -57,7 +57,6 @@ h3
 .product
     min-width: 300px
     width: 100%
-    background-color: #181818
     display: flex
     flex-direction: row
     align-items: center

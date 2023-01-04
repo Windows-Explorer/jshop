@@ -4,6 +4,7 @@
       <q-header v-if="(route.name !=='signup' && route.name !=='signin')"
         reveal
         elevated
+        class="header"
       >
       <admin-layout v-if="store.getters.role === 'admin'" />
         <q-tabs :dense="false" :align="'left'">
@@ -65,6 +66,7 @@ onMounted(async () => {
       return /^http:\/\/\./.test(url)
     }
   })
+  quasar.dark.set(false)
 
   store.dispatch("getRoleFromJwt")
 })
@@ -113,7 +115,6 @@ onMounted(async () => {
   html, body, #app {
     height: 100%;
     margin: 0 auto;
-    background-color: #111111;
     box-sizing: border-box;
   }
   
@@ -164,9 +165,8 @@ onMounted(async () => {
     gap: 10px;
   }
   .form .redirect-container .redirect {
-      cursor: pointer;
-      text-decoration: none;
-      color: white;
+    cursor: pointer;
+    text-decoration: none;
   }
 
   .header-enter-active,
@@ -198,4 +198,38 @@ onMounted(async () => {
   .footer-leave-to {
     transform: translateY(100%);
   }
+</style>
+
+<style lang="scss">
+
+  .body--light {
+    background-color: $primary;
+    color: $secondary
+  }
+
+  .body--light .header {
+    background-color: $dark;
+    color: $primary
+  }
+
+  .body--light .form .redirect {
+    color: $secondary
+  }
+
+  .body--light .form {
+    padding-block: 10px;
+    box-shadow: 0 0px 20px #0000003a;
+  }
+
+  .body--light .q-icon {
+    color: $primary;
+  }
+
+
+
+  .body--dark .redirect {
+    color: $primary
+  }
+
+
 </style>

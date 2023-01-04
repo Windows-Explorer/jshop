@@ -8,8 +8,8 @@
             <div>
                 <span class="price">{{ props.product.cost }}<small> ₽</small></span>
                 <q-btn label="Подробнее" @click="toProduct(props.product.id)" />
-                <q-btn v-if="!inCart" round color="primary" icon="shopping_cart" @click="onCart(props.product)" />
-                <q-btn v-else round color="secondary" icon="shopping_cart" @click="toCart()">
+                <q-btn v-if="!inCart" round color="secondary" icon="shopping_cart" @click="onCart(props.product)" />
+                <q-btn v-else round color="accent" icon="shopping_cart" @click="toCart()">
                     <q-tooltip>
                         Перейти в корзину
                     </q-tooltip>

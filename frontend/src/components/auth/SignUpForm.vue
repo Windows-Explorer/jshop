@@ -4,8 +4,8 @@
         <q-input
             v-model="user.username"
             label="Имя пользователя"
-            standout
-            :dark="true"
+            :standout="quasar.dark.mode"
+            :filled="!quasar.dark.mode"
             :type="'text'"
             :rules="validationRules.username"
             :maxlength="32"
@@ -15,8 +15,8 @@
         <q-input
             v-model="user.email"
             label="Электронная почта"
-            standout
-            :dark="true"
+            :standout="quasar.dark.mode"
+            :filled="!quasar.dark.mode"
             :type="'email'"
             :rules="validationRules.email"
             no-error-icon
@@ -25,8 +25,8 @@
             v-model="user.number"
             label="Номер телефона"
             :mask="'+7 (###) ###-##-##'"
-            standout
-            :dark="true"
+            :standout="quasar.dark.mode"
+            :filled="!quasar.dark.mode"
             :type="'tel'"
             :rules="validationRules.phoneNumber"
             :maxlength="18"
@@ -35,8 +35,8 @@
         <q-input
             v-model="user.password"
             label="Пароль"
-            standout
-            :dark="true"
+            :standout="quasar.dark.mode"
+            :filled="!quasar.dark.mode"
             :type="'password'"
             :rules="validationRules.password"
             :maxlength="16"
@@ -46,8 +46,8 @@
         <q-input
             v-model="user.confirmPassword"
             label="Подтверждение пароля"
-            standout
-            :dark="true"
+            :standout="quasar.dark.mode"
+            :filled="!quasar.dark.mode"
             :type="'password'"
             :rules="validationRules.confirmPassword"
             :maxlength="16"
@@ -55,8 +55,8 @@
         />
         
         <span class="buttons">
-            <q-btn label="Назад" type="reset" dark color="primary" :size="'18px'"/>
-            <q-btn label="Регистрация" type="submit" dark color="primary" :size="'18px'" />
+            <q-btn label="Назад" type="reset" :size="'18px'"/>
+            <q-btn label="Регистрация" type="submit" :size="'18px'" />
         </span>
 
         <div class="redirect-container">

@@ -32,7 +32,6 @@ onMounted(async () => getContent())
         width: 100%;
         height: 100%;
         padding-top: 10px;
-        color: white;
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;

@@ -31,7 +31,6 @@ onMounted(async () => getContent() )
     section {
         width: 100%;
         padding-top: 10px;
-        color: white;
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;

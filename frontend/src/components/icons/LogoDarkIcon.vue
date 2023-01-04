@@ -1,5 +1,5 @@
 <template>
-<svg
+<svg class="logo"
    width="4000"
    height="1024"
    viewBox="0 0 1058.3333 270.93333"
@@ -85,6 +85,5 @@
 svg {
     height: auto;
     width: auto;
-    color: white;
 }
 </style>

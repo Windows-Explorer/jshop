@@ -54,50 +54,64 @@ onMounted(async () => {
 
 </script>
 
-<style scoped lang="sass">
-h5
-    margin: 0px
+<style scoped lang="scss">
 
-section
-    width: 100%
-    height: 100%
-    padding-top: 10px
-    padding-inline: 20px
-    color: white
-    display: flex
-    gap: 10px
-    flex-direction: column
-    align-items: stretch
-    flex-wrap: nowrap
+h5 {
+    margin: 0px;
+}
 
-.cart-header
-    display: flex
-    flex-direction: column
-    align-items: flex-start
-    flex-wrap: nowrap
-    gap: 20px
-    justify-content: flex-start
-    align-content: center
+.body--light h5 {
+    color: $secondary
+}
 
-.cart-container
-    display: flex
-    flex-direction: column
-    flex-wrap: wrap
-    justify-content: flex-start
-    align-items: center
-    gap: 20px
+.body--dark h5 {
+    color: $primary
+}
 
-.main-container
-    display: flex
-    flex-direction: column
-    align-items: stretch
+section {
+    width: 100%;
+    height: 100%;
+    padding-top: 10px;
+    padding-inline: 20px;
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+    align-items: stretch;
+    flex-wrap: nowrap;
+}
 
-.accept-card
-    top: 40px
-    position: sticky
-    width: 100%
-    height: 30%
-    padding: 10px
-    background-color: $primary
+.cart-header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex-wrap: nowrap;
+    gap: 20px;
+    justify-content: flex-start;
+    align-content: center;
+}
+
+.cart-container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px;
+}
+
+.main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.accept-card {
+    top: 40px;
+    position: sticky;
+    width: 100%;
+    height: 30%;
+    padding: 10px;
+    background-color: $primary;
+}
 
 </style>

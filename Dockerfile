@@ -1,5 +1,5 @@
 # образ для gateway
-FROM node:18.13.0-alpine AS gateway
+FROM node:18.13.0-alpine AS production
 
 ARG NODE_ENV=production
 ENV NODE_ENV=${NODE_ENV}

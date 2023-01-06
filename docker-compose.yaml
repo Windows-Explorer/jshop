@@ -7,7 +7,7 @@ services:
     image: nest-api:1.0.0
     build:
       context: ./gateway
-      target: gateway
+      target: production
       dockerfile: .docker/Dockerfile
     command: npm run start:prod
     env_file: .env

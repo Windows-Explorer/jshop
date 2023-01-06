@@ -1,5 +1,5 @@
-import { UserCreateDto } from "src/dto/user-create.dto"
-import { UserSignInDto } from "src/dto/user-signin.dto"
+import { UserCreateDto } from "src/common/dto/user-create.dto"
+import { UserSignInDto } from "src/common/dto/user-signin.dto"
 import { User } from "src/users/entities/user.entity"
 import { ITokenPayload } from "./jwt-payload.interface"
 

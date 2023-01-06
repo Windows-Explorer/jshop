@@ -9,7 +9,7 @@ WORKDIR /usr/src/gateway
 
 # Установить зависимости
 COPY ./package*.json ./
-RUN npm install --only=production
+RUN npm install
 
 # Скопировать приложение из текущей директории в WORKDIR-директорию
 COPY . .

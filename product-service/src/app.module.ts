@@ -3,8 +3,6 @@ import { TypeOrmModule, TypeOrmModuleOptions } from "@nestjs/typeorm"
 import { ConfigModule, ConfigService } from "@nestjs/config"
 import { ProductsModule } from "./products/products.module"
 import { Product } from "./products/entities/product.entity"
-import { PaymentController } from "./payment/payment.controller";
-import { PaymentModule } from "./payment/payment.module"
 
 @Module({
   imports: [
@@ -28,9 +26,7 @@ import { PaymentModule } from "./payment/payment.module"
     }),
     ProductsModule,
     // PaymentModule
-  ],
-  controllers: [],
-  providers: [],
+  ]
 })
 
 export class AppModule {}

@@ -1,40 +1,45 @@
-import { Controller, HttpStatus, Param } from "@nestjs/common"
+import { Controller, HttpStatus, Inject } from "@nestjs/common"
 import { MessagePattern, Payload } from "@nestjs/microservices"
-import { IResult } from "src/dto/result.dto"
+import { PRODUCTS_SERVICE_TOKEN, RESULTER_TOKEN } from "src/common/constants/inject-tokens.constant"
+import { IProductsService } from "src/common/interfaces/products.service.interface"
+import { IResult } from "src/common/interfaces/result.interface"
+import { IResulter } from "src/common/interfaces/resulter.interface"
 import { Product } from "./entities/product.entity"
-import { ProductsService } from "./products.service"
 
 @Controller("products")
 export class ProductsController {
-    constructor( private readonly productsService: ProductsService ) {}
+    constructor(
+        @Inject(PRODUCTS_SERVICE_TOKEN) private readonly _productsService: IProductsService,
+        @Inject(RESULTER_TOKEN) private readonly _resulter: IResulter
+    ) {}
 
-    @MessagePattern("get.products.findAll")
+    @MessagePattern("products.findAll")
     async findAll(): Promise<IResult<Product[]>> {
-        const result: IResult<Product[]> = { statusCode: HttpStatus.OK, message: await this.productsService.findAll() }
+        const result: IResult<Product[]> = await this._resulter.responseAsync(HttpStatus.OK, await this._productsService.findAll())
         return result
     }
 
-    @MessagePattern("get.products.findById")
+    @MessagePattern("products.findById")
     async findById(@Payload() id: number): Promise<IResult<Product>> {
-        const result: IResult<Product> = { statusCode: HttpStatus.OK, message: await this.productsService.findById(id) }
+        const result: IResult<Product> = await this._resulter.responseAsync(HttpStatus.OK, await this._productsService.findById(id))
         return result
     }
 
-    @MessagePattern("post.products.save")
+    @MessagePattern("products.save")
     async save(@Payload() product: Product): Promise<IResult<Product>> {
-        const result: IResult<Product> = { statusCode: HttpStatus.OK, message: await this.productsService.save(product) }
+        const result: IResult<Product> = await this._resulter.responseAsync(HttpStatus.OK, await this._productsService.save(product))
         return result
     }
 
-    @MessagePattern("post.products.saveMany")
-    async saveMany(@Payload() product: Product[]): Promise<IResult<Product[]>> {
-        const result: IResult<Product[]> = { statusCode: HttpStatus.OK, message: await this.productsService.saveMany(product) }
+    @MessagePattern("products.saveMany")
+    async saveMany(@Payload() products: Product[]): Promise<IResult<Product[]>> {
+        const result: IResult<Product[]> = await this._resulter.responseAsync(HttpStatus.OK, await this._productsService.saveMany(products))
         return result
     }
 
-    @MessagePattern("post.products.removeOne")
+    @MessagePattern("products.removeOne")
     async removeOne(@Payload() id: number): Promise<IResult<Product[]>> {
-        const result: IResult<Product[]> = { statusCode: HttpStatus.OK, message: await this.productsService.removeOne(id) }
+        const result: IResult<Product[]> = await this._resulter.responseAsync(HttpStatus.OK, await this._productsService.removeOne(id))
         return result
     }
 }

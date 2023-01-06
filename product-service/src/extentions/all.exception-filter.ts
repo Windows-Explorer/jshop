@@ -1,12 +1,14 @@
-import { Catch, RpcExceptionFilter, ArgumentsHost } from "@nestjs/common"
-import { RpcException } from "@nestjs/microservices"
-import { IResult } from "src/dto/result.dto"
+import { Catch, RpcExceptionFilter, ArgumentsHost, HttpException, Inject } from "@nestjs/common"
+import { RESULTER_TOKEN } from "src/common/constants/inject-tokens.constant"
+import { IResult } from "src/common/interfaces/result.interface"
+import { IResulter } from "src/common/interfaces/resulter.interface"
 
 @Catch()
 export class AllExceptionsFilter implements RpcExceptionFilter<any> {
-  catch(exception: RpcException, host: ArgumentsHost): any {
+  constructor(@Inject(RESULTER_TOKEN) private readonly _resulter: IResulter) {}
+  catch(exception: HttpException, host: ArgumentsHost): any {
 
-    const result: IResult<any> = { statusCode: 400, message: exception.message }
+    const result: IResult<any> = this._resulter.response(exception.getStatus(), exception.message)
 
     return result
   }

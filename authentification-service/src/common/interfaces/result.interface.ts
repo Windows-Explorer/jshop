@@ -1,4 +1,4 @@
 export interface IResult<T> {
-    statusCode: number,
+    statusCode: number
     message: T
 }

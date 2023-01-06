@@ -1,20 +1,19 @@
 import { Module } from "@nestjs/common"
 import { TypeOrmModule, TypeOrmModuleOptions } from "@nestjs/typeorm"
-import { AppController } from "./app.controller"
 import { AuthModule } from "./auth/auth.module"
 import { User } from "./users/entities/user.entity"
 import { ConfigModule, ConfigService } from "@nestjs/config"
 import { UsersModule } from "./users/users.module"
 import { UniqueModule } from "./unique/unique.module"
+import { RESULTER_TOKEN } from "./common/constants/inject-tokens.constant"
+import { Resulter } from "./common/resulter"
 
 @Module({
   imports: [
+    UniqueModule,
     UsersModule,
     AuthModule,
-    ConfigModule.forRoot({
-      isGlobal: true,
-      cache: false
-    }),
+    ConfigModule.forRoot({ isGlobal: true, cache: false }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -29,9 +28,7 @@ import { UniqueModule } from "./unique/unique.module"
         synchronize: true
       })
     }),
-    UniqueModule,
-  ],
-  controllers: [AppController],
+  ]
 })
 
 export class AppModule {}

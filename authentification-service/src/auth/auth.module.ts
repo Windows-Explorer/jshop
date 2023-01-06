@@ -1,9 +1,12 @@
 import { Module } from "@nestjs/common"
-import { UsersModule } from "src/users/users.module"
 import { AuthService } from "./auth.service"
-import { JwtModule, JwtModuleOptions } from "@nestjs/jwt"
+import { JwtModule, JwtModuleOptions, JwtService } from "@nestjs/jwt"
 import { PassportModule } from "@nestjs/passport"
 import { ConfigModule, ConfigService } from "@nestjs/config"
+import { UsersModule } from "src/users/users.module"
+import { AUTH_SERVICE_TOKEN, CONFIG_SERVICE_TOKEN, JWT_SERVICE_TOKEN, RESULTER_TOKEN } from "src/common/constants/inject-tokens.constant"
+import { AuthController } from "./auth.controller"
+import { Resulter } from "src/common/resulter"
 
 @Module({
   imports: [
@@ -19,8 +22,14 @@ import { ConfigModule, ConfigService } from "@nestjs/config"
       })
     })
   ],
-  providers: [AuthService],
-  exports: [AuthService]
+  controllers: [ AuthController ],
+  providers: [
+    { provide: AUTH_SERVICE_TOKEN, useClass: AuthService },
+    { provide: JWT_SERVICE_TOKEN, useClass: JwtService },
+    { provide: CONFIG_SERVICE_TOKEN, useClass: ConfigService },
+    { provide: RESULTER_TOKEN, useClass: Resulter }
+  ],
+  exports: [ AUTH_SERVICE_TOKEN, JWT_SERVICE_TOKEN ]
 })
 
 export class AuthModule {}

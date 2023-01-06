@@ -1,0 +1,4 @@
+./gateway/node_modules
+./frontend/node_modules
+./authentification-service/node_modules
+./product-service/node_modules

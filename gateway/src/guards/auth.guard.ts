@@ -6,13 +6,13 @@ import { IResult } from "src/dto/result.dto"
 @Global()
 @Injectable()
 export class AuthGuard implements CanActivate {
-    constructor(@Inject("AUTH_GATEWAY") private readonly client: ClientKafka) {}
+    constructor(@Inject("AUTH_GATEWAY") private readonly _client: ClientKafka) {}
 
     async canActivate(context: ExecutionContext) {
         try {
             const request: Request = context.switchToHttp().getRequest()
             const token = request.headers.authorization.replace("Bearer ", "")
-            const result: IResult<any> = await this.client.send("get.auth.verify", token).toPromise()
+            const result: IResult<any> = await this._client.send("auth.verify", token).toPromise()
             return result.message
         }
         catch (error) {

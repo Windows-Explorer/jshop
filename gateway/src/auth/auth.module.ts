@@ -1,8 +1,8 @@
-import { Inject, Module } from '@nestjs/common'
-import { ConfigModule, ConfigService } from '@nestjs/config'
-import { ClientKafka, ClientsModule, Transport } from '@nestjs/microservices'
-import { AuthController } from './auth.controller'
-import { UniqueController } from './unique.controller'
+import { Inject, Module } from "@nestjs/common"
+import { ConfigModule, ConfigService } from "@nestjs/config"
+import { ClientKafka, ClientsModule, Transport } from "@nestjs/microservices"
+import { AuthController } from "./auth.controller"
+import { UniqueController } from "./unique.controller"
 
 @Module({
   imports: [
@@ -31,19 +31,20 @@ import { UniqueController } from './unique.controller'
 })
 
 export class AuthModule {
-  constructor(@Inject("AUTH_GATEWAY") private readonly client: ClientKafka) {}
+  constructor(@Inject("AUTH_GATEWAY") private readonly _client: ClientKafka) {}
 
   async onModuleInit() {
-    this.client.subscribeToResponseOf("get.auth.verify")
-    this.client.subscribeToResponseOf("get.unique.email")
-    this.client.subscribeToResponseOf("get.unique.username")
-    this.client.subscribeToResponseOf("post.auth.signUp")
-    this.client.subscribeToResponseOf("post.auth.signIn")
+    this._client.subscribeToResponseOf("auth.verify")
+    this._client.subscribeToResponseOf("auth.verify.admin")
+    this._client.subscribeToResponseOf("unique.email")
+    this._client.subscribeToResponseOf("unique.username")
+    this._client.subscribeToResponseOf("auth.signUp")
+    this._client.subscribeToResponseOf("auth.signIn")
 
-    await this.client.connect()
+    await this._client.connect()
   }
 
   async onModuleDestroy() {
-    await this.client.connect()
+    await this._client.close()
   }
 }

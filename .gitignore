@@ -5,7 +5,19 @@
 
 frontend/node_modules
 frontend/dist
-frontend/.env
+frontend/public/images
+frontend/src/assets/images
+
+
+###############
+####gateway####
+###############
+
+
+gateway/node_modules
+gateway/dist
+gateway/.env
+gateway/public/images
 
 
 ################################
@@ -18,10 +30,11 @@ authentification-service/dist
 authentification-service/.env
 
 
-###############
-####gateway####
-###############
+################################
+####product-service####
+################################
 
-gateway/node_modules
-gateway/dist
-gateway/.env
+
+product-service/dist
+product-service/node_modules
+

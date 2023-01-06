@@ -1,13 +1,19 @@
-import { Module } from '@nestjs/common'
-import { TypeOrmModule } from '@nestjs/typeorm'
-import { User } from './entities/user.entity'
-import { UsersService } from './users.service'
+import { Module } from "@nestjs/common"
+import { TypeOrmModule } from "@nestjs/typeorm"
+import { USERS_SERVICE_TOKEN } from "src/common/constants/inject-tokens.constant"
+import { User } from "./entities/user.entity"
+import { UsersService } from "./users.service"
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User])],
-  providers: [UsersService],
+  imports: [ TypeOrmModule.forFeature([ User ]) ],
+  providers: [
+    {
+      provide: USERS_SERVICE_TOKEN,
+      useClass: UsersService
+    }
+  ],
   controllers: [],
-  exports: [UsersService]
+  exports: [ USERS_SERVICE_TOKEN ]
 })
 
 export class UsersModule {}

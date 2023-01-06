@@ -1,94 +1,235 @@
 <template>
-  <q-layout view="hhh Lpr fFf">
+  <q-layout>
+    <transition name="header">
+      <q-header v-if="(route.name !=='signup' && route.name !=='signin')"
+        reveal
+        elevated
+        class="header"
+      >
+      <admin-layout v-if="store.getters.role === 'admin'" />
+        <q-tabs :dense="false" :align="'left'">
+          <LogoDarkIcon :style="'height:36px; margin-inline:28px; cursor:pointer;'" @click="router.push({ name: 'home'})" />
 
-  <q-header :reveal="true" :elevated="true">
+          <q-route-tab to="/products" label="Продукты" />
+          <q-route-tab to="/cart" label="Корзина" />
 
-    <q-tabs :align="'left'">
-      <q-route-tab to="/" label="Home" />
-      <q-route-tab v-if="!store.getters.isAuthorized" to="signup" label="SignUp" />
-      <q-route-tab v-if="!store.getters.isAuthorized" to="signin" label="SignIn" />
-      <q-route-tab v-if="store.getters.isAuthorized" @click="onLogout()" label="Logout"/>
-    </q-tabs>
+          <q-route-tab label="Учетная запись">
+            <q-menu :transition-show="'jump-up'" :transition-hide="'jump-down'">
+              <div class="menu">
+                <q-btn flat v-if="!store.getters.isAuthorized" to="signin" label="Войти" />
+                <q-btn flat v-if="!store.getters.isAuthorized" to="signup" label="Регистрация" />
+                <q-btn flat v-if="store.getters.isAuthorized" label="Выйти" v-close-popup @click="onLogout()" />
+              </div>
+            </q-menu>
+          </q-route-tab>
+        </q-tabs>
+      </q-header>
+    </transition>
 
-  </q-header>
-
-  <q-page-container :align="'center'">
-    <router-view />
-  </q-page-container>
-
+    <q-page-container class="page-container" :style="myTweak">
+      <transition name="content">
+        <router-view />
+      </transition>
+    </q-page-container>
   </q-layout>
   
 </template>
 
 <script lang="ts" setup>
 
+import { defineAsyncComponent, onMounted } from '@vue/runtime-core'
 import { useQuasar } from 'quasar'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
+
+const LogoDarkIcon = defineAsyncComponent(async () => import("./components/icons/LogoDarkIcon.vue"))
+const AdminLayout = defineAsyncComponent(async () => import("./components/admin/AdminLayout.vue"))
 
 const store = useStore()
 const router = useRouter()
 const quasar = useQuasar()
+const route = useRoute()
+
+const myTweak = (offset: number) => { height: offset ? `calc(100vh - ${offset}px)` : '200vh' }
 
 const onLogout = async () => {
   quasar.loading.show()
-  await store.dispatch('signOut')
+  await store.dispatch('signOut', router)
   quasar.loading.hide()
-  router.push("/")
 }
+
+
+onMounted(async () => {
+  quasar.loadingBar.setDefaults({
+    color: "negative",
+    hijackFilter (url: any) {
+      return /^http:\/\/\./.test(url)
+    }
+  })
+  quasar.dark.set(false)
+
+  store.dispatch("getRoleFromJwt")
+})
+
 
 </script>
 
 <style>
-section {
-  padding-top: 32px;
-}
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+  }
+
+  .page-container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: stretch;
+    justify-content: flex-start;
+  }
+
+  header {
+    font-family: Colus;
+  }
+
+  .menu {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: center;
+    align-items: stretch;
+    padding: 12px;
+    gap: 10px;
+    font-family: Colus;
+  }
+
+  section {
+    align-self: center;
+  }
+  html::-webkit-scrollbar {
+    display: none;
+  }
 
   html, body, #app {
     height: 100%;
     margin: 0 auto;
-    background-color: #111111;
+    box-sizing: border-box;
   }
   
   @font-face {
-    font-family: FuturaBook;
-    src: url("../src/assets/futurabook.otf") format("opentype");
+    font-family: SpectralRegular;
+    src: url("../src/assets/Spectral-Regular.ttf") format("truetype");
   }
   @font-face {
-    font-family: FuturaDemi;
-    src: url("../src/assets/futurademi.otf") format("opentype");
-  }
-  @font-face {
-    font-family: FuturaLight;
-    src: url("../src/assets/futuralight.otf") format("opentype");
-  }
-  @font-face {
-    font-family: FuturaMedium;
-    src: url("../src/assets/futuramedium.otf") format("opentype");
+    font-family: Colus;
+    src: url("../src/assets/Colus.ttf") format("truetype");
   }
 
   .form {
+    font-family: SpectralRegular;
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    width: 300px;
-    padding-block: 30px;
+    width: 360px;
     padding-inline: 20px;
     border-radius: 4px;
-    background-color: white;
+    background-color: transparent;
     transition: 0.5s ease;
-    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
-    gap: 6px;
+    gap: 8px;
+  }
+  .form h5 {
+    font-family: Colus;
   }
   
-  .form h2 {
-    font-family: FuturaDemi;
-    font-size: 28px;
-    margin: 0px;
-    align-self: center;
-    color: rgb(53, 53, 53);
-    text-transform: uppercase;
-    user-select: none;
+  .form .buttons {
+    font-family: Colus;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 10px;
   }
+
+  .form .redirect-container {
+    font-family: SpectralRegular;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .form .redirect-container .redirect {
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .header-enter-active,
+  .header-leave-active {
+    transition: transform 0.7s ease;
+  }
+
+  .header-enter-from,
+  .header-leave-to {
+    transform: translateY(-100%);
+  }
+
+  .content-enter-active,
+  .content-leave-active {
+    transition: transform 0.7s ease;
+  }
+
+  .content-enter-from,
+  .content-leave-to {
+    transform: translateY(-100%);
+  }
+
+  .footer-enter-active,
+  .footer-leave-active {
+    transition: transform 0.7s ease;
+  }
+
+  .footer-enter-from,
+  .footer-leave-to {
+    transform: translateY(100%);
+  }
+</style>
+
+<style lang="scss">
+
+  .body--light {
+    background-color: $primary;
+    color: $secondary
+  }
+
+  .body--light .header {
+    background-color: $dark;
+    color: $primary
+  }
+
+  .body--light .form .redirect {
+    color: $secondary
+  }
+
+  .body--light .form {
+    padding-block: 10px;
+    box-shadow: 0 0px 20px #0000003a;
+  }
+
+  .body--light .q-icon {
+    color: $primary;
+  }
+
+
+
+  .body--dark .redirect {
+    color: $primary
+  }
+
 
 </style>

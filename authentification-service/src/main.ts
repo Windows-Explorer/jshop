@@ -1,9 +1,10 @@
-import { ValidationPipe } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { NestFactory } from '@nestjs/core'
-import { MicroserviceOptions, Transport } from '@nestjs/microservices'
-import { AppModule } from './app.module'
-import { AllExceptionsFilter } from './extentions/all.exception-filter';
+import { ValidationPipe } from "@nestjs/common"
+import { ConfigService } from "@nestjs/config"
+import { NestFactory } from "@nestjs/core"
+import { MicroserviceOptions, Transport } from "@nestjs/microservices"
+import { AppModule } from "./app.module"
+import { Resulter } from "./common/resulter"
+import { AllExceptionsFilter } from "./extentions/all.exception-filter"
 
 
 
@@ -15,12 +16,12 @@ async function bootstrap() {
             brokers: [`${process.env.BROKER_HOST}:${process.env.BROKER_PORT}`],
         },
         consumer: {
-            groupId: 'auth-consumer',
+            groupId: "auth-consumer",
             allowAutoTopicCreation: true
         }
     }
   })
-  app.useGlobalFilters(new AllExceptionsFilter())
+  app.useGlobalFilters(new AllExceptionsFilter(new Resulter()))
   app.useGlobalPipes(new ValidationPipe())
 
   console.log(app.get(ConfigService))

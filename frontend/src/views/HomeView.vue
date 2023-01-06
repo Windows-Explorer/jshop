@@ -1,22 +1,29 @@
 <template>
     <section>
-        HomePage
+        <product-carousel style="height: 100%; width: 100%; z-index: 1000;" />
     </section>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
+
+import { defineAsyncComponent } from "@vue/runtime-core"
+
+
+const ProductCarousel = defineAsyncComponent(async () => import("../components/ProductCarousel.vue"))
 
 </script>
 
 <style scoped>
     section {
-        color: white;
-        height: 100%;
         width: 100%;
+        height: 100%;
+        color: white;
         display: flex;
-        flex-direction: row;
-        align-content: center;
-        justify-content: space-evenly;
+        flex-direction: column;
         align-items: center;
+        flex-wrap: nowrap;
+        align-content: center;
+        justify-content: flex-start;
+        align-items: stretch;
     }
 </style>

@@ -1,83 +1,81 @@
-import { BadRequestException, Inject, Injectable, UnauthorizedException } from '@nestjs/common'
-import { JwtService, JwtSignOptions } from '@nestjs/jwt'
-import { UsersService } from 'src/users/users.service'
-import { UserCreateDto } from '../dto/user-create.dto'
+import { HttpException, HttpStatus, Inject, Injectable } from "@nestjs/common"
+import { JwtService } from "@nestjs/jwt"
+import { UserCreateDto } from "../common/dto/user-create.dto"
 import * as bcrypt from "bcrypt"
-import { User } from 'src/users/entities/user.entity'
-import { ITokenPayload } from './interfaces/jwt-payload.interface'
-import { RpcException } from '@nestjs/microservices'
-import { UserSignInDto } from 'src/dto/user-signin.dto'
-import { ConfigService } from '@nestjs/config'
+import { User } from "src/users/entities/user.entity"
+import { ITokenPayload } from "../common/interfaces/jwt-payload.interface"
+import { UserSignInDto } from "src/common/dto/user-signin.dto"
+import { ConfigService } from "@nestjs/config"
+import { IUsersService } from "../common/interfaces/user.service.interface"
+import { CONFIG_SERVICE_TOKEN, JWT_SERVICE_TOKEN, USERS_SERVICE_TOKEN } from "src/common/constants/inject-tokens.constant"
+import { IAuthService } from "src/common/interfaces/auth.service.interface"
 
 @Injectable()
-export class AuthService {
+export class AuthService implements IAuthService {
     constructor(
-        private readonly usersService: UsersService,
-        private readonly jwtService: JwtService,
-        private readonly configService: ConfigService
-        ){}
+        @Inject(USERS_SERVICE_TOKEN) private readonly _usersService: IUsersService,
+        @Inject(JWT_SERVICE_TOKEN) private readonly _jwtService: JwtService,
+        @Inject(CONFIG_SERVICE_TOKEN) private readonly _configService: ConfigService
+    ) {}
 
-
-    async signUp(userDto: UserCreateDto): Promise<any> {
+    async signUp(userDto: UserCreateDto): Promise<string> {
         try {
             const passwordHash = await bcrypt.hash(userDto.password, 10)
-            const user = await this.usersService.create({
+            const user = await this._usersService.create({
                 username: userDto.username,
                 email: userDto.email,
                 phoneNumber: userDto.phoneNumber,
                 passwordHash: passwordHash,
                 role: "user"
             })
-    
             return await this.signUser(user)
         }
         catch(error) {
-            throw new RpcException(error)
+            throw new HttpException(error, HttpStatus.UNAUTHORIZED)
         }
     }
 
 
-    async signIn(userDto: UserSignInDto): Promise<any> {
-        console.log("UserDto:")
-        console.log(userDto)
-        const user = await this.usersService.findByEmail(userDto.email)
-        console.log("User")
-        console.log(user)
-
+    async signIn(userDto: UserSignInDto): Promise<string> {
+        const user = await this._usersService.findByEmail(userDto.email)
         if(user && (await bcrypt.compare(userDto.password, user.passwordHash))) {
             return await this.signUser(user)
         }
-
-        throw new RpcException("Unauthorized")
-
+        throw new HttpException("Unauthorized", HttpStatus.UNAUTHORIZED)
     }
 
 
-    private async signUser(user: User){
+    async verifyToken(token: string): Promise<string> {
+        try {
+            const data = await this._jwtService.verifyAsync(token, { secret: this._configService.get<string>("JWT_SECRET") })
+            return await this.generateToken({ email: data.email, role: data.role })
+        }
+        catch {
+            return ""
+        }
+    }
+
+    async verifyAdminToken(token: string): Promise<boolean> {
+            await this._jwtService.verifyAsync(token, { secret: this._configService.get<string>("JWT_SECRET") })
+            const decodedToken = await this._jwtService.decode(token)
+            if (typeof(decodedToken) !== "string" && decodedToken.role === "admin" ){
+                return true
+            }
+            return false
+    }
+
+
+    async signUser(user: User): Promise<string> {
         const tokenPayload: ITokenPayload = {
-            id: user.id,
             email: user.email,
             role: user.role
         }
-
         const token = await this.generateToken(tokenPayload)
-
         return token
     }
 
 
-    private async generateToken(data: ITokenPayload): Promise<string> {
-        return await this.jwtService.signAsync(data, { secret: this.configService.get<string>("JWT_SECRET") })
-    }
-
-
-    async verifyToken(token: string): Promise<any> {
-        try {
-            await this.jwtService.verifyAsync(token, { secret: this.configService.get<string>("JWT_SECRET") })
-            return true
-        }
-        catch {
-            return false
-        }
+    async generateToken(data: ITokenPayload): Promise<string> {
+        return await this._jwtService.signAsync(data, { secret: this._configService.get<string>("JWT_SECRET") })
     }
 }

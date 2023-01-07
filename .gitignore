@@ -1,40 +1,26 @@
-################
-####frontend####
-################
-
-
+#frontend
 frontend/node_modules
 frontend/dist
 frontend/public/images
 frontend/src/assets/images
 
-
-###############
-####gateway####
-###############
-
-
+#gateway
 gateway/node_modules
 gateway/dist
 gateway/.env
 gateway/public/images
 
-
-################################
-####authentification-service####
-################################
-
-
+#authentification-service
 authentification-service/node_modules
 authentification-service/dist
 authentification-service/.env
 
-
-################################
-####product-service####
-################################
-
-
+#product-service
 product-service/dist
 product-service/node_modules
 
+#kafka
+kafka
+kafka/kafka1
+kafka/zookeeper1
+kafka/*

@@ -1,7 +1,7 @@
 # gateway
 FROM node:18-alpine
 
-WORKDIR /usr/src/gateway
+WORKDIR /usr/src/product-service
 
 COPY ./package*.json ./
 RUN npm install

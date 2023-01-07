@@ -109,12 +109,12 @@ services:
       - default
 
   products_microservice:
-    container_name: auth_microservice
+    container_name: products_microservice
     image: nest-api:1.0.0
     restart: always
-    hostname: auth_microservice_host
+    hostname: products_microservice_host
     build:
-      context: ./authentification-service
+      context: ./products-service
       dockerfile: ./Dockerfile
     environment:
       DATABASE_USERNAME: "jshop_user"

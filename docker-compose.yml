@@ -56,7 +56,7 @@ services:
       KAFKA_ZOOKEEPER_CONNECT: "zoo_host:2181"
       KAFKA_BROKER_ID: 1
       KAFKA_LOG4J_LOGGERS: "kafka.controller=INFO,kafka.producer.async.DefaultEventHandler=INFO,state.change.logger=INFO"
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 5
     volumes:
       - ./kafka/full-stack/kafka/data:/var/lib/kafka/data
     depends_on:
@@ -78,9 +78,6 @@ services:
       BROKER_PORT: 9092
     ports:
       - "3000:3000"
-    depends_on:
-      - zookeeper
-      - kafka
     networks:
       - default
 
@@ -102,31 +99,25 @@ services:
       DATABASE_HOST: db_host
       BROKER_HOST: kafka_host
       BROKER_PORT: 9092
-    depends_on:
-      - zookeeper
-      - kafka
     networks:
       - default
 
-  products_microservice:
-    container_name: products_microservice
+
+  product_microservice:
+    container_name: product_microservice
     image: nest-api:1.0.0
     restart: always
-    hostname: products_microservice_host
+    hostname: product_microservice_host
     build:
-      context: ./products-service
+      context: ./product-service
       dockerfile: ./Dockerfile
     environment:
       DATABASE_USERNAME: "jshop_user"
       DATABASE_PASSWORD: "jshop_test_password"
       DATABASE_DATABASE: "jshop"
       DATABASE_HOST: db_host
-
       BROKER_HOST: kafka_host
       BROKER_PORT: 9092
-    depends_on:
-      - zookeeper
-      - kafka
     networks:
       - default
 

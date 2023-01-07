@@ -27,6 +27,7 @@ async function bootstrap() {
   console.log(app.get(ConfigService))
 
   await app.listen()
+  console.log("Auth service is running")
 }
 
 bootstrap()

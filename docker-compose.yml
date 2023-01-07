@@ -1,6 +1,29 @@
 version: '3'
 
 services:
+  db:
+    image: mariadb
+    container_name: db
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: root
+      MARIADB_DATABASE: jshop
+      MARIADB_USER: jshop_user
+      MARIADB_PASSWORD: jshop_test_password
+    networks:
+      - default
+
+
+  adminer:
+    image: adminer
+    container_name: adminer
+    restart: always
+    ports:
+      - 8080:8080
+    networks:
+      - default
+
+
   zookeeper:
     image: zookeeper:3.4.9
     container_name: zookeeper
@@ -15,7 +38,6 @@ services:
     volumes:
       - ./kafka/full-stack/zoo/data:/data
       - ./kafka/full-stack/zoo/datalog:/datalog
-    
     networks:
       - default
 
@@ -23,6 +45,7 @@ services:
   kafka:
     image: confluentinc/cp-kafka:5.2.1
     container_name: kafka
+    restart: always
     hostname: kafka_host
     ports:
       - "9092:9092"
@@ -38,8 +61,6 @@ services:
       - ./kafka/full-stack/kafka/data:/var/lib/kafka/data
     depends_on:
       - zookeeper
-    restart: always
-
     networks:
       - default
 
@@ -47,6 +68,7 @@ services:
   nest_gateway:
     container_name: nest_gateway
     image: nest-api:1.0.0
+    restart: always
     hostname: nest_gateway_host
     build:
       context: ./gateway
@@ -59,7 +81,34 @@ services:
     depends_on:
       - zookeeper
       - kafka
+    networks:
+      - default
 
+
+  auth_microservice:
+    container_name: auth_microservice
+    image: nest-api:1.0.0
+    restart: always
+    hostname: auth_microservice_host
+    build:
+      context: ./authentification-service
+      dockerfile: ./Dockerfile
+    environment:
+      JWT_SECRET: "123"
+      JWT_EXPIRESIN: "3600s"
+
+      DATABASE_USERNAME: "jshop_user"
+      DATABASE_PASSWORD: "jshop_test_password"
+      DATABASE_DATABASE: "jshop"
+      DATABASE_HOST: db_host
+
+      BROKER_HOST: kafka_host
+      BROKER_PORT: 9092
+    ports:
+      - "3000:3000"
+    depends_on:
+      - zookeeper
+      - kafka
     networks:
       - default
 

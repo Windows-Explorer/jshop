@@ -1,15 +1,13 @@
 # образ для gateway
 FROM node:18-alpine
 
-ARG NODE_ENV=production
-ENV NODE_ENV=${NODE_ENV}
-
 # Создать директорию внутри контейнера
 WORKDIR /usr/src/gateway
 
 # Установить зависимости
 COPY ./package*.json ./
 RUN npm install
+RUN npm i -g @nestjs/cli
 
 # Скопировать приложение из текущей директории в WORKDIR-директорию
 COPY . .

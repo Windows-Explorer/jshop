@@ -72,7 +72,7 @@ services:
     hostname: nest_gateway_host
     build:
       context: ./gateway
-      dockerfile: ./gateway/Dockerfile
+      dockerfile: ./gateway/Dockerfile_gateway
     environment:
       BROKER_HOST: kafka_host
       BROKER_PORT: 9092
@@ -89,7 +89,7 @@ services:
     hostname: auth_microservice_host
     build:
       context: ./authentification-service
-      dockerfile: ./authentification-service/Dockerfile
+      dockerfile: ./authentification-service/Dockerfile_auth
     environment:
       JWT_SECRET: "123"
       JWT_EXPIRESIN: "3600s"
@@ -110,7 +110,7 @@ services:
     hostname: product_microservice_host
     build:
       context: ./product-service
-      dockerfile: ./product-service/Dockerfile
+      dockerfile: ./product-service/Dockerfile_product
     environment:
       DATABASE_USERNAME: "jshop_user"
       DATABASE_PASSWORD: "jshop_test_password"

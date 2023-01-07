@@ -96,7 +96,27 @@ services:
     environment:
       JWT_SECRET: "123"
       JWT_EXPIRESIN: "3600s"
+      DATABASE_USERNAME: "jshop_user"
+      DATABASE_PASSWORD: "jshop_test_password"
+      DATABASE_DATABASE: "jshop"
+      DATABASE_HOST: db_host
+      BROKER_HOST: kafka_host
+      BROKER_PORT: 9092
+    depends_on:
+      - zookeeper
+      - kafka
+    networks:
+      - default
 
+  products_microservice:
+    container_name: auth_microservice
+    image: nest-api:1.0.0
+    restart: always
+    hostname: auth_microservice_host
+    build:
+      context: ./authentification-service
+      dockerfile: ./Dockerfile
+    environment:
       DATABASE_USERNAME: "jshop_user"
       DATABASE_PASSWORD: "jshop_test_password"
       DATABASE_DATABASE: "jshop"
@@ -104,8 +124,6 @@ services:
 
       BROKER_HOST: kafka_host
       BROKER_PORT: 9092
-    ports:
-      - "3000:3000"
     depends_on:
       - zookeeper
       - kafka

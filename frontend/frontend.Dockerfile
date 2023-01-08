@@ -1,7 +1,8 @@
-FROM ubuntu/nginx
+FROM ubuntu:22.04
 
 WORKDIR /usr/src/frontend
 
+RUN apt install nginx
 RUN apt install npm
 COPY ./package*.json ./
 RUN npm install --production

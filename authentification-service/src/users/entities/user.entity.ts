@@ -20,7 +20,9 @@ export abstract class User implements IUser {
     @Column({ length: 255, type: "varchar" })
     passwordHash: string
 
-    @Column({ length: 16, type: "varchar", default: "user"})
+    @Column({ length: 16, type: "varchar", default: "user" })
     role: string
 
+    @Column({ length: 255, type: "varchar" })
+    phoneNumber: string
 }

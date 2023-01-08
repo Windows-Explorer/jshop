@@ -11,7 +11,7 @@ RUN npm install @vue/cli-service
 COPY . .
 COPY ./config/nginx.conf /etc/nginx/sites-available/nginx.conf
 RUN ln -s /etc/nginx/sites-available/nginx.conf /etc/nginx/sites-enabled/nginx.conf
-RUN systemctl restart nginx
+RUN service nginx restart
 
 RUN npm run build
 

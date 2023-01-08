@@ -2,6 +2,7 @@ FROM ubuntu/nginx
 
 WORKDIR /usr/src/frontend
 
+RUN apt install npm
 COPY ./package*.json ./
 RUN npm install --production
 RUN npm install @vue/cli-service

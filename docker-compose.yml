@@ -46,7 +46,7 @@ services:
   kafka:
     image: confluentinc/cp-kafka:5.2.1
     container_name: kafka
-    #restart: always
+    restart: always
     hostname: kafka_host
     ports:
       - "9092:9092"
@@ -57,7 +57,7 @@ services:
       KAFKA_ZOOKEEPER_CONNECT: "zoo_host:2181"
       KAFKA_BROKER_ID: 1
       KAFKA_LOG4J_LOGGERS: "kafka.controller=INFO,kafka.producer.async.DefaultEventHandler=INFO,state.change.logger=INFO"
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 6
     volumes:
       - ./kafka/full-stack/kafka/data:/var/lib/kafka/data
     depends_on:
@@ -136,10 +136,8 @@ services:
       dockerfile: frontend.Dockerfile
     environment:
       VUE_APP_GATEMAY_ADDRESS: "nest_gateway_host:3000"
-    depends_on:
-      - nest_gateway
     ports:
-      - "80:8080"
+      - "80:80"
     networks:
       - default
 

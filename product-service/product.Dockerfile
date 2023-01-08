@@ -1,5 +1,5 @@
 # образ для gateway
-FROM node:18
+FROM node:18-alpine
 
 # Создать директорию внутри контейнера
 WORKDIR /usr/src/product-service

@@ -138,6 +138,8 @@ services:
       VUE_APP_GATEMAY_ADDRESS: "nest_gateway_host:3000"
     depends_on:
       - nest_gateway
+    ports:
+      - "80:8080"
     networks:
       - default
 

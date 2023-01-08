@@ -8,10 +8,10 @@ RUN apt-get install npm -y
 COPY ./package*.json ./
 RUN npm install --production
 RUN npm install @vue/cli-service
+RUN npm install -g @quasar/cli
 COPY . .
 COPY ./config/nginx.conf /etc/nginx/sites-available/nginx.conf
 RUN ln -s /etc/nginx/sites-available/nginx.conf /etc/nginx/sites-enabled/nginx.conf
-RUN service nginx restart
 
-RUN npm run build
+RUN quasar build
 

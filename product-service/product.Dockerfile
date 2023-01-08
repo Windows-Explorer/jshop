@@ -8,7 +8,6 @@ WORKDIR /usr/src/product-service
 COPY ./package*.json ./
 RUN npm install
 RUN npm i -g @nestjs/cli
-RUN cat product > product.TEST
 
 # Скопировать приложение из текущей директории в WORKDIR-директорию
 COPY . .

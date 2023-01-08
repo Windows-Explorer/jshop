@@ -127,6 +127,20 @@ services:
     networks:
       - default
 
+  frontend_nginx:
+    container_name: frontend_nginx
+    restart: always
+    hostname: frontend_nginx_host
+    build:
+      context: frontend
+      dockerfile: frontend.Dockerfile
+    environment:
+      VUE_APP_GATEMAY_ADDRESS: "nest_gateway_host:3000"
+    depends_on:
+      - nest_gateway
+    networks:
+      - default
+
 networks:
   default:
     external:

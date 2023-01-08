@@ -1,4 +1,4 @@
-FROM node:18-alpine
+FROM node:18
 
 # Создать директорию внутри контейнера
 WORKDIR /usr/src/authentification-service

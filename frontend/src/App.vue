@@ -5,6 +5,7 @@
         reveal
         elevated
         class="header"
+        dark
       >
       <admin-layout v-if="store.getters.role === 'admin'" />
         <q-tabs :dense="false" :align="'left'">
@@ -66,7 +67,7 @@ onMounted(async () => {
       return /^http:\/\/\./.test(url)
     }
   })
-  quasar.dark.set(false)
+  quasar.dark.set(true)
 
   store.dispatch("getRoleFromJwt")
 })
@@ -202,6 +203,7 @@ onMounted(async () => {
 
 <style lang="scss">
 
+
   .body--light {
     background-color: $primary;
     color: $secondary
@@ -210,6 +212,10 @@ onMounted(async () => {
   .body--light .header {
     background-color: $dark;
     color: $primary
+  }
+  .body--dark .header {
+    background-color: $dark;
+    color: $primary;
   }
 
   .body--light .form .redirect {

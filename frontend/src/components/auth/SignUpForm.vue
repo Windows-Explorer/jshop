@@ -83,7 +83,7 @@ const store = useStore()
 const router = useRouter()
 const quasar = useQuasar()
 
-const user = reactive({ username: "", email: "", number: "", password: "", confirmPassword: "" })
+const user = reactive({ username: "", email: "", phoneNumber: "", password: "", confirmPassword: "" })
 
 const validationRules = {
     username: [

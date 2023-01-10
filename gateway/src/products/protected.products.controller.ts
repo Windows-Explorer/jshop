@@ -31,7 +31,8 @@ export class ProtectedProductsController {
         storage: diskStorage({
             destination: "./public/images",
             filename: (req, file, callback) => {
-                callback(null, file.originalname)
+		const filename: string = Buffer.from(file.originalname, 'latin1').toString('utf8')
+                callback(null, filename)
             }
         })
     }))

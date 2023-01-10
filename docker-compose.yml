@@ -135,7 +135,7 @@ services:
       context: frontend
       dockerfile: frontend.Dockerfile
     environment:
-      VUE_APP_GATEMAY_ADDRESS: "nest_gateway_host:3000"
+      VUE_APP_GATEMAY_ADDRESS: "95.163.243.173:3000"
     ports:
       - "80:80"
     networks:

@@ -1,11 +1,12 @@
 <template>
     <section>
         <q-uploader
-            url="http://localhost:3000/products/save/images"
-            :headers="[{name: 'Authorization', value: token}]"
+            url="http://95.163.243.173:3000/products/save/images"
+            :headers="[{ name: 'Authorization', value: token }, { name: 'Content-Transfer-Encoding', value: '8BIT' }]"
             label="Upload"
             multiple
-            style="width: 600px; height: 500px"
+	    color="dark"
+            style="width: 600px; height: 500px; background-color: '#131313'"
         />
     </section>
     

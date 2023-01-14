@@ -11,6 +11,4 @@ import { FilesService } from "./files.service"
     ],
     controllers: [ FilesProtectedController ]
 })
-export class FilesModule {
-
-}
+export class FilesModule {}

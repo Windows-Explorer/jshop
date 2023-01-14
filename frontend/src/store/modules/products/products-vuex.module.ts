@@ -1,8 +1,6 @@
 import { store } from '@/store'
 import { customNotifies } from '@/store/notifies'
 import axios from 'axios'
-import { Dialog, Loading, Notify } from 'quasar'
-import { Ref } from 'vue'
 import { Module, VuexModule, Mutation, Action } from 'vuex-module-decorators'
 import { IProduct } from './product.interface'
 

@@ -36,11 +36,9 @@ export class TokenStoreModule extends VuexModule {
       router.push({ name: "home"})
       return token
     }
-    else {
-      Dialog.create({ title: "Unauthorized", message: "Some is invalid" })
-      VueCookieNext.removeCookie("token")
-      return ""
-    }
+    Dialog.create({ title: "Не авторизован", message: "Что-то пошло не так" })
+    VueCookieNext.removeCookie("token")
+    return ""
   }
 
 
@@ -56,14 +54,12 @@ export class TokenStoreModule extends VuexModule {
       router.push({ name: "home"})
       return token
     }
-    else{
-      Dialog.create({
-        title: "Unauthorized",
-        message: "Email or password is invalid"
-      })
-      VueCookieNext.removeCookie("token")
-      return ""
-    }
+    Dialog.create({
+      title: "Не авторизован",
+      message: "Логин или пароль не верный"
+    })
+    VueCookieNext.removeCookie("token")
+    return ""
   }
 
   @Action({ commit: "tokenMutation"})

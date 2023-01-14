@@ -15,5 +15,5 @@ export interface UserSignUp {
 
 export interface AuthPayload {
     user: UserSignIn | UserSignUp
-    router?: Router 
+    router: Router 
 }

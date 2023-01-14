@@ -7,9 +7,7 @@
             multiple
         />
 
-        <q-list class="list"
-            separator
-        >
+        <q-list class="list" separator>
             <q-item clickable v-ripple>
                 <q-item-section v-for="(file, index) in files" :key="index" />
             </q-item>
@@ -21,7 +19,8 @@
 
 <script setup lang="ts">
 
-import { defineAsyncComponent, onMounted, Ref, ref } from "@vue/runtime-core"
+import { IFile } from "../../store/modules/files/file-object.interface"
+import { onMounted, Ref, ref } from "@vue/runtime-core"
 import { useQuasar } from "quasar"
 import { useRouter } from "vue-router"
 import { useStore } from "vuex"
@@ -31,9 +30,11 @@ const quasar = useQuasar()
 const store = useStore()
 
 const token: Ref<string> = ref<string>("")
+const files: Ref<IFile[]> = ref<IFile[]>([])
 
 onMounted(async () => {
     token.value = await store.getters.token
+    files.value = await store.dispatch("getAllFiles")
 })
 
 </script>
@@ -48,13 +49,13 @@ section {
     justify-content: center;
     gap: 12px
 }
-
 .uploader {
     width: 50%;
     min-height: 100%;
 }
-
 .list {
-    min-height: 100%; width: 50%;
+    width: 50%;
+    min-height: 100%;
+    background-color: $primary;
 }
 </style>

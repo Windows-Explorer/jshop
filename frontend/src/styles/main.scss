@@ -1,0 +1,95 @@
+@import './quasar.variables.sass'
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+.page-container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: stretch;
+    justify-content: flex-start;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: center;
+    align-items: stretch;
+    padding: 12px;
+    gap: 10px;
+    font-family: Colus;
+}
+
+html::-webkit-scrollbar {
+    display: none;
+}
+
+html, body, #app {
+    height: 100%;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.form {
+    font-family: SpectralRegular;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 360px;
+    padding-inline: 20px;
+    border-radius: 4px;
+    background-color: transparent;
+    transition: 0.5s ease;
+    gap: 8px;
+}
+
+.form h5 {
+    font-family: Colus;
+}
+
+.form .buttons {
+    font-family: Colus;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.form .redirect-container {
+    font-family: SpectralRegular;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.form .redirect-container .redirect {
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.header {
+    background-color: red;
+
+}
+
+.page-section {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.redirect {
+    color: $primary;    
+}

@@ -1,5 +1,5 @@
 <template>
-    <section>
+    <section class="page-section">
         <q-uploader
             url="http://localhost:3000/products/save/images"
             :headers="[{name: 'Authorization', value: token}]"

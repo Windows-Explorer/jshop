@@ -1,5 +1,5 @@
 <template>
-    <section>
+    <section class="page-section">
         <div class="cart-header">
             <h5>Корзина</h5>
             <h5>Итого: {{ finalCost }}<small> ₽</small></h5>
@@ -60,25 +60,6 @@ h5 {
     margin: 0px;
 }
 
-.body--light h5 {
-    color: $secondary
-}
-
-.body--dark h5 {
-    color: $primary
-}
-
-section {
-    width: 100%;
-    height: 100%;
-    padding-top: 10px;
-    padding-inline: 20px;
-    display: flex;
-    gap: 10px;
-    flex-direction: column;
-    align-items: stretch;
-    flex-wrap: nowrap;
-}
 
 .cart-header {
     display: flex;
@@ -103,6 +84,7 @@ section {
     display: flex;
     flex-direction: column;
     align-items: stretch;
+    color: $secondary
 }
 
 .accept-card {

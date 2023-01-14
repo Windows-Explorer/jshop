@@ -112,12 +112,16 @@ const validationRules = {
 
 
 const onSubmit = async () => {
-    quasar.loading.show()
-    await store.dispatch("signUp", { user: user, router: router})
-    quasar.loading.hide()
+    await store.dispatch("signUp", { user: user, router: router })
 }
 
 const onReset = async () => router.push({ name: "home" })
 
 
 </script>
+
+<style lang="scss" scoped>
+.redirect {
+    color: $secondary
+}
+</style>

@@ -22,7 +22,7 @@
             no-error-icon
         />
         <q-input
-            v-model="user.number"
+            v-model="user.phoneNumber"
             label="Номер телефона"
             :mask="'+7 (###) ###-##-##'"
             :standout="quasar.dark.mode"
@@ -83,7 +83,7 @@ const store = useStore()
 const router = useRouter()
 const quasar = useQuasar()
 
-const user = reactive({ username: "", email: "", number: "", password: "", confirmPassword: "" })
+const user = reactive({ username: "", email: "", phoneNumber: "", password: "", confirmPassword: "" })
 
 const validationRules = {
     username: [

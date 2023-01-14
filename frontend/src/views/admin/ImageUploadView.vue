@@ -1,7 +1,7 @@
 <template>
     <section class="page-section">
         <q-uploader class="uploader"
-            url="http://31.31.201.48:3000/products/save/images"
+            url="http://31.31.201.48:3000/files"
             :headers="[{ name: 'Authorization', value: token }]"
             label="Загрузить изображение"
             multiple
@@ -9,7 +9,7 @@
 
         <q-list class="list" separator>
             <q-item clickable v-ripple>
-                <q-item-section v-for="(file, index) in files" :key="index" />
+                <q-item-section v-for="(file, index) in files" :key="index">{{ file }}</q-item-section>
             </q-item>
         </q-list>
     </section>
@@ -34,7 +34,7 @@ const files: Ref<IFile[]> = ref<IFile[]>([])
 
 onMounted(async () => {
     token.value = await store.getters.token
-    files.value = await store.dispatch("getAllFiles")
+    files.value = await store.dispatch("getFiles")
 })
 
 </script>
@@ -57,5 +57,6 @@ section {
     width: 50%;
     min-height: 100%;
     background-color: $primary;
+    color: $secondary;
 }
 </style>

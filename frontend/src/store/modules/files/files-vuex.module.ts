@@ -16,7 +16,7 @@ export class CartStoreModule extends VuexModule {
 
   @Action({ commit: "cartMutation" })
   async getAllFiles(): Promise<IFile[]> {
-    const result = await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/products/save/image`, {
+    const result = await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/files`, {
         method: "GET",
         headers: { "Authorization": `Bearer ${store.getters.token}` }
     })

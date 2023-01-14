@@ -19,7 +19,7 @@ const product: Ref<any> = ref()
 
 const getContent = async () => {
     loading.value = true
-    product.value = await store.dispatch("getOneProduct", router.currentRoute.value.params.id)
+    product.value = await store.dispatch("getProductById", router.currentRoute.value.params.id)
     loading.value = false
 }
 

@@ -20,11 +20,12 @@ export class FilesProtectedController {
             }
         })
     }))
-    @Post("/save")
+    @Post("/")
     async saveMultipleImages(@UploadedFiles() files: Express.Multer.File[], @Res() response: Response): Promise<void> {
         response.send(files)
     }
 
+    @Get("/")
     async getFileList(@Res() response: Response): Promise<void> {
         response.send(await this._filesService.findFilesFromPublic())
     }

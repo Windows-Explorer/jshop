@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Inject, Injectable, Post, Req, Res } from "@nestjs/common"
+import { Body, Controller, Get, Inject, Post, Req, Res } from "@nestjs/common"
 import { ClientKafka } from "@nestjs/microservices"
 import { Request, Response } from "express"
 import { AUTH_KAFKA_CLIENT_TOKEN } from "src/common/constants/inject-tokens.constant"

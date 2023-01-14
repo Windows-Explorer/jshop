@@ -1,7 +1,7 @@
 <template>
     <section class="page-section">
         <q-uploader
-            url="http://localhost:3000/products/save/images"
+            url="http://31.31.201.48:3000/products/save/images"
             :headers="[{name: 'Authorization', value: token}]"
             label="Upload"
             multiple
@@ -22,6 +22,7 @@ import { useStore } from "vuex"
 const router = useRouter()
 const quasar = useQuasar()
 const store = useStore()
+
 
 const token: Ref<string> = ref<string>("")
 

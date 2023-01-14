@@ -77,4 +77,5 @@ onMounted(async () => {
   @import url("./styles/main.scss");
   @import url("./styles/fonts.scss");
   @import url("./styles/transitions.scss");
+  @import url("./styles/auth.scss");
 </style>

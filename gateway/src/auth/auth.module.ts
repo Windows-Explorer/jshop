@@ -1,6 +1,7 @@
 import { Inject, Module } from "@nestjs/common"
 import { ConfigModule, ConfigService } from "@nestjs/config"
 import { ClientKafka, ClientsModule, Transport } from "@nestjs/microservices"
+import { AUTH_KAFKA_CLIENT_TOKEN } from "src/common/constants/inject-tokens.constant"
 import { AuthController } from "./auth.controller"
 import { UniqueController } from "./unique.controller"
 
@@ -8,7 +9,7 @@ import { UniqueController } from "./unique.controller"
   imports: [
     ClientsModule.registerAsync([
       {
-        name: "AUTH_GATEWAY",
+        name: AUTH_KAFKA_CLIENT_TOKEN,
         imports: [ConfigModule],
         inject: [ConfigService],
         useFactory: async (configService: ConfigService) => ({
@@ -31,7 +32,7 @@ import { UniqueController } from "./unique.controller"
 })
 
 export class AuthModule {
-  constructor(@Inject("AUTH_GATEWAY") private readonly _client: ClientKafka) {}
+  constructor(@Inject(AUTH_KAFKA_CLIENT_TOKEN) private readonly _client: ClientKafka) {}
 
   async onModuleInit() {
     this._client.subscribeToResponseOf("auth.verify")

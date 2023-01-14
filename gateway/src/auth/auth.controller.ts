@@ -1,11 +1,12 @@
 import { Body, Controller, Get, Inject, Injectable, Post, Req, Res } from "@nestjs/common"
 import { ClientKafka } from "@nestjs/microservices"
 import { Request, Response } from "express"
+import { AUTH_KAFKA_CLIENT_TOKEN } from "src/common/constants/inject-tokens.constant"
 import { IResult } from "src/dto/result.dto"
 
 @Controller("auth")
 export class AuthController {
-    constructor(@Inject("AUTH_GATEWAY") private readonly _client: ClientKafka) {}
+    constructor(@Inject(AUTH_KAFKA_CLIENT_TOKEN) private readonly _client: ClientKafka) {}
 
     @Post("/signup")
     async signUp(@Body() message: any, @Res() response: Response): Promise<void> {

@@ -1,47 +1,14 @@
-import { Body, Controller, Get, Inject, Param, Post, Res, UploadedFile, UploadedFiles, UseGuards, UseInterceptors } from "@nestjs/common";
-import { ClientKafka } from "@nestjs/microservices";
-import { FileInterceptor, AnyFilesInterceptor } from "@nestjs/platform-express";
-import { Response } from "express";
-import { diskStorage } from "multer";
-import { IResult } from "src/dto/result.dto";
-import { AdminGuard } from "src/guards/admin.guard";
+import { Body, Controller, Get, Inject, Param, Post, Res, UseGuards } from "@nestjs/common"
+import { ClientKafka } from "@nestjs/microservices"
+import { Response } from "express"
+import { PRODUCTS_KAFKA_CLIENT_TOKEN } from "src/common/constants/inject-tokens.constant"
+import { IResult } from "src/dto/result.dto"
+import { AdminGuard } from "src/guards/admin.guard"
 
 @Controller("products")
 export class ProductsProtectedController {
-    constructor(@Inject("PRODUCTS_GATEWAY") private readonly _client: ClientKafka) {}
-
-
-    @UseGuards(AdminGuard)
-    @UseInterceptors(FileInterceptor("file", {
-       storage: diskStorage({
-        destination: "./public/images",
-        filename: (req, file, callback) => {
-          callback(null, file.originalname)
-        }
-      })
-    }))
-    @Post("/save/image")
-    async saveImage(@UploadedFile() file: Express.Multer.File, @Res() response: Response): Promise<void> {
-        response.send(file)
-    }
-
-
-    @UseGuards(AdminGuard)
-    @UseInterceptors(AnyFilesInterceptor({
-        storage: diskStorage({
-            destination: "./public/images",
-            filename: (req, file, callback) => {
-                const filename: string = Buffer.from(file.originalname, 'latin1').toString('utf8')
-                callback(null, filename)
-            }
-        })
-    }))
-    @Post("/save/images")
-    async saveMultipleImages(@UploadedFiles() files: Express.Multer.File[], @Res() response: Response): Promise<void> {
-        response.send(files)
-    }
+    constructor(@Inject(PRODUCTS_KAFKA_CLIENT_TOKEN) private readonly _client: ClientKafka) {}
     
-
     @UseGuards(AdminGuard)
     @Post("/save")
     async save(@Body() product: any, @Res() response: Response): Promise<void> {

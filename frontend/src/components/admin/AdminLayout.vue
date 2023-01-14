@@ -15,4 +15,8 @@ h6 {
     margin-inline: 20px
 }
 
+section {
+    font-family: Colus;
+}
+
 </style>

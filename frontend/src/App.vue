@@ -4,6 +4,7 @@
       <q-header v-if="(route.name !=='signup' && route.name !=='signin')"
         reveal
         elevated
+        class="header"
       >
         <admin-layout v-if="store.getters.role === 'admin'" />
         <q-tabs :dense="false" :align="'left'">

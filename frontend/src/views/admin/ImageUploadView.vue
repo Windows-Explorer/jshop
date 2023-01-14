@@ -31,22 +31,3 @@ onMounted(async () => {
 })
 
 </script>
-
-
-<style lang="sass" scoped>
-
-section
-    width: 100%
-    height: 100%
-    padding-top: 10px
-    color: white
-    display: flex
-    flex-direction: row
-    flex-wrap: wrap
-    align-content: center
-    justify-content: center
-    align-items: flex-start
-    gap: 10px
-
-
-</style>

@@ -1,4 +1,3 @@
-import axios from 'axios'
 import { Dialog, Loading } from 'quasar'
 import { VueCookieNext } from 'vue-cookie-next'
 import { Router } from 'vue-router'
@@ -11,13 +10,10 @@ export class TokenStoreModule extends VuexModule {
   tokenState: string = VueCookieNext.getCookie("token") || ""
   roleState: string = VueCookieNext.getCookie("role") || "guest"
 
-
   @Mutation
   roleMutation(role: string): void {
     this.roleState = role
   }
-
-
   @Mutation
   tokenMutation(token: string): void {
     this.tokenState = token
@@ -28,10 +24,17 @@ export class TokenStoreModule extends VuexModule {
   async signUp(payload: AuthPayload): Promise<string> {
     const user = payload.user
     const router = payload.router!
-    const result = await axios.post(`${process.env.VUE_APP_GATEMAY_ADDRESS}/auth/signup`, user)
+    const result = await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/auth/signup`, {
+      method: "POST",
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(user)
+    })
 
     if(result.status === 200) {
-      const token: string = await result.data
+      const token: string = await result.text()
       VueCookieNext.setCookie("token", token)
       router.push({ name: "home"})
       return token
@@ -46,18 +49,22 @@ export class TokenStoreModule extends VuexModule {
   async signIn(payload: AuthPayload): Promise<string> {
     const user = payload.user
     const router: Router = payload.router!
-    const result = await axios.post(`${process.env.VUE_APP_GATEMAY_ADDRESS}/auth/signin`, user)
+    const result = await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/auth/signin`, {
+      method: "POST",
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(user)
+    })
 
     if(result.status === 200) {
-      const token: string = await result.data
+      const token: string = await result.text()
       VueCookieNext.setCookie("token", token)
       router.push({ name: "home"})
       return token
     }
-    Dialog.create({
-      title: "Не авторизован",
-      message: "Логин или пароль не верный"
-    })
+    Dialog.create({ title: "Не авторизован", message: "Логин или пароль введены неверно" })
     VueCookieNext.removeCookie("token")
     return ""
   }
@@ -65,12 +72,15 @@ export class TokenStoreModule extends VuexModule {
   @Action({ commit: "tokenMutation"})
   async verifyToken(): Promise<string> {
     if (this.tokenState !== "") {
-      const result = await axios.get(`${process.env.VUE_APP_GATEMAY_ADDRESS}/auth/verify`, {
+      const result = await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/auth/verify`, {
+        method: "GET",
         headers: { "Authorization": `Bearer ${this.tokenState}` }
       })
-    
-      if (typeof(result.data) === "string" && result.data) {
-        return result.data
+      if (result.status === 200) {
+        const token = await result.text()
+        if (token !== "") {
+          return token
+        }
       }
     }
 

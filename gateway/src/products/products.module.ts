@@ -3,7 +3,7 @@ import { ConfigModule, ConfigService } from "@nestjs/config"
 import { ClientKafka, ClientsModule, Transport } from "@nestjs/microservices"
 import { AuthModule } from "src/auth/auth.module"
 import { ProductsController } from "./products.controller"
-import { ProtectedProductsController } from "./protected.products.controller"
+import { ProductsProtectedController } from "./products.protected.controller"
 
 @Module({
   imports: [
@@ -28,7 +28,7 @@ import { ProtectedProductsController } from "./protected.products.controller"
       }
     ])
   ],
-  controllers: [ProductsController, ProtectedProductsController]
+  controllers: [ProductsController, ProductsProtectedController]
 })
 export class ProductsModule {
   constructor(@Inject("PRODUCTS_GATEWAY") private readonly client: ClientKafka) {}

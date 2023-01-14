@@ -7,7 +7,7 @@ import { IResult } from "src/dto/result.dto";
 import { AdminGuard } from "src/guards/admin.guard";
 
 @Controller("products")
-export class ProtectedProductsController {
+export class ProductsProtectedController {
     constructor(@Inject("PRODUCTS_GATEWAY") private readonly _client: ClientKafka) {}
 
 

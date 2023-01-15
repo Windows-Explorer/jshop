@@ -2,7 +2,7 @@ import { Inject, Module } from "@nestjs/common"
 import { ConfigModule, ConfigService } from "@nestjs/config"
 import { ClientKafka, ClientsModule, Transport } from "@nestjs/microservices"
 import { AuthModule } from "src/auth/auth.module"
-import { PRODUCTS_KAFKA_CLIENT_TOKEN } from "src/common/constants/inject-tokens.constant"
+import { PRODUCTS_KAFKA_CLIENT_TOKEN } from "src/common/constants/inject-tokens.constants"
 import { ProductsController } from "./products.controller"
 import { ProductsProtectedController } from "./products.protected.controller"
 

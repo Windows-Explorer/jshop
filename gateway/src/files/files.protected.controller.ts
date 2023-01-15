@@ -2,7 +2,8 @@ import { Body, Controller, Delete, Get, Inject, Param, Post, Res, UploadedFiles,
 import { FileInterceptor, AnyFilesInterceptor } from "@nestjs/platform-express"
 import { Response } from "express"
 import { diskStorage } from "multer"
-import { FILES_SERVICE_TOKEN } from "src/common/constants/inject-tokens.constant"
+import { IMAGES_DIRECTORY_PATH } from "src/common/constants/file-directories.constants"
+import { FILES_SERVICE_TOKEN } from "src/common/constants/inject-tokens.constants"
 import { IFilesService } from "src/common/interfaces/files.service.interface"
 import { AdminGuard } from "src/guards/admin.guard"
 
@@ -13,7 +14,7 @@ export class FilesProtectedController {
     @UseGuards(AdminGuard)
     @UseInterceptors(AnyFilesInterceptor({
         storage: diskStorage({
-            destination: "./public/images",
+            destination: IMAGES_DIRECTORY_PATH,
             filename: (req, file, callback) => {
                 const filename: string = Buffer.from(file.originalname, 'latin1').toString('utf8')
                 callback(null, filename)

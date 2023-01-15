@@ -1,7 +1,7 @@
 import { Inject, Module } from "@nestjs/common"
 import { ConfigModule, ConfigService } from "@nestjs/config"
 import { ClientKafka, ClientsModule, Transport } from "@nestjs/microservices"
-import { AUTH_KAFKA_CLIENT_TOKEN } from "src/common/constants/inject-tokens.constant"
+import { AUTH_KAFKA_CLIENT_TOKEN } from "src/common/constants/inject-tokens.constants"
 import { AuthController } from "./auth.controller"
 import { UniqueController } from "./unique.controller"
 

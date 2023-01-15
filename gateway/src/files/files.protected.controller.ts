@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Inject, Param, Post, Res, UploadedFile, UploadedFiles, UseGuards, UseInterceptors } from "@nestjs/common"
+import { Body, Controller, Delete, Get, Inject, Param, Post, Res, UploadedFiles, UseGuards, UseInterceptors } from "@nestjs/common"
 import { FileInterceptor, AnyFilesInterceptor } from "@nestjs/platform-express"
 import { Response } from "express"
 import { diskStorage } from "multer"
@@ -25,8 +25,16 @@ export class FilesProtectedController {
         response.send(files)
     }
 
+    @UseGuards(AdminGuard)
     @Get("/")
     async getFileList(@Res() response: Response): Promise<void> {
+        response.send(await this._filesService.findFilesFromPublic())
+    }
+
+    @UseGuards(AdminGuard)
+    @Delete("/:filename")
+    async removeFile(@Param("filename") filename: string, @Res() response: Response): Promise<void> {
+        await this._filesService.removeFileFromPubllic(filename)
         response.send(await this._filesService.findFilesFromPublic())
     }
 }

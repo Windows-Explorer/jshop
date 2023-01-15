@@ -9,4 +9,8 @@ export class FilesService implements IFilesService {
         const files = await fs.readdir("./public/images")
         return files
     }
+
+    async removeFileFromPubllic(filename: string): Promise<void> {
+        await fs.unlink(`./public/images/${filename}`)
+    }
 }

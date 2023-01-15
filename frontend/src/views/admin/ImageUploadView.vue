@@ -9,7 +9,14 @@
 
         <q-list class="list" separator>
             <q-item clickable v-ripple>
-                <q-item-section v-for="(file, index) in files" :key="index">{{ file }}</q-item-section>
+                <q-item-section v-for="(file, index) in files" :key="index">
+                    {{ file }}
+                    <q-btn
+                        label="Удалить"
+                        color="negative"
+                        @click="onRemoveFile(file)"
+                    />
+                </q-item-section>
             </q-item>
         </q-list>
     </section>
@@ -32,6 +39,10 @@ const store = useStore()
 const token: Ref<string> = ref<string>("")
 const files: Ref<IFile[]> = ref<IFile[]>([])
 
+const onRemoveFile = async (filename: string) => {
+    store.dispatch("removeFile", filename)
+}
+
 onMounted(async () => {
     token.value = await store.getters.token
     files.value = await store.dispatch("getFiles")
@@ -40,6 +51,7 @@ onMounted(async () => {
 </script>
 
 <style lang="scss" scoped>
+
 section {
     display: flex;
     height: 100%;
@@ -59,4 +71,5 @@ section {
     background-color: $primary;
     color: $secondary;
 }
+
 </style>

@@ -25,7 +25,24 @@ export class FilesStoreModule extends VuexModule {
       return files
     }
 
-    customNotifies.positiveNotify()
+    customNotifies.negativeNotify()
+    return []
+  }
+
+  @Action({ commit: "filesMutation" })
+  async removeFile(filename: string): Promise<string[]> {
+    const result = await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/files/${filename}`, {
+      method: "DELETE",
+      headers: { "Authorization": `Bearer ${store.getters.token}`}
+    })
+
+    if(result.status === 200) {
+      const files = await result.json()
+      customNotifies.positiveNotify()
+      return files
+    }
+
+    customNotifies.negativeNotify()
     return []
   }
 

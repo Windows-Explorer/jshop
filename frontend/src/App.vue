@@ -10,8 +10,8 @@
         <q-tabs :dense="false" :align="'left'">
           <LogoDarkIcon :style="'height:36px; margin-inline:28px; cursor:pointer;'" @click="router.push({ name: 'home'})" />
 
-          <q-route-tab to="/products" label="Продукты" />
-          <q-route-tab to="/cart" label="Корзина" />
+          <!-- <q-route-tab to="/products" label="Продукты" />
+          <q-route-tab to="/cart" label="Корзина" /> -->
 
           <q-route-tab label="Учетная запись">
             <q-menu :transition-show="'jump-up'" :transition-hide="'jump-down'">

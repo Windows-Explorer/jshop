@@ -27,8 +27,7 @@ async function bootstrap() {
 
   console.log(app.get(ConfigService))
 
-  await app.listen()
-  console.log("Product service is running")
+  await app.listen(3000)
 }
 
 bootstrap()

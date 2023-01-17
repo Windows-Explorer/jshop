@@ -1,6 +1,9 @@
 import { Module } from "@nestjs/common"
 import { TypeOrmModule, TypeOrmModuleOptions } from "@nestjs/typeorm"
 import { ConfigModule, ConfigService } from "@nestjs/config"
+import { Card } from "./card/entities/card.entity"
+import { Color } from "./card/entities/color.entity"
+import { CardModule } from "./card/card.module"
 
 @Module({
   imports: [
@@ -18,10 +21,11 @@ import { ConfigModule, ConfigService } from "@nestjs/config"
         database: configService.get<string>("DATABASE_DATABASE"),
         password: configService.get<string>("DATABASE_PASSWORD"),
         username: configService.get<string>("DATABASE_USERNAME"),
-        entities: [],
+        entities: [Card, Color],
         synchronize: true
       })
-    })
+    }),
+    CardModule
   ]
 })
 

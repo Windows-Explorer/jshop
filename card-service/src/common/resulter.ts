@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common"
 import { IResult } from "src/common/interfaces/result.interface"
-import { IOutput } from "./interfaces/resulter.interface"
+import { IOutput } from "./interfaces/output.interface"
 
 @Injectable()
 export class Resulter implements IOutput {

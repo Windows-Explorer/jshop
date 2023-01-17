@@ -13,7 +13,7 @@ export class CardService implements ICardService {
         return await this._cardRepository.find()
     }
 
-    async save(card: CardCreateDto): Promise<any> {
+    async save(card: CardCreateDto): Promise<Card> {
         return await this._cardRepository.save(card)
     }
 }

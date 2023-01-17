@@ -4,6 +4,7 @@ import { ConfigModule, ConfigService } from "@nestjs/config"
 import { Card } from "./card/entities/card.entity"
 import { Color } from "./card/entities/color.entity"
 import { CardModule } from "./card/card.module"
+import { CardType } from "./card/entities/type.entity"
 
 @Module({
   imports: [
@@ -21,7 +22,7 @@ import { CardModule } from "./card/card.module"
         database: configService.get<string>("DATABASE_DATABASE"),
         password: configService.get<string>("DATABASE_PASSWORD"),
         username: configService.get<string>("DATABASE_USERNAME"),
-        entities: [Card, Color],
+        entities: [Card, Color, CardType],
         synchronize: true
       })
     }),

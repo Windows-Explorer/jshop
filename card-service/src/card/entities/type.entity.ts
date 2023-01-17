@@ -1,10 +1,10 @@
 import { Entity, Column, PrimaryGeneratedColumn } from "typeorm"
 import { IsNumber } from "class-validator"
-import { IColor } from "src/common/interfaces/color.interface"
+import { ICardType } from "src/common/interfaces/type.interface"
 
 @Entity()
-export class Color implements IColor {
-    constructor(name?: string) {
+export class CardType implements ICardType {
+    constructor(name: string) {
         this.name = name
     }
 

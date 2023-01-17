@@ -22,7 +22,7 @@ async function bootstrap() {
   //   }
   // })
   const app = await NestFactory.create(AppModule)
-  app.useGlobalFilters(new AllExceptionsFilter(new Resulter()))
+  // app.useGlobalFilters(new AllExceptionsFilter(new Resulter()))
   app.useGlobalPipes(new ValidationPipe())
 
   console.log(app.get(ConfigService))

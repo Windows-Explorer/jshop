@@ -5,10 +5,12 @@
     align-items: stretch;
     width: 360px;
     padding-inline: 20px;
+    padding-block: 20px;
     border-radius: 4px;
-    background-color: transparent;
+    background-color: $primary;
     transition: 0.5s ease;
-    gap: 8px;
+    gap: 12px;
+    box-shadow: 0 0 30px 0 #000000ad;
 }
 
 .form h5 {
@@ -40,4 +42,8 @@
 .form .redirect-container .redirect {
     cursor: pointer;
     text-decoration: none;
+}
+
+.form .logo {
+    margin-bottom: 20px;
 }

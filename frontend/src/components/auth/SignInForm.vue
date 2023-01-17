@@ -40,11 +40,15 @@ import { rules } from "../../validation"
 import { withMessage } from "../../validation/helpers"
 import { useRouter } from "vue-router"
 import { defineAsyncComponent } from "vue"
+
 const store = useStore()
 const quasar = useQuasar()
 const router = useRouter()
+
 const logo = defineAsyncComponent(async () => import("../icons/LogoDarkIcon.vue"))
+
 const user = reactive({ username: "", email: "", password: "", confirmPassword: "" })
+
 const validationRules = {
     email: [
         async (value: string) => await withMessage("", rules.isRequired(value)),
@@ -54,9 +58,12 @@ const validationRules = {
         async (value: string) => await withMessage("", rules.isRequired(value)),
     ]
 }
+
+
 const onSubmit = async () => {
     await store.dispatch("signIn", { user: user, router: router })
 }
+
 const onReset = async () => router.push({ name: "home" })
 
 </script>

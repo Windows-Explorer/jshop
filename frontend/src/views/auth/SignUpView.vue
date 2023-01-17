@@ -15,3 +15,10 @@ const signUpForm = defineAsyncComponent(async () => import("../../components/aut
 
 
 </script>
+
+<style lang="scss" scoped>
+.page-section {
+    justify-content: center;
+    align-items: center;
+}
+</style>

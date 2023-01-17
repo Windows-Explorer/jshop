@@ -9,6 +9,13 @@ import { Card } from "./entities/card.entity"
 export class CardService implements ICardService {
     constructor(@InjectRepository(Card) private readonly _cardRepository: Repository<Card>) {}
 
+    parseData(): Promise<Card[]> {
+        return []
+    }
+    pushParsedData(): Promise<Card[]> {
+        throw new Error("Method not implemented.")
+    }
+
     async findAll(): Promise<Card[]> {
         return await this._cardRepository.find()
     }

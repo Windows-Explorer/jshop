@@ -19,6 +19,10 @@ authentification-service/.env
 product-service/dist
 product-service/node_modules
 
+#card-service
+card-service/dist
+card-service/node_modules
+
 #kafka
 kafka
 kafka/kafka1

@@ -15,12 +15,14 @@ services:
       - default
 
 
-  adminer:
-    image: adminer
-    container_name: adminer
+  phpmyadmin:
+    image: phpmyadmin
+    container_name: phpmyadmin
     restart: always
     ports:
       - 8080:8080
+    environment:
+      - PMA_ARBITRARY=1
     networks:
       - default
 

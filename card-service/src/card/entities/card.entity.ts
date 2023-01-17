@@ -17,7 +17,8 @@ export class Card {
     @Column({ type: "int", unique: false, nullable: false })
     pt: number
 
-    @ManyToOne(() => Color, (color: Color) => color.id)
-    colorId: number
+    @ManyToOne(() => Color, (color: Color) => color.id, { eager: true })
+    @JoinTable()
+    color: Color
 
 }

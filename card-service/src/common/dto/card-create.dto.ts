@@ -1,5 +1,6 @@
 import { IsNotEmpty } from "class-validator"
 import { Card } from "src/card/entities/card.entity"
+import { Color } from "src/card/entities/color.entity"
 
 export class CardCreateDto implements Card {
     @IsNotEmpty()
@@ -15,7 +16,7 @@ export class CardCreateDto implements Card {
     pt: number
 
     @IsNotEmpty()
-    colorId: number
+    color: Color
     
 
 }

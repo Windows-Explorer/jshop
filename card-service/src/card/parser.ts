@@ -41,9 +41,10 @@ export class Parser implements IParser {
             })
             colorNames.forEach(colorName => colors.push(new Color(colorName)))
 
-            this._logger.log("Successfull colors parsing")
+            const result: IColor[] = await this._colorRepository.save(colors)
+            this._logger.successfull("Successfull colors parsing")
 
-            return await this._colorRepository.save(colors)
+            return result
 
         } catch (err) {
             this._logger.error(err)
@@ -71,10 +72,10 @@ export class Parser implements IParser {
             })
             typeNames.forEach(typeName => types.push(new CardType(typeName)))
 
-            this._logger.log("Successfull types parsing")
+            const result: ICardType[] = await this._typeRepository.save(types)
+            this._logger.successfull("Successfull types parsing")
 
-            return await this._typeRepository.save(types)
-
+            return result
         } catch (err) {
             this._logger.error(err)
             throw new HttpException(err, HttpStatus.INTERNAL_SERVER_ERROR)
@@ -109,11 +110,13 @@ export class Parser implements IParser {
                 cards.push(new Card(name, text, manacost, pt, maintype, type, color, image))
             })
 
-            this._logger.log("Successfull cards parsing")
-
+            this._logger.successfull("Successfull cards parsing")
             this._logger.log("Starting pushing into database...")
-            return await this._cardRepository.save(cards)
+
+            const result: ICard[] = await this._cardRepository.save(cards)
+            this._logger.successfull("Successfull parsed")
             
+            return result
         } catch (err) {
             this._logger.error(err)
             throw new HttpException(err, HttpStatus.INTERNAL_SERVER_ERROR)

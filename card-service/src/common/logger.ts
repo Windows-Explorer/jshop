@@ -4,7 +4,6 @@ import { Prefix } from "./constants/prefix.enum"
 
 @Injectable()
 export class Logger implements ILogger {
-
     async log(message: string, prefix?: Prefix): Promise<void> {
         if(!prefix) prefix = Prefix.LOG
 
@@ -17,5 +16,11 @@ export class Logger implements ILogger {
 
         const now: Date = new Date()
         console.log(`${now} | [${prefix}] ${error};`)
+    }
+    async successfull(message: string, prefix?: Prefix): Promise<void> {
+        if(!prefix) prefix = Prefix.SUCCESSFULL
+
+        const now: Date = new Date()
+        console.log(`${now} | [${prefix}] ${message};`)
     }
 }

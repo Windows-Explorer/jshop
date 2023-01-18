@@ -2,3 +2,4 @@
 ./frontend/node_modules
 ./authentification-service/node_modules
 ./product-service/node_modules
+./card-service/node_modules

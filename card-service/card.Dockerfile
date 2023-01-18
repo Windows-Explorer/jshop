@@ -2,7 +2,7 @@
 FROM node:18-alpine
 
 # Создать директорию внутри контейнера
-WORKDIR /usr/src/product-service
+WORKDIR /usr/src/card-service
 
 # Установить зависимости
 COPY ./package*.json ./

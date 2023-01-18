@@ -3,7 +3,6 @@ import { CARD_SERVICE_TOKEN } from "src/common/constants/inject-tokens.constant"
 import { CardCreateDto } from "src/common/dto/card-create.dto"
 import { ICard } from "src/common/interfaces/card.interface"
 import { ICardService } from "src/common/interfaces/card.service.interface"
-import { Card } from "./entities/card.entity"
 
 @Controller("")
 export class CardController {

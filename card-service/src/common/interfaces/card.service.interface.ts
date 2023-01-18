@@ -6,5 +6,4 @@ export interface ICardService {
     findAll(): Promise<ICard[]> 
     save(card: CardCreateDto): Promise<ICard>
     parseData(): Promise<ICard[]>
-    pushParsedData(): Promise<ICard[]>
 }

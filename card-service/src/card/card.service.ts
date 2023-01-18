@@ -15,11 +15,8 @@ export class CardService implements ICardService {
         @Inject(PARSER_TOKEN) private readonly _parser: IParser
     ) {}
 
-    async parseData(): Promise<any[]> {
+    async parseData(): Promise<ICard[]> {
         return this._parser.parseCards(await (await fetch("http://kontinuum.su:3000/images/Ascent.xml")).text())
-    }
-    async pushParsedData(): Promise<Card[]> {
-        throw new Error("Method not implemented.")
     }
 
     async findAll(): Promise<Card[]> {

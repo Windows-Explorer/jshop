@@ -20,7 +20,8 @@ export class Parser implements IParser {
 
     async parseColors(xml: string): Promise<IColor[]> {
         try {
-            await this._colorRepository.clear()
+            await this._colorRepository.delete({})
+            
             const colors: IColor[] = []
             const colorNames: string[] = []
             xmlParser.parse(xml).root.children[1].children.forEach(card => {
@@ -40,7 +41,8 @@ export class Parser implements IParser {
     
     async parseTypes(xml: string): Promise<ICardType[]> {
         try {
-            await this._typeRepository.clear()
+            await this._typeRepository.delete({})
+
             const types: ICardType[] = []
             const typeNames: string[] = []
             xmlParser.parse(xml).root.children[1].children.forEach( card => {
@@ -60,7 +62,8 @@ export class Parser implements IParser {
 
     async parseCards(xml: string): Promise<ICard[]> {
         try {
-            await this._cardRepository.clear()
+            await this._cardRepository.delete({})
+
             const colors: IColor[] = await this.parseColors(xml)
             const types: ICardType[] = await this.parseTypes(xml)
 

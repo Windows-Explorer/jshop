@@ -42,13 +42,13 @@ export class Card implements ICard {
     @Column({ type: "int", unique: false, nullable: false })
     pt: number
 
-    @ManyToOne(() => CardType, (type: ICardType) => type.id, { eager: true })
+    @ManyToOne(() => CardType, (type: ICardType) => type.id, { eager: true, onDelete: "CASCADE" })
     maintype: ICardType
 
-    @ManyToOne(() => CardType, (type: ICardType) => type.id, { eager: true })
+    @ManyToOne(() => CardType, (type: ICardType) => type.id, { eager: true, onDelete: "CASCADE" })
     type: ICardType
 
-    @ManyToOne(() => Color, (color: IColor) => color.id, { eager: true })
+    @ManyToOne(() => Color, (color: IColor) => color.id, { eager: true, onDelete: "CASCADE" })
     color: IColor
 
 }

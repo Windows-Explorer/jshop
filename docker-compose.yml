@@ -20,12 +20,12 @@ services:
     container_name: phpmyadmin
     restart: always
     ports:
-      - 8080:8080
+      - 8080:80
     environment:
       PMA_USER: jshop_user
-      PWA_PASSWORD: jshop_test_password
-      PWA_HOST: db_host
-      PWA_PORT: 3306
+      PMA_PASSWORD: jshop_test_password
+      PMA_HOST: db_host
+      PMA_PORT: 3306
     networks:
       - default
 

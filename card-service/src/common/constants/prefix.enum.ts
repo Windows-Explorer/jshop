@@ -1,5 +1,6 @@
 export enum Prefix {
     LOG = "LOG",
     ERROR = "ERROR",
-    SUCCESSFULL = "SUCCESSFULL"
+    SUCCESSFULL = "SUCCESSFULL",
+    EXCEPTION = "EXCEPTION"
 }

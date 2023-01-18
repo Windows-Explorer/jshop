@@ -1,7 +1,8 @@
 import { Module } from "@nestjs/common"
 import { TypeOrmModule } from "@nestjs/typeorm"
-import { CARD_SERVICE_TOKEN, LOGGER_TOKEN, PARSER_TOKEN } from "src/common/constants/inject-tokens.constant"
+import { CARD_SERVICE_TOKEN, LOGGER_TOKEN, OUTPUT_TOKEN, PARSER_TOKEN } from "src/common/constants/inject-tokens.constant"
 import { Logger } from "src/common/logger"
+import { Resulter } from "src/common/resulter"
 import { CardController } from "./card.controller"
 import { CardService } from "./card.service"
 import { Card } from "./entities/card.entity"
@@ -17,7 +18,8 @@ import { Parser } from "./parser"
     providers: [
         { provide: CARD_SERVICE_TOKEN, useClass: CardService },
         { provide: PARSER_TOKEN, useClass: Parser },
-        { provide: LOGGER_TOKEN, useClass: Logger }
+        { provide: LOGGER_TOKEN, useClass: Logger },
+        { provide: OUTPUT_TOKEN, useClass: Resulter }
     ]
 })
 

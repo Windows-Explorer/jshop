@@ -83,9 +83,10 @@ export class Parser implements IParser {
 
                 const color: IColor = colors.find(() => new Color(String(el.children[2].children[4].content)))
 
-                cards.push(new Card(name, text, manacost, pt, maintype, type, color))
-            })
+                const image: string = String(el.children[4].attributes.picURL)
 
+                cards.push(new Card(name, text, manacost, pt, maintype, type, color, image))
+            })
             return await this._cardRepository.save(cards)
             
         } catch (err) {

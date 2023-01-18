@@ -15,7 +15,8 @@ export class Card implements ICard {
         pt: number,
         maintype: ICardType,
         type: ICardType,
-        color: IColor
+        color: IColor,
+        image: string
     ) {
         this.name = name
         this.text = text
@@ -24,6 +25,7 @@ export class Card implements ICard {
         this.maintype = maintype
         this.type = type
         this.color = color
+        this.image = image
     }
 
     @IsNumber()

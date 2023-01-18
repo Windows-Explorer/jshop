@@ -51,4 +51,7 @@ export class Card implements ICard {
     @ManyToOne(() => Color, (color: IColor) => color.id, { eager: true, onDelete: "CASCADE", onUpdate: "CASCADE" })
     color: IColor
 
+    @Column({ type: "varchar", unique: false, nullable: false, default: null })
+    image: string
+
 }

@@ -16,24 +16,24 @@ export class CardController {
         @Inject(LOGGER_TOKEN) private readonly _logger: ILogger
     ) {}
 
-    @MessagePattern("cards.findAll")
+    @MessagePattern("card.findAll")
     async findAll(): Promise<IResult<ICard[]>> {
         const result: IResult<ICard[]> = await this._output.responseAsync(HttpStatus.OK, await this._cardService.findAll())
-        this._logger.log(result, "cards.findAll")
+        this._logger.log(result, "card.findAll")
         return result
     }
 
-    @MessagePattern("cards.save")
+    @MessagePattern("card.save")
     async save(@Payload() createDto: CardCreateDto): Promise<IResult<ICard>> {
         const result: IResult<ICard> = await this._output.responseAsync(HttpStatus.OK, await this._cardService.save(createDto))
-        this._logger.log(result, "cards.save")
+        this._logger.log(result, "card.save")
         return
     }
 
-    @MessagePattern("cards.parse")
+    @MessagePattern("card.parse")
     async parse(): Promise<IResult<ICard[]>> {
         const result: IResult<ICard[]> = await this._output.responseAsync(HttpStatus.OK, await this._cardService.parseData())
-        this._logger.log(result, "cards.parse")
+        this._logger.log(result, "card.parse")
         return result
     }
 }

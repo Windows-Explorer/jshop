@@ -5,22 +5,22 @@ import { ICardType } from './card-type-object.interface'
 import { IColor } from './color-object.interface'
 
 @Module
-export class CardStoreModule extends VuexModule {
-    cardState: ICard[] = []
-    cardTypeState: ICardType[] = []
-    colorState: IColor[] = []
+export class CardsStoreModule extends VuexModule {
+    cardsState: ICard[] = []
+    cardTypesState: ICardType[] = []
+    colorsState: IColor[] = []
 
     @Mutation
     cardMutation(cards: ICard[]): void {
-        this.cardState = cards
+        this.cardsState = cards
     }
     @Mutation
     cardTypeMutation(cardTypes: ICardType[]): void {
-        this.cardTypeState = cardTypes
+        this.cardTypesState = cardTypes
     }
     @Mutation
     colorMutation(colors: IColor[]): void {
-        this.colorState = colors
+        this.colorsState = colors
     }
 
     @Action({ commit: "cardMutatuion" })
@@ -67,16 +67,16 @@ export class CardStoreModule extends VuexModule {
         }
     }
 
-    get card(): ICard[] {
-        return this.cardState
+    get cards(): ICard[] {
+        return this.cardsState
     }
 
     get cardTypes(): ICardType[] {
-        return this.cardTypeState
+        return this.cardTypesState
     }
 
     get cardColors(): IColor[] {
-        return this.colorState
+        return this.colorsState
     }
 
 }

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Inject, Post, Res } from "@nestjs/common"
+import { Controller, Get, Inject, Res } from "@nestjs/common"
 import { ClientKafka } from "@nestjs/microservices"
 import { CARD_KAFKA_CLIENT_TOKEN } from "src/common/constants/inject-tokens.constants"
 import { IResult } from "src/dto/result.dto"
@@ -10,7 +10,19 @@ export class CardController {
     
     @Get()
     async findAll(@Res() response: Response): Promise<void> {
-        const result: IResult<any> = await this._client.send("card.findAll", "").toPromise()
+        const result: IResult<any> = await this._client.send("cards.findAll", "").toPromise()
+        response.status(result.statusCode).send(result.message)
+    }
+
+    @Get("/colors")
+    async findAllColors(@Res() response: Response): Promise<void> {
+        const result: IResult<any> = await this._client.send("cards.colors.findAll", "").toPromise()
+        response.status(result.statusCode).send(result.message)
+    }
+
+    @Get("/types")
+    async findAllTypes(@Res() response: Response): Promise<void> {
+        const result: IResult<any> = await this._client.send("cards.types.findAll", "").toPromise()
         response.status(result.statusCode).send(result.message)
     }
 }

@@ -12,14 +12,14 @@ export class CardProtectedController {
     @UseGuards(AdminGuard)
     @Post()
     async save(@Body() product: any, @Res() response: Response): Promise<void> {
-        const result: IResult<any> = await this._client.send("card.save", product).toPromise()
+        const result: IResult<any> = await this._client.send("cards.save", product).toPromise()
         response.status(result.statusCode).send(result.message)
     }
 
     @UseGuards(AdminGuard)
     @Get("/parse")
     async parse(@Res() response: Response): Promise<void> {
-        const result: IResult<any> = await this._client.send("card.parse", "").toPromise()
+        const result: IResult<any> = await this._client.send("cards.parse", "").toPromise()
         response.status(result.statusCode).send(result.message)
     }
 }

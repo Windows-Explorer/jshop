@@ -3,7 +3,7 @@ import { TypeOrmModule, TypeOrmModuleOptions } from "@nestjs/typeorm"
 import { ConfigModule, ConfigService } from "@nestjs/config"
 import { Card } from "./card/entities/card.entity"
 import { Color } from "./card/entities/color.entity"
-import { CardModule } from "./card/card.module"
+import { CardsModule } from "./card/cards.module"
 import { CardType } from "./card/entities/type.entity"
 
 @Module({
@@ -26,7 +26,7 @@ import { CardType } from "./card/entities/type.entity"
         synchronize: true
       })
     }),
-    CardModule
+    CardsModule
   ]
 })
 

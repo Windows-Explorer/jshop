@@ -15,9 +15,9 @@ import { ILogger } from "src/common/interfaces/logger.interface"
 @Injectable()
 export class Parser implements IParser {
     constructor(
-        @InjectRepository(Color) private readonly _colorRepository: Repository<IColor>,
-        @InjectRepository(CardType) private readonly _typeRepository: Repository<ICardType>,
-        @InjectRepository(Card) private readonly _cardRepository: Repository<ICard>,
+        @InjectRepository(Color) private readonly _colorsRepository: Repository<IColor>,
+        @InjectRepository(CardType) private readonly _typesRepository: Repository<ICardType>,
+        @InjectRepository(Card) private readonly _cardsRepository: Repository<ICard>,
         @Inject(LOGGER_TOKEN) private readonly _logger: ILogger
     ) {}
 
@@ -25,10 +25,10 @@ export class Parser implements IParser {
         try {
             this._logger.log("Starting parsing colors...")
 
-            await this._colorRepository.delete({})
+            await this._colorsRepository.delete({})
             this._logger.log("Colors table is cleared")
 
-            await this._colorRepository.query("ALTER TABLE color AUTO_INCREMENT = 1")
+            await this._colorsRepository.query("ALTER TABLE color AUTO_INCREMENT = 1")
             this._logger.log("Colors table reset auto_increment")
 
             const colors: IColor[] = []
@@ -41,7 +41,7 @@ export class Parser implements IParser {
             })
             colorNames.forEach(colorName => colors.push(new Color(colorName)))
 
-            const result: IColor[] = await this._colorRepository.save(colors)
+            const result: IColor[] = await this._colorsRepository.save(colors)
             this._logger.successfull("Successfull colors parsing")
 
             return result
@@ -56,10 +56,10 @@ export class Parser implements IParser {
         try {
             this._logger.log("Starting parsing types...")
 
-            await this._typeRepository.delete({})
+            await this._typesRepository.delete({})
             this._logger.log("Types table is cleared")
 
-            await this._typeRepository.query("ALTER TABLE card_type AUTO_INCREMENT = 1")
+            await this._typesRepository.query("ALTER TABLE card_type AUTO_INCREMENT = 1")
             this._logger.log("Types table reset auto_increment")
 
             const types: ICardType[] = []
@@ -72,7 +72,7 @@ export class Parser implements IParser {
             })
             typeNames.forEach(typeName => types.push(new CardType(typeName)))
 
-            const result: ICardType[] = await this._typeRepository.save(types)
+            const result: ICardType[] = await this._typesRepository.save(types)
             this._logger.successfull("Successfull types parsing")
 
             return result
@@ -86,10 +86,10 @@ export class Parser implements IParser {
         try {
             this._logger.log("Starting parsing cards...")
 
-            await this._cardRepository.delete({})
+            await this._cardsRepository.delete({})
             this._logger.log("Types table is cleared")
 
-            await this._cardRepository.query("ALTER TABLE card AUTO_INCREMENT = 1")
+            await this._cardsRepository.query("ALTER TABLE card AUTO_INCREMENT = 1")
             this._logger.log("Types table reset auto_increment")
             
             const colors: IColor[] = await this.parseColors(xml)
@@ -113,7 +113,7 @@ export class Parser implements IParser {
             this._logger.successfull("Successfull cards parsing")
             this._logger.log("Starting pushing into database...")
 
-            const result: ICard[] = await this._cardRepository.save(cards)
+            const result: ICard[] = await this._cardsRepository.save(cards)
             this._logger.successfull("Successfull parsed")
             
             return result

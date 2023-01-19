@@ -35,11 +35,12 @@ export class CardModule {
     constructor(@Inject(CARD_KAFKA_CLIENT_TOKEN) private readonly _client: ClientKafka) {}
 
     async onModuleInit() {
-        this._client.subscribeToResponseOf("card.findAll")
-        this._client.subscribeToResponseOf("card.parse")
-        this._client.subscribeToResponseOf("card.save")
-        this._client.subscribeToResponseOf("card.saveMany")
-        this._client.subscribeToResponseOf("card.removeOne")
+        this._client.subscribeToResponseOf("cards.findAll")
+        this._client.subscribeToResponseOf("cards.parse")
+        this._client.subscribeToResponseOf("cards.save")
+        this._client.subscribeToResponseOf("cards.colors.findAll")
+        this._client.subscribeToResponseOf("cards.types.findAll")
+        
 
         await this._client.connect()
     }

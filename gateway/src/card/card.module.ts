@@ -1,6 +1,6 @@
-import { Module } from "@nestjs/common"
+import { Inject, Module } from "@nestjs/common"
 import { ConfigModule, ConfigService } from "@nestjs/config"
-import { ClientsModule, Transport } from "@nestjs/microservices"
+import { ClientKafka, ClientsModule, Transport } from "@nestjs/microservices"
 import { AuthModule } from "src/auth/auth.module"
 import { CARD_KAFKA_CLIENT_TOKEN } from "src/common/constants/inject-tokens.constants"
 import { CardController } from "./card.controller"
@@ -29,6 +29,22 @@ import { CardProtectedController } from "./card.protected.controller"
             }
         ])
     ],
-    controllers: [ CardController, CardProtectedController ]
+    controllers: [CardController, CardProtectedController]
 })
-export class CardModule { }
+export class CardModule {
+    constructor(@Inject(CARD_KAFKA_CLIENT_TOKEN) private readonly _client: ClientKafka) {}
+
+    async onModuleInit() {
+        this._client.subscribeToResponseOf("card.findAll")
+        this._client.subscribeToResponseOf("card.findById")
+        this._client.subscribeToResponseOf("card.save")
+        this._client.subscribeToResponseOf("card.saveMany")
+        this._client.subscribeToResponseOf("card.removeOne")
+
+        await this._client.connect()
+    }
+
+    async onModuleDestroy() {
+        await this._client.close()
+    }
+}

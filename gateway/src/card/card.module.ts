@@ -18,11 +18,11 @@ import { CardProtectedController } from "./card.protected.controller"
                     transport: Transport.KAFKA,
                     options: {
                         client: {
-                            clientId: "products-producer",
+                            clientId: "card-producer",
                             brokers: [`${configService.get<string>("BROKER_HOST")}:${configService.get<number>("BROKER_PORT")}`]
                         },
                         consumer: {
-                            groupId: "products-consumer"
+                            groupId: "card-consumer"
                         }
                     }
                 })

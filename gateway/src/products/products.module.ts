@@ -32,7 +32,7 @@ import { ProductsProtectedController } from "./products.protected.controller"
   controllers: [ProductsController, ProductsProtectedController]
 })
 export class ProductsModule {
-  constructor(@Inject(PRODUCTS_KAFKA_CLIENT_TOKEN) private readonly _client: ClientKafka) {}
+  constructor(@Inject(PRODUCTS_KAFKA_CLIENT_TOKEN) private readonly _client: ClientKafka) { }
 
   async onModuleInit() {
     this._client.subscribeToResponseOf("products.findAll")

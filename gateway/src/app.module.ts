@@ -6,6 +6,7 @@ import { ProductsModule } from "./products/products.module"
 import { ServeStaticModule } from "@nestjs/serve-static"
 import { join } from "path"
 import { FilesModule } from "./files/files.module"
+import { CardModule } from "./card/card.module"
 
 @Module({
   imports: [
@@ -17,9 +18,10 @@ import { FilesModule } from "./files/files.module"
     }),
     AuthModule,
     ProductsModule,
-    FilesModule
+    FilesModule,
+    CardModule
   ],
   controllers: [AppController]
 })
 
-export class AppModule {}
+export class AppModule { }

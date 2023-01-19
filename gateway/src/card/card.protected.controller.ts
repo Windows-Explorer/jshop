@@ -1,4 +1,4 @@
-import { Body, Controller, Inject, Post, Res, UseGuards } from "@nestjs/common"
+import { Body, Controller, Get, Inject, Post, Res, UseGuards } from "@nestjs/common"
 import { ClientKafka } from "@nestjs/microservices"
 import { CARD_KAFKA_CLIENT_TOKEN } from "src/common/constants/inject-tokens.constants"
 import { IResult } from "src/dto/result.dto"
@@ -13,6 +13,13 @@ export class CardProtectedController {
     @Post()
     async save(@Body() product: any, @Res() response: Response): Promise<void> {
         const result: IResult<any> = await this._client.send("card.save", product).toPromise()
+        response.status(result.statusCode).send(result.message)
+    }
+
+    @UseGuards(AdminGuard)
+    @Get("/parse")
+    async parse(@Res() response: Response): Promise<void> {
+        const result: IResult<any> = await this._client.send("card.parse", "").toPromise()
         response.status(result.statusCode).send(result.message)
     }
 }

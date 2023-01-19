@@ -36,7 +36,7 @@ export class CardModule {
 
     async onModuleInit() {
         this._client.subscribeToResponseOf("card.findAll")
-        this._client.subscribeToResponseOf("card.findById")
+        this._client.subscribeToResponseOf("card.parse")
         this._client.subscribeToResponseOf("card.save")
         this._client.subscribeToResponseOf("card.saveMany")
         this._client.subscribeToResponseOf("card.removeOne")

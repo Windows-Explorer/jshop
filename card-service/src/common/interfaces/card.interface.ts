@@ -10,4 +10,5 @@ export interface ICard {
     maintype: ICardType
     type: ICardType
     color: IColor
+    image: string
 }

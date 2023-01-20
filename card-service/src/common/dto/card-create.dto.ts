@@ -29,5 +29,6 @@ export class CardCreateDto implements ICard {
     @IsNotEmpty()
     color: Color
     
-
+    @IsNotEmpty()
+    image: string
 }

@@ -6,6 +6,7 @@ import { ICard } from "src/common/interfaces/card.interface"
 import { ICardsService } from "src/common/interfaces/cards.service.interface"
 import { ILogger } from "src/common/interfaces/logger.interface"
 import { IOutput } from "src/common/interfaces/output.interface"
+import { IResultAndCount } from "src/common/interfaces/result-and-count.interface"
 import { IResult } from "src/common/interfaces/result.interface"
 
 @Controller("")
@@ -17,8 +18,8 @@ export class CardsController {
     ) {}
 
     @MessagePattern("cards.findAll")
-    async findAll(): Promise<IResult<ICard[]>> {
-        const result: IResult<ICard[]> = await this._output.responseAsync(HttpStatus.OK, await this._cardService.findAll())
+    async findAll(@Payload() page: number): Promise<IResult<IResultAndCount<ICard[]> | ICard[]>> {
+        const result: IResult<IResultAndCount<ICard[]> | ICard[]> = await this._output.responseAsync(HttpStatus.OK, await this._cardService.findAll(page))
         this._logger.log(result, "cards.findAll")
         return result
     }

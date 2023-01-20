@@ -14,31 +14,33 @@ export class CardsStoreModule extends VuexModule {
     cardMutation(cards: ICard[]): void {
         this.cardsState = cards
     }
+
     @Mutation
     cardTypeMutation(cardTypes: ICardType[]): void {
         this.cardTypesState = cardTypes
     }
+
     @Mutation
     colorMutation(colors: IColor[]): void {
         this.colorsState = colors
     }
 
-    @Action({ commit: "cardMutatuion" })
-    async getCards(): Promise<ICard[]> {
-        const result = await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/cards`)
+    @Action({ commit: "cardMutation" })
+    async getCards(page: number): Promise<{ result: ICard[], count: number }> {
+        const result = await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/cards?page=${page}`)
 
         if (result.status === 200) {
-            const cards: ICard[] = await result.json()
+            const cards: { result: ICard[], count: number } = await result.json()
             customNotifies.positiveNotify()
             return cards
         }
         else {
             customNotifies.negativeNotify()
-            return []
+            return { result: [], count: 0 }
         }
     }
 
-    @Action({ commit: "cardMutatuion" })
+    @Action({ commit: "colorMutatuion" })
     async getColors(): Promise<IColor[]> {
         const result = await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/cards/colors`)
 
@@ -52,7 +54,7 @@ export class CardsStoreModule extends VuexModule {
             return []
         }
     }
-    @Action({ commit: "cardMutatuion" })
+    @Action({ commit: "cardTypeMutatuion" })
     async getCardTypes(): Promise<ICardType[]> {
         const result = await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/cards/types`)
 

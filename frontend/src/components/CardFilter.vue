@@ -60,6 +60,7 @@ onMounted(async () => {
 
 <style lang="scss" scoped>
 .filter-section {
+    font-family: SpectralRegular;
     display: flex;
     width: 100%;
     height: auto;

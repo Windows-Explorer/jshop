@@ -5,14 +5,14 @@ import { Logger } from "src/common/logger"
 import { Resulter } from "src/common/resulter"
 import { CardsController } from "./cards.controller"
 import { CardsService } from "./cards.service"
-import { ColorsController } from "./colors.controller"
-import { ColorsService } from "./colors.service"
+import { ColorsController } from "./colors/colors.controller"
+import { ColorsService } from "./colors/colors.service"
 import { Card } from "./entities/card.entity"
 import { Color } from "./entities/color.entity"
 import { CardType } from "./entities/type.entity"
 import { Parser } from "./parser"
-import { TypesController } from "./types.controller"
-import { TypesService } from "./types.service"
+import { TypesController } from "./types/types.controller"
+import { TypesService } from "./types/types.service"
 
 @Module({
     imports: [

@@ -115,7 +115,6 @@ export class Parser implements IParser {
                     if(String(el.children[2].children[4].content) === color.name) return true
                     return false
                 })
-                this._logger.log(colors)
                 const image: string = String(el.children[4].attributes.picURL)
                 cards.push(new Card(name, text, manacost, pt, maintype, type, color, image))
             })

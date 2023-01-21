@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from "typeorm"
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from "typeorm"
 import { IsNumber } from "class-validator"
 import { Color } from "./color.entity"
 import { CardType } from "./type.entity"
@@ -45,12 +45,15 @@ export class Card implements ICard {
     pt: number
 
     @ManyToOne(() => CardType, (type: ICardType) => type.id, { eager: true, onDelete: "CASCADE", onUpdate: "CASCADE" })
+    @JoinColumn()
     maintype: ICardType
 
     @ManyToOne(() => CardType, (type: ICardType) => type.id, { eager: true, onDelete: "CASCADE", onUpdate: "CASCADE" })
+    @JoinColumn()
     type: ICardType
 
     @ManyToOne(() => Color, (color: IColor) => color.id, { eager: true, onDelete: "CASCADE", onUpdate: "CASCADE" })
+    @JoinColumn()
     color: IColor
 
     @Column({ type: "varchar", unique: false, nullable: false, default: null })

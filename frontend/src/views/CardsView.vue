@@ -8,7 +8,7 @@
             direction-links
             color="secondary"
             active-color="primary"
-            @update:model-value="onGetCards()"
+            @update:model-value="onGetCards(currentFilter)"
             style="margin-block: 10px"
         />
         <section class="cards-section">
@@ -37,26 +37,29 @@ const loading: Ref<boolean> = ref(false)
 
 const queryData: any = router.currentRoute.value.query.page || 1
 const page: Ref<number> = ref<any>(queryData)
+const currentFilter: Ref<IFilter> = ref({ name: null, manacost: null, pt: null, color: null, type: null})
 
-const cards: Ref<{ result: ICard[], count: number }> = ref<{ result: ICard[], count: number }>({ result: [], count: 0})
+const cards: Ref<{ result: ICard[], count: number }> = ref({ result: [], count: 0})
+
+const onAcceptedFilter = async (filter: IFilter) => {
+    currentFilter.value = filter
+    onGetCards(filter)
+}
 
 const onGetCards = async (filter?: IFilter | any) => {
+    console.log(filter)
     loading.value = true
     let query = {
         ...{ page: page.value },
-        ...filter || {}
+        ...filter
     }
     await router.replace({ name: "cards", query: query })
     cards.value = await store.dispatch("getCards", { page: page.value - 1, filter: filter })
     loading.value = false
 }
 
-const onAcceptedFilter = async (filter: IFilter) => {
-    await onGetCards(filter)
-}
-
 onMounted(async () => {
-    onGetCards()
+    onGetCards(currentFilter)
 })
 </script>
 

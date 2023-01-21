@@ -2,6 +2,7 @@ import { Controller, HttpStatus, Inject } from "@nestjs/common"
 import { MessagePattern, Payload } from "@nestjs/microservices"
 import { CARDS_SERVICE_TOKEN, LOGGER_TOKEN, OUTPUT_TOKEN } from "src/common/constants/inject-tokens.constant"
 import { CardCreateDto } from "src/common/dto/card-create.dto"
+import { CardFindDto } from "src/common/dto/card-find.dto"
 import { ICard } from "src/common/interfaces/card.interface"
 import { ICardsService } from "src/common/interfaces/cards.service.interface"
 import { ILogger } from "src/common/interfaces/logger.interface"
@@ -18,8 +19,9 @@ export class CardsController {
     ) {}
 
     @MessagePattern("cards.findAll")
-    async findAll(@Payload() page: number): Promise<IResult<IResultAndCount<ICard[]> | ICard[]>> {
-        const result: IResult<IResultAndCount<ICard[]> | ICard[]> = await this._output.responseAsync(HttpStatus.OK, await this._cardService.findAll(page))
+    async findAll(@Payload() findDto: CardFindDto): Promise<IResult<IResultAndCount<ICard[]> | ICard[]>> {
+        this._logger.log(findDto)
+        const result: IResult<IResultAndCount<ICard[]> | ICard[]> = await this._output.responseAsync(HttpStatus.OK, await this._cardService.findAll(findDto.page, findDto.filter))
         this._logger.log(result, "cards.findAll")
         return result
     }

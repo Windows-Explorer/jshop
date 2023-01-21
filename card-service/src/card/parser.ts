@@ -103,9 +103,19 @@ export class Parser implements IParser {
                 const text: string = String(el.children[1].content)
                 const manacost: number = Number(el.children[2].children[0].content) || 0
                 const pt: number = Number(el.children[2].children[1].content) || 0
-                const maintype: ICardType = types.find(() => new CardType(String(el.children[2].children[2].content)))
-                const type: ICardType = types.find(() => new CardType(String(el.children[2].children[3].content)))
-                const color: IColor = colors.find(() => new Color(String(el.children[2].children[4].content)))
+                const maintype: ICardType = types.find((maintype: ICardType) => {
+                    if(String(el.children[2].children[2].content)) return true
+                    return false
+                })
+                const type: ICardType = types.find((type: ICardType) => {
+                    if(String(el.children[2].children[3].content) === type.name) return true
+                    return false
+                })
+                const color: IColor = colors.find((color: IColor) => {
+                    if(String(el.children[2].children[4].content) === color.name) return true
+                    return false
+                })
+                this._logger.log(colors)
                 const image: string = String(el.children[4].attributes.picURL)
                 cards.push(new Card(name, text, manacost, pt, maintype, type, color, image))
             })

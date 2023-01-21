@@ -16,7 +16,7 @@ export class CardProtectedController {
         response.status(result.statusCode).send(result.message)
     }
 
-    @UseGuards(AdminGuard)
+    // @UseGuards(AdminGuard)
     @Get("/parse")
     async parse(@Res() response: Response): Promise<void> {
         const result: IResult<any> = await this._client.send("cards.parse", "").toPromise()

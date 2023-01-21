@@ -24,14 +24,14 @@ export class CardsService implements ICardsService {
     }
 
     async findAll(page: number): Promise<IResultAndCount<ICard[]>> {
-        const cardsCount: number = 8
-        const take: number = page * cardsCount || cardsCount
-        const skip: number = ( (take - cardsCount) < 0 ? 0: (take - cardsCount) ) || 0
+        const take: number = 8
+        const skip: number = ((page * take) < 0 ? 0: (page * take)) || 0
+        
         const [result, count] = await this._cardRepository.findAndCount({
             take: take,
             skip: skip
         })
-        return { result: result, count: count / cardsCount }
+        return { result: result, count: count / take }
     }
 
     async save(card: CardCreateDto): Promise<Card> {

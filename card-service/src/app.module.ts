@@ -17,6 +17,7 @@ import { CardType } from "./card/entities/type.entity"
       inject: [ConfigService],
       useFactory: async (configService: ConfigService): Promise<TypeOrmModuleOptions> => ({
         type: "mysql",
+        logging: true,
         port: configService.get<number>("DATABASE_PORT"),
         host: configService.get<string>("DATABASE_HOST"),
         database: configService.get<string>("DATABASE_DATABASE"),

@@ -9,6 +9,6 @@ export const mainRoutes: RouteRecordRaw[] = [
     {
         path: '/cards',
         name: 'cards',
-        component: async () => await import("../../views/CardsView.vue")
+        component: async () => await import("../../views/CardsView.vue"),
     },
 ]

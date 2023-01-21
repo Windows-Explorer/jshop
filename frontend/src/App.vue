@@ -12,7 +12,7 @@
 
           <!-- <q-route-tab to="/products" label="Продукты" />
           <q-route-tab to="/cart" label="Корзина" /> -->
-          <q-route-tab to="/cards" label="База карт" />
+          <q-route-tab :to="{ name: 'cards' }" label="База карт" />
 
           <q-route-tab label="Учетная запись">
             <q-menu :transition-show="'jump-up'" :transition-hide="'jump-down'">

@@ -1,5 +1,6 @@
 import { customNotifies } from '@/store/notifies'
 import { Module, VuexModule, Mutation, Action } from 'vuex-module-decorators'
+import { IFilter } from './card-filter.interface'
 import { ICard } from './card-object.interface'
 import { ICardType } from './card-type-object.interface'
 import { IColor } from './color-object.interface'
@@ -26,8 +27,16 @@ export class CardsStoreModule extends VuexModule {
     }
 
     @Action({ commit: "cardMutation" })
-    async getCards(page: number): Promise<{ result: ICard[], count: number }> {
-        const result = await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/cards?page=${page}`)
+    async getCards(payload: {page: number, filter?: IFilter | any}): Promise<{result: ICard[], count: number}> {
+
+        let filterParams: string = ""
+        if(payload.filter) {
+            Object.keys(payload.filter).forEach(key => {
+                if(payload.filter[key]) filterParams += `&${key}=${payload.filter[key]}`
+            })
+        }
+
+        const result = await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/cards?page=${payload.page}${[filterParams]}`)
 
         if (result.status === 200) {
             const cards: { result: ICard[], count: number } = await result.json()
@@ -36,11 +45,11 @@ export class CardsStoreModule extends VuexModule {
         }
         else {
             customNotifies.negativeNotify()
-            return { result: [], count: 0 }
+            return {result: [], count: 0}
         }
     }
 
-    @Action({ commit: "colorMutatuion" })
+    @Action({ commit: "colorMutation" })
     async getColors(): Promise<IColor[]> {
         const result = await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/cards/colors`)
 
@@ -54,7 +63,7 @@ export class CardsStoreModule extends VuexModule {
             return []
         }
     }
-    @Action({ commit: "cardTypeMutatuion" })
+    @Action({ commit: "cardTypeMutation" })
     async getCardTypes(): Promise<ICardType[]> {
         const result = await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/cards/types`)
 

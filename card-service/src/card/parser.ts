@@ -104,7 +104,7 @@ export class Parser implements IParser {
                 const manacost: number = Number(el.children[2].children[0].content) || 0
                 const pt: number = Number(el.children[2].children[1].content) || 0
                 const maintype: ICardType = types.find((maintype: ICardType) => {
-                    if(String(el.children[2].children[2].content)) return true
+                    if(String(el.children[2].children[2].content) === maintype.name) return true
                     return false
                 })
                 const type: ICardType = types.find((type: ICardType) => {

@@ -1,7 +1,6 @@
 <template>
     <div class="card">
         <q-img class="img" :src="$props.card.image" height="100%" width="100%" />
-        test
     </div>
 </template>
 

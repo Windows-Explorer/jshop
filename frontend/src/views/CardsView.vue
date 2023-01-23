@@ -12,10 +12,7 @@
             style="margin-block: 10px"
         />
         <section class="cards-section">
-            <div v-for="(card, index) in cards.result" :key="index">
-                <card :card="card" />
-            </div>
-            
+            <card-block v-for="(card, index) in cards.result" :key="index" :card="card" />
         </section>
     </section>
 </template>
@@ -24,7 +21,6 @@
 
 import { ref, Ref } from "@vue/reactivity"
 import { defineAsyncComponent, onMounted } from "@vue/runtime-core"
-import { defineComponent } from "vue"
 import { useRouter } from "vue-router"
 import { useStore } from "vuex"
 import { IFilter } from "../store/modules/cards/card-filter.interface"
@@ -32,7 +28,7 @@ import { ICard } from "../store/modules/cards/card-object.interface"
 
 const router = useRouter()
 
-const card = defineComponent(() => import("../components/Card.vue"))
+const cardBlock = defineAsyncComponent(async () => import("../components/CardBlock.vue"))
 const cardFilter = defineAsyncComponent(async () => await import("../components/CardFilter.vue"))
 
 const store = useStore()

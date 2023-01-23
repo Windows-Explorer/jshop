@@ -11,6 +11,7 @@
             @update:model-value="onGetCards(currentFilter)"
             style="margin-block: 10px"
         />
+        {{ cards.result }}
         <section class="cards-section">
             <card v-for="(card, index) in cards.result" :key="index" :card="card" />
         </section>

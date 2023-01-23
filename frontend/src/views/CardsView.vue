@@ -12,7 +12,11 @@
             style="margin-block: 10px"
         />
         <section class="cards-section">
-            <card v-for="card in cards.result" :key="card.id" :card="card" />
+            <div v-for="(card, index) in cards.result" :key="index">
+                {{ index }}
+                <card :card="card" />
+            </div>
+            
         </section>
     </section>
 </template>

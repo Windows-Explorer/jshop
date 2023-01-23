@@ -11,4 +11,4 @@ COPY . .
 
 EXPOSE 80
 
-CMD ["npm", "run", "serve", "--port 80", "--host 0.0.0.0"]
+CMD ["npm", "run serve --port 80 --host 0.0.0.0"]

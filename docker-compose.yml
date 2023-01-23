@@ -6,8 +6,8 @@ services:
     container_name: db
     restart: always
     hostname: db_host
-    ports:
-      - 3306:3306
+#    ports:
+#      - 3306:3306
     environment:
       MARIADB_ROOT_PASSWORD: root
       MARIADB_DATABASE: jshop
@@ -37,8 +37,8 @@ services:
     container_name: zookeeper
     restart: always
     hostname: zoo_host
-    ports:
-      - "2181:2181"
+#    ports:
+#      - "2181:2181"
     environment:
         ZOO_MY_ID: 1
         ZOO_PORT: 2181
@@ -155,19 +155,19 @@ services:
     networks:
       - default
 
-  # frontend_nginx:
-  #   container_name: frontend_nginx
-  #   restart: always
-  #   hostname: frontend_nginx_host
-  #   build:
-  #     context: frontend
-  #     dockerfile: frontend.Dockerfile
-  #   environment:
-  #     VUE_APP_GATEMAY_ADDRESS: "nest_gateway_host:3000"
-  #   ports:
-  #     - "80:80"
-  #   networks:
-  #     - default
+  frontend_nginx:
+    container_name: frontend_nginx
+    restart: always
+    hostname: frontend_nginx_host
+    build:
+      context: frontend
+      dockerfile: frontend.Dockerfile
+    environment:
+      VUE_APP_GATEMAY_ADDRESS: "nest_gateway_host:3000"
+    ports:
+      - "80:80"
+    networks:
+      - default
 
 networks:
   default:

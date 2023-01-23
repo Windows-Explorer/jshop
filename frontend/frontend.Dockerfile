@@ -9,10 +9,7 @@ COPY ./package*.json ./
 RUN npm install
 RUN npm install -g @vue/cli
 COPY . .
-#COPY ./config/nginx.conf /etc/nginx/sites-available/nginx.conf
-#RUN ln -s /etc/nginx/sites-available/nginx.conf /etc/nginx/sites-enabled/nginx.conf
-RUN npm run build
-RUN mv dist/* .
+RUN npm run serve
 
 EXPOSE 80
 

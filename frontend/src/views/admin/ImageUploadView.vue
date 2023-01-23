@@ -9,8 +9,8 @@
         />
 
         <q-list class="list" separator>
-            <q-item clickable v-ripple>
-                <q-item-section class="item-section" v-for="(file, index) in files" :key="index">
+            <q-item clickable v-ripple v-for="(file, index) in files" :key="index">
+                <q-item-section class="item-section">
                     {{ file }}
                     <q-btn
                         label="Удалить"

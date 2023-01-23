@@ -39,7 +39,7 @@ const queryData: any = router.currentRoute.value.query.page || 1
 const page: Ref<number> = ref<any>(queryData)
 const currentFilter: Ref<IFilter> = ref({ name: null, manacost: null, pt: null, color: null, type: null})
 
-const cards: Ref<{ result: ICard[], count: number }> = ref({ result: [], count: 0})
+const cards: Ref<{ result: ICard[], count: number }> = ref<{ result: ICard[], count: number }>({ result: [], count: 0})
 
 const onAcceptedFilter = async (filter: IFilter) => {
     currentFilter.value = filter

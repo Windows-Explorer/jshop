@@ -22,7 +22,7 @@ export class FilesProtectedController {
         })
     }))
     @Post("/")
-    async saveMultipleImages(@UploadedFiles() files: Express.Multer.File[], @Res() response: Response): Promise<void> {
+    async saveMultipleFiles(@UploadedFiles() files: Express.Multer.File[], @Res() response: Response): Promise<void> {
         response.send(files)
     }
 

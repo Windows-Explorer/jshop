@@ -1,7 +1,7 @@
 <template>
     <section class="page-section">
         <q-uploader class="uploader"
-            url="http://31.31.201.48:3000/files"
+            url="http://kontinuum.su:3000/files"
             :headers="[{ name: 'Authorization', value: token }]"
             label="Загрузить изображение"
             multiple

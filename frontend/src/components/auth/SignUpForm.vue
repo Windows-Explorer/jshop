@@ -22,7 +22,7 @@
             no-error-icon
         />
         <q-input
-            v-model="user.number"
+            v-model="user.phoneNumber"
             label="Номер телефона"
             :mask="'+7 (###) ###-##-##'"
             :standout="quasar.dark.mode"
@@ -112,12 +112,16 @@ const validationRules = {
 
 
 const onSubmit = async () => {
-    quasar.loading.show()
-    await store.dispatch("signUp", { user: user, router: router})
-    quasar.loading.hide()
+    await store.dispatch("signUp", { user: user, router: router })
 }
 
 const onReset = async () => router.push({ name: "home" })
 
 
 </script>
+
+<style lang="scss" scoped>
+.redirect {
+    color: $secondary
+}
+</style>

@@ -1,0 +1,50 @@
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+.page-container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: stretch;
+    justify-content: flex-start;
+    background: url("../assets/images/1.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: center;
+    align-items: stretch;
+    padding: 12px;
+    gap: 10px;
+    font-family: Colus;
+}
+
+html::-webkit-scrollbar {
+    display: none;
+}
+
+html, body, #app {
+    height: 100%;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.page-section {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 12px;
+    height: 100%;
+}
+
+.header { 
+    font-family: Colus;
+}

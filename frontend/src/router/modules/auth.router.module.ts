@@ -26,11 +26,6 @@ export const authGuard = async (to: any, from: any, next: any) => {
 
 export const authRoutes: RouteRecordRaw[] = [
   {
-    path: '/',
-    name: 'home',
-    component: async () => await import("../../views/HomeView.vue")
-  },
-  {
     path: '/signup',
     name: 'signup',
     component: async () => await import("../../views/auth/SignUpView.vue"),

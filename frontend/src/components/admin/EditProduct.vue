@@ -74,7 +74,7 @@ const currentFile: Ref<File | null> = ref<File | null>(null)
 
 const onSubmit = async () => {
     loading.value = true
-    await store.dispatch("saveOneProduct", { product: props.product, file: currentFile.value })
+    await store.dispatch("saveProduct", { product: props.product, file: currentFile.value })
     loading.value = false
     emits("productEdited")
 }

@@ -1,5 +1,5 @@
 <template>
-    <section>
+    <section class="page-section"> 
         <q-table
             :style="'width: 100%'"
             :rows="products"
@@ -117,40 +117,21 @@ onMounted(async () => {
 
 </script>
 
-
-<style lang="sass" scoped>
-
-.table
+<style lang="scss" scoped>
+.table {
     font-family: SpectralRegular
-
-button
-    font-family: Colus
-
-section
-    width: 100%
-    height: 100%
-    padding-top: 10px
-    padding-inline: 20px
-    color: white
-    display: flex
-    gap: 10px
-    flex-direction: column
-    align-items: stretch
-    flex-wrap: nowrap
-
-p
-    width: 300px
-    white-space: nowrap
-    overflow: hidden
-    text-overflow: ellipsis
-
-.actionsContainer
-    width: 100%
-    display: flex
-    flex-direction: row
-    flex-wrap: nowrap
-    align-content: center
-    justify-content: center
-    align-items: center
-    gap: 10px
+}
+.actionsContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+button {
+    font-family: Colus;
+}
 </style>

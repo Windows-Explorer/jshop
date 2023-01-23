@@ -1,16 +1,17 @@
 import { store } from '@/store'
 import { LoadingBar } from 'quasar'
-import { createRouter, createWebHistory, createMemoryHistory, RouteRecordRaw } from 'vue-router'
+import { createMemoryHistory, createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import { adminRoutes } from './modules/admin.router.module'
 import { authRoutes } from './modules/auth.router.module'
+import { mainRoutes } from './modules/main.router.module'
 import { productsRoutes } from './modules/products.roter.module'
 
 const defaultTitle = "Континуум"
 
-const routes: RouteRecordRaw[] = authRoutes.concat(productsRoutes, adminRoutes)
+const routes: RouteRecordRaw[] = mainRoutes.concat(authRoutes, adminRoutes)
 
 const router = createRouter({
-  history: createMemoryHistory(),
+  history: createMemoryHistory(process.env.BASE_URL),
   routes
 })
 

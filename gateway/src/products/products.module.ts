@@ -2,15 +2,16 @@ import { Inject, Module } from "@nestjs/common"
 import { ConfigModule, ConfigService } from "@nestjs/config"
 import { ClientKafka, ClientsModule, Transport } from "@nestjs/microservices"
 import { AuthModule } from "src/auth/auth.module"
+import { PRODUCTS_KAFKA_CLIENT_TOKEN } from "src/common/constants/inject-tokens.constants"
 import { ProductsController } from "./products.controller"
-import { ProtectedProductsController } from "./protected.products.controller"
+import { ProductsProtectedController } from "./products.protected.controller"
 
 @Module({
   imports: [
     AuthModule,
     ClientsModule.registerAsync([
       {
-        name: "PRODUCTS_GATEWAY",
+        name: PRODUCTS_KAFKA_CLIENT_TOKEN,
         imports: [ConfigModule],
         inject: [ConfigService],
         useFactory: async (configService: ConfigService) => ({
@@ -28,22 +29,22 @@ import { ProtectedProductsController } from "./protected.products.controller"
       }
     ])
   ],
-  controllers: [ProductsController, ProtectedProductsController]
+  controllers: [ProductsController, ProductsProtectedController]
 })
 export class ProductsModule {
-  constructor(@Inject("PRODUCTS_GATEWAY") private readonly client: ClientKafka) {}
+  constructor(@Inject(PRODUCTS_KAFKA_CLIENT_TOKEN) private readonly _client: ClientKafka) { }
 
   async onModuleInit() {
-    this.client.subscribeToResponseOf("products.findAll")
-    this.client.subscribeToResponseOf("products.findById")
-    this.client.subscribeToResponseOf("products.save")
-    this.client.subscribeToResponseOf("products.saveMany")
-    this.client.subscribeToResponseOf("products.removeOne")
+    this._client.subscribeToResponseOf("products.findAll")
+    this._client.subscribeToResponseOf("products.findById")
+    this._client.subscribeToResponseOf("products.save")
+    this._client.subscribeToResponseOf("products.saveMany")
+    this._client.subscribeToResponseOf("products.removeOne")
 
-    await this.client.connect()
+    await this._client.connect()
   }
 
   async onModuleDestroy() {
-    await this.client.close()
+    await this._client.close()
   }
 }

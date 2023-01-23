@@ -1,0 +1,30 @@
+
+.header-enter-active,
+.header-leave-active {
+    transition: transform 0.7s ease;
+}
+
+.header-enter-from,
+.header-leave-to {
+    transform: translateY(-100%);
+}
+
+.content-enter-active,
+.content-leave-active {
+    transition: transform 0.7s ease;
+}
+
+.content-enter-from,
+.content-leave-to {
+    transform: translateY(-100%);
+}
+
+.footer-enter-active,
+.footer-leave-active {
+    transition: transform 0.7s ease;
+}
+
+.footer-enter-from,
+.footer-leave-to {
+    transform: translateY(100%);
+}

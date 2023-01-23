@@ -1,13 +1,25 @@
 <template>
-    <section>
-        <q-uploader
-            url="http://95.163.243.173:3000/products/save/images"
-            :headers="[{ name: 'Authorization', value: token }, { name: 'Content-Transfer-Encoding', value: '8BIT' }]"
-            label="Upload"
+    <section class="page-section">
+        <q-uploader class="uploader"
+            url="http://kontinuum.su:3000/files"
+            :headers="[{ name: 'Authorization', value: token }]"
+            label="Загрузить изображение"
             multiple
-	    color="dark"
-            style="width: 600px; height: 500px; background-color: '#131313'"
+            @uploaded="getFiles()"
         />
+
+        <q-list class="list" separator>
+            <q-item clickable v-ripple>
+                <q-item-section class="item-section" v-for="(file, index) in files" :key="index">
+                    {{ file }}
+                    <q-btn
+                        label="Удалить"
+                        color="negative"
+                        @click="onRemoveFile(file)"
+                    />
+                </q-item-section>
+            </q-item>
+        </q-list>
     </section>
     
 </template>
@@ -15,7 +27,7 @@
 
 <script setup lang="ts">
 
-import { defineAsyncComponent, onMounted, Ref, ref } from "@vue/runtime-core"
+import { onMounted, Ref, ref } from "@vue/runtime-core"
 import { useQuasar } from "quasar"
 import { useRouter } from "vue-router"
 import { useStore } from "vuex"
@@ -25,28 +37,47 @@ const quasar = useQuasar()
 const store = useStore()
 
 const token: Ref<string> = ref<string>("")
+const files: Ref<string[]> = ref<string[]>([])
+
+const onRemoveFile = async (filename: string) => {
+    files.value = await store.dispatch("removeFile", filename)
+}
+
+const getFiles = async () => {
+    files.value = await store.dispatch("getFiles")
+}
 
 onMounted(async () => {
     token.value = await store.getters.token
+    getFiles()
 })
 
 </script>
 
+<style lang="scss" scoped>
 
-<style lang="sass" scoped>
+section {
+    display: flex;
+    height: 100%;
+    padding: 12px;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    gap: 12px
+}
+.uploader {
+    width: 50%;
+    min-height: 100%;
+}
+.list {
+    width: 50%;
+    min-height: 100%;
+    background-color: $primary;
+    color: $secondary;
+}
 
-section
-    width: 100%
-    height: 100%
-    padding-top: 10px
-    color: white
-    display: flex
-    flex-direction: row
-    flex-wrap: wrap
-    align-content: center
-    justify-content: center
-    align-items: flex-start
-    gap: 10px
-
+.item-section {
+    display: flex;
+}
 
 </style>

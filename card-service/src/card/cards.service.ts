@@ -46,11 +46,7 @@ export class CardsService implements ICardsService {
             }
             
             const [result, count] = await this._cardRepository.findAndCount({
-                order: {
-                    card: {
-                        name: "ASC"
-                    }
-                },
+                order: { name: "ASC" },
                 take: take,
                 skip: skip,
                 where: {

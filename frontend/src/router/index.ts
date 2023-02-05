@@ -6,7 +6,7 @@ import { authRoutes } from './modules/auth.router.module'
 import { mainRoutes } from './modules/main.router.module'
 import { productsRoutes } from './modules/products.roter.module'
 
-const defaultTitle = "Континуум"
+const defaultTitle = "Не пропаганда, потому что заблюрено гейство ебаное (без негатива кстати)"
 
 const routes: RouteRecordRaw[] = mainRoutes.concat(authRoutes, adminRoutes, productsRoutes)
 

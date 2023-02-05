@@ -72,10 +72,10 @@
 import { reactive, Ref } from "@vue/reactivity"
 import { useStore } from "vuex"
 import { useQuasar } from "quasar"
-import { rules } from "../../validation"
-import { withMessage } from "../../validation/helpers"
 import { useRouter } from "vue-router"
 import { defineAsyncComponent } from "@vue/runtime-core"
+import { Validator } from "../../common/validation/validator"
+import { ValidatorHelper } from "../../common/validation/validator-helper"
 
 const logo = defineAsyncComponent(async () => import("../icons/LogoDarkIcon.vue"))
 
@@ -83,37 +83,38 @@ const store = useStore()
 const router = useRouter()
 const quasar = useQuasar()
 
+const validator: Validator = new Validator()
+const validatorHelper: ValidatorHelper = new ValidatorHelper()
+
 const user = reactive({ username: "", email: "", phoneNumber: "", password: "", confirmPassword: "" })
 
 const validationRules = {
     username: [
-        async (value: string) => await withMessage("", rules.isRequired(value)),
-        async (value: string) => await withMessage("", rules.minLength(value, 4)),
-        async (value: string) => await withMessage("", rules.isUsernameUnique(value))
+        async (value: string) => await validatorHelper.withMessage("", await validator.isRequired(value)),
+        async (value: string) => await validatorHelper.withMessage("", await validator.minLength(value, 4)),
+        async (value: string) => await validatorHelper.withMessage("", await validator.isUsernameUnique(value))
     ],
     email: [
-        async (value: string) => await withMessage("", rules.isRequired(value)),
-        async (value: string) => await withMessage("", rules.isEmail(value)),
-        async (value: string) => await withMessage("", rules.isEmailUnique(value))
+        async (value: string) => await validatorHelper.withMessage("", await validator.isRequired(value)),
+        async (value: string) => await validatorHelper.withMessage("", await validator.isEmail(value)),
+        async (value: string) => await validatorHelper.withMessage("", await validator.isEmailUnique(value))
     ],
     password: [
-        async (value: string) => await withMessage("", rules.isRequired(value)),
-        async (value: string) => await withMessage("", rules.minLength(value, 8)),
+        async (value: string) => await validatorHelper.withMessage("", await validator.isRequired(value)),
+        async (value: string) => await validatorHelper.withMessage("", await validator.minLength(value, 8)),
     ],
     confirmPassword: [
-        async (value: string) => await withMessage("", rules.isRequired(value)),
-        async (value: string) => await withMessage("", rules.isEqual(value, user.password)),
+        async (value: string) => await validatorHelper.withMessage("", await validator.isRequired(value)),
+        async (value: string) => await validatorHelper.withMessage("", await validator.isEqual(value, user.password)),
     ],
     phoneNumber: [
-        async (value: string) => await withMessage("", rules.isRequired(value)),
-        async (value: string) => await withMessage("", rules.isPhoneNumber(value)),
+        async (value: string) => await validatorHelper.withMessage("", await validator.isRequired(value)),
+        async (value: string) => await validatorHelper.withMessage("", await validator.isPhoneNumber(value)),
     ]
 }
 
 
-const onSubmit = async () => {
-    await store.dispatch("signUp", { user: user, router: router })
-}
+const onSubmit = async () => await store.dispatch("signUp", { user: user, router: router })
 
 const onReset = async () => router.push({ name: "home" })
 

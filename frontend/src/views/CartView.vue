@@ -22,7 +22,7 @@
 <script setup lang="ts">
 import { defineAsyncComponent, onMounted, Ref, ref } from "@vue/runtime-core"
 import { useStore } from "vuex"
-import { ICartObject } from "../store/modules/cart/cart-object.interface"
+import { ICartObject } from "../common/interfaces/cart-object.interface"
 
 const ProductCart = defineAsyncComponent(async () => import("../components/ProductCart.vue"))
 const store = useStore()

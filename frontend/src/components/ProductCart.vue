@@ -21,12 +21,12 @@
 </template>
 
 <script setup lang="ts">
-import { ICartObject } from "../store/modules/cart/cart-object.interface"
 import { onMounted, onUpdated, PropType, ref, Ref } from "@vue/runtime-core"
 import { QBtn, QImg, QTooltip, useQuasar } from "quasar"
 import { useRouter } from "vue-router"
 import { useStore } from "vuex"
-import { IProduct } from "../store/modules/products/product.interface"
+import { IProduct } from "../common/interfaces/product.interface"
+import { ICartObject } from "../common/interfaces/cart-object.interface"
 
 const router = useRouter()
 const store = useStore()

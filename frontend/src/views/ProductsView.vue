@@ -9,11 +9,11 @@
 import { Ref, ref } from "@vue/reactivity"
 import { defineAsyncComponent, onMounted } from "@vue/runtime-core"
 import { useStore } from "vuex"
-import { IProduct } from "../store/modules/products/product.interface"
+import { IProduct } from "../common/interfaces/product.interface"
 
 const store = useStore()
 
-const Product = defineAsyncComponent(async () => import("../components/Product.vue"))
+const ProductCard = defineAsyncComponent(async () => import("../components/ProductCard.vue"))
 
 const products: Ref<IProduct[]> = ref<IProduct[]>([])
 const loading: Ref<boolean> = ref(false)

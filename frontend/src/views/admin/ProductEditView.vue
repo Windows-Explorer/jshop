@@ -58,7 +58,7 @@ import { defineAsyncComponent, onMounted, Ref, ref } from "@vue/runtime-core"
 import { useQuasar } from "quasar"
 import { useRouter } from "vue-router"
 import { useStore } from "vuex"
-import { IProduct } from "../../store/modules/products/product.interface"
+import { IProduct } from "../../common/interfaces/product.interface"
 
 const CreateProduct = defineAsyncComponent(async () => import("../../components/admin/CreateProduct.vue"))
 const EditProduct = defineAsyncComponent(async () => import("../../components/admin/EditProduct.vue"))

@@ -36,14 +36,17 @@
 import { reactive, Ref } from "@vue/reactivity"
 import { useStore } from "vuex"
 import { useQuasar } from "quasar"
-import { rules } from "../../validation"
-import { withMessage } from "../../validation/helpers"
 import { useRouter } from "vue-router"
 import { defineAsyncComponent } from "vue"
+import { Validator } from "../../common/validation/validator"
+import { ValidatorHelper } from "../../common/validation/validator-helper"
 
 const store = useStore()
 const quasar = useQuasar()
 const router = useRouter()
+
+const validator: Validator = new Validator()
+const validatorHelper: ValidatorHelper = new ValidatorHelper()
 
 const logo = defineAsyncComponent(async () => import("../icons/LogoDarkIcon.vue"))
 
@@ -51,11 +54,11 @@ const user = reactive({ username: "", email: "", password: "", confirmPassword: 
 
 const validationRules = {
     email: [
-        async (value: string) => await withMessage("", rules.isRequired(value)),
-        async (value: string) => await withMessage("", rules.isEmail(value))
+        async (value: string) => await validatorHelper.withMessage("", await validator.isRequired(value)),
+        async (value: string) => await validatorHelper.withMessage("", await validator.isEmail(value))
     ],
     password: [
-        async (value: string) => await withMessage("", rules.isRequired(value)),
+        async (value: string) => await validatorHelper.withMessage("", await validator.isRequired(value)),
     ]
 }
 

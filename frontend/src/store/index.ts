@@ -1,12 +1,11 @@
 import { createStore } from "vuex"
-import { CardsStoreModule } from "./modules/cards/cards-vuex.module"
-import { CartStoreModule } from "./modules/cart/cart-vuex.module"
-import { FilesStoreModule } from "./modules/files/files-vuex.module"
-import { ProductsStoreModule } from "./modules/products/products-vuex.module"
-import { TokenStoreModule } from "./modules/token/token-vuex.module"
+import { CartStoreModule } from "./modules/cart-vuex.module"
+import { FilesStoreModule } from "./modules/files-vuex.module"
+import { ProductsStoreModule } from "./modules/products-vuex.module"
+import { TokenStoreModule } from "./modules/token-vuex.module"
 
 
 export const store = createStore({
     state: {},
-    modules: { TokenStoreModule, ProductsStoreModule, CartStoreModule, FilesStoreModule, CardsStoreModule }
+    modules: { TokenStoreModule, ProductsStoreModule, CartStoreModule, FilesStoreModule }
 })

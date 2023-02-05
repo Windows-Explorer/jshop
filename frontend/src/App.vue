@@ -11,8 +11,8 @@
         <q-tabs :dense="false" :align="'left'">
           <LogoDarkIcon :style="'height:36px; margin-inline:28px; cursor:pointer;'" @click="router.push({ name: 'home'})" />
 
-          <!-- <q-route-tab to="/products" label="Продукты" />
-          <q-route-tab to="/cart" label="Корзина" /> -->
+          <q-route-tab to="/products" label="Продукты" />
+          <q-route-tab to="/cart" label="Корзина" />
           <q-route-tab :to="{ name: 'cards' }" label="База карт" />
 
           <q-route-tab label="Учетная запись">
@@ -63,12 +63,8 @@ const onLogout = async () => {
 
 onMounted(async () => {
   quasar.loadingBar.setDefaults({
-    color: "negative",
-    hijackFilter (url: any) {
-      return /^http:\/\/\./.test(url)
-    }
+    color: "negative"
   })
-  quasar.dark.set(true)
 
   store.dispatch("getRoleFromJwt")
 })

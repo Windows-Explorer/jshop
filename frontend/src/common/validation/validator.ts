@@ -19,7 +19,7 @@ export class Validator implements IValidator {
     public async isEmailUnique(value: string | number): Promise<string | boolean> {
         if(value === "") return true
 
-        const result: string = await (await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/unique/email/${value}`)).json()
+        const result: string = await (await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/unique/email/${value}`)).text()
         if(value.toString().toLowerCase() !== result.toLowerCase()) return true
 
         return false
@@ -28,7 +28,7 @@ export class Validator implements IValidator {
     public async isUsernameUnique(value: string | number): Promise<string | boolean> {
         if(value === "") return true
 
-        const result: string = await (await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/unique/username/${value}`)).json()
+        const result: string = await (await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/unique/username/${value}`)).text()
         if(value.toString().toLowerCase() !== result.toLowerCase()) return true
 
         return false

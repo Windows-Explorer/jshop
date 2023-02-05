@@ -11,4 +11,9 @@ export const mainRoutes: RouteRecordRaw[] = [
         name: 'cards',
         component: async () => await import("../../views/CardsView.vue"),
     },
+    {
+        path: '/testing',
+        name: 'testing',
+        component: async () => await import("../../views/TestingView.vue"),
+    },
 ]

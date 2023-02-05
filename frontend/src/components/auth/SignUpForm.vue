@@ -1,11 +1,9 @@
 <template>
     <q-form @submit="onSubmit()" @reset="onReset()" class="form">
-        <logo/>
+        <h4>Регистрация</h4>
         <q-input
             v-model="user.username"
             label="Имя пользователя"
-            :standout="quasar.dark.mode"
-            :filled="!quasar.dark.mode"
             :type="'text'"
             :rules="validationRules.username"
             :maxlength="32"
@@ -15,8 +13,6 @@
         <q-input
             v-model="user.email"
             label="Электронная почта"
-            :standout="quasar.dark.mode"
-            :filled="!quasar.dark.mode"
             :type="'email'"
             :rules="validationRules.email"
             no-error-icon
@@ -25,8 +21,6 @@
             v-model="user.phoneNumber"
             label="Номер телефона"
             :mask="'+7 (###) ###-##-##'"
-            :standout="quasar.dark.mode"
-            :filled="!quasar.dark.mode"
             :type="'tel'"
             :rules="validationRules.phoneNumber"
             :maxlength="18"
@@ -35,8 +29,6 @@
         <q-input
             v-model="user.password"
             label="Пароль"
-            :standout="quasar.dark.mode"
-            :filled="!quasar.dark.mode"
             :type="'password'"
             :rules="validationRules.password"
             :maxlength="16"
@@ -46,47 +38,37 @@
         <q-input
             v-model="user.confirmPassword"
             label="Подтверждение пароля"
-            :standout="quasar.dark.mode"
-            :filled="!quasar.dark.mode"
             :type="'password'"
             :rules="validationRules.confirmPassword"
             :maxlength="16"
             no-error-icon
         />
-        
-        <span class="buttons">
-            <q-btn label="Назад" type="reset" :size="'18px'"/>
-            <q-btn label="Регистрация" type="submit" :size="'18px'" />
-        </span>
 
         <div class="redirect-container">
-            <router-link class="redirect" :to="{name: 'signin'}">Уже есть аккаунт</router-link>
+            <router-link class="redirect" :to="{ name: 'signin' }">Уже есть аккаунт</router-link>
         </div>
-        
-        
+        <span class="buttons">
+            <q-btn label="Регистрация" type="submit" :size="'18px'" :loading="loading" />
+        </span>
     </q-form>
 </template>
 
 <script setup lang="ts">
 
-import { reactive, Ref } from "@vue/reactivity"
+import { reactive, ref, Ref } from "@vue/reactivity"
 import { useStore } from "vuex"
-import { useQuasar } from "quasar"
 import { useRouter } from "vue-router"
-import { defineAsyncComponent } from "@vue/runtime-core"
 import { Validator } from "../../common/validation/validator"
 import { ValidatorHelper } from "../../common/validation/validator-helper"
 
-const logo = defineAsyncComponent(async () => import("../icons/LogoDarkIcon.vue"))
-
 const store = useStore()
 const router = useRouter()
-const quasar = useQuasar()
 
 const validator: Validator = new Validator()
 const validatorHelper: ValidatorHelper = new ValidatorHelper()
 
 const user = reactive({ username: "", email: "", phoneNumber: "", password: "", confirmPassword: "" })
+const loading: Ref<boolean> = ref(false)
 
 const validationRules = {
     username: [
@@ -114,7 +96,11 @@ const validationRules = {
 }
 
 
-const onSubmit = async () => await store.dispatch("signUp", { user: user, router: router })
+const onSubmit = async () => {
+    loading.value = true
+    await store.dispatch("signUp", { user: user, router: router })
+    loading.value = false
+}
 
 const onReset = async () => router.push({ name: "home" })
 

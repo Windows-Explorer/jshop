@@ -3,25 +3,35 @@
         <div class="header-content">
             <admin-layout v-if="store.getters.role === 'admin'" />
             <q-tabs :dense="false" :align="'left'">
-
-            <q-route-tab to="/products" label="Продукты" icon="shopping_bag" />
-            <q-route-tab to="/cart" label="Корзина"  class="tab" icon="shopping_cart"/>
-
+                <q-route-tab :to="{ name: 'products' }" label="Продукты" icon="shopping_bag" />
+                <q-route-tab :to="{ name: 'cart' }" label="Корзина" icon="shopping_cart"/>
             </q-tabs>
             
             <q-tabs>
-                <q-route-tab label="Учетная запись" icon="account_circle">
-                <q-menu :transition-show="'jump-down'" :transition-hide="'jump-up'">
-                <div class="menu">
-                    <q-btn flat v-if="!store.getters.isAuthorized" to="signin" label="Войти" />
-                    <q-btn flat v-if="!store.getters.isAuthorized" to="signup" label="Регистрация" />
-                    <q-btn flat v-if="store.getters.isAuthorized" label="Выйти" v-close-popup @click="onLogout()" />
-                </div>
-                </q-menu>
-            </q-route-tab>
+                <q-route-tab
+                    v-if="!store.getters.isAuthorized"
+                    :to="{ name: 'signin' }"
+                    label="Войти"
+                    flat
+                    icon="login"
+                />
+                <q-route-tab label="Учетная запись" icon="account_circle" v-if="store.getters.isAuthorized">
+                    <q-menu fit :transition-show="'jump-down'" :transition-hide="'jump-up'">
+                        <div class="menu">
+                            <q-btn
+                                v-if="store.getters.isAuthorized"
+                                label="Выйти"
+                                v-close-popup
+                                @click="onLogout()"
+                                flat
+                                icon="logout"
+                            />
+                        </div>
+                    </q-menu>
+                </q-route-tab>
             </q-tabs>
-            </div>
-      </q-header>
+        </div>
+    </q-header>
 </template>
 
 <script lang="ts" setup>

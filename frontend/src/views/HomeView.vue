@@ -6,11 +6,6 @@
 
 <script lang="ts" setup>
 
-import { defineAsyncComponent } from "@vue/runtime-core"
-
-
-const ProductCarousel = defineAsyncComponent(async () => import("../components/ProductCarousel.vue"))
-
 </script>
 
 <style scoped>

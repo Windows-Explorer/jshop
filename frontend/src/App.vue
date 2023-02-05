@@ -28,7 +28,7 @@ const myTweak = (offset: number) => { height: offset ? `calc(100vh - ${offset}px
 
 onMounted(async () => {
   quasar.loadingBar.setDefaults({
-    color: "negative"
+    color: "red"
   })
 
   store.dispatch("getRoleFromJwt")

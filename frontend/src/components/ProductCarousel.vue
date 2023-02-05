@@ -13,7 +13,7 @@
         :transition-prev="'slide-right'"
     >
         
-        <q-carousel-slide style="padding: 0" :name="1">
+        <!-- <q-carousel-slide style="padding: 0" :name="1">
             <q-img no-native-menu  loading="eager" src="@/assets/images/ascent.png" fit="cover" key="cover" style="height:100%" position="50% 25%">
                 <div class="absolute-full carousel-content ">
                     <h3>ВОСХОЖДЕНИЕ</h3>
@@ -36,7 +36,7 @@
                     <span>Возглавьте одну из восьми могущественных фракций и сразитесь за сокровища неизведанных земель!</span>
                 </div>
             </q-img>
-        </q-carousel-slide>
+        </q-carousel-slide> -->
     </q-carousel>
 </template>
 

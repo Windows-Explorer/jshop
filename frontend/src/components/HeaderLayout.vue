@@ -1,55 +1,48 @@
 <template>
     <q-header v-if="(route.name !=='signup' && route.name !=='signin')" class="header">
-        <div class="header-content">
-            <admin-layout v-if="store.getters.role === 'admin'" />
-            <q-tabs :dense="false" :align="'left'">
-                <q-route-tab :to="{ name: 'products' }" label="Продукты" icon="shopping_bag" />
-                <q-route-tab :to="{ name: 'cart' }" label="Корзина" icon="shopping_cart"/>
-            </q-tabs>
-            
-            <q-tabs>
-                <q-route-tab
-                    v-if="!store.getters.isAuthorized"
-                    :to="{ name: 'signin' }"
-                    label="Войти"
-                    flat
-                    icon="login"
-                />
-                <q-route-tab label="Учетная запись" icon="account_circle" v-if="store.getters.isAuthorized">
-                    <q-menu fit :transition-show="'jump-down'" :transition-hide="'jump-up'">
-                        <div class="menu">
-                            <q-btn
-                                v-if="store.getters.isAuthorized"
-                                label="Выйти"
-                                v-close-popup
-                                @click="onLogout()"
-                                flat
-                                icon="logout"
-                            />
-                        </div>
-                    </q-menu>
-                </q-route-tab>
-            </q-tabs>
+        <div class="main-header">
+            <div class="header-block">
+                <q-btn label="Иркутская область" icon="location_on" size="12px" flat square />
+            </div>
+            <div class="header-block">
+                <q-btn label="Войти" icon="login" :to="{ name: 'signin'}" size="12px" flat square />
+            </div>
         </div>
+        <div class="secondary-header">
+            <img src="https://hobbygames.ru/assets/img/svg/logo.svg" />
+            <q-form class="search" @submit="onSearch()">
+                <q-input v-model="search" :style="{ width: '100%' }" filled>
+                    <template v-slot:append>
+                        <q-icon name="search" flat round />
+                    </template>
+                </q-input>
+            </q-form>
+            <q-btn icon="shopping_cart" size="20px" flat round color="primary" />
+        </div>
+
     </q-header>
 </template>
 
 <script lang="ts" setup>
 
-import { useQuasar } from "quasar"
+import { defineAsyncComponent, ref, Ref } from "@vue/runtime-core"
 import { useRouter, useRoute } from "vue-router"
 import { useStore } from "vuex"
 
+const AdminLayout = defineAsyncComponent(async () => import("../components/admin/AdminLayout.vue"))
 
 const store = useStore()
 const router = useRouter()
-const quasar = useQuasar()
 const route = useRoute()
 
+const search: Ref<string> = ref("")
+
+const onSearch = async () => {
+    alert(search.value)
+}
+
 const onLogout = async () => {
-  quasar.loading.show()
   await store.dispatch('signOut', router)
-  quasar.loading.hide()
 }
 
 </script>

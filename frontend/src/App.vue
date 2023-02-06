@@ -1,7 +1,7 @@
 <template>
   <q-layout>
     <header-layout />
-    <q-page-container class="page-container" :style="myTweak">
+    <q-page-container :style="{ padding: '0px' }" class="page-container">
         <router-view />
     </q-page-container>
   </q-layout>
@@ -22,8 +22,6 @@ const store = useStore()
 const router = useRouter()
 const quasar = useQuasar()
 const route = useRoute()
-
-const myTweak = (offset: number) => { height: offset ? `calc(100vh - ${offset}px)` : '200vh' }
 
 
 onMounted(async () => {

@@ -1,6 +1,6 @@
 <template>
     <section>
-        <q-inner-loading :showing="loading" dark />
+        <q-inner-loading :showing="loading" />
         <product :product="product" v-for="(product, index) in products" :key="index"/>
     </section>
 </template>

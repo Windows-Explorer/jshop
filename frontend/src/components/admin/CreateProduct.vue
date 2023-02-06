@@ -1,39 +1,28 @@
 <template>
-    <q-card dark :style="'padding-block: 20px'">
+    <q-card>
         <q-form @submit="onSubmit()" class="form">
             <h5>Создание</h5>
-            <small style="color: red">валидаций нет</small>
             <q-input
-                standout
-                dark
                 v-model="currentProduct.title"
                 type="text"
                 :label="'Заголовок товара'"
             />
             <q-input
-                standout
-                dark
                 v-model="currentProduct.description"
                 type="textarea"
                 :label="'Описание'"
             />
             <q-input
-                standout
-                dark
                 v-model="currentProduct.cost"
                 type="number"
                 :label="'Цена'"
             />
             <q-input
-                standout
-                dark
                 v-model="currentProduct.type"
                 type="text"
                 :label="'Тип (book/game, потом что-нибудь умнее придумаю)'"
             />
             <q-file
-                standout
-                dark
                 v-model="currentFile"
                 :label="'Изображение'"
             >

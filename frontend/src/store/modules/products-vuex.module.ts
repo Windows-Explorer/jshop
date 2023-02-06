@@ -1,5 +1,5 @@
 import { store } from '@/store'
-import { customNotifies } from '@/store/notifies'
+import { customNotifies } from '@/common/notifies'
 import { Module, VuexModule, Mutation, Action } from 'vuex-module-decorators'
 import { IProduct } from '../../common/interfaces/product.interface'
 

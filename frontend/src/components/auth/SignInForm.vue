@@ -1,5 +1,5 @@
 <template>
-    <q-form @submit="onSubmit()" @reset="onReset()" class="form">
+    <q-form @submit="onSubmit()" class="form">
         <h4>Вход</h4>
         <q-input
             v-model="user.email"
@@ -18,7 +18,7 @@
             flat
         />
         <div class="redirect-container">
-            <router-link class="redirect" :to="{ name: 'signup' }">Регистрация</router-link>
+            <span class="redirect" @click="emits('signUp')">Регистрация</span>
             <span class="redirect" @click="quasar.dialog({ message:'Вспоминайте', title:'Забыли пароль?' })">Забыли пароль?</span>
         </div>
         <span class="buttons">
@@ -47,13 +47,16 @@ const validatorHelper: ValidatorHelper = new ValidatorHelper()
 const loading: Ref<boolean> = ref(false)
 const user = reactive({ username: "", email: "", password: "", confirmPassword: "" })
 
+const emits = defineEmits<{
+    (event: "signUp"): void
+}>()
+
 
 const onSubmit = async () => {
     loading.value = true
     await store.dispatch("signIn", { user: user, router: router })
     loading.value = false
 }
-const onReset = async () => router.push({ name: "home" })
 
 </script>
 

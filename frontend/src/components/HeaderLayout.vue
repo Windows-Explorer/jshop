@@ -2,10 +2,21 @@
     <q-header v-if="(route.name !=='signup' && route.name !=='signin')" class="header">
         <div class="main-header">
             <div class="header-block">
-                <q-btn label="Иркутская область" icon="location_on" size="12px" flat square />
+                <q-btn label="Нефтеcumск" icon="location_on" size="12px" flat square />
             </div>
             <div class="header-block">
-                <q-btn label="Войти" icon="login" :to="{ name: 'signin'}" size="12px" flat square />
+                <q-btn label="Войти" icon="login" @click="onSignIn()" size="12px" flat square>
+                    <q-dialog transition-show="jump-down" transition-hide="jump-up" v-model="signInShowing">
+                        <div>
+                            <sign-in-form @sign-up="onSignUp()" />
+                        </div>
+                    </q-dialog>
+                    <q-dialog transition-show="jump-down" transition-hide="jump-up" v-model="signUpShowing">
+                        <div>
+                            <sign-up-form @sign-in="onSignIn()" />
+                        </div>
+                    </q-dialog>
+                </q-btn>
             </div>
         </div>
         <div class="secondary-header">
@@ -30,12 +41,25 @@ import { useRouter, useRoute } from "vue-router"
 import { useStore } from "vuex"
 
 const AdminLayout = defineAsyncComponent(async () => import("../components/admin/AdminLayout.vue"))
+const SignInForm = defineAsyncComponent(async () => import("../components/auth/SignInForm.vue"))
+const SignUpForm = defineAsyncComponent(async () => import("../components/auth/SignUpForm.vue"))
 
 const store = useStore()
 const router = useRouter()
 const route = useRoute()
 
 const search: Ref<string> = ref("")
+const signInShowing: Ref<boolean> = ref(false)
+const signUpShowing: Ref<boolean> = ref(false)
+
+const onSignIn = async () => {
+    signUpShowing.value = false
+    signInShowing.value = true
+}
+const onSignUp = async () => {
+    signUpShowing.value = true
+    signInShowing.value = false
+}
 
 const onSearch = async () => {
     alert(search.value)

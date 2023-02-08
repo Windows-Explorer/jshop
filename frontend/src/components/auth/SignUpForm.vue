@@ -1,5 +1,5 @@
 <template>
-    <q-form @submit="onSubmit()" @reset="onReset()" class="form">
+    <q-form @submit="onSubmit()" class="form">
         <h4>Регистрация</h4>
         <q-input
             v-model="user.username"
@@ -45,7 +45,7 @@
         />
 
         <div class="redirect-container">
-            <router-link class="redirect" :to="{ name: 'signin' }">Уже есть аккаунт</router-link>
+            <span class="redirect" @click="emits('signIn')">Уже есть аккаунт</span>
         </div>
         <span class="buttons">
             <q-btn label="Регистрация" type="submit" :size="'18px'" :loading="loading" />
@@ -69,6 +69,10 @@ const validatorHelper: ValidatorHelper = new ValidatorHelper()
 
 const user = reactive({ username: "", email: "", phoneNumber: "", password: "", confirmPassword: "" })
 const loading: Ref<boolean> = ref(false)
+
+const emits = defineEmits<{
+    (event: "signIn"): void
+}>()
 
 const validationRules = {
     username: [
@@ -101,8 +105,6 @@ const onSubmit = async () => {
     await store.dispatch("signUp", { user: user, router: router })
     loading.value = false
 }
-
-const onReset = async () => router.push({ name: "home" })
 
 
 </script>

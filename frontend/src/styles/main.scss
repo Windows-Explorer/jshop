@@ -48,6 +48,11 @@ html, body, #app {
 .secondary-header img {
     width: 140px;
     height: auto;
+    cursor: pointer;
+    transition: 0.5s ease;
+}
+.secondary-header img:hover {
+    transform: scale(1.025);
 }
 
 .page-container {

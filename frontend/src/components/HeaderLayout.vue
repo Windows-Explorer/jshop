@@ -42,7 +42,7 @@
             </div>
         </div>
         <div class="secondary-header">
-            <img src="https://hobbygames.ru/assets/img/svg/logo.svg" />
+            <img src="https://hobbygames.ru/assets/img/svg/logo.svg" @click="router.push({ name: 'home'})" />
             <q-form class="search" @submit="onSearch()">
                 <q-input v-model="search" :style="{ width: '100%' }" filled>
                     <template v-slot:append>

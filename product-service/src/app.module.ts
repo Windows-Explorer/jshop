@@ -3,6 +3,8 @@ import { TypeOrmModule, TypeOrmModuleOptions } from "@nestjs/typeorm"
 import { ConfigModule, ConfigService } from "@nestjs/config"
 import { ProductsModule } from "./products/products.module"
 import { Product } from "./products/entities/product.entity"
+import { Category } from "./products/entities/category.entity"
+import { Subcategory } from "./products/entities/subcategory.entity"
 
 @Module({
   imports: [
@@ -20,7 +22,7 @@ import { Product } from "./products/entities/product.entity"
         database: configService.get<string>("DATABASE_DATABASE"),
         password: configService.get<string>("DATABASE_PASSWORD"),
         username: configService.get<string>("DATABASE_USERNAME"),
-        entities: [Product],
+        entities: [Product, Category, Subcategory],
         synchronize: true
       })
     }),

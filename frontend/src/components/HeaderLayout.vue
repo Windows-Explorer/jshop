@@ -1,11 +1,19 @@
 <template>
-    <q-header v-if="(route.name !=='signup' && route.name !=='signin')" class="header">
+    <q-header class="header">
         <div class="main-header">
             <div class="header-block">
                 <q-btn label="Нефтеcumск" icon="location_on" size="12px" flat square />
             </div>
             <div class="header-block">
-                <q-btn label="Войти" icon="login" @click="onSignIn()" size="12px" flat square>
+                <q-btn
+                    v-if="!store.getters.isAuthorized"
+                    label="Войти"
+                    icon="login"
+                    @click="onSignIn()"
+                    size="12px"
+                    flat
+                    square
+                >
                     <q-dialog transition-show="jump-down" transition-hide="jump-up" v-model="signInShowing">
                         <div>
                             <sign-in-form @sign-up="onSignUp()" />
@@ -16,6 +24,20 @@
                             <sign-up-form @sign-in="onSignIn()" />
                         </div>
                     </q-dialog>
+                </q-btn>
+                <q-btn
+                    v-if="store.getters.isAuthorized"
+                    label="Учетная запись"
+                    icon="person"
+                    size="12px"
+                    flat
+                    square
+                >
+                    <q-menu fit anchor="bottom left" self="top left">
+                        <q-item clickable @click="onLogout()">
+                            <q-item-section>Выйти</q-item-section>
+                        </q-item>
+                    </q-menu>
                 </q-btn>
             </div>
         </div>

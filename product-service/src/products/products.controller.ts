@@ -1,4 +1,4 @@
-import { Controller, HttpStatus, Inject } from "@nestjs/common"
+import { Controller, HttpException, HttpStatus, Inject } from "@nestjs/common"
 import { MessagePattern, Payload } from "@nestjs/microservices"
 import { LOGGER_TOKEN, PRODUCTS_SERVICE_TOKEN, RESULTER_TOKEN } from "src/common/constants/inject-tokens.constant"
 import { FindDto } from "src/common/dto/find.dto"
@@ -19,19 +19,37 @@ export class ProductsController {
 
     @MessagePattern("products.findAll")
     async findAll(@Payload() payload: FindDto): Promise<IResult<IResultAndCount<IProduct[]> | IProduct[]>> {
-        const result: IResult<IResultAndCount<IProduct[]> | IProduct[]> = await this._output.responseAsync(HttpStatus.OK, await this._productsService.findAll(payload.page, payload.filter))
-        return result
+        try {
+            const result: IResult<IResultAndCount<IProduct[]> | IProduct[]> = await this._output.responseAsync(HttpStatus.OK, await this._productsService.findAll(payload.page, payload.filter))
+            return result
+        }
+        catch(error) {
+            this._logger.log(error, "PRODUCTS-CONTROLLER: findAll")
+            throw new HttpException(error, 500)
+        }
     }
 
     @MessagePattern("products.findById")
     async findById(@Payload() id: number): Promise<IResult<IProduct>> {
-        const result: IResult<IProduct> = await this._output.responseAsync(HttpStatus.OK, await this._productsService.findById(id))
-        return result
+        try {
+            const result: IResult<IProduct> = await this._output.responseAsync(HttpStatus.OK, await this._productsService.findById(id))
+            return result
+        }
+        catch(error) {
+            this._logger.log(error, "PRODUCTS-CONTROLLER: findById")
+            throw new HttpException(error, 500)
+        }
     }
 
     @MessagePattern("products.save")
     async save(@Payload() product: IProduct): Promise<IResult<IProduct>> {
-        const result: IResult<IProduct> = await this._output.responseAsync(HttpStatus.OK, await this._productsService.save(product))
-        return result
+        try {
+            const result: IResult<IProduct> = await this._output.responseAsync(HttpStatus.OK, await this._productsService.save(product))
+            return result
+        }
+        catch(error) {
+            this._logger.log(error, "PRODUCTS-CONTROLLER: save")
+            throw new HttpException(error, 500)
+        }
     }
 }

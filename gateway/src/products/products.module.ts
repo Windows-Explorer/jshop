@@ -36,6 +36,8 @@ export class ProductsModule {
 
   async onModuleInit() {
     this._client.subscribeToResponseOf("products.findAll")
+    this._client.subscribeToResponseOf("products.categories.findAll")
+    this._client.subscribeToResponseOf("products.subcategories.findAll")
     this._client.subscribeToResponseOf("products.findById")
     this._client.subscribeToResponseOf("products.save")
     this._client.subscribeToResponseOf("products.saveMany")

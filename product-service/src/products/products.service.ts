@@ -15,7 +15,7 @@ import { Product } from "./entities/product.entity"
 @Injectable()
 export class ProductsService implements IProductsService {
     constructor(
-        @InjectRepository(Product) private readonly _productsRepository: Repository<Product>,
+        @InjectRepository(Product) private readonly _productsRepository: Repository<IProduct>,
         @Inject(FILTER_TOKEN) private readonly _filter: IFilter,
         @Inject(PAGINATOR_TOKEN) private readonly _paginator: IPaginator,
         @Inject(LOGGER_TOKEN) private readonly _logger: ILoggerOutput
@@ -33,6 +33,7 @@ export class ProductsService implements IProductsService {
             return { result: result, count: count / 10 }
         }
         catch(error) {
+            this._logger.log(error, "PRODUCTS-SERVICE: findAll")
             throw new HttpException(error, 500)
         }
     }

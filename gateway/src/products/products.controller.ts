@@ -1,15 +1,15 @@
-import { Body, Controller, Get, Inject, Param, Query, Res } from "@nestjs/common"
+import { Controller, Get, Inject, Param, Query, Res } from "@nestjs/common"
 import { ClientKafka } from "@nestjs/microservices"
 import { Response } from "express"
 import { PRODUCTS_KAFKA_CLIENT_TOKEN } from "src/common/constants/inject-tokens.constants"
 import { ProductsFindDto } from "src/common/dto/products-find.dto"
 import { IResult } from "src/common/dto/result.dto"
 
-@Controller("products")
+@Controller("api")
 export class ProductsController {
     constructor(@Inject(PRODUCTS_KAFKA_CLIENT_TOKEN) private readonly _client: ClientKafka) {}
 
-    @Get("/")
+    @Get("/products")
     async findAll(
             @Res() response: Response,
             @Query("page") page: number,
@@ -20,7 +20,7 @@ export class ProductsController {
         ): Promise<void> {
 
         if(!page) page = 0
-        const request: ProductsFindDto = { page: page, filter: {title, cost, category, subcategory} }
+        const request: ProductsFindDto = { page: page, filter: { title, cost, category, subcategory } }
 
         const result: IResult<any> = await this._client.send("products.findAll", request).toPromise()
         response.status(result.statusCode).send(result.message)
@@ -29,6 +29,18 @@ export class ProductsController {
     @Get("/:id")
     async findById(@Param("id") id: number, @Res() response: Response): Promise<void> {
         const result: IResult<any> = await this._client.send("products.findById", id).toPromise()
+        response.status(result.statusCode).send(result.message)
+    }
+
+    @Get("products/categories")
+    async findAllCategories(@Res() response: Response): Promise<void> {
+        const result: IResult<any> = await this._client.send("products.categories.findAll", "").toPromise()
+        response.status(result.statusCode).send(result.message)
+    }
+
+    @Get("/products/subcategories")
+    async findAllSubcategories(@Res() response: Response): Promise<void> {
+        const result: IResult<any> = await this._client.send("products.subcategories.findAll", "").toPromise()
         response.status(result.statusCode).send(result.message)
     }
 }

@@ -4,7 +4,7 @@ import { Request, Response } from "express"
 import { AUTH_KAFKA_CLIENT_TOKEN } from "src/common/constants/inject-tokens.constants"
 import { IResult } from "src/common/dto/result.dto"
 
-@Controller("auth")
+@Controller("api/auth")
 export class AuthController {
     constructor(@Inject(AUTH_KAFKA_CLIENT_TOKEN) private readonly _client: ClientKafka) {}
 

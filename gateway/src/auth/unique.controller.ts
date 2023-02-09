@@ -5,7 +5,7 @@ import { AUTH_KAFKA_CLIENT_TOKEN } from "src/common/constants/inject-tokens.cons
 import { IResult } from "src/common/dto/result.dto"
 
 @Injectable()
-@Controller("unique")
+@Controller("api/unique")
 export class UniqueController {
     constructor(@Inject(AUTH_KAFKA_CLIENT_TOKEN) private readonly _client: ClientKafka) {}
 

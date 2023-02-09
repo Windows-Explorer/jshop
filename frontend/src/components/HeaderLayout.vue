@@ -1,5 +1,5 @@
 <template>
-    <q-header class="header">
+    <header class="header">
         <div class="main-header">
             <div class="header-block">
                 <q-btn label="Нефтеcumск" icon="location_on" size="12px" flat square />
@@ -53,7 +53,7 @@
             <q-btn icon="shopping_cart" size="20px" flat round color="primary" />
         </div>
 
-    </q-header>
+    </header>
 </template>
 
 <script lang="ts" setup>

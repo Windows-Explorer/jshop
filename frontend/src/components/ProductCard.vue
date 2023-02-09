@@ -1,7 +1,7 @@
 <template>
     <div class="product">
         <div class="image">
-            <q-img :height="'300px'" :width="'300px'" :src="props.product.image" :fit="'cover'"/>
+            <q-img :height="'300px'" :width="'300px'" :src="props.product.image" :fit="'cover'" :alt="'https://s3.castbox.fm/4a/f7/6f/61e1484b31909065414ea4e75a.jpg'"/>
         </div>
         <div class="info">
             <h3>{{ props.product.title }}</h3>

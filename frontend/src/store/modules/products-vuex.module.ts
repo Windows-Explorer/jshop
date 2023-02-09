@@ -2,6 +2,7 @@ import { store } from '@/store'
 import { customNotifies } from '@/common/notifies'
 import { Module, VuexModule, Mutation, Action } from 'vuex-module-decorators'
 import { IProduct } from '../../common/interfaces/product.interface'
+import { IProductsFilter } from '@/common/interfaces/products-filter.interface'
 
 @Module
 export class ProductsStoreModule extends VuexModule {
@@ -19,22 +20,26 @@ export class ProductsStoreModule extends VuexModule {
 
 
   @Action({ commit: "productsMutation" })
-  async getProducts(): Promise<IProduct[]> {
-    const result = await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/products`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
+  async getProducts(payload: { page: number, filter?: IProductsFilter | any }): Promise<{result: IProduct[], count: number}> {
 
-    if(result.status === 200) {
-      const products: IProduct[] = await result.json()
-      return products
-    }
-    else {
-      customNotifies.negativeNotify()
-      return []
-    }
+      let filterParams: string = ""
+      if(payload.filter) {
+          Object.keys(payload.filter).forEach(key => {
+              if(payload.filter[key]) filterParams += `&${key}=${payload.filter[key]}`
+          })
+      }
+
+      const result = await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/cards?page=${payload.page}${[filterParams]}`)
+
+      if (result.status === 200) {
+          const cards: { result: IProduct[], count: number } = await result.json()
+          customNotifies.positiveNotify()
+          return cards
+      }
+      else {
+          customNotifies.negativeNotify()
+          return {result: [], count: 0}
+      }
   }
 
   @Action({ commit: "currentProductMutation" })

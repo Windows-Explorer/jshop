@@ -8,6 +8,7 @@ html, body, #app {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
+    color: $secondary;
 }
 
 .main-header {
@@ -55,6 +56,13 @@ html, body, #app {
     transform: scale(1.025);
 }
 
+.categories {
+    margin-top: 20px;
+    width: 100vw;
+    padding-inline: 10%;
+    background-color: $accent;
+}
+
 .page-container {
     z-index: 1;
     padding: 0px;
@@ -65,4 +73,5 @@ html, body, #app {
     align-items: stretch;
     justify-content: flex-start;
     background-color: rgb(226, 226, 226);
+    color: $dark;
 }

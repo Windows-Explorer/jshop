@@ -4,9 +4,10 @@ import { Category } from "./category.entity"
 import { ICategory } from "src/common/interfaces/category.interface"
 import { Subcategory } from "./subcategory.entity"
 import { ISubcategory } from "src/common/interfaces/subcategory.interface"
+import { IProduct } from "src/common/interfaces/product.interface"
 
 @Entity()
-export class Product {
+export class Product implements IProduct {
     @IsNumber()
     @PrimaryGeneratedColumn()
     id?: number
@@ -19,9 +20,9 @@ export class Product {
     @Length(0, 255)
     description: string
 
-    @Column({ length: 255, type: "varchar", unique: false, nullable: false })
+    @Column({ length: 255, type: "varchar", unique: false, nullable: true })
     @Length(0, 255)
-    image: string
+    image?: string
 
     @Column({ type: "float", unique: false, nullable: false })
     cost: number
@@ -30,6 +31,6 @@ export class Product {
     category: ICategory
 
     @ManyToOne(() => Subcategory, (type: ISubcategory) => type.id, { eager: true, onDelete: "CASCADE", onUpdate: "CASCADE", nullable: true })
-    subcategory: ISubcategory
+    subcategory?: ISubcategory
 
 }

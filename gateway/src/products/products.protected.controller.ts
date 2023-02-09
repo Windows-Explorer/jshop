@@ -3,7 +3,7 @@ import { Delete } from "@nestjs/common/decorators"
 import { ClientKafka } from "@nestjs/microservices"
 import { Response } from "express"
 import { PRODUCTS_KAFKA_CLIENT_TOKEN } from "src/common/constants/inject-tokens.constants"
-import { IResult } from "src/dto/result.dto"
+import { IResult } from "src/common/dto/result.dto"
 import { AdminGuard } from "src/guards/admin.guard"
 
 @Controller("products")

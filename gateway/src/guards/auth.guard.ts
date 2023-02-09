@@ -2,7 +2,7 @@ import { Injectable, CanActivate, ExecutionContext, Inject, Global } from "@nest
 import { ClientKafka } from "@nestjs/microservices"
 import { Request } from "express"
 import { AUTH_KAFKA_CLIENT_TOKEN } from "src/common/constants/inject-tokens.constants"
-import { IResult } from "src/dto/result.dto"
+import { IResult } from "src/common/dto/result.dto"
 
 @Global()
 @Injectable()

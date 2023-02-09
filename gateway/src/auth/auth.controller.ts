@@ -2,7 +2,7 @@ import { Body, Controller, Get, Inject, Post, Req, Res } from "@nestjs/common"
 import { ClientKafka } from "@nestjs/microservices"
 import { Request, Response } from "express"
 import { AUTH_KAFKA_CLIENT_TOKEN } from "src/common/constants/inject-tokens.constants"
-import { IResult } from "src/dto/result.dto"
+import { IResult } from "src/common/dto/result.dto"
 
 @Controller("auth")
 export class AuthController {

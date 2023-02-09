@@ -2,7 +2,7 @@ import { Controller, Get, Inject, Injectable, Param, Res } from "@nestjs/common"
 import { ClientKafka } from "@nestjs/microservices"
 import { Response } from "express"
 import { AUTH_KAFKA_CLIENT_TOKEN } from "src/common/constants/inject-tokens.constants"
-import { IResult } from "src/dto/result.dto"
+import { IResult } from "src/common/dto/result.dto"
 
 @Injectable()
 @Controller("unique")

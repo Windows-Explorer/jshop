@@ -15,7 +15,6 @@ export class Subcategory implements ISubcategory {
     @Column({ length: 255, type: "varchar", unique: true, nullable: true })
     name: string
 
-    @ManyToOne(() => Category, (type: ICategory) => type.id, { eager: true, onDelete: "CASCADE", onUpdate: "CASCADE" })
+    @ManyToOne(() => Category, (category: ICategory) => category.id, { cascade: true })
     category: ICategory
-
 }

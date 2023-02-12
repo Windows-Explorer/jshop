@@ -27,10 +27,10 @@ export class Product implements IProduct {
     @Column({ type: "float", unique: false, nullable: false })
     cost: number
 
-    @ManyToOne(() => Category, (type: ICategory) => type.id, { eager: true, onDelete: "CASCADE", onUpdate: "CASCADE" })
+    @ManyToOne(() => Category, (type: ICategory) => type.id, { eager: true, cascade: true })
     category: ICategory
 
-    @ManyToOne(() => Subcategory, (type: ISubcategory) => type.id, { eager: true, onDelete: "CASCADE", onUpdate: "CASCADE", nullable: true })
+    @ManyToOne(() => Subcategory, (type: ISubcategory) => type.id, { eager: true, cascade: true, nullable: true })
     subcategory?: ISubcategory
 
 }

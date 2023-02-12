@@ -48,7 +48,7 @@
             <span class="redirect" @click="emits('signIn')">Уже есть аккаунт</span>
         </div>
         <span class="buttons">
-            <q-btn label="Регистрация" type="submit" :size="'18px'" :loading="loading" />
+            <q-btn label="Регистрация" type="submit" :size="'18px'" :loading="loading" color="positive" />
         </span>
     </q-form>
 </template>

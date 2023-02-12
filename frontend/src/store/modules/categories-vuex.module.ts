@@ -46,4 +46,11 @@ export class CategoriesStoreModule extends VuexModule {
       }
   }
 
+  get categories(): ICategory[] {
+    return this.categoriesState
+  }
+  get subcategories(): ISubcategory[] {
+    return this.subcategoriesState
+  }
+
 }

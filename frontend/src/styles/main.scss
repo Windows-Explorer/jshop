@@ -12,7 +12,7 @@ html, body, #app {
 }
 
 .main-header {
-    font-family: RobotoRegular;
+    font-family: Lato,Arial,sans-serif;
     height: auto;
     background-color: $dark;
     padding-inline: 10vw;
@@ -53,7 +53,7 @@ html, body, #app {
     transition: 0.5s ease;
 }
 .secondary-header img:hover {
-    transform: scale(1.025);
+    transform: translateY(-4px);
 }
 
 .categories {

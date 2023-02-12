@@ -22,7 +22,7 @@
 
 <script setup lang="ts">
 import { onMounted, PropType, ref, Ref } from "@vue/runtime-core"
-import { QBtn, QImg, QTooltip, useQuasar } from "quasar"
+import { useQuasar } from "quasar"
 import { useRouter } from "vue-router"
 import { useStore } from "vuex"
 import { ICartObject } from "../common/interfaces/cart-object.interface"

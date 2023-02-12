@@ -9,7 +9,9 @@
                 v-for="(category, index) in categories" :key="index"
                 :label="category.name"
             />
-            <categories-tab-skeleton v-show="categories.length <= 0" />
+            <div class="skeleton-container" v-show="categories.length <= 0">
+                <q-skeleton class="skeleton" type="text" v-for="index in [...Array(6).keys()]" :key="index" />
+            </div>
         </q-tabs>        
     </section>
 </template>
@@ -22,7 +24,6 @@ import { useStore } from "vuex"
 import { ISubcategory } from "../common/interfaces/subcategory.interface"
 
 const CategoriesMenu = defineAsyncComponent(async () => import("./CategoriesMenu.vue"))
-const CategoriesTabSkeleton = defineAsyncComponent(async () => import("./skeletons/CategoriesTabSkeleton.vue"))
 
 const store = useStore()
 const categories: Ref<ICategory[]> = ref(store.getters.categories)
@@ -40,3 +41,17 @@ onMounted(async () => {
 })
 
 </script>
+<style scoped lang="scss">
+.skeleton-container {
+    display: flex;
+    height: 90%;
+    gap: 10px;
+    .skeleton {
+        margin: 0px;
+        height: 100%;
+        padding: 0px;
+        width: 160px;
+    }
+}
+
+</style>

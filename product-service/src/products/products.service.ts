@@ -8,7 +8,6 @@ import { IPaginator } from "src/common/interfaces/paginator.interface"
 import { IProduct } from "src/common/interfaces/product.interface"
 import { IProductsFilterPayload } from "src/common/interfaces/products-filter.interface"
 import { IProductsService } from "src/common/interfaces/products.service.interface"
-import { IResultAndCount } from "src/common/interfaces/result-and-count.interface"
 import { FindManyOptions, Repository } from "typeorm"
 import { Product } from "./entities/product.entity"
 
@@ -21,16 +20,29 @@ export class ProductsService implements IProductsService {
         @Inject(LOGGER_TOKEN) private readonly _logger: ILoggerOutput
     ){}
 
+    async count(page: number, filter: IProductsFilterPayload): Promise<{ count: number }> {
+        try {
+            const filteredOptions: FindManyOptions = await this._filter.filter(filter)
+            const paginatedOptions: FindManyOptions = await this._paginator.paginateFromPageNumber(page, filteredOptions)
+            const count: number = await this._productsRepository.count(paginatedOptions)
+            return { count: count}
+        }
+        catch (error) {
+            this._logger.log(error, "PRODUCTS-SERVICE: count")
+            throw new HttpException(error, 500)
+        }
+    }
+
     async findById(productId: number): Promise<IProduct> {
         return await this._productsRepository.findOne({ where: { id: productId } })
     }
 
-    async findAll(page: number, filter: IProductsFilterPayload): Promise<IResultAndCount<IProduct[]>> {
+    async findAll(page: number, filter: IProductsFilterPayload): Promise<IProduct[]> {
         try {
             const filteredOptions: FindManyOptions = await this._filter.filter(filter)
             const paginatedOptions: FindManyOptions = await this._paginator.paginateFromPageNumber(page, filteredOptions)
-            const [result, count] = await this._productsRepository.findAndCount(paginatedOptions)
-            return { result: result, count: count / 10 }
+            const result = await this._productsRepository.find(paginatedOptions)
+            return result
         }
         catch(error) {
             this._logger.log(error, "PRODUCTS-SERVICE: findAll")

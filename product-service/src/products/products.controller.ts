@@ -18,13 +18,25 @@ export class ProductsController {
     ) {}
 
     @MessagePattern("products.findAll")
-    async findAll(@Payload() payload: FindDto): Promise<IResult<IResultAndCount<IProduct[]> | IProduct[]>> {
+    async findAll(@Payload() payload: FindDto): Promise<IResult<IProduct[]>> {
         try {
-            const result: IResult<IResultAndCount<IProduct[]> | IProduct[]> = await this._output.responseAsync(HttpStatus.OK, await this._productsService.findAll(payload.page, payload.filter))
+            const result: IResult<IProduct[]> = await this._output.responseAsync(HttpStatus.OK, await this._productsService.findAll(payload.page, payload.filter))
             return result
         }
         catch(error) {
             this._logger.log(error, "PRODUCTS-CONTROLLER: findAll")
+            throw new HttpException(error, 500)
+        }
+    }
+
+    @MessagePattern("products.count")
+    async count(@Payload() payload: FindDto): Promise<IResult<{ count: number }>> {
+        try {
+            const result: IResult<{ count: number }> = await this._output.responseAsync(HttpStatus.OK, await this._productsService.count(payload.page, payload.filter))
+            return result
+        }
+        catch(error) {
+            this._logger.log(error, "PRODUCTS-CONTROLLER: count")
             throw new HttpException(error, 500)
         }
     }

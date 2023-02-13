@@ -5,7 +5,8 @@ import { IResultAndCount } from "./result-and-count.interface"
 
 export interface IProductsService {
     findById(productId: number): Promise<IProduct>
-    findAll(page: number, filter: IProductsFilterPayload): Promise<IProduct[] | IResultAndCount<IProduct[]>>
+    findAll(page: number, filter: IProductsFilterPayload): Promise<IProduct[]>
+    count(page: number, filter: IProductsFilterPayload): Promise<{ count: number }>
     save(product: IProduct): Promise<IProduct>
     saveMany(product: IProduct[]): Promise<IProduct[]>
     removeOne(id: number): Promise<void>

@@ -3,6 +3,7 @@ import { ConfigModule, ConfigService } from "@nestjs/config"
 import { ClientKafka, ClientsModule, Transport } from "@nestjs/microservices"
 import { AuthModule } from "src/auth/auth.module"
 import { PRODUCTS_KAFKA_CLIENT_TOKEN } from "src/common/constants/inject-tokens.constants"
+import { CategoriesController } from "./categories.controller"
 import { ProductsController } from "./products.controller"
 import { ProductsProtectedController } from "./products.protected.controller"
 
@@ -29,13 +30,14 @@ import { ProductsProtectedController } from "./products.protected.controller"
       }
     ])
   ],
-  controllers: [ProductsController, ProductsProtectedController]
+  controllers: [ProductsController, ProductsProtectedController, CategoriesController]
 })
 export class ProductsModule {
   constructor(@Inject(PRODUCTS_KAFKA_CLIENT_TOKEN) private readonly _client: ClientKafka) { }
 
   async onModuleInit() {
     this._client.subscribeToResponseOf("products.findAll")
+    this._client.subscribeToResponseOf("products.count")
     this._client.subscribeToResponseOf("products.categories.findAll")
     this._client.subscribeToResponseOf("products.subcategories.findAll")
     this._client.subscribeToResponseOf("products.findById")

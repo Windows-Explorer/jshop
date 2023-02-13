@@ -5,11 +5,11 @@ import { PRODUCTS_KAFKA_CLIENT_TOKEN } from "src/common/constants/inject-tokens.
 import { ProductsFindDto } from "src/common/dto/products-find.dto"
 import { IResult } from "src/common/dto/result.dto"
 
-@Controller("api")
+@Controller("api/products")
 export class ProductsController {
     constructor(@Inject(PRODUCTS_KAFKA_CLIENT_TOKEN) private readonly _client: ClientKafka) {}
 
-    @Get("/products")
+    @Get("/")
     async findAll(
             @Res() response: Response,
             @Query("page") page: number,
@@ -18,7 +18,6 @@ export class ProductsController {
             @Query("category") category: string,
             @Query("subcategory") subcategory: string 
         ): Promise<void> {
-
         if(!page) page = 0
         const request: ProductsFindDto = { page: page, filter: { title, cost, category, subcategory } }
 
@@ -26,21 +25,25 @@ export class ProductsController {
         response.status(result.statusCode).send(result.message)
     }
 
+    @Get("/count")
+    async count(
+        @Res() response: Response,
+        @Query("page") page: number,
+        @Query("title") title: string,
+        @Query("cost") cost: number,
+        @Query("category") category: string,
+        @Query("subcategory") subcategory: string 
+    ): Promise<void> {
+        if(!page) page = 0
+        const request: ProductsFindDto = { page: page, filter: { title, cost, category, subcategory } }
+
+        const result: IResult<any> = await this._client.send("products.count", request).toPromise()
+        response.status(result.statusCode).send(result.message)
+    }
+
     @Get("/:id")
     async findById(@Param("id") id: number, @Res() response: Response): Promise<void> {
         const result: IResult<any> = await this._client.send("products.findById", id).toPromise()
-        response.status(result.statusCode).send(result.message)
-    }
-
-    @Get("products/categories")
-    async findAllCategories(@Res() response: Response): Promise<void> {
-        const result: IResult<any> = await this._client.send("products.categories.findAll", "").toPromise()
-        response.status(result.statusCode).send(result.message)
-    }
-
-    @Get("/products/subcategories")
-    async findAllSubcategories(@Res() response: Response): Promise<void> {
-        const result: IResult<any> = await this._client.send("products.subcategories.findAll", "").toPromise()
         response.status(result.statusCode).send(result.message)
     }
 }

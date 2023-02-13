@@ -19,7 +19,7 @@ export class CategoriesStoreModule extends VuexModule {
 
   @Action({ commit: "categoriesMutation" })
   async getCategories(): Promise<ICategory[]> {
-      const result = await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/products/categories`)
+      const result = await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/categories`)
 
       if (result.status === 200) {
           const colors: ICategory[] = await result.json()
@@ -34,7 +34,7 @@ export class CategoriesStoreModule extends VuexModule {
 
   @Action({ commit: "subcategoriesMutation" })
   async getSubcategories(): Promise<ISubcategory[]> {
-      const result = await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/products/subcategories`)
+      const result = await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/subcategories`)
 
       if (result.status === 200) {
           const colors: ISubcategory[] = await result.json()

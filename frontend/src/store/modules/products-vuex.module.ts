@@ -20,7 +20,7 @@ export class ProductsStoreModule extends VuexModule {
 
 
   @Action({ commit: "productsMutation" })
-  async getProducts(payload: { page: number, filter?: IProductsFilter | any }): Promise<{result: IProduct[], count: number}> {
+  async getProducts(payload: { page: number, filter?: IProductsFilter | any }): Promise<IProduct[]> {
 
       let filterParams: string = ""
       if(payload.filter) {
@@ -29,16 +29,16 @@ export class ProductsStoreModule extends VuexModule {
           })
       }
 
-      const result = await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/cards?page=${payload.page}${[filterParams]}`)
+      const result = await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/products?page=${payload.page}${[filterParams]}`)
 
       if (result.status === 200) {
-          const cards: { result: IProduct[], count: number } = await result.json()
+          const products: IProduct[] = await result.json()
           customNotifies.positiveNotify()
-          return cards
+          return products
       }
       else {
           customNotifies.negativeNotify()
-          return {result: [], count: 0}
+          return []
       }
   }
 

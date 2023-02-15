@@ -21,108 +21,126 @@ export class ProductsStoreModule extends VuexModule {
 
   @Action({ commit: "productsMutation" })
   async getProducts(payload: { page?: number, filter?: IProductsFilter | any }): Promise<IProduct[]> {
-    let pageParam: string | number = ""
-    let filterParams: string = ""
+    try {
+      let pageParam: string | number = ""
+      let filterParams: string = ""
 
-    if (payload.filter) {
-      Object.keys(payload.filter).forEach(key => {
-        if (payload.filter[key]) filterParams += `&${key}=${payload.filter[key]}`
-      })
-    }
-    if (payload.page) {
-      pageParam = `page=${payload.page}`
-    }
+      if (payload.filter) {
+        Object.keys(payload.filter).forEach(key => {
+          if (payload.filter[key]) filterParams += `&${key}=${payload.filter[key]}`
+        })
+      }
+      if (payload.page) {
+        pageParam = `page=${payload.page}`
+      }
 
-    const result = await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/products?${pageParam}${filterParams}`)
+      const result = await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/products?${pageParam}${filterParams}`)
 
-    if (result.status === 200) {
-      const products: IProduct[] = await result.json()
-      customNotifies.positiveNotify()
-      return products
+      if (result.status === 200) {
+        const products: IProduct[] = await result.json()
+        return products
+      }
+      else {
+        customNotifies.dialogs.negative(result.status, result.statusText)
+        return []
+      }
     }
-    else {
-      customNotifies.negativeNotify()
+    catch {
+      customNotifies.dialogs.negative(null, null, true)
       return []
     }
   }
 
   @Action({ commit: "currentProductMutation" })
   async getProductById(id: number): Promise<IProduct | null> {
-    const result = await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/products/${id}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
+    try {
+      const result = await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/products/${id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
 
-    if (result.status === 200) {
-      const product: IProduct = await result.json()
-      return product
+      if (result.status === 200) {
+        const product: IProduct = await result.json()
+        return product
+      }
+      else {
+        customNotifies.dialogs.negative(result.status, result.statusText)
+        return null
+      }
     }
-    else {
-      customNotifies.negativeNotify()
+    catch {
+      customNotifies.dialogs.negative()
       return null
     }
   }
 
   @Action({ commit: "productsMutation" })
   async saveProduct(payload: { product: IProduct, file: File }): Promise<IProduct[]> {
+    try {
+      payload.product.image = `${process.env.VUE_APP_GATEMAY_ADDRESS}/images/${payload.file.name}`
 
-    payload.product.image = `${process.env.VUE_APP_GATEMAY_ADDRESS}/images/${payload.file.name}`
-
-    const result = await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/products`, {
-      method: "POST",
-      headers: {
-        'Content-Type': 'multipart/form-data',
-        "Authorization": `Bearer ${store.getters.token}`
-      },
-      body: JSON.stringify(payload.product)
-    })
-
-    if (result.status === 200) {
-      const products: IProduct[] = await result.json()
-      let formData: FormData = new FormData()
-      formData.append("file", payload.file)
-
-      const imageUploadResult = await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/products/save/image`, {
+      const result = await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/products`, {
         method: "POST",
         headers: {
           'Content-Type': 'multipart/form-data',
           "Authorization": `Bearer ${store.getters.token}`
         },
-        body: formData
+        body: JSON.stringify(payload.product)
       })
 
-      if (imageUploadResult.status === 200 || imageUploadResult.status === 201) {
-        customNotifies.positiveNotify()
-        return products
-      }
-    }
+      if (result.status === 200) {
+        const products: IProduct[] = await result.json()
+        let formData: FormData = new FormData()
+        formData.append("file", payload.file)
 
-    customNotifies.negativeNotify()
-    return this.productsState
+        const imageUploadResult = await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/products/save/image`, {
+          method: "POST",
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            "Authorization": `Bearer ${store.getters.token}`
+          },
+          body: formData
+        })
+
+        if (imageUploadResult.status === 200 || imageUploadResult.status === 201) {
+          customNotifies.notifies.positive()
+          return products
+        }
+      }
+      return this.productsState
+    }
+    catch {
+      customNotifies.notifies.negative()
+      return this.productsState
+    }
   }
 
 
   @Action({ commit: "productsMutation" })
   async removeOneProduct(id: number): Promise<IProduct[]> {
-    const result = await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/products/remove/${id}`, {
-      method: "DELETE",
-      headers: {
-        'Content-Type': 'multipart/form-data',
-        "Authorization": `Bearer ${store.getters.token}`
+    try {
+      const result = await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/products/remove/${id}`, {
+        method: "DELETE",
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          "Authorization": `Bearer ${store.getters.token}`
+        }
+      })
+
+      if (result.status === 200) {
+        const products: IProduct[] = await result.json()
+        customNotifies.notifies.positive()
+        return products
       }
-    })
-
-
-
-    if (result.status === 200) {
-      const products: IProduct[] = await result.json()
-      customNotifies.positiveNotify()
-      return products
+      else {
+        customNotifies.notifies.negative(result.statusText)
+        return this.productsState
+      }
     }
-    else {
-      customNotifies.negativeNotify()
+    catch {
+      customNotifies.notifies.negative()
       return this.productsState
     }
   }

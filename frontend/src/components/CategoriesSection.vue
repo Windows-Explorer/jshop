@@ -1,15 +1,15 @@
 <template>
     <section>
-        <q-tabs class="categories" inline-label outside-arrows :align="'left'">
+        <q-tabs class="categories" inline-label :align="'left'">
             <q-route-tab label="Все категории" icon="menu">
-                <categories-menu :subcategories="subcategories" :categories="categories" />
+                <categories-menu :categories="categories" />
             </q-route-tab>
             <q-route-tab
                 v-show="categories.length > 0"
                 v-for="(category, index) in categories" :key="index"
                 :label="category.name"
             />
-            <div class="skeleton-container" v-show="categories.length <= 0">
+            <div class="skeleton-container" v-show="loading">
                 <q-skeleton class="skeleton" type="text" v-for="index in [...Array(6).keys()]" :key="index" />
             </div>
         </q-tabs>        
@@ -21,23 +21,17 @@ import { ICategory } from "../common/interfaces/category.interface"
 import { ref, Ref } from "@vue/reactivity"
 import { defineAsyncComponent, onMounted } from "@vue/runtime-core"
 import { useStore } from "vuex"
-import { ISubcategory } from "../common/interfaces/subcategory.interface"
 
 const CategoriesMenu = defineAsyncComponent(async () => import("./CategoriesMenu.vue"))
 
 const store = useStore()
 const categories: Ref<ICategory[]> = ref(store.getters.categories)
-const subcategories: Ref<ISubcategory[]> = ref(store.getters.subcategories)
-const menu: Ref<boolean> = ref(false)
-
-const sortSubcategories = async () => {
-}
+const loading: Ref<boolean> = ref(true)
 
 onMounted(async () => {
+    loading.value = true
     categories.value = await store.dispatch("getCategories")
-    subcategories.value = await store.dispatch("getSubcategories")
-
-
+    loading.value = false
 })
 
 </script>

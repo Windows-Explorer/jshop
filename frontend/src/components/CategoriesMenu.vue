@@ -35,10 +35,6 @@ const props = defineProps({
     categories: {
         type: Object as PropType<ICategory[]>,
         required: true
-    },
-    subcategories: {
-        type: Object as PropType<ISubcategory[]>,
-        required: true
     }
 })
 

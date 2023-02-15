@@ -9,51 +9,57 @@ html, body, #app {
     flex-direction: column;
     flex-wrap: nowrap;
     color: $secondary;
-}
-
-.main-header {
-    font-family: Lato,Arial,sans-serif;
-    height: auto;
-    background-color: $dark;
-    padding-inline: 10vw;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-content: center;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.secondary-header {
-    display: flex;
-    padding-block: 16px;
-    padding-inline: 16vw;
-    background-color: #e2e2e2;
-    flex-direction: row;
-    align-content: center;
-    justify-content: space-evenly;
-    align-items: center;
-    gap: 60px;
-}
-
-.secondary-header .search {
-    display: flex;
-    flex-wrap: nowrap;
-    width: 100%;
-    align-items: center;
-    flex-direction: row;
-    align-content: center;
-    justify-content: center;
-}
-
-.secondary-header img {
-    width: 140px;
-    height: auto;
-    cursor: pointer;
-    transition: 0.5s ease;
-}
-.secondary-header img:hover {
-    transform: translateY(-4px);
+    .main-header {
+        font-family: Lato,Arial,sans-serif;
+        height: auto;
+        background-color: $dark;
+        padding-inline: 10vw;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-content: center;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .secondary-header {
+        display: flex;
+        padding-block: 16px;
+        padding-inline: 16vw;
+        background-color: #e2e2e2;
+        flex-direction: row;
+        align-content: center;
+        justify-content: space-evenly;
+        align-items: center;
+        gap: 60px;
+        .search {
+            display: flex;
+            flex-wrap: nowrap;
+            width: 100%;
+            align-items: center;
+            flex-direction: row;
+            align-content: center;
+            justify-content: center;
+        }
+        img {
+            width: 140px;
+            height: auto;
+            cursor: pointer;
+            transition: 0.5s ease;
+        }
+        img:hover {
+            transform: translateY(-4px);
+        }
+        .feedback {
+            width: 250px;
+            color: $dark;
+            text-align: center;
+            gap: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            flex-wrap: nowrap;
+        }
+    }
 }
 
 .categories {

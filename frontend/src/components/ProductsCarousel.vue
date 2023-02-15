@@ -1,7 +1,7 @@
 <template>
     <div>
         <q-carousel
-            v-if="!loading"
+            v-if="!loading && productsSlides.length > 0 && productsSlides[0].length > 0"
             animated
             :transition-duration="800"
             v-model="slide"
@@ -34,7 +34,7 @@
             </q-carousel-slide>
         </q-carousel>
         <q-carousel
-            v-if="loading"
+            v-else-if="loading"
             v-model="slide"
             class="carousel"
         >

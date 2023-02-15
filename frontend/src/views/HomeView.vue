@@ -2,7 +2,7 @@
     <section>
         <q-inner-loading :showing="loading" dark />
         <categories-section />
-        <products-carousel :products="products" />
+        <products-carousel />
         <!-- <product-card :product="product" v-for="(product, index) in products" :key="index" /> -->
     </section>
 </template>

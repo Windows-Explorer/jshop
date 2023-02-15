@@ -20,16 +20,20 @@ export class ProductsStoreModule extends VuexModule {
 
 
   @Action({ commit: "productsMutation" })
-  async getProducts(payload: { page: number, filter?: IProductsFilter | any }): Promise<IProduct[]> {
-
+  async getProducts(payload: { page?: number, filter?: IProductsFilter | any }): Promise<IProduct[]> {
+      let pageParam: string | number = ""
       let filterParams: string = ""
+      
       if(payload.filter) {
-          Object.keys(payload.filter).forEach(key => {
-              if(payload.filter[key]) filterParams += `&${key}=${payload.filter[key]}`
-          })
+        Object.keys(payload.filter).forEach(key => {
+            if(payload.filter[key]) filterParams += `&${key}=${payload.filter[key]}`
+        })
+      }
+      if(payload.page) {
+        pageParam = payload.page
       }
 
-      const result = await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/products?page=${payload.page}${[filterParams]}`)
+      const result = await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/products?page=${pageParam}${[filterParams]}`)
 
       if (result.status === 200) {
           const products: IProduct[] = await result.json()

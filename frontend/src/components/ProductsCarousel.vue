@@ -1,85 +1,94 @@
 <template>
     <div>
-        {{ productsSlides }}
         <q-carousel
-        swipeable
-        animated
-        :transition-duration="800"
-        v-model="slide"
-        infinite
-        arrows
-        :transition-next="'slide-left'"
-        :transition-prev="'slide-right'"
-        height="auto"
+            v-if="!loading"
+            animated
+            :transition-duration="800"
+            v-model="slide"
+            arrows
+            infinite
+            swipeable
+            control-color="dark"
+            transition-next="slide-left"
+            transition-prev="slide-right"
+            class="carousel"
         >
             <q-carousel-slide v-for="(slide, slideIndex) in productsSlides" :key="slideIndex" :name="slideIndex">
                 <div class="slide">
                     <q-img
                         v-for="(product, productIndex) in slide" :key="productIndex"
-                        loading="eager"
-                        src="https://hobbygames.cdnvideo.ru/image/data/HobbyWorld/Dedukcio/Banners/Dedukcio_632x340.jpg"
+                        loading="lazy"
+                        :src="product.image"
                         fit="cover" position="50% 25%" class="image"
                     >
-                    {{ product }}
+                        <div class="absolute-bottom slide-inner">
+                            <q-btn label="Подробнее" color="accent" text-color="dark" />
+                        </div>
+                        <template v-slot:error>
+                            <div class="absolute-full flex flex-center text-white">
+                                Не удалось загрузить изображение
+                            </div>
+                        </template>
                     </q-img>
                 </div>
             </q-carousel-slide>
         </q-carousel>
+        <q-carousel
+            v-if="loading"
+            v-model="slide"
+            class="carousel"
+        >
+            <q-carousel-slide :name="0">
+                <div class="slide">
+                    <q-skeleton class="skeleton" type="rect" v-for="index in [...Array(3).keys()]" :key="index" />
+                </div>
+            </q-carousel-slide>
+        </q-carousel>
     </div>
+    
 </template>
 
 <script setup lang="ts">
-import { onMounted, PropType, Ref, ref } from "vue"
+import { onMounted, Ref, ref } from "vue"
+import { useStore } from "vuex"
 import { IProduct } from "../common/interfaces/product.interface"
-const slide = ref(1)
 
-const props = defineProps({
-    products: {
-        type: Object as PropType<IProduct[]>,
-        required: true
-    }
-})
+const store = useStore()
+
+const slide: Ref<number> = ref(0)
 const productsSlides: Ref<IProduct[][]> = ref([])
+const loading: Ref<boolean> = ref(true)
 
-const sortSlides = async (oldArray: IProduct[]): Promise<IProduct[][]> => {
-    if(oldArray.length > 3) {
-        let newArray: IProduct[][] = []
+const sortSlides = async (products: IProduct[]): Promise<IProduct[][]> => {
+    if(products.length > 3) {
+        let slides: IProduct[][] = []
         let internalTempArray: IProduct[] = []
 
-        oldArray.forEach(el => {
+        products.forEach(el => {
             internalTempArray.push(el)
             if(internalTempArray.length == 3) {
-                newArray.push(internalTempArray)
+                slides.push(internalTempArray)
 
                 internalTempArray = []
             }
         })
-
-        return newArray
+        return slides
     }
-    
-    return [oldArray]
+    return [products]
 }
 
 onMounted(async () => {
-    productsSlides.value = await sortSlides(props.products)
+    loading.value = true
+    productsSlides.value = await sortSlides(await store.dispatch("getProducts", { page: null, filter: null }))
+    loading.value = false
 })
 </script>
 
-<style scoped>
-    .image {
-        height: auto;
+<style scoped lang="scss">
+    .skeleton {
+        margin: 0px;
         width: 33%;
+        height: 200px;
     }
-    .slide {
-        height: auto;
-        width: auto;
-        display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
-        align-content: center;
-        justify-content: center;
-        align-items: center;
-        gap: 16px;
-    }
+
 </style>

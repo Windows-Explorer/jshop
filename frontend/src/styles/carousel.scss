@@ -1,0 +1,25 @@
+.carousel {
+    height: auto;
+    width: 100%;
+}
+.image {
+    height: auto;
+    width: 33%;
+    border-radius: 6px;
+}
+.slide {
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    padding-inline: 10%;
+}
+.slide-inner {
+    background-color: transparent;
+    display: flex;
+    justify-content: flex-end;
+}

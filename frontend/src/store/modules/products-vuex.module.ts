@@ -21,29 +21,29 @@ export class ProductsStoreModule extends VuexModule {
 
   @Action({ commit: "productsMutation" })
   async getProducts(payload: { page?: number, filter?: IProductsFilter | any }): Promise<IProduct[]> {
-      let pageParam: string | number = ""
-      let filterParams: string = ""
-      
-      if(payload.filter) {
-        Object.keys(payload.filter).forEach(key => {
-            if(payload.filter[key]) filterParams += `&${key}=${payload.filter[key]}`
-        })
-      }
-      if(payload.page) {
-        pageParam = payload.page
-      }
+    let pageParam: string | number = ""
+    let filterParams: string = ""
 
-      const result = await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/products?page=${pageParam}${[filterParams]}`)
+    if (payload.filter) {
+      Object.keys(payload.filter).forEach(key => {
+        if (payload.filter[key]) filterParams += `&${key}=${payload.filter[key]}`
+      })
+    }
+    if (payload.page) {
+      pageParam = `page=${payload.page}`
+    }
 
-      if (result.status === 200) {
-          const products: IProduct[] = await result.json()
-          customNotifies.positiveNotify()
-          return products
-      }
-      else {
-          customNotifies.negativeNotify()
-          return []
-      }
+    const result = await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/products?${pageParam}${filterParams}`)
+
+    if (result.status === 200) {
+      const products: IProduct[] = await result.json()
+      customNotifies.positiveNotify()
+      return products
+    }
+    else {
+      customNotifies.negativeNotify()
+      return []
+    }
   }
 
   @Action({ commit: "currentProductMutation" })
@@ -55,7 +55,7 @@ export class ProductsStoreModule extends VuexModule {
       }
     })
 
-    if(result.status === 200) {
+    if (result.status === 200) {
       const product: IProduct = await result.json()
       return product
     }
@@ -78,10 +78,10 @@ export class ProductsStoreModule extends VuexModule {
       },
       body: JSON.stringify(payload.product)
     })
-    
-    if(result.status === 200) {
+
+    if (result.status === 200) {
       const products: IProduct[] = await result.json()
-      let formData: FormData = new FormData() 
+      let formData: FormData = new FormData()
       formData.append("file", payload.file)
 
       const imageUploadResult = await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/products/save/image`, {
@@ -93,12 +93,12 @@ export class ProductsStoreModule extends VuexModule {
         body: formData
       })
 
-      if(imageUploadResult.status === 200 || imageUploadResult.status === 201) {
+      if (imageUploadResult.status === 200 || imageUploadResult.status === 201) {
         customNotifies.positiveNotify()
         return products
       }
     }
-    
+
     customNotifies.negativeNotify()
     return this.productsState
   }
@@ -114,9 +114,9 @@ export class ProductsStoreModule extends VuexModule {
       }
     })
 
-    
 
-    if(result.status === 200) {
+
+    if (result.status === 200) {
       const products: IProduct[] = await result.json()
       customNotifies.positiveNotify()
       return products

@@ -1,6 +1,9 @@
 <template>
     <q-menu transition-show="jump-down" transition-hide="jump-up" fit class="categories-menu">
         <h5 style="text-align: center; margin: 0px; margin-block: 16px;">Категории</h5>
+        <span v-if="categories.length === 0" style="cursor: default;" class="empty">
+            Пусто
+        </span>
         <q-list center v-for="(category, index) in props.categories" :key="index">
             <q-item clickable>
                 <q-item-section class="categories-item">{{ category.name }}</q-item-section>
@@ -16,7 +19,7 @@
                         >
                             {{ subcategory.name }}
                         </span>
-                        <span v-if="category.subcategories.length === 0" style="cursor: default;">
+                        <span v-if="category.subcategories.length === 0" style="cursor: default;" class="empty">
                             Пусто
                         </span>
                     </div>

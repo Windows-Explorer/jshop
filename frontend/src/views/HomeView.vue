@@ -11,7 +11,7 @@
 import { IProduct } from "../common/interfaces/product.interface"
 import { Ref, onMounted, ref, defineAsyncComponent } from "vue"
 import { useStore } from "vuex"
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { IProductsFilter } from "../common/interfaces/products-filter.interface";
 
 const ProductCard = defineAsyncComponent(async () => import("../components/ProductCard.vue"))
@@ -23,16 +23,11 @@ const router = useRouter()
 
 const loading: Ref<boolean> = ref(false)
 
-const filter: Ref<IProductsFilter> = ref({
-    title: ref(null),
-    cost: ref(null),
-    categoryName: ref(null),
-    subcategoryName: ref(null)
-})
+const filter: Ref<IProductsFilter> = ref(router.currentRoute.value.query)
 
 const products: Ref<IProduct[]> = ref([])
 
-onMounted(async () => {
+onMounted(async () => { 
     products.value = await store.dispatch("getProducts", { page: 0, filter: filter.value })
 })
 

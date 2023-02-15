@@ -44,7 +44,7 @@
         <div class="secondary-header">
             <img src="https://hobbygames.ru/assets/img/svg/logo.svg" @click="router.push({ name: 'home'})" />
             <q-form class="search" @submit="onSearch()">
-                <q-input v-model="search" :style="{ width: '100%' }" filled>
+                <q-input v-model="filter.title" :style="{ width: '100%' }" filled>
                     <template v-slot:append>
                         <q-icon name="search" flat round />
                     </template>
@@ -62,9 +62,12 @@
 
 <script lang="ts" setup>
 
+import { ISearch } from "../common/interfaces/search.interface"
 import { defineAsyncComponent, ref, Ref } from "@vue/runtime-core"
 import { useRouter, useRoute } from "vue-router"
 import { useStore } from "vuex"
+import { Search } from "../common/search"
+import { IProductsFilter } from "../common/interfaces/products-filter.interface"
 
 const AdminLayout = defineAsyncComponent(async () => import("../components/admin/AdminLayout.vue"))
 const SignInForm = defineAsyncComponent(async () => import("../components/auth/SignInForm.vue"))
@@ -73,8 +76,9 @@ const SignUpForm = defineAsyncComponent(async () => import("../components/auth/S
 const store = useStore()
 const router = useRouter()
 const route = useRoute()
+const search: ISearch = new Search(router)
+const filter: Ref<IProductsFilter> = ref({})
 
-const search: Ref<string> = ref("")
 const signInShowing: Ref<boolean> = ref(false)
 const signUpShowing: Ref<boolean> = ref(false)
 
@@ -88,7 +92,7 @@ const onSignUp = async () => {
 }
 
 const onSearch = async () => {
-    alert(search.value)
+    search.find(filter.value)
 }
 
 const onLogout = async () => {

@@ -15,18 +15,25 @@ export class FilesStoreModule extends VuexModule {
 
   @Action({ commit: "filesMutation" })
   async getFiles(): Promise<string[]> {
-    const result = await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/files`, {
-        method: "GET",
-        headers: { "Authorization": `Bearer ${store.getters.token}` }
-    })
+    try {
+      const result = await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/files`, {
+          method: "GET",
+          headers: { "Authorization": `Bearer ${store.getters.token}` }
+      })
 
-    if(result.status === 200) {
-      const files = await result.json()
-      return files
+      if(result.status === 200) {
+        const files = await result.json()
+        return files
+      }
+      else {
+        customNotifies.dialogs.negative(result.status, result.statusText)
+        return []
+      }
     }
-
-    customNotifies.negativeNotify()
-    return []
+    catch {
+      customNotifies.dialogs.negative(null, null, true)
+      return []
+    }
   }
 
   @Action({ commit: "filesMutation" })
@@ -38,12 +45,13 @@ export class FilesStoreModule extends VuexModule {
 
     if(result.status === 200) {
       const files = await result.json()
-      customNotifies.positiveNotify()
+      customNotifies.notifies.positive()
       return files
     }
-
-    customNotifies.negativeNotify()
-    return []
+    else {
+      customNotifies.notifies.negative(result.status)
+      return []
+    }
   }
 
   get files(): string[] {

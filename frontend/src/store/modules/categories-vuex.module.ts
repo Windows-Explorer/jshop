@@ -19,21 +19,28 @@ export class CategoriesStoreModule extends VuexModule {
 
   @Action({ commit: "categoriesMutation" })
   async getCategories(): Promise<ICategory[]> {
+    try {
       const result = await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/categories`)
 
       if (result.status === 200) {
           const colors: ICategory[] = await result.json()
-          customNotifies.positiveNotify()
+          customNotifies.notifies.positive()
           return colors
       }
       else {
-          customNotifies.negativeNotify()
+          customNotifies.dialogs.negative(result.status, result.statusText)
           return []
       }
+    }
+    catch {
+      customNotifies.dialogs.negative(null, null, true)
+      return []
+    }
   }
 
   @Action({ commit: "subcategoriesMutation" })
   async getSubcategories(): Promise<ISubcategory[]> {
+    try {
       const result = await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/subcategories`)
 
       if (result.status === 200) {
@@ -41,9 +48,14 @@ export class CategoriesStoreModule extends VuexModule {
           return colors
       }
       else {
-          customNotifies.negativeNotify()
+          customNotifies.dialogs.negative(result.status, result.statusText)
           return []
       }
+    }
+    catch {
+      customNotifies.dialogs.negative(null, null, true)
+      return []
+    }
   }
 
   get categories(): ICategory[] {

@@ -17,23 +17,17 @@ html, body, #app {
     color: $dark;
 }
 
+.notify-redirect {
+    color: rgb(129, 189, 204);
+    cursor: pointer;
+    text-decoration: none;
+}
+
 .header {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
     color: $secondary;
-    .main-header {
-        font-family: Lato,Arial,sans-serif;
-        height: auto;
-        background-color: $dark;
-        padding-inline: 10vw;
-        display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
-        align-content: center;
-        justify-content: space-between;
-        align-items: center;
-    }
     .secondary-header {
         display: flex;
         padding-block: 16px;
@@ -73,6 +67,20 @@ html, body, #app {
             flex-wrap: nowrap;
         }
     }
+}
+
+.auth-header {
+    font-family: Lato,Arial,sans-serif;
+    height: auto;
+    background-color: $dark;
+    color: $secondary;
+    padding-inline: 10vw;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .categories {

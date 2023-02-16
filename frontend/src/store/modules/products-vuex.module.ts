@@ -84,7 +84,7 @@ export class ProductsStoreModule extends VuexModule {
       const result = await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/products`, {
         method: "POST",
         headers: {
-          'Content-Type': 'multipart/form-data',
+          'Content-Type': 'application/json',
           "Authorization": `Bearer ${store.getters.token}`
         },
         body: JSON.stringify(payload.product)
@@ -95,10 +95,10 @@ export class ProductsStoreModule extends VuexModule {
         let formData: FormData = new FormData()
         formData.append("file", payload.file)
 
-        const imageUploadResult = await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/products/save/image`, {
+        const imageUploadResult = await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/products/image`, {
           method: "POST",
           headers: {
-            'Content-Type': 'multipart/form-data',
+            // 'Content-Type': 'multipart/form-data',
             "Authorization": `Bearer ${store.getters.token}`
           },
           body: formData

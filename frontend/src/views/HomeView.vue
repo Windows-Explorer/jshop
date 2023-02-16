@@ -14,6 +14,7 @@ import { useStore } from "vuex"
 import { useRoute, useRouter } from "vue-router";
 import { IProductsFilter } from "../common/interfaces/products-filter.interface";
 
+const HeaderLayout = defineAsyncComponent(async () => import("../components/HeaderLayout.vue"))
 const ProductCard = defineAsyncComponent(async () => import("../components/ProductCard.vue"))
 const CategoriesSection = defineAsyncComponent(async () => import("../components/CategoriesSection.vue"))
 const ProductsCarousel = defineAsyncComponent(async () => import("../components/ProductsCarousel.vue"))

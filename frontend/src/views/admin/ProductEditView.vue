@@ -1,9 +1,7 @@
 <template>
     <section class="page-section"> 
         <q-table
-            :style="'width: 100%'"
             :rows="products"
-            dark
             :columns="columns"
             :rows-per-page-options="[]"
             row-key="name"
@@ -11,27 +9,36 @@
             class="table"
         >
             <template v-slot:top>
-                <q-btn color="primary" :disable="loading" label="Создать" @click="onShowCreate()" />
+                <q-btn icon="add" flat :disable="loading" :loading="loading" label="Добавить" @click="onShowCreate()" />
+                <q-btn icon="update" flat :disable="loading" :loading="loading" label="Обновить" @click="getProducts()"/>
             </template>
 
             <template v-slot:body="props">
                 <q-tr :props="props">
-                    <q-td key="id" :props="props">
-                        {{ props.row.id }}
+                    <q-td class="table-item" key="id" :props="props">
+                        <span>
+                            {{ props.row.id }}
+                        </span>
                     </q-td>
-                    <q-td key="title" :props="props">
-                        {{ props.row.title }}
+                    <q-td class="table-item" key="title" :props="props">
+                        <span>
+                            {{ props.row.title }}
+                        </span>
                     </q-td>
-                    <q-td key="description" :props="props">
-                        {{ props.row.description }}
+                    <q-td class="table-item" key="description" :props="props">
+                        <span>
+                            {{ props.row.description }}
+                        </span>
                     </q-td>
-                    <q-td key="type" :props="props">
-                        {{ props.row.type }}
+                    <q-td class="table-item" key="type" :props="props">
+                        <span>
+                            {{ props.row.type }}
+                        </span>
                     </q-td>
-                    <q-td key="image" :props="props">
+                    <q-td class="table-item" key="image" :props="props">
                         <q-img :src="props.row.image" />
                     </q-td>
-                    <q-td key="removeBtn" :props="props">
+                    <q-td class="table-item" key="removeBtn" :props="props">
                         <div class="actionsContainer">
                             <q-btn color="negative" label="Удалить" :disable="loading" @click="onRemove(props.row.id)" />
                             <q-btn color="negative" label="Изменить" :disable="loading" @click="onShowEdit()" />
@@ -71,7 +78,6 @@ const columns: any[] = [
   { name: "id", align: "center", label: "ID", field: "id" },
   { name: "title", align: "center", label: "Заголовок", field: "title" },
   { name: "description", align: "center", label: "Описание", field: "description" },
-  { name: "type", align: "center", label: "Тип товара", field: "type" },
   { name: "image", align: "center", label: "Изображение", field: "image" },
   { name: "removeBtn", align: "center", label: "Действия", field: "type" },
 ]
@@ -109,17 +115,27 @@ const onProductEdited = async () => {
     loading.value = false
 }
 
-onMounted(async () => {
+const getProducts = async () => {
     loading.value = true
-    products.value = await store.dispatch("getProducts")
+    products.value = await store.dispatch("getProducts", { page: null, filter: null })
     loading.value = false
+}
+
+onMounted(async () => {
+    getProducts()
 })
 
 </script>
 
 <style lang="scss" scoped>
 .table {
-    font-family: SpectralRegular
+    width: 90%
+}
+.table-item {
+    width: 100px;
+}
+.table-item span {
+    white-space: pre-wrap;
 }
 .actionsContainer {
     width: 100%;
@@ -131,7 +147,11 @@ onMounted(async () => {
     align-items: center;
     gap: 10px;
 }
-button {
-    font-family: Colus;
+.page-section {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+    font-family: RobotoRegular;
 }
 </style>

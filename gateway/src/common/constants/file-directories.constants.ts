@@ -1,1 +1,1 @@
-export const IMAGES_DIRECTORY_PATH = "./public/images/"
+export const IMAGES_DIRECTORY_PATH = "./public/api/images/"

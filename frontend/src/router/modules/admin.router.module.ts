@@ -1,4 +1,4 @@
-import { Notify } from "quasar"
+import { customNotifies } from "@/common/notifies"
 import { VueCookieNext } from "vue-cookie-next"
 import { RouteRecordRaw } from "vue-router"
 
@@ -11,13 +11,7 @@ export const isAdmin = async (): Promise<boolean> => {
 
 export const adminGuard = async (to: any, from: any, next: any) => {
   if(!await isAdmin()) {
-    Notify.create({
-      position: "bottom",
-      message: "Forbidden",
-      timeout: 500,
-      type: "info",
-      textColor: "primary"
-    })
+    customNotifies.dialogs.negative("Ошибка", "Отказано в доступе", false)
     next({ name: "home" })
   }
   else next()
@@ -26,7 +20,7 @@ export const adminGuard = async (to: any, from: any, next: any) => {
 export const adminRoutes: RouteRecordRaw[] = [
   {
     path: "/admin/edit/products",
-    name: "onlyauthed",
+    name: "productsEdit",
     component: async () => await import("../../views/admin/ProductEditView.vue"),
     beforeEnter: adminGuard
   },

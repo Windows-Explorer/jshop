@@ -1,22 +1,16 @@
 <template>
-    <section>
-        <q-tabs :dense="false" :align="'left'">
-            <h6>Admin layout</h6>
-            <q-route-tab to="/admin/edit/products" label="Редактирование товаров" />
-            <q-route-tab to="/admin/image" label="Загрузка изображений" />
-        </q-tabs>
-    </section>
+    <div class="auth-header">
+        <div class="header-block">
+            <q-btn :to="{ name: 'productsEdit' }" size="12px" label="Редактирование товаров" flat square />
+            <q-btn :to="{ name: 'imageUpload' }" size="12px" label="Загрузка изображений" flat square />
+        </div>
+    </div>
 </template>
 
 <style scoped>
-h6 {
-    font-size: medium;
-    margin-block: 0px;
-    margin-inline: 20px
-}
 
 section {
-    font-family: Colus;
+    font-family: RobotoRegular;
 }
 
 </style>

@@ -24,7 +24,6 @@ export class CategoriesStoreModule extends VuexModule {
 
       if (result.status === 200) {
           const colors: ICategory[] = await result.json()
-          customNotifies.notifies.positive()
           return colors
       }
       else {

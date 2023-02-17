@@ -43,7 +43,7 @@ export class ProductsModule {
     this._client.subscribeToResponseOf("products.findById")
     this._client.subscribeToResponseOf("products.save")
     this._client.subscribeToResponseOf("products.saveMany")
-    this._client.subscribeToResponseOf("products.removeOne")
+    this._client.subscribeToResponseOf("products.remove")
 
     await this._client.connect()
   }

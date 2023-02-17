@@ -119,12 +119,12 @@ export class ProductsStoreModule extends VuexModule {
 
 
   @Action({ commit: "productsMutation" })
-  async removeOneProduct(id: number): Promise<IProduct[]> {
+  async removeProduct(id: number): Promise<IProduct[]> {
     try {
-      const result = await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/products/remove/${id}`, {
+      const result = await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/products/${id}`, {
         method: "DELETE",
         headers: {
-          'Content-Type': 'multipart/form-data',
+          'Content-Type': 'application/json',
           "Authorization": `Bearer ${store.getters.token}`
         }
       })

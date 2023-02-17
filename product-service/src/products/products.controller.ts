@@ -8,6 +8,7 @@ import { IProductsService } from "src/common/interfaces/products.service.interfa
 import { IResultAndCount } from "src/common/interfaces/result-and-count.interface"
 import { IResult } from "src/common/interfaces/result.interface"
 import { IOutput } from "src/common/interfaces/resulter.interface"
+import { DeleteResult } from "typeorm"
 
 @Controller("products")
 export class ProductsController {
@@ -61,6 +62,18 @@ export class ProductsController {
         }
         catch(error) {
             this._logger.log(error, "PRODUCTS-CONTROLLER: save")
+            throw new HttpException(error, 500)
+        }
+    }
+
+    @MessagePattern("products.remove")
+    async remove(@Payload() id: number): Promise<IResult<DeleteResult>> {
+        try {
+            const result: IResult<DeleteResult> = await this._output.responseAsync(HttpStatus.OK, await this._productsService.remove(id))
+            return result
+        }
+        catch(error) {
+            this._logger.log(error, "PRODUCTS-CONTROLLER: remove")
             throw new HttpException(error, 500)
         }
     }

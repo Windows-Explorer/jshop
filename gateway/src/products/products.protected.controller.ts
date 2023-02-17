@@ -24,7 +24,7 @@ export class ProductsProtectedController {
     @UseGuards(AdminGuard)
     @Delete("/:id")
     async removeOne(@Param("id") id: number, @Res() response: Response): Promise<void> {
-        const result: IResult<any> = await this._client.send("products.removeOne", id).toPromise()
+        const result: IResult<any> = await this._client.send("products.remove", id).toPromise()
         response.status(result.statusCode).send(result.message)
     }
 

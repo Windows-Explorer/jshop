@@ -40,8 +40,8 @@
                     </q-td>
                     <q-td class="table-item" key="removeBtn" :props="props">
                         <div class="actionsContainer">
-                            <q-btn color="negative" label="Удалить" :disable="loading" @click="onRemove(props.row.id)" />
-                            <q-btn color="negative" label="Изменить" :disable="loading" @click="onShowEdit()" />
+                            <q-btn color="negative" label="Удалить" flat :disable="loading" @click="onRemove(props.row.id, props.row.title)" />
+                            <q-btn color="dark" label="Изменить" flat :disable="loading" @click="onShowEdit()" />
                         </div>
                     </q-td>
                     <q-dialog v-model="showEdit" :transition-show="'jump-down'" :transition-hide="'jump-up'">
@@ -95,23 +95,34 @@ const onShowEdit = async () => {
     showEdit.value = true
 }
 
-const onRemove = async (id: number) => {
-    loading.value = true
-    products.value = await store.dispatch("removeOneProduct", id)
-    loading.value = false
+const onRemove = async (id: number, name: string) => {
+    quasar.dialog({
+        message: `Удалить ${name}?`,
+        title: "Внимание!",
+        focus: "cancel",
+        cancel: { flat: true, label: "Нет" },
+        ok: { flat: true, label: "Да", onclick: async () => removeProduct(id) }
+    })
 }
 
 const onProductCreated = async () => {
     showCreate.value = false
     loading.value = true
-    products.value = await store.dispatch("getProducts")
+    await getProducts()
     loading.value = false
 }
 
 const onProductEdited = async () => {
     showEdit.value = false
     loading.value = true
-    products.value = await store.dispatch("getProducts")
+    await getProducts()
+    loading.value = false
+}
+
+const removeProduct = async (id: number) => {
+    loading.value = true
+    await store.dispatch("removeProduct", id)
+    await getProducts()
     loading.value = false
 }
 

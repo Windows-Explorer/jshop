@@ -8,7 +8,7 @@ import { IPaginator } from "src/common/interfaces/paginator.interface"
 import { IProduct } from "src/common/interfaces/product.interface"
 import { IProductsFilterPayload } from "src/common/interfaces/products-filter.interface"
 import { IProductsService } from "src/common/interfaces/products.service.interface"
-import { FindManyOptions, Repository } from "typeorm"
+import { DeleteResult, FindManyOptions, Repository } from "typeorm"
 import { Product } from "./entities/product.entity"
 
 @Injectable()
@@ -54,11 +54,7 @@ export class ProductsService implements IProductsService {
         return await this._productsRepository.save(product)
     }
 
-    async saveMany(product: Product[]): Promise<Product[]> {
-        return await this._productsRepository.save(product)
-    }
-
-    async removeOne(id: number): Promise<void> {
-        await this._productsRepository.delete(id)
+    async remove(id: number): Promise<DeleteResult> {
+        return await this._productsRepository.delete(id)
     }
 }

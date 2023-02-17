@@ -28,7 +28,7 @@
                 </template>
             </q-file>
             <span class="buttons">
-                <q-btn label="Сохранить" :loading="loading" type="submit" dark color="primary" :size="'18px'"/>
+                <q-btn label="Сохранить" :loading="loading" type="submit" flat :size="'18px'"/>
             </span>
         </q-form>
     </q-card>

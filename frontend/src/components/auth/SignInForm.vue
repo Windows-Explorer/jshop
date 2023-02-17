@@ -41,9 +41,6 @@ const store = useStore()
 const quasar = useQuasar()
 const router = useRouter()
 
-const validator: Validator = new Validator()
-const validatorHelper: ValidatorHelper = new ValidatorHelper()
-
 const loading: Ref<boolean> = ref(false)
 const user = reactive({ username: "", email: "", password: "", confirmPassword: "" })
 

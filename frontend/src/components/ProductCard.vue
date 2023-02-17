@@ -1,23 +1,33 @@
 <template>
-    <div class="product">
-        <div class="image">
-            <q-img :height="'300px'" :width="'300px'" :src="props.product.image" :fit="'cover'" :alt="'https://s3.castbox.fm/4a/f7/6f/61e1484b31909065414ea4e75a.jpg'"/>
-        </div>
-        <div class="info">
-            <h3>{{ props.product.title }}</h3>
-            <div>
-                <span class="price">{{ props.product.cost }}<small> ₽</small></span>
-                <q-btn label="Подробнее" @click="toProduct(props.product.id)" />
-                <q-btn v-if="!inCart" round color="secondary" icon="shopping_cart" @click="onCart(props.product)" />
-                <q-btn v-else round color="accent" icon="shopping_cart" @click="toCart()">
-                    <q-tooltip>
-                        Перейти в корзину
-                    </q-tooltip>
-                </q-btn>
-                
+    <q-card class="product-card">
+        <div class="product-content">
+            <div class="image">
+                <q-img width="400px" :src="props.product.image" fit="cover" alt="https://s3.castbox.fm/4a/f7/6f/61e1484b31909065414ea4e75a.jpg"/>
+            </div>
+            <div class="info">
+                <div class="name">{{ props.product.title }}</div>
+                <div class="description">{{ props.product.description }}</div>
+                <div class="actions-block">
+                    <q-btn
+                        v-if="!inCart"
+                        rounded
+                        color="dark"
+                        icon="shopping_cart"
+                        :label="`${props.product.cost} ₽`"
+                        @click="onCart(props.product)"
+                    />
+                    <q-btn
+                        v-else
+                        rounded
+                        color="dark"
+                        icon="shopping_cart"
+                        label="Перейти в корзину"
+                        @click="toCart()"
+                    />
+                </div>
             </div>
         </div>
-    </div>
+    </q-card>
 </template>
 
 <script setup lang="ts">
@@ -41,7 +51,6 @@ const props = defineProps({
 
 const inCart: Ref<boolean> = ref<boolean>(false)
 
-const toProduct = async (id: number) => router.push({ name: "product", params: { id: id }})
 const toCart = async () => router.push({ name: "cart" })
 
 const onCart = async (product: IProduct) => {
@@ -52,8 +61,7 @@ const onCart = async (product: IProduct) => {
         description: product.description,
         image: product.image,
         cost: product.cost,
-        count: 1,
-        type: "product"
+        count: 1
     }
 
     await store.dispatch("pushIntoCart", cartObject)
@@ -70,38 +78,56 @@ const isCarted = async (product: IProduct) => {
     else return false
 }
 
-
-
 onMounted( async () => {
     inCart.value = await isCarted(props.product)
 })
 
 </script>
 
-<style lang="sass" scoped>
+<style lang="scss" scoped>
 
-.product
-    background-color: $primary
-    display: flex
-    flex-direction: column
-    align-items: center
-    align-content: center
-    padding: 16px
-.image
-    margin-bottom: 0px
+.product-card {
+    background-color: $accent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    padding: 20px;
+    width: auto;
+}
+.image {
+    text-align: center;
+    margin: 0 0 10px;
+    display: table;
+    width: 100%;
+    position: relative;
+}
 
-.info h3
-    font-size: 21px
-    margin-bottom: 0px
+.description {
+    color: #9b9a99;
+    margin: 0 40px 20px;
+    text-align: center;
+    height: 45px;
+    overflow: hidden;
+    position: relative;
+}
 
-.info
-    width: 100%
-.info div
-    display: flex
-    flex-direction: row
-    align-items: center
-    justify-content: space-between
+.name {
+    font-size: 17px;
+    line-height: 1.5;
+    overflow: hidden;
+    position: relative;
+    display: block;
+    text-align: center;
+    margin-bottom: 10px;
+}
 
-.price
+.actions-block {
+    display: flex;
+    justify-content: center;
+}
+
+.price {
     font-size: 18px
+}
 </style>

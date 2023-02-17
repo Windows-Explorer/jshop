@@ -27,6 +27,9 @@ export class Product implements IProduct {
     @Column({ type: "float", unique: false, nullable: false })
     cost: number
 
+    @Column({ type: "boolean", unique: false, nullable: false, default: 0 })
+    isTop: boolean
+
     @ManyToOne(() => Category, (type: ICategory) => type.id, { eager: true, cascade: true })
     category: ICategory
 

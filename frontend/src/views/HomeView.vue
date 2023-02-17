@@ -3,7 +3,9 @@
         <q-inner-loading :showing="loading" dark />
         <categories-section />
         <products-carousel />
-        <!-- <product-card :product="product" v-for="(product, index) in products" :key="index" /> -->
+        <div class="products-section">
+            <product-card :product="product" v-for="(product, index) in products" :key="index" />
+        </div>
     </section>
 </template>
 
@@ -11,8 +13,8 @@
 import { IProduct } from "../common/interfaces/product.interface"
 import { Ref, onMounted, ref, defineAsyncComponent } from "vue"
 import { useStore } from "vuex"
-import { useRoute, useRouter } from "vue-router";
-import { IProductsFilter } from "../common/interfaces/products-filter.interface";
+import { useRoute, useRouter } from "vue-router"
+import { IProductsFilter } from "../common/interfaces/products-filter.interface"
 
 const HeaderLayout = defineAsyncComponent(async () => import("../components/HeaderLayout.vue"))
 const ProductCard = defineAsyncComponent(async () => import("../components/ProductCard.vue"))

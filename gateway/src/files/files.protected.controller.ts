@@ -7,7 +7,7 @@ import { FILES_SERVICE_TOKEN } from "src/common/constants/inject-tokens.constant
 import { IFilesService } from "src/common/interfaces/files.service.interface"
 import { AdminGuard } from "src/guards/admin.guard"
 
-@Controller("files")
+@Controller("api/files")
 export class FilesProtectedController {
     constructor(@Inject(FILES_SERVICE_TOKEN) private readonly _filesService: IFilesService) {}
 

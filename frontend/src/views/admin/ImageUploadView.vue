@@ -1,7 +1,7 @@
 <template>
     <section class="page-section">
         <q-uploader class="uploader"
-            url="http://kontinuum.su:3000/files"
+            url=""
             :headers="[{ name: 'Authorization', value: token }]"
             label="Загрузить изображение"
             multiple
@@ -15,7 +15,9 @@
                     <q-btn
                         label="Удалить"
                         color="negative"
+                        flat
                         @click="onRemoveFile(file)"
+                        class="button"
                     />
                 </q-item-section>
             </q-item>
@@ -72,12 +74,15 @@ section {
 .list {
     width: 50%;
     min-height: 100%;
-    background-color: $primary;
-    color: $secondary;
+    background-color: $accent;
+    border-radius: 4px;
+    color: $dark;
 }
-
 .item-section {
     display: flex;
+}
+.button {
+    width: 100px;
 }
 
 </style>

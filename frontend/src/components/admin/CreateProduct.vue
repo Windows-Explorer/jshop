@@ -6,22 +6,45 @@
                 v-model="currentProduct.title"
                 type="text"
                 label="Заголовок товара"
+                :rules="validationRules.title"
+                no-error-icon
             />
             <q-input
                 v-model="currentProduct.description"
                 type="textarea"
                 label="Описание"
+                :rules="validationRules.description"
+                no-error-icon
+                counter
+                maxlength="255"
             />
             <q-input
                 v-model="currentProduct.cost"
                 type="number"
                 label="Цена"
+                :rules="validationRules.cost"
+                no-error-icon
             />
-            <q-select :loading="loadingCategories" v-model="currentProduct.category" :options="optionsCategories" label="Категория" />
-            <q-select :loading="loadingCategories" v-model="currentProduct.subcategory" :options="currentProduct.category?.subcategories" label="Подкатегория" />
+            <q-select
+                :loading="loadingCategories"
+                v-model="currentProduct.category"
+                :options="optionsCategories"
+                label="Категория"
+                :rules="validationRules.categories"
+                no-error-icon
+            />
+            <q-select
+                :loading="loadingCategories"
+                v-model="currentProduct.subcategory"
+                :options="currentProduct.category?.subcategories"
+                label="Подкатегория"
+                no-error-icon
+            />
             <q-file
                 v-model="currentFile"
                 label="Изображение"
+                :rules="validationRules.image"
+                no-error-icon
             >
                 <template v-slot:prepend>
                     <q-icon name="attach_file" />
@@ -40,8 +63,10 @@ import { ICategory } from "../../common/interfaces/category.interface"
 import { onMounted, ref, Ref } from "vue"
 import { useStore } from "vuex"
 import { IProduct } from "../../common/interfaces/product.interface"
+import { Validator } from "../../common/validation/validator"
 
 const store = useStore()
+const validator = new Validator()
 
 const emits = defineEmits<{
     (event: "productCreated"): void
@@ -51,6 +76,29 @@ const loading: Ref<boolean> = ref<boolean>(false)
 const loadingCategories: Ref<boolean> = ref<boolean>(false)
 const categories: Ref<ICategory[]> = ref([])
 const optionsCategories: Ref<string[]> = ref([])
+
+
+const validationRules = {
+    title: [
+        async (value: string) => await validator.isRequired(value),
+        async (value: string) => await validator.minLength(value, 4),
+        async (value: string) => await validator.maxLength(value, 255)
+    ],
+    description: [
+        async (value: string) => await validator.isRequired(value),
+        async (value: string) => await validator.minLength(value, 4),
+        async (value: string) => await validator.maxLength(value, 255)
+    ],
+    cost: [
+        async (value: string) => await validator.isRequired(value)
+    ],
+    categories: [
+        async (value: string) => await validator.isRequired(value)
+    ],
+    image: [
+        async (value: string) => await validator.isRequired(value)
+    ]
+}
 
 const currentProduct: Ref<IProduct | any> = ref({
     title: "",

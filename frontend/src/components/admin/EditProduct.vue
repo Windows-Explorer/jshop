@@ -6,22 +6,45 @@
                 v-model="props.product.title"
                 type="text"
                 label="Заголовок товара"
+                :rules="validationRules.title"
+                no-error-icon
             />
             <q-input
                 v-model="props.product.description"
                 type="textarea"
                 label="Описание"
+                :rules="validationRules.description"
+                no-error-icon
+                counter
+                maxlength="255"
             />
             <q-input
                 v-model="props.product.cost"
                 type="number"
                 label="Цена"
+                :rules="validationRules.cost"
+                no-error-icon
             />
-            <q-select :loading="loadingCategories" v-model="props.product.category" :options="optionsCategories" label="Категория" />
-            <q-select :loading="loadingCategories" v-model="props.product.subcategory" :options="props.product.category?.subcategories" label="Подкатегория" />
+            <q-select
+                :loading="loadingCategories"
+                v-model="props.product.category"
+                :options="optionsCategories"
+                label="Категория"
+                :rules="validationRules.categories"
+                no-error-icon
+            />
+            <q-select
+                :loading="loadingCategories"
+                v-model="props.product.subcategory"
+                :options="props.product.category?.subcategories"
+                label="Подкатегория"
+                no-error-icon
+            />
             <q-file
                 v-model="currentFile"
                 label="Изображение"
+                :rules="validationRules.image"
+                no-error-icon
             >
                 <template v-slot:prepend>
                     <q-icon name="attach_file" />
@@ -41,8 +64,32 @@ import { onMounted, PropType, ref, Ref } from "vue"
 import { useStore } from "vuex"
 import { ICategory } from "../../common/interfaces/category.interface"
 import { IProduct } from "../../common/interfaces/product.interface"
+import { Validator } from "../../common/validation/validator"
 
 const store = useStore()
+const validator = new Validator()
+
+const validationRules = {
+    title: [
+        async (value: string) => await validator.isRequired(value),
+        async (value: string) => await validator.minLength(value, 4),
+        async (value: string) => await validator.maxLength(value, 255)
+    ],
+    description: [
+        async (value: string) => await validator.isRequired(value),
+        async (value: string) => await validator.minLength(value, 4),
+        async (value: string) => await validator.maxLength(value, 255)
+    ],
+    cost: [
+        async (value: string) => await validator.isRequired(value)
+    ],
+    categories: [
+        async (value: string) => await validator.isRequired(value)
+    ],
+    image: [
+        async (value: string) => await validator.isRequired(value)
+    ]
+}
 
 const props = defineProps({
     product: {

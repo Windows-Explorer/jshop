@@ -26,7 +26,6 @@
                 />
             </div>
             <span class="price">{{ props.product.cost }}<small> ₽</small></span>
-            <span>Категория: {{ props.product.category?.name }}</span>
         </div>
     </q-card>
 </template>

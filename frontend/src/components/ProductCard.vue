@@ -67,14 +67,11 @@ const props = defineProps({
 const inCart: Ref<boolean> = ref(false)
 
 const onCart = async (product: IProduct) => {
-    const cartObject: ICartObject = {
+    const cartObject: ICartObject | any = {
         id: product.id,
         title: product.title,
-        description: product.description,
         image: product.image,
         cost: product.cost,
-        category: product.category,
-        subcategory: product.subcategory,
         count: 1
     }
 

@@ -5,16 +5,16 @@ import { ICartObject } from '../../common/interfaces/cart-object.interface'
 
 @Module
 export class CartStoreModule extends VuexModule {
-  cartState: IProduct[] = JSON.parse(VueCookieNext.getCookie("cart")) || []
+  cartState: ICartObject[] = JSON.parse(VueCookieNext.getCookie("cart")) || []
 
   @Mutation
-  cartMutation(products: IProduct[]): void {
+  cartMutation(products: ICartObject[]): void {
     this.cartState = products
   }
 
   @Action({ commit: "cartMutation" })
-  async removeFromCart(product: IProduct): Promise<IProduct[]> {
-    const cart: IProduct[] = this.cartState || []
+  async removeFromCart(product: ICartObject): Promise<IProduct[]> {
+    const cart: ICartObject[] = this.cartState || []
     console.log(cart)
     const index = cart.indexOf(product)
     if (index > -1) {
@@ -25,9 +25,8 @@ export class CartStoreModule extends VuexModule {
   }
 
   @Action({ commit: "cartMutation" })
-  async pushIntoCart(cartObject: IProduct): Promise<IProduct[]> {
-    const cart: IProduct[] = await JSON.parse(VueCookieNext.getCookie("cart")) || []
-    
+  async pushIntoCart(cartObject: ICartObject): Promise<IProduct[]> {
+    const cart: ICartObject[] = JSON.parse(VueCookieNext.getCookie("cart")) || this.cartState
     cart.push(cartObject)
     VueCookieNext.setCookie("cart", JSON.stringify(cart), { expire: 36000 })
     return cart
@@ -39,7 +38,7 @@ export class CartStoreModule extends VuexModule {
     return cart
   }
 
-  get cart(): IProduct[] {
+  get cart(): ICartObject[] {
     return this.cartState
   }
 

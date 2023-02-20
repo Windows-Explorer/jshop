@@ -9,7 +9,7 @@
                     </template>
                 </q-input>
             </q-form>
-            <q-btn icon="shopping_cart" size="20px" flat round color="primary" />
+            <q-btn icon="shopping_cart" size="20px" flat round color="primary" :to="{ name: 'cart'}" />
             <div class="feedback">
                 <span>+7 (3952) 48-28-49</span>
                 <span>Обратная связь</span>

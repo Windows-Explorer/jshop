@@ -1,19 +1,16 @@
 <template>
     <section class="page-section">
-        <div class="cart-header">
-            <h5>Корзина</h5>
-            <h5>Итого: {{ finalCost }}<small> ₽</small></h5>
-        </div>
-        
-        <div class="main-container">
-            <div class="cart-container">
-                <product-cart
+        <div class="products-section">
+            <div class="cart-header">
+                <h5>Корзина</h5>
+                <h5>Итого: {{ finalCost }}<small> ₽</small></h5>
+            </div>
+            <product-cart
                     :product="product"
                     v-for="(product, index) in cart"
                     :key="index"
                     @update-count="onUpdateCount(index, $event)"
                 />
-            </div>
         </div>
         
     </section>
@@ -59,8 +56,6 @@ onMounted(async () => {
 h5 {
     margin: 0px;
 }
-
-
 .cart-header {
     display: flex;
     flex-direction: column;

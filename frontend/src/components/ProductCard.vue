@@ -2,7 +2,18 @@
     <q-card class="product-card">
         <div class="product-content">
             <div class="image">
-                <q-img width="400px" :src="props.product.image" fit="cover" alt="https://s3.castbox.fm/4a/f7/6f/61e1484b31909065414ea4e75a.jpg"/>
+                <q-img
+                    width="400px"
+                    :src="props.product.image"
+                    fit="cover"
+                    alt="https://s3.castbox.fm/4a/f7/6f/61e1484b31909065414ea4e75a.jpg"
+                >
+                    <template v-slot:error>
+                        <div class="absolute-full flex flex-center text-white">
+                            Не удалось загрузить изображение
+                        </div>
+                    </template>
+                </q-img>
             </div>
             <div class="info">
                 <div class="name">{{ props.product.title }}</div>
@@ -15,14 +26,16 @@
                         icon="shopping_cart"
                         :label="`${props.product.cost} ₽`"
                         @click="onCart(props.product)"
+                        :loading="loading"
                     />
                     <q-btn
-                        v-else
+                        v-else-if="inCart"
                         rounded
                         color="dark"
                         icon="shopping_cart"
                         label="Перейти в корзину"
-                        @click="toCart()"
+                        :to="{ name: 'cart' }"
+                        :loading="loading"
                     />
                 </div>
             </div>
@@ -42,38 +55,36 @@ const router = useRouter()
 const store = useStore()
 const quasar = useQuasar()
 
+const loading: Ref<boolean> = ref(false)
+
 const props = defineProps({
     product: {
-        type: Object as PropType<IProduct> || Object as PropType<ICartObject>,
+        type: Object as PropType<IProduct>,
         required: true
     }
 })
 
-const inCart: Ref<boolean> = ref<boolean>(false)
-
-const toCart = async () => router.push({ name: "cart" })
+const inCart: Ref<boolean> = ref(false)
 
 const onCart = async (product: IProduct) => {
-    quasar.loading.show()
     const cartObject: ICartObject = {
         id: product.id,
         title: product.title,
         description: product.description,
         image: product.image,
         cost: product.cost,
+        category: product.category,
+        subcategory: product.subcategory,
         count: 1
     }
 
     await store.dispatch("pushIntoCart", cartObject)
     inCart.value = await isCarted(cartObject)
-    quasar.loading.hide()
 }
 
 const isCarted = async (product: IProduct) => {
     const cart: ICartObject[] = await store.getters.cart
-
     const index = cart.map(el => el.id).indexOf(product.id)
-
     if(index !== -1) return true
     else return false
 }
@@ -125,9 +136,5 @@ onMounted( async () => {
 .actions-block {
     display: flex;
     justify-content: center;
-}
-
-.price {
-    font-size: 18px
 }
 </style>

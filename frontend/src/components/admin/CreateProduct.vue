@@ -16,7 +16,7 @@
                 :rules="validationRules.description"
                 no-error-icon
                 counter
-                maxlength="255"
+                maxlength="1024"
             />
             <q-input
                 v-model="currentProduct.cost"
@@ -29,14 +29,15 @@
                 :loading="loadingCategories"
                 v-model="currentProduct.category"
                 :options="optionsCategories"
+                @update:model-value="getOptionsSubcategories()"
                 label="Категория"
                 :rules="validationRules.categories"
                 no-error-icon
             />
             <q-select
-                :loading="loadingCategories"
+                :loading="loadingSubcategories"
                 v-model="currentProduct.subcategory"
-                :options="currentProduct.category?.subcategories"
+                :options="optionsSubcategories"
                 label="Подкатегория"
                 no-error-icon
             />
@@ -72,10 +73,13 @@ const emits = defineEmits<{
     (event: "productCreated"): void
 }>()
 
-const loading: Ref<boolean> = ref<boolean>(false)
-const loadingCategories: Ref<boolean> = ref<boolean>(false)
+const loading: Ref<boolean> = ref(false)
+const loadingCategories: Ref<boolean> = ref(false)
+const loadingSubcategories: Ref<boolean> = ref(false)
 const categories: Ref<ICategory[]> = ref([])
+const subcategories: Ref<ICategory[]> = ref([])
 const optionsCategories: Ref<string[]> = ref([])
+const optionsSubcategories: Ref<string[]> = ref([])
 
 
 const validationRules = {
@@ -87,7 +91,7 @@ const validationRules = {
     description: [
         async (value: string) => await validator.isRequired(value),
         async (value: string) => await validator.minLength(value, 4),
-        async (value: string) => await validator.maxLength(value, 255)
+        async (value: string) => await validator.maxLength(value, 1024)
     ],
     cost: [
         async (value: string) => await validator.isRequired(value)
@@ -117,6 +121,13 @@ const getCategories = async () => {
     loadingCategories.value = false
 }
 
+const getOptionsSubcategories = async () => {
+    loadingSubcategories.value = true
+    let currentCategory: any = categories.value.find(el => el.name === currentProduct.value.category)
+    optionsSubcategories.value = currentCategory.subcategories.map((el: any) => el.name)
+    loadingSubcategories.value = false
+}
+
 onMounted(async () => {
     getCategories()
 })
@@ -124,6 +135,7 @@ onMounted(async () => {
 const onSubmit = async () => {
     loading.value = true
     currentProduct.value.category = categories.value.find(el => el.name === currentProduct.value.category)
+    currentProduct.value.subcategory = subcategories.value.find(el => el.name === currentProduct.value.subcategory)
     await store.dispatch("saveProduct", { product: currentProduct.value, file: currentFile.value })
     loading.value = false
     emits("productCreated")

@@ -16,7 +16,6 @@ export class Paginator implements IPaginator {
         try {
             inputOptions.take = 8
             inputOptions.skip = ((page * inputOptions.take) < 0 ? 0: (page * inputOptions.take)) || 0
-            this._logger.log(inputOptions, "PAGINATOR")
             return inputOptions
         }
         catch(error) {

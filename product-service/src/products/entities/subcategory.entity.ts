@@ -16,7 +16,7 @@ export class Subcategory implements ISubcategory {
     name: string
     
     @IsNotEmpty()
-    @Column({ length: 255, type: "varchar", unique: true, nullable: false })
+    @Column({ length: 1024, type: "varchar", unique: true, nullable: false })
     description: string
 
     @ManyToOne(() => Category, (category: ICategory) => category.id, { cascade: true })

@@ -16,8 +16,8 @@ export class Product implements IProduct {
     @Length(4, 32)
     title: string
 
-    @Column({ length: 255, type: "varchar", unique: false, nullable: false })
-    @Length(0, 255)
+    @Column({ length: 1024, type: "varchar", unique: false, nullable: false })
+    @Length(0, 1024)
     description: string
 
     @Column({ length: 255, type: "varchar", unique: false, nullable: true })

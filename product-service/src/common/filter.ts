@@ -24,7 +24,6 @@ export class Filter implements IFilter {
                     subcategory: { name: filter.subcategory }
                 }
             }
-            this._logger.log(result, "FILTER")
             return result
         }
         catch(error) {

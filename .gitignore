@@ -23,6 +23,10 @@ product-service/node_modules
 card-service/dist
 card-service/node_modules
 
+#jshop_react_native
+jshop_react_native/shelf/
+jshop_react_native/workspace.xml
+
 #kafka
 kafka
 kafka/kafka1

@@ -1,7 +1,7 @@
 <template>
     <div class="auth-header">
         <div class="header-block">
-            <q-btn label="Нефтеcumск" icon="location_on" size="12px" flat square />
+            <q-btn label="Нефтекамск" icon="location_on" size="12px" flat square />
             <q-btn label="Помощь" size="12px" flat square :to="{ name: 'personaldatapolicy' }" />
         </div>
         <div class="header-block">

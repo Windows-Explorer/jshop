@@ -46,6 +46,20 @@ export class FilesStoreModule extends VuexModule {
     return []
   }
 
+  @Action({ commit: "filesMutation" })
+  async parseXML(): Promise<void> {
+    const result = await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/cards/parse`, {
+      method: "GET",
+      headers: { "Authorization": `Bearer ${store.getters.token}`}
+    })
+
+    if(result.status === 200) {
+      customNotifies.positiveNotify()
+    }
+
+    else customNotifies.negativeNotify()
+  }
+
   get files(): string[] {
     return this.filesState
   }

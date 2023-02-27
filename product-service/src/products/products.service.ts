@@ -2,6 +2,7 @@ import { Inject, Injectable } from "@nestjs/common"
 import { HttpException } from "@nestjs/common/exceptions"
 import { InjectRepository } from "@nestjs/typeorm"
 import { FILTER_TOKEN, LOGGER_TOKEN, PAGINATOR_TOKEN } from "src/common/constants/inject-tokens.constant"
+import { PRODUCTS_COUNT_AT_PAGE } from "src/common/constants/products-count-at-page.constant"
 import { IFilter } from "src/common/interfaces/filter.interface"
 import { ILoggerOutput } from "src/common/interfaces/logger-output.interface"
 import { IPaginator } from "src/common/interfaces/paginator.interface"
@@ -25,7 +26,7 @@ export class ProductsService implements IProductsService {
             const filteredOptions: FindManyOptions = await this._filter.filter(filter)
             const paginatedOptions: FindManyOptions = await this._paginator.paginateFromPageNumber(page, filteredOptions)
             const count: number = await this._productsRepository.count(paginatedOptions)
-            return { count: count}
+            return { count: count / PRODUCTS_COUNT_AT_PAGE}
         }
         catch (error) {
             this._logger.log(error, "PRODUCTS-SERVICE: count")

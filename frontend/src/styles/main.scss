@@ -2,6 +2,7 @@ html, body, #app {
     height: 100%;
     margin: 0 auto;
     box-sizing: border-box;
+    background-color: $secondary;
 }
 
 .empty {
@@ -106,4 +107,10 @@ html, body, #app {
     padding: 30px;
     margin-top: 20px;
     display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px;
 }

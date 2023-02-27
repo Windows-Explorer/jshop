@@ -3,6 +3,15 @@
         <q-inner-loading :showing="loading" dark />
         <categories-section />
         <products-carousel />
+        <q-pagination
+            v-if="Math.round(count.count) > 0"
+            v-model="page"
+            :max="count.count"
+            direction-links
+            color="dark"
+            active-color="primary"
+            @update:model-value="onPageChange()"
+        />
         <div class="products-section">
             <product-card :product="product" v-for="(product, index) in products" :key="index" />
         </div>
@@ -29,9 +38,22 @@ const loading: Ref<boolean> = ref(false)
 const filter: Ref<IProductsFilter> = ref(router.currentRoute.value.query)
 
 const products: Ref<IProduct[]> = ref([])
+const count: Ref<{ count: number }> = ref({ count: 0 })
+const page: Ref<number> = ref(0)
 
-onMounted(async () => { 
-    products.value = await store.dispatch("getProducts", { page: 0, filter: filter.value })
+async function onPageChange() {
+    await router.replace({ name: "home", query: { page: String(page.value) }})
+    await getProducts()
+}
+
+async function getProducts() {
+    page.value = Number(router.currentRoute.value.query.page) || 0
+    count.value = await store.dispatch("getProductsCount", { page: page.value -1, filter: filter.value })
+    products.value = await store.dispatch("getProducts", { page: page.value -1, filter: filter.value })
+}
+
+onMounted(async () => {
+    await getProducts()
 })
 
 </script>

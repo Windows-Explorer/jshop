@@ -1,11 +1,11 @@
 import { RouteRecordRaw } from "vue-router";
 
 export const productsRoutes: RouteRecordRaw[] = [
-    {
-        path: "/products",
-        name: "products",
-        component: async () => await import("../../views/ProductsView.vue")
-    },
+    // {
+    //     path: "/products",
+    //     name: "products",
+    //     component: async () => await import("../../views/ProductsView.vue")
+    // },
     {
         path: "/products/:id",
         name: "product",

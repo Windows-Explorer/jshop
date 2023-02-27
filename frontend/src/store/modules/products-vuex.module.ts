@@ -7,6 +7,7 @@ import { IProductsFilter } from '@/common/interfaces/products-filter.interface'
 @Module
 export class ProductsStoreModule extends VuexModule {
   productsState: IProduct[] = []
+  productsCountState: { count: number } = { count: 0 }
   currentProductState: IProduct | null = null
 
   @Mutation
@@ -16,6 +17,10 @@ export class ProductsStoreModule extends VuexModule {
   @Mutation
   currentProductMutation(product: IProduct): void {
     this.currentProductState = product
+  }
+  @Mutation
+  productsCountMutation(count: { count: number }): void {
+    this.productsCountState = count
   }
 
 
@@ -48,6 +53,38 @@ export class ProductsStoreModule extends VuexModule {
     catch {
       customNotifies.dialogs.negative(null, null, true)
       return []
+    }
+  }
+
+  @Action({ commit: "productsCountMutation" })
+  async getProductsCount(payload: { page?: number, filter?: IProductsFilter | any }): Promise<{ count: number }> {
+    try {
+      let pageParam: string | number = ""
+      let filterParams: string = ""
+
+      if (payload.filter) {
+        Object.keys(payload.filter).forEach(key => {
+          if (payload.filter[key]) filterParams += `&${key}=${payload.filter[key]}`
+        })
+      }
+      if (payload.page) {
+        pageParam = `page=${payload.page}`
+      }
+
+      const result = await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/products/count?${pageParam}${filterParams}`)
+
+      if (result.status === 200) {
+        const products: { count: number } = await result.json()
+        return products
+      }
+      else {
+        customNotifies.dialogs.negative(result.status, result.statusText)
+        return { count: 0 }
+      }
+    }
+    catch {
+      customNotifies.dialogs.negative(null, null, true)
+      return { count: 0 }
     }
   }
 

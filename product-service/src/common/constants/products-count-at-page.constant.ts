@@ -1,0 +1,1 @@
+export const PRODUCTS_COUNT_AT_PAGE: number = 8

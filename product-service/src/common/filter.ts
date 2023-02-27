@@ -9,9 +9,7 @@ import { IProductsFilterPayload } from "./interfaces/products-filter.interface"
 
 @Injectable()
 export class Filter implements IFilter {
-    constructor(
-        @Inject(LOGGER_TOKEN) private readonly _logger: ILoggerOutput
-    ){}
+    constructor(@Inject(LOGGER_TOKEN) private readonly _logger: ILoggerOutput){}
 
     async filter(filter: IProductsFilterPayload): Promise<FindManyOptions<IProduct>> {
         try {
@@ -24,11 +22,9 @@ export class Filter implements IFilter {
                     subcategory: { name: filter.subcategory }
                 }
             }
-            this._logger.log(result, "FILTER")
             return result
         }
         catch(error) {
-            this._logger.log(error, "FILTER")
             throw new HttpException(error, 500)
         }
     }

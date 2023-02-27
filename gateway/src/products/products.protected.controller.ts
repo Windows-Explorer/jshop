@@ -16,7 +16,6 @@ export class ProductsProtectedController {
     @UseGuards(AdminGuard)
     @Post("/")
     async save(@Body() product: any, @Res() response: Response): Promise<void> {
-        console.log(product)
         const result: IResult<any> = await this._client.send("products.save", product).toPromise()
         response.status(result.statusCode).send(result.message)
     }

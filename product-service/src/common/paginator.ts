@@ -14,7 +14,7 @@ export class Paginator implements IPaginator {
     async paginateFromPageNumber(page: number, inputOptions: FindManyOptions<any>): Promise<FindManyOptions<IProduct>> {
         try {
             inputOptions.take = PRODUCTS_COUNT_AT_PAGE
-            inputOptions.skip = ((page * inputOptions.take) < 0 ? 0: (page * inputOptions.take)) || 0
+            inputOptions.skip = (page * PRODUCTS_COUNT_AT_PAGE) < 0 ? 0 : 0
             return inputOptions
         }
         catch(error) {

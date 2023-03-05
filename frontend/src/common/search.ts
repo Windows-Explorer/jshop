@@ -17,6 +17,7 @@ export class Search implements ISearch {
 
     async find(filter: IProductsFilter): Promise<void> {
         await this._router.replace({ name: "home", query: await this.sortFilterParams(filter)})
+        window.location.reload()
     }
 
     

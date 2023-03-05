@@ -48,8 +48,8 @@ async function onPageChange() {
 
 async function getProducts() {
     page.value = Number(router.currentRoute.value.query.page) || 0
-    count.value = await store.dispatch("getProductsCount", { page: page.value -1, filter: filter.value })
-    products.value = await store.dispatch("getProducts", { page: page.value -1, filter: filter.value })
+    count.value = await store.dispatch("getProductsCount", { page: page.value, filter: filter.value })
+    products.value = await store.dispatch("getProducts", { page: page.value, filter: filter.value })
 }
 
 onMounted(async () => {

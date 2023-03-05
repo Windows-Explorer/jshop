@@ -1,4 +1,4 @@
-package com.jshop_android.common.interfaces
+package com.jshop_android.interfaces
 
 interface IEventHandler<T> {
     fun obtainEvent(event: T)

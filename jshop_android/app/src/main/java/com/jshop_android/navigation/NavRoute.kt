@@ -1,4 +1,5 @@
 package com.jshop_android.navigation
 
-class NavRoute {
+sealed class NavRoute(val route: String) {
+    object HomeRoute: NavRoute("home_route")
 }

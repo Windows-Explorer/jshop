@@ -1,4 +1,4 @@
-package com.jshop_android.screens.auth.views
+package com.jshop_android.screens.auth
 
 sealed class AuthEvent {
     object EnterScreen : AuthEvent()

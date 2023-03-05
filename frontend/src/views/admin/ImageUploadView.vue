@@ -1,7 +1,7 @@
 <template>
     <section class="page-section">
         <q-uploader class="uploader"
-            url=""
+            url="http://localhost:3000/api/files"
             :headers="[{ name: 'Authorization', value: token }]"
             label="Загрузить изображение"
             multiple

@@ -16,7 +16,7 @@ export class Category implements ICategory {
     name: string
 
     @IsNotEmpty()
-    @Column({ length: 255, type: "varchar", unique: true, nullable: false })
+    @Column({ length: 1024, type: "varchar", unique: true, nullable: false })
     description: string
     
     @OneToMany(() => Subcategory, (subcategory: ISubcategory) => subcategory.category)

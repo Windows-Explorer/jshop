@@ -22,7 +22,7 @@
 import { IProduct } from "../common/interfaces/product.interface"
 import { Ref, onMounted, ref, defineAsyncComponent } from "vue"
 import { useStore } from "vuex"
-import { useRoute, useRouter } from "vue-router"
+import { useRouter } from "vue-router"
 import { IProductsFilter } from "../common/interfaces/products-filter.interface"
 
 const HeaderLayout = defineAsyncComponent(async () => import("../components/HeaderLayout.vue"))
@@ -33,13 +33,13 @@ const ProductsCarousel = defineAsyncComponent(async () => import("../components/
 const store = useStore()
 const router = useRouter()
 
+const page: Ref<number> = ref(1)
 const loading: Ref<boolean> = ref(false)
 
 const filter: Ref<IProductsFilter> = ref(router.currentRoute.value.query)
 
 const products: Ref<IProduct[]> = ref([])
 const count: Ref<{ count: number }> = ref({ count: 0 })
-const page: Ref<number> = ref(0)
 
 async function onPageChange() {
     await router.replace({ name: "home", query: { page: String(page.value) }})

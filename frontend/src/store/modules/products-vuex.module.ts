@@ -15,12 +15,12 @@ export class ProductsStoreModule extends VuexModule {
     this.productsState = products
   }
   @Mutation
-  currentProductMutation(product: IProduct): void {
-    this.currentProductState = product
+  productsCountMutation(count: { count: 0 }): void {
+    this.productsCountState = count
   }
   @Mutation
-  productsCountMutation(count: { count: number }): void {
-    this.productsCountState = count
+  currentProductMutation(product: IProduct): void {
+    this.currentProductState = product
   }
 
 

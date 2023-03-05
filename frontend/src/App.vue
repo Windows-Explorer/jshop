@@ -5,7 +5,9 @@
     <header-layout />
     <q-page-container :style="{ padding: '0px' }" class="page-container">
         <router-view />
+        <footer-down />
     </q-page-container>
+
   </q-layout>
   
 </template>
@@ -21,6 +23,7 @@ import { useStore } from 'vuex'
 const AdminLayout = defineAsyncComponent(async () => import("./components/admin/AdminLayout.vue"))
 const HeaderLayout = defineAsyncComponent(async () => import("./components/HeaderLayout.vue"))
 const AuthHeader = defineAsyncComponent(async () => import("./components/AuthHeader.vue"))
+const FooterDown = defineAsyncComponent(async () => import("./components/FooterDown.vue"))
 
 const store = useStore()
 const router = useRouter()

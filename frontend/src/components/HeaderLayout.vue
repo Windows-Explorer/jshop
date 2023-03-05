@@ -1,7 +1,7 @@
 <template>
     <header class="header">
         <div class="secondary-header">
-            <img src="https://hobbygames.ru/assets/img/svg/logo.svg" @click="router.push({ name: 'home'})" />
+            <h2 @click="router.push({ name: 'home'})">BULLSHIT</h2>
             <q-form class="search" @submit="onSearch()">
                 <q-input v-model="filter.title" :style="{ width: '100%' }" filled>
                     <template v-slot:append>

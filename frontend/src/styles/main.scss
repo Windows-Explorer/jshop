@@ -48,13 +48,16 @@ html, body, #app {
             align-content: center;
             justify-content: center;
         }
-        img {
+        h2 {
             width: 140px;
             height: auto;
             cursor: pointer;
             transition: 0.5s ease;
+            color: $dark;
+            margin: 0px;
+            font-size: large;
         }
-        img:hover {
+        h2:hover {
             transform: translateY(-4px);
         }
         .feedback {

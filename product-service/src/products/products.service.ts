@@ -25,7 +25,7 @@ export class ProductsService implements IProductsService {
             const filteredOptions: FindManyOptions = await this._filter.filter(filter)
             const paginatedOptions: FindManyOptions = await this._paginator.paginateFromPageNumber(page, filteredOptions)
             const count: number = await this._productsRepository.count(paginatedOptions)
-            return { count: count}
+            return { count: count / 6 }
         }
         catch (error) {
             this._logger.log(error, "PRODUCTS-SERVICE: count")

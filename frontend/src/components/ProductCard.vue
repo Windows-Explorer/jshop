@@ -3,7 +3,7 @@
         <div class="product-content">
             <div class="image">
                 <q-img
-                    width="400px"
+                    width="200px"
                     :src="props.product.image"
                     fit="cover"
                     alt="https://s3.castbox.fm/4a/f7/6f/61e1484b31909065414ea4e75a.jpg"
@@ -101,7 +101,7 @@ onMounted( async () => {
     align-items: center;
     align-content: center;
     padding: 20px;
-    width: auto;
+    width: 30%;
 }
 .image {
     text-align: center;

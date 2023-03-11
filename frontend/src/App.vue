@@ -1,12 +1,11 @@
 <template>
   <q-layout>
-    <auth-header />
     <admin-layout v-if="store.getters.role === 'admin'" />
-    <header-layout />
-    <q-page-container :style="{ padding: '0px' }" class="page-container">
+    <the-header />
+    <!-- <q-page-container :style="{ padding: '0px' }" class="page-container">
         <router-view />
         <footer-down />
-    </q-page-container>
+    </q-page-container> -->
 
   </q-layout>
   
@@ -24,6 +23,7 @@ const AdminLayout = defineAsyncComponent(async () => import("./components/admin/
 const HeaderLayout = defineAsyncComponent(async () => import("./components/HeaderLayout.vue"))
 const AuthHeader = defineAsyncComponent(async () => import("./components/AuthHeader.vue"))
 const FooterDown = defineAsyncComponent(async () => import("./components/FooterDown.vue"))
+const TheHeader = defineAsyncComponent(async () => import("./components/TheHeader.vue"))
 
 const store = useStore()
 const router = useRouter()

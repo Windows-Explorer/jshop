@@ -1,5 +1,5 @@
 <template>
   <div>
-    <TheHeader />
+    <VHeader />
   </div>
 </template>

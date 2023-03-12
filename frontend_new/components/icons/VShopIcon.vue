@@ -7,3 +7,9 @@
         </path>
     </svg>
 </template>
+
+<style lang="scss" scoped>
+svg {
+    margin: 0;
+}
+</style>

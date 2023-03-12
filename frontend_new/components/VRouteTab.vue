@@ -33,9 +33,10 @@ const props = defineProps({
 </script>
 
 <style lang="scss">
-.tab:hover > svg {
+.tab:hover>svg {
     animation: pulsation 0.5s ease infinite;
 }
+
 .tab {
     flex-grow: 0;
     width: auto;
@@ -50,6 +51,7 @@ const props = defineProps({
     align-items: flex-start;
     transition: 0.5s ease;
     border-radius: 50px;
+    background-color: #fff;
 
     svg {
         fill: $primary;

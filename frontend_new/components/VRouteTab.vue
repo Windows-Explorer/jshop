@@ -97,7 +97,6 @@ const props = defineProps({
     svg {
         fill: $primary;
         width: 0%;
-        transform: rotateZ(90deg);
         opacity: 0;
     }
 

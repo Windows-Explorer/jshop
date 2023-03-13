@@ -1,5 +1,5 @@
 <template>
-    <NuxtLink v-ripple :to="props.to" active-class="tab-active" class="tab">
+    <NuxtLink :to="props.to" active-class="tab-active" class="tab">
         <slot class="icon" name="icon">
 
         </slot>
@@ -37,6 +37,10 @@ const props = defineProps({
     animation: pulsation 0.5s ease infinite;
 }
 
+.tab:focus {
+    outline: none;
+}
+
 .tab {
     flex-grow: 0;
     width: auto;
@@ -51,11 +55,11 @@ const props = defineProps({
     align-items: flex-start;
     transition: 0.5s ease;
     border-radius: 50px;
-    background-color: #fff;
 
     svg {
-        fill: $primary;
+        fill: $accent;
         transition: 0.5s ease-in-out;
+        padding-block: 2px;
     }
 
     .label-container {
@@ -68,6 +72,7 @@ const props = defineProps({
         width: calc(0% - 0px);
         transition: 0.5s ease-in-out;
         width: 0px;
+        padding-block: 2px;
 
         .label {
             white-space: nowrap;
@@ -90,8 +95,9 @@ const props = defineProps({
 
 .tab-active {
     svg {
-        fill: $accent;
+        fill: $primary;
         width: 0%;
+        transform: rotateZ(90deg);
         opacity: 0;
     }
 
@@ -99,14 +105,14 @@ const props = defineProps({
         width: 100px;
 
         .label {
-            color: $accent;
+            color: $primary;
             transform: translateY(0);
             opacity: 1;
             width: 100%;
         }
 
         .line {
-            background-color: $accent;
+            background-color: $primary;
             width: 100%;
         }
     }
@@ -114,5 +120,6 @@ const props = defineProps({
 
 a {
     text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
 }
 </style>

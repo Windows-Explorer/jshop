@@ -17,7 +17,7 @@ async function createRipple(element: HTMLElement, mouseEvent: MouseEvent, color:
     var x = mouseEvent.pageX - offset.left - document.body.scrollLeft
     var y = mouseEvent.pageY - offset.top - document.body.scrollTop
 
-    circle.setAttribute('style', `background: ${color}; width: 1px; height: 1px; border-radius: 100em; position: absolute; top: ${y}px; left: ${x}px; animation: ripple ${timing / 1000}s 1 cubic-bezier(0.48, 1.05, 0.69, 0.44);`)
+    circle.setAttribute('style', `background: ${color}; width: 1px; height: 1px; border-radius: 100em; position: absolute; top: ${y}px; left: ${x}px; animation: ripple ${timing / 1000}s 1 ease-in-out;`)
 
 
     element.append(circle)

@@ -57,12 +57,12 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    position: fixed;
+    position: absolute;
     top: 0;
 
     .header {
         display: flex;
-        padding: 20px 60px;
+        padding: 40px 40px;
         background-color: transparent;
         border-radius: 0px 0px 20px 20px;
     }

@@ -46,6 +46,7 @@
                     </svg>
                 </template>
             </VRouteTab>
+            <VPopover />
         </div>
     </div>
 </template>

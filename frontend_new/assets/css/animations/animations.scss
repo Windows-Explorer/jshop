@@ -29,8 +29,18 @@
         transform: translateY(-100%);
         opacity: 0;
     }
+
     100% {
         transform: translateY(0);
         opacity: 1;
+    }
+}
+
+@keyframes showVerticalLine {
+    0% {
+        height: 0;
+    }
+    100% {
+        height: 100%;
     }
 }

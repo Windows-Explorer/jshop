@@ -46,6 +46,11 @@
                     </svg>
                 </template>
             </VRouteTab>
+        </div>
+        <div class="header">
+            <VPopover />
+            <VPopover />
+            <VPopover />
             <VPopover />
         </div>
     </div>
@@ -57,7 +62,7 @@
     width: 100vw;
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: space-between;
     position: absolute;
     top: 0;
 
@@ -67,4 +72,5 @@
         background-color: transparent;
         border-radius: 0px 0px 20px 20px;
     }
+
 }</style>

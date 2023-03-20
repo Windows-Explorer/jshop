@@ -48,10 +48,8 @@
             </VRouteTab>
         </div>
         <div class="header">
-            <VPopover />
-            <VPopover />
-            <VPopover />
-            <VPopover />
+            <VAccountPopover />
+            <VCartButton />
         </div>
     </div>
 </template>

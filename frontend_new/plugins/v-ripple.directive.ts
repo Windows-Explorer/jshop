@@ -1,4 +1,4 @@
-export default defineNuxtPlugin((nuxtApp) => {
+export default defineNuxtPlugin(async (nuxtApp) => {
     nuxtApp.vueApp.directive('ripple', async (element: HTMLElement, binding: any) => {
         let color = binding.value || "#fff"
 

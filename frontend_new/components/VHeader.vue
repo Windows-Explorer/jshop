@@ -1,7 +1,8 @@
 <template>
     <div class="header-container">
         <div class="header">
-            <VRouteTab :to="{ path: '/' }" label="главная" style="animation: jump-down 0.6s 1 cubic-bezier(0.6, 0.1, 0, 1.5);">
+            <VRouteTab :to="{ path: '/' }" label="главная"
+                style="animation: jump-down 0.6s 1 cubic-bezier(0.6, 0.1, 0, 1.5);">
                 <template v-slot:icon>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
                         <path fill="none" d="M0 0h24v24H0z" />
@@ -10,7 +11,8 @@
                     </svg>
                 </template>
             </VRouteTab>
-            <VRouteTab :to="{ path: '/contact' }" label="контакты" style="animation: jump-down 0.8s 1 cubic-bezier(0.6, 0.1, 0, 1.5);">
+            <VRouteTab :to="{ path: '/contact' }" label="контакты"
+                style="animation: jump-down 0.8s 1 cubic-bezier(0.6, 0.1, 0, 1.5);">
                 <template v-slot:icon>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
                         <path fill="none" d="M0 0h24v24H0z" />
@@ -28,7 +30,8 @@
                     </svg>
                 </template>
             </VRouteTab>
-            <VRouteTab :to="{ path: '/coffee' }" label="кофе" style="animation: jump-down 1.2s 1 cubic-bezier(0.6, 0.1, 0, 1.5);">
+            <VRouteTab :to="{ path: '/coffee' }" label="кофе"
+                style="animation: jump-down 1.2s 1 cubic-bezier(0.6, 0.1, 0, 1.5);">
                 <template v-slot:icon>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
                         <path fill="none" d="M0 0h24v24H0z" />
@@ -37,7 +40,8 @@
                     </svg>
                 </template>
             </VRouteTab>
-            <VRouteTab :to="{ path: '/about' }" label="о нас" style="animation: jump-down 1.4s 1 cubic-bezier(0.6, 0.1, 0, 1.5);">
+            <VRouteTab :to="{ path: '/about' }" label="о нас"
+                style="animation: jump-down 1.4s 1 cubic-bezier(0.6, 0.1, 0, 1.5);">
                 <template v-slot:icon>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
                         <path fill="none" d="M0 0H24V24H0z" />
@@ -51,6 +55,7 @@
             <VAccountPopover />
             <VCartButton />
         </div>
+        <VStickyHeader />
     </div>
 </template>
 
@@ -66,7 +71,7 @@
 
     .header {
         display: flex;
-        padding: 40px 40px;
+        padding: 40px 100px;
         background-color: transparent;
         border-radius: 0px 0px 20px 20px;
     }

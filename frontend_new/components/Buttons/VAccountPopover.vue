@@ -79,19 +79,19 @@ import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
 
 .popover-enter-active,
 .popover-leave-active {
-  transition: 0.5s ease;
+  transition: 0.3s ease;
   overflow: hidden;
 
   .vertical-line {
-    transition: 0.5s ease;
+    transition: 0.3s ease;
   }
 
   .popover-content {
     overflow: hidden;
-    transition: 0.8s cubic-bezier(0.6, 0.1, 0, 1.5);
+    transition: 0.5s cubic-bezier(0.6, 0.1, 0, 1.5);
 
     svg {
-      transition: 0.5s ease;
+      transition: 0.3s ease;
     }
   }
 }

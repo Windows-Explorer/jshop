@@ -14,7 +14,6 @@
 
     <transition name="popover">
       <PopoverPanel class="popover">
-        <span class="vertical-line"></span>
         <div class="popover-content">
           <VUIButton label="Войти">
             <template v-slot:icon>

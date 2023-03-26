@@ -1,7 +1,6 @@
 <template>
     <NuxtLink :to="props.to" active-class="tab-active" class="tab">
         <slot class="icon" name="icon">
-
         </slot>
         <div class="label-container">
             <span class="label">

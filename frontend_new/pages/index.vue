@@ -1,51 +1,61 @@
 <template>
-    <div class="home-page-content">
-        
-
-        <div class="text-banner-container">
-            <div class="text-banner">
-                <h3 class="sub-header text-banner-content">
-                    DON'T MISS TODAY'S FEATURED DEALS
-                </h3>
-                <h1 class="header text-banner-content">
-                    Life Begin After Coffee
-                </h1>
-                <h4 class="content text-banner-content">
-                    Here to bring your Life Style to the next level!
-                </h4>
+    <div class="home-page-container">
+        <section class="image-section">
+            <div class="section-content">
+                <div class="logo"></div>
+                <span class="logo-text">Welcome to</span>
+                <span class="logo-subtext">Beans Coffee Production</span>
             </div>
-        </div>
+        </section>
     </div>
 </template>
 
-<script lang="ts" setup>
-
-</script>
-
 <style lang="scss" scoped>
-
-.text-banner-content {
-    margin: 20px;
+.home-page-container {
+    height: 100vh;
+    width: 100vw;
 }
-.home-page-content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+
+.image-section {
+    background: url("../assets/images/background.jpg");
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+}
+
+.section-content {
     width: 100%;
     height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    gap: 26px;
 }
 
-.text-banner-container {
-    font-family: Arial, Helvetica, sans-serif;
+.logo {
+    width: 150px;
+    height: 150px;
+    margin-top: 16vh;
+    background: url("../assets/images/logo-light.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    animation: 1s drawLogo ease;
+}
+
+.logo-text {
+    font-size: xx-large;
+    font-family: 'Roboto Slab', serif;
     color: $primary;
-    position: absolute;
-    margin-left: 40%;
+    text-align: center;
+    animation: 1.2s drawLogo ease;
 }
-.text-banner {
-    opacity: 0.95;
-    .content{
-        opacity: 0.8;
-    }    
+.logo-subtext {
+    font-size: xxx-large;
+    font-family: 'Roboto Slab', serif;
+    color: $primary;
+    text-align: center;
+    animation: 1.4s drawLogo ease;
 }
-
 </style>

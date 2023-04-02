@@ -45,7 +45,7 @@ const props = defineProps({
     width: auto;
     padding: 8px;
     user-select: none;
-    font-family: 'Nunito', sans-serif;
+    font-family: 'Roboto Slab', serif;
     text-transform: uppercase;
     cursor: pointer;
     display: flex;
@@ -68,7 +68,7 @@ const props = defineProps({
         justify-content: flex-end;
         overflow: hidden;
         flex-wrap: nowrap;
-        width: calc(0% - 0px);
+        width: 0px;
         transition: 0.5s ease-in-out;
         width: 0px;
         padding-block: 2px;
@@ -86,7 +86,7 @@ const props = defineProps({
         .line {
             background-color: $primary;
             width: 0%;
-            height: 2.5px;
+            height: 2px;
             border-radius: 10px;
         }
     }

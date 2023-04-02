@@ -1,8 +1,6 @@
 <template>
     <div class="header-container">
-        <div class="left-header">
-            <VRouteTab label="О нас" />
-        </div>
+        <VButton label="BUTTON" />
     </div>
 </template>
 
@@ -10,7 +8,6 @@
 
 .header-container {
     position: fixed;
-    background-color: #fff;
     width: 100%;
 }
 

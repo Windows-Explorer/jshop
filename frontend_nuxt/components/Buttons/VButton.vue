@@ -1,5 +1,5 @@
 <template>
-    <button>О нас</button>
+    <button class="button" v-ripple>{{ label }}</button>
 </template>
 
 <script lang="ts" setup>
@@ -14,3 +14,11 @@ const props = defineProps({
 })
 
 </script>
+
+<style lang="scss" scoped>
+.button {
+    background-color: $primary;
+    border: 0px solid;
+    
+}
+</style>

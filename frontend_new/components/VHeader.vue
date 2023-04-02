@@ -51,11 +51,7 @@
                 </template>
             </VRouteTab>
         </div>
-        <div class="header">
-            <VAccountPopover />
-            <VCartButton />
-        </div>
-        <VStickyHeader />
+        <div class="separator"></div>
     </div>
 </template>
 
@@ -65,15 +61,23 @@
     width: 100vw;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
     position: absolute;
     top: 0;
+    flex-direction: column;
 
     .header {
         display: flex;
-        padding: 40px 100px;
+        padding: 10px 20px;
         background-color: transparent;
         border-radius: 0px 0px 20px 20px;
     }
+}
 
-}</style>
+.separator {
+    height: 2px;
+    width: 90%;
+    background-color: $primary;
+    animation: 1s drawSeparator ease;
+}
+</style>

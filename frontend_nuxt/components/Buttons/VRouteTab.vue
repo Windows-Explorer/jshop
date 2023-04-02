@@ -1,6 +1,6 @@
 <template>
     <NuxtLink class="route-tab">
-
+        {{ props.label }}
     </NuxtLink>
 </template>
 

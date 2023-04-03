@@ -1,5 +1,0 @@
-export const USERS_SERVICE_TOKEN = "UsersService"
-export const AUTH_SERVICE_TOKEN = "AuthService"
-export const CONFIG_SERVICE_TOKEN = "ConfigService"
-export const JWT_SERVICE_TOKEN = "JwtService"
-export const RESULTER_TOKEN = "Resulter"

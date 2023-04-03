@@ -1,7 +1,0 @@
-export const CONFIG_SERVICE_TOKEN = "ConfigService"
-export const OUTPUT_TOKEN = "Output"
-export const PARSER_TOKEN = "Parser"
-export const LOGGER_TOKEN = "Logger"
-export const CARDS_SERVICE_TOKEN = "CardService"
-export const COLORS_SERVICE_TOKEN = "ColorsService"
-export const TYPES_SERVICE_TOKEN = "TypesService"

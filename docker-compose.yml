@@ -6,8 +6,6 @@ services:
     container_name: db
     restart: always
     hostname: db_host
-#    ports:
-#      - 3306:3306
     environment:
       MARIADB_ROOT_PASSWORD: root
       MARIADB_DATABASE: jshop
@@ -15,7 +13,6 @@ services:
       MARIADB_PASSWORD: jshop_test_password
     networks:
       - default
-
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
@@ -31,74 +28,13 @@ services:
     networks:
       - default
 
-
-  zookeeper:
-    image: zookeeper:3.4.9
-    container_name: zookeeper
+  api:
+    container_name: api
     restart: always
-    hostname: zoo_host
-#    ports:
-#      - "2181:2181"
-    environment:
-        ZOO_MY_ID: 1
-        ZOO_PORT: 2181
-        ZOO_SERVERS: server.1=zoo_host:2888:3888
-    volumes:
-      - ./kafka/full-stack/zoo/data:/data
-      - ./kafka/full-stack/zoo/datalog:/datalog
-    networks:
-      - default
-
-
-  kafka:
-    image: confluentinc/cp-kafka:5.2.1
-    container_name: kafka
-    restart: always
-    hostname: kafka_host
-#    ports:
-#      - "9092:9092"
-    environment:
-      KAFKA_ADVERTISED_LISTENERS: LISTENER_DOCKER_INTERNAL://kafka_host:9093
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: LISTENER_DOCKER_INTERNAL:PLAINTEXT
-      KAFKA_INTER_BROKER_LISTENER_NAME: LISTENER_DOCKER_INTERNAL
-      KAFKA_ZOOKEEPER_CONNECT: "zoo_host:2181"
-      KAFKA_BROKER_ID: 1
-      KAFKA_LOG4J_LOGGERS: "kafka.controller=INFO,kafka.producer.async.DefaultEventHandler=INFO,state.change.logger=INFO"
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
-    volumes:
-      - ./kafka/full-stack/kafka/data:/var/lib/kafka/data
-    depends_on:
-      - zookeeper
-    networks:
-      - default
-
-
-  nest_gateway:
-    container_name: nest_gateway
-    restart: always
-    hostname: nest_gateway_host
+    hostname: api_host
     build:
-      context: gateway
-      dockerfile: gateway.Dockerfile
-    environment:
-      BROKER_HOST: kafka_host
-      BROKER_PORT: 9093
-    depends_on:
-      - kafka
-    ports:
-      - "3000:3000"
-    networks:
-      - default
-
-
-  auth_microservice:
-    container_name: auth_microservice
-    restart: always
-    hostname: auth_microservice_host
-    build:
-      context: authentification-service
-      dockerfile: auth.Dockerfile
+      context: api
+      dockerfile: api.Dockerfile
     environment:
       JWT_SECRET: "123"
       JWT_EXPIRESIN: "3600s"
@@ -106,64 +42,20 @@ services:
       DATABASE_PASSWORD: "jshop_test_password"
       DATABASE_DATABASE: "jshop"
       DATABASE_HOST: db_host
-      BROKER_HOST: kafka_host
-      BROKER_PORT: 9093
-    depends_on:
-      - kafka
-      - db
+    ports:
+      - "3000:3000"
     networks:
       - default
 
-
-  product_microservice:
-    container_name: product_microservice
+  frontend:
+    container_name: frontend
     restart: always
-    hostname: product_microservice_host
-    build:
-      context: product-service
-      dockerfile: product.Dockerfile
-    environment:
-      DATABASE_USERNAME: "jshop_user"
-      DATABASE_PASSWORD: "jshop_test_password"
-      DATABASE_DATABASE: "jshop"
-      DATABASE_HOST: db_host
-      BROKER_HOST: kafka_host
-      BROKER_PORT: 9093
-    depends_on:
-      - kafka
-      - db
-    networks:
-      - default
-
-  card_microservice:
-    container_name: card_microservice
-    restart: always
-    hostname: card_microservice_host
-    build:
-      context: card-service
-      dockerfile: card.Dockerfile
-    environment:
-      DATABASE_USERNAME: "jshop_user"
-      DATABASE_PASSWORD: "jshop_test_password"
-      DATABASE_DATABASE: "jshop"
-      DATABASE_HOST: db_host
-      BROKER_HOST: kafka_host
-      BROKER_PORT: 9093
-    depends_on:
-      - kafka
-      - db
-    networks:
-      - default
-
-  frontend_nginx:
-    container_name: frontend_nginx
-    restart: always
-    hostname: frontend_nginx_host
+    hostname: frontend_host
     build:
       context: frontend
       dockerfile: frontend.Dockerfile
     environment:
-      VUE_APP_GATEMAY_ADDRESS: "nest_gateway_host:3000"
+      VUE_APP_GATEMAY_ADDRESS: "api_host:3000"
     ports:
       - "80:80"
     networks:

@@ -6,7 +6,7 @@
             <span class="label">
                 {{ props.label }}
             </span>
-            <span class="line"></span>
+            <!-- <span class="line"></span> -->
         </div>
     </NuxtLink>
 </template>
@@ -45,7 +45,7 @@ const props = defineProps({
     width: auto;
     padding: 8px;
     user-select: none;
-    font-family: 'Roboto Slab', serif;
+    font-family: 'Nunito', serif;
     text-transform: uppercase;
     cursor: pointer;
     display: flex;

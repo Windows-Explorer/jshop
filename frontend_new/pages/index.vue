@@ -2,9 +2,10 @@
     <div class="home-page-container">
         <section class="image-section">
             <div class="section-content">
-                <div class="logo"></div>
+                <VLogo />
                 <span class="logo-text">Welcome to</span>
                 <span class="logo-subtext">Beans Coffee Production</span>
+                <VButton label="Купить cum" :size="16" />
             </div>
         </section>
     </div>
@@ -32,16 +33,6 @@
     align-items: center;
     flex-direction: column;
     gap: 26px;
-}
-
-.logo {
-    width: 150px;
-    height: 150px;
-    margin-top: 16vh;
-    background: url("../assets/images/logo-light.png");
-    background-repeat: no-repeat;
-    background-size: contain;
-    animation: 1s drawLogo ease;
 }
 
 .logo-text {

@@ -1,5 +1,7 @@
+import { DirectiveBinding } from "nuxt/dist/app/compat/capi"
+
 export default defineNuxtPlugin(async (nuxtApp) => {
-    nuxtApp.vueApp.directive('ripple', async (element: HTMLElement, binding: any) => {
+    nuxtApp.vueApp.directive('ripple', async (element: HTMLElement, binding: DirectiveBinding<string>) => {
         let color = binding.value || "#fff"
 
         element.style.position = 'relative'

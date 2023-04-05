@@ -1,12 +1,12 @@
 <template>
-    <NuxtLink :to="props.to" active-class="tab-active" class="tab">
+    <NuxtLink :to="props.to" active-class="tab-mobile-active" class="tab-mobile">
         <slot class="icon" name="icon">
         </slot>
         <div class="label-container">
             <span class="label">
                 {{ props.label }}
             </span>
-            <span class="line"></span>
+            <!-- <span class="line"></span> -->
         </div>
     </NuxtLink>
 </template>
@@ -32,15 +32,15 @@ const props = defineProps({
 </script>
 
 <style lang="scss">
-.tab:hover>svg {
+.tab-mobile:hover>svg {
     animation: pulsation 0.5s ease infinite;
 }
 
-.tab:focus {
+.tab-mobile:focus {
     outline: none;
 }
 
-.tab {
+.tab-mobile {
     flex-grow: 0;
     width: auto;
     padding: 8px;
@@ -49,6 +49,7 @@ const props = defineProps({
     text-transform: uppercase;
     cursor: pointer;
     display: flex;
+    flex-wrap: nowrap;
     justify-content: center;
     flex-direction: row;
     align-items: flex-start;
@@ -56,7 +57,6 @@ const props = defineProps({
     border-radius: 50px;
 
     svg {
-        display: none;
         fill: $primary;
         transition: 0.5s ease-in-out;
         padding-block: 2px;
@@ -66,19 +66,20 @@ const props = defineProps({
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: flex-start;
+        justify-content: flex-end;
         overflow: hidden;
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
         transition: 0.5s ease-in-out;
-        height: 100%;
-        width: 100%;
+        width: 0px;
         padding-block: 2px;
 
         .label {
             white-space: nowrap;
+            transform: translateY(150%);
             color: $primary;
             transition: 0.5s cubic-bezier(0.6, 0.1, 0, 1.5);
             transition-delay: 0.3s;
+            opacity: 0;
             text-align: center;
         }
 
@@ -87,13 +88,29 @@ const props = defineProps({
             width: 0%;
             height: 2px;
             border-radius: 10px;
-            transition: 0.5s ease;
         }
     }
 }
-.tab-active {
+
+.tab-mobile-active {
+    svg {
+        fill: $primary;
+        width: 0%;
+        opacity: 0;
+    }
+
     .label-container {
+        width: 100px;
+
+        .label {
+            color: $primary;
+            transform: translateY(0);
+            opacity: 1;
+            width: 100%;
+        }
+
         .line {
+            background-color: $primary;
             width: 100%;
         }
     }

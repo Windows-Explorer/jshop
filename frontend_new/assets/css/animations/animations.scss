@@ -57,3 +57,37 @@
         opacity: 1;
     }
 }
+
+@keyframes drawBeans {
+    0% {
+        box-shadow: 0px 0px 0px 0px transparent, 0px 0px 0px 0px transparent inset;
+    }
+    80% {
+        box-shadow: 0px 0px 0px 3px $primary, 0px 0px 0px 2px $primary inset;
+    }
+    100% {
+        box-shadow: 0px 0px 0px 2px $primary, 0px 0px 0px 1px $primary inset;
+    }
+}
+
+@keyframes drawBeansText {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes drawBeansIcon {
+    0% {
+        transform: rotateZ(90deg) scale(0);
+        opacity: 0;
+    }
+    100% {
+        transform: rotateZ(0deg) scale(1);
+        opacity: 1;
+    }
+}

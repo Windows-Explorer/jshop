@@ -3,7 +3,7 @@
         <section class="image-section">
             <div class="section-content">
                 <VLogo />
-                <span class="logo-text">Welcome to</span>
+                <span class="logo-text">Добро пожаловать</span>
                 <span class="logo-subtext">Beans Coffee Production</span>
                 <VButton label="Купить cum" :size="16" />
             </div>
@@ -27,7 +27,7 @@
 .section-content {
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.3);
     display: flex;
     justify-content: flex-start;
     align-items: center;

@@ -2,9 +2,10 @@
     <div class="home-page-container">
         <section class="image-section">
             <div class="section-content">
-                <div class="logo-container">
-                    <div class="logo"></div>
-                </div>
+                <VLogo />
+                <span class="logo-text">Welcome to</span>
+                <span class="logo-subtext">Beans Coffee Production</span>
+                <VButton label="Купить cum" :size="16" />
             </div>
         </section>
     </div>
@@ -15,31 +16,37 @@
     height: 100vh;
     width: 100vw;
 }
+
 .image-section {
     background: url("../assets/images/background.jpg");
     background-size: cover;
     height: 100%;
     width: 100%;
 }
+
 .section-content {
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.2);
-}
-.logo-container {
-    width: 100%;
-    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
     display: flex;
-    justify-content: center;
-    align-items: flex-start;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    gap: 26px;
 }
-.logo {
-    margin-top: 8%;
-    width: 150px;
-    height: 150px;
-    background: url("../assets/images/logo-light.png");
-    background-repeat: no-repeat;
-    background-size: contain;
-    position: absolute;
+
+.logo-text {
+    font-size: xx-large;
+    font-family: 'Roboto Slab', serif;
+    color: $primary;
+    text-align: center;
+    animation: 1.2s drawLogo ease;
+}
+.logo-subtext {
+    font-size: xxx-large;
+    font-family: 'Roboto Slab', serif;
+    color: $primary;
+    text-align: center;
+    animation: 1.4s drawLogo ease;
 }
 </style>

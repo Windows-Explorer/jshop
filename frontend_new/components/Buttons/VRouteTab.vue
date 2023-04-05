@@ -91,6 +91,7 @@ const props = defineProps({
         }
     }
 }
+
 .tab-active {
     .label-container {
         .line {

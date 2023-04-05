@@ -1,7 +1,5 @@
 <template>
-    <transition name="vbutton">
-        <button v-ripple="'#fff'" class="button" :style="{ fontSize: props.size + 'px' }">{{ props.label }}</button>
-    </transition>
+    <button v-ripple="'#fff'" class="button" :style="{ fontSize: props.size + 'px' }">{{ props.label }}</button>
 </template>
 
 <script lang="ts" setup>
@@ -31,23 +29,10 @@ const props = defineProps({
     color: $primary;
     box-shadow: 0px 0px 0px 2px $primary;
     border-radius: 0px;
-    backdrop-filter: blur(2px);
     transition: 0.5s ease;
     text-transform: uppercase;
     cursor: pointer;
-}
-
-.vbutton-leave-active,
-.vbutton-enter-active {
-    overflow: hidden;
-    transition: 0.5s ease;
-}
-
-.vbutton-enter-to,
-.vbutton-leave-from {
-    transform: scale(3);
-}
-.vbutton-enter-from, .vbutton-leave-to {
-    transform: scale(0);
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
 }
 </style>

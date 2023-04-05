@@ -63,7 +63,7 @@
 
 <style lang="scss">
 .header-container {
-    width: 100vw;
+    width: 100%;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -71,6 +71,7 @@
     position: absolute;
     top: 0;
     flex-direction: column;
+    z-index: 2;
 }
 
 .header-routes-block {

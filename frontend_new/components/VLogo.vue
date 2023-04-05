@@ -11,7 +11,6 @@
 .v-logo {
     width: 150px;
     height: 150px;
-    margin-top: 16vh;
     border-radius: 50%;
     box-shadow: 0px 0px 0px 2px $primary, 0px 0px 0px 1px $primary inset;
     border: 6px solid transparent;
@@ -56,8 +55,9 @@
 .coffee-beans-icon {
     margin: 0px;
     height: 32px;
+    width: 32px;
     fill: $primary;
-    animation: 1s drawBeansIcon cubic-bezier(0.51,-0.15, 0.48, 1.6);
+    animation: 1s drawIcon cubic-bezier(0.51,-0.15, 0.48, 1.6);
     overflow: hidden;
 }
 </style>

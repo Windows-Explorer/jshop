@@ -5,7 +5,7 @@
     }
 
     100% {
-        transform: scale(400);
+        transform: scale(1000);
         opacity: 0;
     }
 }
@@ -45,6 +45,15 @@
         width: 90%;
     }
 }
+@keyframes drawSeparatorFull {
+    0% {
+        width: 0%;
+    }
+
+    100% {
+        width: 100%;
+    }
+}
 
 @keyframes drawLogo {
     0% {
@@ -60,13 +69,11 @@
 
 @keyframes drawBeans {
     0% {
-        box-shadow: 0px 0px 0px 0px transparent, 0px 0px 0px 0px transparent inset;
+        opacity: 0;
     }
-    80% {
-        box-shadow: 0px 0px 0px 3px $primary, 0px 0px 0px 2px $primary inset;
-    }
+
     100% {
-        box-shadow: 0px 0px 0px 2px $primary, 0px 0px 0px 1px $primary inset;
+        opacity: 1;
     }
 }
 
@@ -75,17 +82,19 @@
         transform: scale(0);
         opacity: 0;
     }
+
     100% {
         transform: scale(1);
         opacity: 1;
     }
 }
 
-@keyframes drawBeansIcon {
+@keyframes drawIcon {
     0% {
         transform: rotateZ(90deg) scale(0);
         opacity: 0;
     }
+
     100% {
         transform: rotateZ(0deg) scale(1);
         opacity: 1;

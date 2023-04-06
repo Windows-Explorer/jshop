@@ -35,6 +35,7 @@ const props = defineProps({
     gap: 8px;
     animation: 0.5s jump-down ease;
     user-select: none;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .label-container {

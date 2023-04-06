@@ -32,7 +32,7 @@ p {
 }
 
 .contact-send-block-container {
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.6);
     padding: 100px 60px;
     display: flex;
     height: 100%;

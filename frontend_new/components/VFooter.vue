@@ -48,6 +48,7 @@
     align-items: center;
     color: $primary;
     flex-direction: column;
+    justify-content: space-around;
 }
 
 .footer-inner-content {
@@ -56,6 +57,11 @@
     align-items: center;
     font-family: 'Nunito', serif;
     gap: 20px;
+    margin-top: 56px;
+}
+
+p{
+    margin: 0px;
 }
 
 .contact-information-block {
@@ -64,8 +70,9 @@
     align-items: flex-start;
     gap: 20px;
 
-    h2 {
+    h3 {
         font-family: "Roboto Slab", serif;
+        margin: 0px;
     }
 }
 
@@ -78,14 +85,16 @@
         padding: 20px;
         gap: 10px;
     }
-    .footer-inner-content{
+
+    .footer-inner-content {
         gap: 8px;
     }
+
     .contact-information-block {
         gap: 10px;
+
         h2 {
             margin: 0px;
         }
     }
-}
-</style>
+}</style>

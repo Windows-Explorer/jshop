@@ -1,14 +1,12 @@
 <template>
-    <div class="home-page-container">
-        <VImageSection />
-        <VAdSection />
-        <VPhotoSection />
+    <div class="contact-page-container">
+        <VContactSection />
         <VFooter />
     </div>
 </template>
 
 <style lang="scss" scoped>
-.home-page-container {
+.contact-page-container {
     display: flex;
     flex-direction: column;
     justify-content: center;

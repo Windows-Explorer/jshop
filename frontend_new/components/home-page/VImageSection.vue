@@ -21,7 +21,7 @@
                 <VLogo />
                 <span class="logo-text">Добро пожаловать</span>
                 <span class="logo-subtext">Beans Coffee Production</span>
-                <VButton label="И я продолжаю жить в говне" :size="16" />
+                <VButton label="В магазин" :size="16" />
             </div>
         </div>
     </section>

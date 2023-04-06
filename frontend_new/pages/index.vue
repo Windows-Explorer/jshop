@@ -2,6 +2,7 @@
     <div class="home-page-container">
         <VImageSection />
         <VAdSection />
+        <VPhotoSection />
         <VFooter />
     </div>
 </template>

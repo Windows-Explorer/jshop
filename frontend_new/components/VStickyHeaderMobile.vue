@@ -1,7 +1,7 @@
 <template>
-    <div class="header-container">
-        <div class="header-routes-block">
-            <div class="header">
+    <transition name="sticky-header">
+        <div class="sticky-header-container" v-if="show">
+            <div class="sticky-header">
                 <VRouteTabMobile :to="{ path: '/' }" label="главная"
                     style="animation: jump-down 0.6s 1 cubic-bezier(0.6, 0.1, 0, 1.5);">
                     <template v-slot:icon>
@@ -22,8 +22,18 @@
                         </svg>
                     </template>
                 </VRouteTabMobile>
-                <VRouteTabMobile :to="{ path: '/coffee' }" label="кофе"
+                <VRouteTabMobile :to="{ path: '/tea' }" label="чай"
                     style="animation: jump-down 1s 1 cubic-bezier(0.6, 0.1, 0, 1.5);">
+                    <template v-slot:icon>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                            <path fill="none" d="M0 0H24V24H0z" />
+                            <path
+                                d="M21 3v2c0 9.627-5.373 14-12 14H5.243C5.08 19.912 5 20.907 5 22H3c0-1.363.116-2.6.346-3.732C3.116 16.974 3 15.218 3 13 3 7.477 7.477 3 13 3c2 0 4 1 8 0zm-8 2c-4.418 0-8 3.582-8 8 0 .362.003.711.01 1.046 1.254-1.978 3.091-3.541 5.494-4.914l.992 1.736C8.641 12.5 6.747 14.354 5.776 17H9c6.015 0 9.871-3.973 9.997-11.612-1.372.133-2.647.048-4.22-.188C13.627 5.027 13.401 5 13 5z" />
+                        </svg>
+                    </template>
+                </VRouteTabMobile>
+                <VRouteTabMobile :to="{ path: '/coffee' }" label="кофе"
+                    style="animation: jump-down 1.2s 1 cubic-bezier(0.6, 0.1, 0, 1.5);">
                     <template v-slot:icon>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
                             <path fill="none" d="M0 0h24v24H0z" />
@@ -33,7 +43,7 @@
                     </template>
                 </VRouteTabMobile>
                 <VRouteTabMobile :to="{ path: '/cart' }" label="Корзина"
-                    style="animation: jump-down 1.4s 1 cubic-bezier(0.6, 0.1, 0, 1.5);">
+                    style="animation: jump-down 1.6s 1 cubic-bezier(0.6, 0.1, 0, 1.5);">
                     <template v-slot:icon>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
                             <path
@@ -43,7 +53,7 @@
                     </template>
                 </VRouteTabMobile>
                 <VRouteTabMobile :to="{ path: '/user' }" label="Аккаунт"
-                    style="animation: jump-down 1.4s 1 cubic-bezier(0.6, 0.1, 0, 1.5);">
+                    style="animation: jump-down 1.8s 1 cubic-bezier(0.6, 0.1, 0, 1.5);">
                     <template v-slot:icon>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
                             <path
@@ -53,42 +63,69 @@
                     </template>
                 </VRouteTabMobile>
             </div>
+            <div class="separator"></div>
         </div>
-        <div class="separator"></div>
-    </div>
+    </transition>
 </template>
 
+<script lang="ts" setup>
+import { Ref, ref, onMounted } from "vue"
+
+const show: Ref<boolean> = ref(false)
+
+onMounted(async () => {
+    window.addEventListener("scroll", async (event: Event) => {
+        if (window.scrollY > 60) {
+            show.value = true
+        }
+        else {
+            show.value = false
+        }
+    })
+})
+
+</script>
 
 <style lang="scss" scoped>
-.header-container {
+.separator {
     width: 100%;
+    animation: 1s drawSeparatorFull ease;
+}
+
+.sticky-header-container {
+    position: fixed;
+    top: 0px;
+    width: 100%;
+    z-index: 2;
+    background-color: rgba($dark, 0.5);
+    backdrop-filter: blur(10px);
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    position: absolute;
-    top: 0;
-    flex-direction: column;
 }
 
-.header-routes-block {
+.sticky-header {
     display: flex;
-    align-items: center;
     justify-content: center;
-    flex-direction: row;
-    width: 100%;
+    align-items: center;
+    padding-block: 10px;
 }
 
-.header {
-    display: flex;
-    padding: 10px 20px;
-    background-color: transparent;
-    border-radius: 0px 0px 20px 20px;
+.sticky-header-enter-active,
+.sticky-header-leave-active {
+    transition: 0.3s ease;
 }
 
-.separator {
-    height: 2px;
-    width: 90%;
-    background-color: $primary;
-    animation: 1s drawSeparator ease;
+.sticky-header-enter-from,
+.sticky-header-leave-to {
+    transform: translateY(-100%);
+    box-shadow: 0px 0px 0px black;
+}
+
+.sticky-header-enter-to,
+.sticky-header-leave-from {
+    transform: translateY(0);
+    box-shadow: 0px 0px 20px black;
 }
 </style>

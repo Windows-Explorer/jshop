@@ -2,7 +2,8 @@
   <div>
     <VHeaderMobile v-if="baseScreenWidth < 660" />
     <VHeader v-else />
-    <VStickyHeader />
+    <VStickyHeaderMobile v-if="baseScreenWidth < 660" />
+    <VStickyHeader v-else />
     <NuxtPage />
   </div>
 </template>

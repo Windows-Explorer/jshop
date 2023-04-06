@@ -28,7 +28,7 @@ h2 {
     font-family: 'Roboto Slab', serif;
     font-size: xxx-large;
     color: $primary;
-    animation: 0.5s drawLogo ease;
+    animation: 1s drawLogo ease;
 }
 
 .contact-image-block {

@@ -31,6 +31,7 @@ export default defineNuxtConfig({
         "~/components/icons",
         "~/components/Buttons",
         "~/components/home-page",
-        "~/components/contact-page"
+        "~/components/contact-page",
+        "~/components/about-page"
     ]
 })

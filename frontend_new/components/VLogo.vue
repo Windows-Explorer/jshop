@@ -24,6 +24,7 @@
     gap: 6px;
     color: $primary;
     user-select: none;
+    margin: 2px;
 }
 
 .v-logo-label {

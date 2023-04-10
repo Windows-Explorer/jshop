@@ -13,7 +13,11 @@ export default defineNuxtConfig({
     },
     modules: [
         '@pinia/nuxt',
+        '@formkit/nuxt',
     ],
+    formkit: {
+        configFile: "./formkit.config.ts"
+    },
     vite: {
         css: {
             preprocessorOptions: {
@@ -32,6 +36,7 @@ export default defineNuxtConfig({
         "~/components/Buttons",
         "~/components/home-page",
         "~/components/contact-page",
-        "~/components/about-page"
+        "~/components/about-page",
+        "~/components/user-page"
     ]
 })

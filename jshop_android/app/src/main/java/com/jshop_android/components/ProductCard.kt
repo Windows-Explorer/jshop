@@ -17,7 +17,10 @@ import com.jshop_android.common.interfaces.IProduct
 fun ProductCard(product: IProduct) {
     ListItem(
         headlineText = {
-            Text(text = "One line list item with 24x24 icon")
+            Text(
+                text = "One line list item with 24x24 icon",
+                style = MaterialTheme.typography.displayMedium
+            )
         },
         leadingContent = {
             Icon(Icons.Rounded.Add, contentDescription = "test")

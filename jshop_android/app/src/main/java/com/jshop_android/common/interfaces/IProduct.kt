@@ -1,4 +1,4 @@
-package com.jshop_android.interfaces
+package com.jshop_android.common.interfaces
 
 interface IProduct {
     val id: Long

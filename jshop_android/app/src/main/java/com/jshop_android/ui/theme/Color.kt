@@ -2,9 +2,10 @@ package com.jshop_android.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple80 = Color(0xFFD0BCFF)
-val PurpleGrey80 = Color(0xFFCCC2DC)
-val Pink80 = Color(0xFFEFB8C8)
+val White100 = Color(0xFFFFFFFF)
+val Gray100 = Color(0xFFE7E7E7)
+val Brown100 = Color(0xFFE6AA43)
+val Dark100 = Color(0xFF242424)
 
 val Purple40 = Color(0xFF6650a4)
 val PurpleGrey40 = Color(0xFF625b71)

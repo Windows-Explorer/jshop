@@ -1,12 +1,14 @@
 package com.jshop_android.screens.home
 
-import com.jshop_android.interfaces.IProduct
+import com.jshop_android.common.interfaces.IProduct
 
 sealed class HomeViewState {
     object Loading: HomeViewState()
-    object Error: HomeViewState()
+    object Error : HomeViewState()
     data class Display(
         val items: List<IProduct>,
-        val title: String
-    )
+    ): HomeViewState()
+    data class DisplayOneProduct(
+        val item: IProduct
+    ): HomeViewState()
 }

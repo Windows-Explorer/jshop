@@ -1,32 +1,33 @@
 package com.jshop_android
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.navigation.compose.rememberNavController
-import com.jshop_android.components.BottomNavigationBar
-import com.jshop_android.navigation.NavHost
+import androidx.lifecycle.lifecycleScope
+import com.jshop_android.screens.SplashScreen
 import com.jshop_android.ui.theme.Jshop_androidTheme
+import kotlinx.coroutines.delay
 
-class MainActivity : ComponentActivity() {
+class SplashActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3Api::class)
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
-            val navController = rememberNavController()
+        lifecycleScope.launchWhenCreated {
+            delay(5000)
 
-            Jshop_androidTheme {
+            val intent = Intent(this@SplashActivity, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+        setContent {
+            Jshop_androidTheme() {
                 MaterialTheme() {
-                    Scaffold(bottomBar = {
-                        BottomNavigationBar(navController = navController)
-                    }) {
-                        NavHost(navController = navController)
-                    }
+                    SplashScreen()
                 }
             }
         }

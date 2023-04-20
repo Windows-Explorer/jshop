@@ -33,7 +33,7 @@ export class TokenStoreModule extends VuexModule {
       body: JSON.stringify(user)
     })
 
-    if(result.status === 200) {
+    if(result.status === 200 ?? result.status === 201) {
       const token: string = await result.text()
       VueCookieNext.setCookie("token", token)
       router.push({ name: "home"})
@@ -58,7 +58,7 @@ export class TokenStoreModule extends VuexModule {
       body: JSON.stringify(user)
     })
 
-    if(result.status === 200) {
+    if(result.status === 200 ?? result.status === 201) {
       const token: string = await result.text()
       VueCookieNext.setCookie("token", token)
       router.push({ name: "home"})

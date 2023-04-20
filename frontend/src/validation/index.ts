@@ -19,7 +19,7 @@ export const rules = {
         if(value === "") return true
 
         const response: string = await (await axios.get(`${process.env.VUE_APP_GATEMAY_ADDRESS}/unique/email/${value}`)).data
-        if(Boolean(response)) return true
+        if(Boolean(response) == true ?? response == "true") return true
 
         return false
     },
@@ -28,7 +28,7 @@ export const rules = {
         if(value === "") return true
 
         const response: string = await (await axios.get(`${process.env.VUE_APP_GATEMAY_ADDRESS}/unique/username/${value}`)).data
-        if(Boolean(response)) return true
+        if(Boolean(response) == true ?? response == "true") return true
 
         return false
     },

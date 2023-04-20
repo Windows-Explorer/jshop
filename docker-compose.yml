@@ -7,10 +7,10 @@ services:
     restart: always
     hostname: db_host
     environment:
-      MARIADB_ROOT_PASSWORD: root
+      MARIADB_ROOT_PASSWORD: fHKSDbf231dsfsnsdfs
       MARIADB_DATABASE: jshop
-      MARIADB_USER: jshop_user
-      MARIADB_PASSWORD: jshop_test_password
+      MARIADB_USER: user
+      MARIADB_PASSWORD: letsCELEBRATEandSuckSOMEDICK
     networks:
       - default
 
@@ -21,8 +21,8 @@ services:
     ports:
       - 8080:80
     environment:
-      PMA_USER: jshop_user
-      PMA_PASSWORD: jshop_test_password
+      PMA_USER: user
+      PMA_PASSWORD: letsCELEBRATEandSuckSOMEDICK
       PMA_HOST: db_host
       PMA_PORT: 3306
     networks:
@@ -36,10 +36,10 @@ services:
       context: api
       dockerfile: api.Dockerfile
     environment:
-      JWT_SECRET: "123"
+      JWT_SECRET: "dshkgdikjfgb972134523"
       JWT_EXPIRESIN: "3600s"
-      DATABASE_USERNAME: "jshop_user"
-      DATABASE_PASSWORD: "jshop_test_password"
+      DATABASE_USERNAME: "user"
+      DATABASE_PASSWORD: "letsCELEBRATEandSuckSOMEDICK"
       DATABASE_DATABASE: "jshop"
       DATABASE_HOST: db_host
     ports:
@@ -55,7 +55,7 @@ services:
       context: frontend
       dockerfile: frontend.Dockerfile
     environment:
-      VUE_APP_GATEMAY_ADDRESS: "api_host:3000"
+      VUE_APP_GATEMAY_ADDRESS: "api.kontinuum.su"
     ports:
       - "80:80"
     networks:

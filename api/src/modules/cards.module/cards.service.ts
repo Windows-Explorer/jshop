@@ -27,10 +27,8 @@ export class CardsService implements ICardsService {
         return this._parser.parseCards(await (await fetch("http://kontinuum.su:3000/images/Ascent.xml")).text())
     }
 
-    async findAll(page: number, filter: IFilter): Promise<ICard[]> {
+    async findAll(filter: IFilter): Promise<ICard[]> {
         try {
-            const take: number = 8
-            const skip: number = ((page * take) < 0 ? 0 : (page * take)) || 0
 
             let color = null
             let type = null
@@ -44,8 +42,6 @@ export class CardsService implements ICardsService {
 
             const [result, count] = await this._cardRepository.findAndCount({
                 order: { name: "ASC" },
-                take: take,
-                skip: skip,
                 where: {
                     name: filter.name ? Like(`%${filter.name}%`) : Like("%%"),
                     pt: filter.pt ? Equal(filter.pt) : Not(999999),

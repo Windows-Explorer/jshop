@@ -2,7 +2,7 @@
     <section class="page-section">
         <card-filter @filter-accepted="onAcceptedFilter($event)" />
         <q-inner-loading :showing="loading" dark style="z-index: 1000" />
-        <q-pagination
+        <!-- <q-pagination
             v-model="page"
             :max="cards.count"
             direction-links
@@ -10,9 +10,9 @@
             active-color="primary"
             @update:model-value="onGetCards(currentFilter)"
             style="margin-block: 10px"
-        />
+        /> -->
         <section class="cards-section">
-            <card-block v-for="(card, index) in cards.result" :key="index" :card="card" />
+            <card-block v-for="(card, index) in cards" :key="index" :card="card" />
         </section>
     </section>
 </template>
@@ -39,7 +39,7 @@ const queryData: any = router.currentRoute.value.query.page || 1
 const page: Ref<number> = ref<any>(queryData)
 const currentFilter: Ref<IFilter> = ref({ name: null, manacost: null, pt: null, color: null, type: null})
 
-const cards: Ref<{ result: ICard[], count: number }> = ref<{ result: ICard[], count: number }>({ result: [], count: 0})
+const cards: Ref<any> = ref()
 
 const onAcceptedFilter = async (filter: IFilter) => {
     currentFilter.value = filter

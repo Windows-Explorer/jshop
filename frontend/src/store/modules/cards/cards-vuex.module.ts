@@ -27,25 +27,25 @@ export class CardsStoreModule extends VuexModule {
     }
 
     @Action({ commit: "cardMutation" })
-    async getCards(payload: {page: number, filter?: IFilter | any}): Promise<{result: ICard[], count: number}> {
+    async getCards(filter?: IFilter | any): Promise<ICard[]> {
 
         let filterParams: string = ""
-        if(payload.filter) {
-            Object.keys(payload.filter).forEach(key => {
-                if(payload.filter[key]) filterParams += `&${key}=${payload.filter[key]}`
+        if(filter) {
+            Object.keys(filter).forEach(key => {
+                if(filter[key]) filterParams += `&${key}=${filter[key]}`
             })
         }
 
-        const result = await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/cards?page=${payload.page}${[filterParams]}`)
+        const result = await fetch(`${process.env.VUE_APP_GATEMAY_ADDRESS}/cards?${[filterParams]}`)
 
         if (result.status === 200) {
-            const cards: { result: ICard[], count: number } = await result.json()
+            const cards: ICard[] = await result.json()
             customNotifies.positiveNotify()
             return cards
         }
         else {
             customNotifies.negativeNotify()
-            return {result: [], count: 0}
+            return []
         }
     }
 

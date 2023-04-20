@@ -10,11 +10,10 @@ export class CardController {
 
     @Get()
     async findAll(
-        @Query("page") page: number, @Query("name") name: string, @Query("manacost") manacost: number,
+        @Query("name") name: string, @Query("manacost") manacost: number,
         @Query("pt") pt: number, @Query("color") color: string, @Query("type") type: string
     ): Promise<ICard[]> {
-        if (!page) page = 0
         const filter: IFilter = { name, manacost, pt, color, type }
-        return this._cardsService.findAll(page, filter)
+        return this._cardsService.findAll(filter)
     }
 }

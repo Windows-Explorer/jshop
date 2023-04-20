@@ -21,7 +21,7 @@ export class Parser implements IParser {
     async parseColors(xml: string): Promise<ICardColor[]> {
         try {
             await this._colorsRepository.delete({})
-            await this._colorsRepository.query("ALTER TABLE color AUTO_INCREMENT = 1")
+            await this._colorsRepository.query("ALTER TABLE card_color AUTO_INCREMENT = 1")
 
             const colors: ICardColor[] = []
             const colorNames: string[] = []

@@ -39,7 +39,7 @@ const queryData: any = router.currentRoute.value.query.page || 1
 const page: Ref<number> = ref<any>(queryData)
 const currentFilter: Ref<IFilter> = ref({ name: null, manacost: null, pt: null, color: null, type: null})
 
-const cards: Ref<any> = ref()
+const cards: Ref<ICard[]> = ref([])
 
 const onAcceptedFilter = async (filter: IFilter) => {
     currentFilter.value = filter
@@ -50,11 +50,10 @@ const onGetCards = async (filter?: IFilter | any) => {
     console.log(filter)
     loading.value = true
     let query = {
-        ...{ page: page.value },
         ...filter
     }
     await router.replace({ name: "cards", query: query })
-    cards.value = await store.dispatch("getCards", { page: page.value - 1, filter: filter })
+    cards.value = await store.dispatch("getCards", filter)
     loading.value = false
 }
 

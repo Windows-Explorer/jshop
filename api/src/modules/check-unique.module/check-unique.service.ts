@@ -11,7 +11,7 @@ export class CheckUniqueService implements ICheckUniqueService {
 
     async checkEmailUnique(email: string): Promise<boolean> {
         try {
-            if (this._usersService.findByEmail(email)) {
+            if (await this._usersService.findByEmail(email)) {
                 return false
             }
             else {
@@ -23,7 +23,7 @@ export class CheckUniqueService implements ICheckUniqueService {
     }
     async checkUsernameUnique(username: string): Promise<boolean> {
         try {
-            if (this._usersService.findByEmail(username)) {
+            if (await this._usersService.findByEmail(username)) {
                 return false
             }
             else {

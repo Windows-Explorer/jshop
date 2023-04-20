@@ -11,7 +11,9 @@ export class UniqueController {
 
     @Get("/email/:email")
     async checkUniqueEmail(@Param("email") email: string): Promise<boolean> {
-        return await this._checkUniqueService.checkEmailUnique(email)
+        const result = await this._checkUniqueService.checkEmailUnique(email)
+        console.log(result)
+        return result
     }
 
     @Get("/username/:username")

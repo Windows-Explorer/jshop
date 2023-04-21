@@ -30,7 +30,7 @@ fun BeansLogo(size: Dp = 160.dp, labelSize: TextUnit = 36.sp, subLabel: TextUnit
             .border(
                 shape = RoundedCornerShape(size),
                 color = MaterialTheme.colorScheme.primary,
-                width = 1.dp
+                width = 2.dp
             )
     ) {
         Column(
@@ -39,14 +39,23 @@ fun BeansLogo(size: Dp = 160.dp, labelSize: TextUnit = 36.sp, subLabel: TextUnit
                 .fillMaxSize(),
             verticalArrangement = Arrangement.Center
         ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Image(
+                    imageVector = ImageVector.vectorResource(id = com.jshop_android.R.drawable.icon_beans),
+                    contentDescription = "Coffee Beans Icon",
+                    modifier = Modifier.size(36.dp)
+                )
+            }
             Text(
                 text = "Beans",
                 style = MaterialTheme.typography.labelLarge,
                 fontSize = labelSize,
                 textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 10.dp)
+                modifier = Modifier.fillMaxWidth()
             )
             Text(
                 text = "Coffee Production",

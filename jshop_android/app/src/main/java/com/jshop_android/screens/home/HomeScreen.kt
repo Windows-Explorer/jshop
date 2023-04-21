@@ -1,12 +1,13 @@
 package com.jshop_android.screens.home
 
 import androidx.compose.animation.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import com.jshop_android.components.Loading
 import com.jshop_android.screens.home.views.HomeViewDisplay
 import com.jshop_android.screens.home.views.HomeViewError
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable()
@@ -16,7 +17,7 @@ fun HomeScreen(homeViewModel: HomeViewModel) {
     Crossfade(targetState = viewState.value) { state ->
         when (state) {
             is HomeViewState.Loading -> Loading()
-            is HomeViewState.Display -> HomeViewDisplay(generateProducts())
+            is HomeViewState.Display -> HomeViewDisplay(generateProducts(), homeViewModel)
 
             HomeViewState.Error -> HomeViewError()
             else -> HomeViewError()
@@ -26,4 +27,10 @@ fun HomeScreen(homeViewModel: HomeViewModel) {
     LaunchedEffect(key1 = viewState, block = {
         homeViewModel.obtainEvent(HomeEvent.EnterScreen)
     })
+
+    DisposableEffect(key1 = viewState) {
+        onDispose {
+            homeViewModel.obtainEvent(HomeEvent.OutScreen)
+        }
+    }
 }

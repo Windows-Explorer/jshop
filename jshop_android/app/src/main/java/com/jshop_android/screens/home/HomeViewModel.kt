@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavController
 import com.jshop_android.common.classes.Product
 import com.jshop_android.common.interfaces.IEventHandler
 import com.jshop_android.common.interfaces.IProduct
@@ -16,14 +15,14 @@ import javax.inject.Inject
 
 fun generateProducts(): List<IProduct> {
     val list = mutableListOf<IProduct>()
-    for (i in 0..20) {
+    for (i in 0..3) {
         list.add(
             Product(
                 type = "Type",
                 title = "Title",
                 cost = i.toLong(),
                 description = "description",
-                image = "image",
+                image = "https://mykaleidoscope.ru/x/uploads/posts/2022-10/1666372248_54-mykaleidoscope-ru-p-kofe-i-shokolad-kartinki-krasivo-59.jpg",
             )
         )
     }
@@ -31,10 +30,7 @@ fun generateProducts(): List<IProduct> {
 }
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(
-    private val navController: NavController
-) : ViewModel(), IEventHandler<HomeEvent> {
-
+class HomeViewModel @Inject constructor() : ViewModel(), IEventHandler<HomeEvent> {
     private val _homeViewState: MutableLiveData<HomeViewState> =
         MutableLiveData(HomeViewState.Loading)
 
@@ -60,7 +56,8 @@ class HomeViewModel @Inject constructor(
     private fun reduce(event: HomeEvent, currentState: HomeViewState.Display) {
         when (event) {
             HomeEvent.EnterScreen -> getData()
-            HomeEvent.ReloadScreen -> getData()
+            HomeEvent.ReloadScreen -> reloadScreen()
+            HomeEvent.OutScreen -> unloadData()
             else -> processError()
         }
     }
@@ -82,6 +79,20 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             delay(1000)
             _homeViewState.postValue(HomeViewState.Display(generateProducts()))
+        }
+    }
+
+    private fun reloadScreen() {
+        viewModelScope.launch {
+            _homeViewState.postValue(HomeViewState.Loading)
+            delay(1000)
+            _homeViewState.postValue(HomeViewState.Display(generateProducts()))
+        }
+    }
+
+    private fun unloadData() {
+        viewModelScope.launch {
+            _homeViewState.postValue(HomeViewState.Loading)
         }
     }
 }

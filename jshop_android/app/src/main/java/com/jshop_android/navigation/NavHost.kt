@@ -14,7 +14,7 @@ import com.jshop_android.screens.home.HomeViewModel
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun NavHost(navController: NavHostController) {
-    val homeViewModel: HomeViewModel = HomeViewModel(navController)
+    val homeViewModel: HomeViewModel = HomeViewModel()
     val accountViewModel: AccountViewModel = AccountViewModel(navController)
 
     NavHost(navController = navController, startDestination = NavRoute.HomeRoute.route) {
@@ -24,8 +24,7 @@ fun NavHost(navController: NavHostController) {
         composable(route = NavRoute.Account.route) {
             AccountScreen(accountViewModel)
         }
-        composable(route = NavRoute.Cart.route)
-        {
+        composable(route = NavRoute.Cart.route) {
             HomeScreen(homeViewModel = homeViewModel)
         }
     }

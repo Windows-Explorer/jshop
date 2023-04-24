@@ -1,21 +1,22 @@
 package com.jshop_android.navigation
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.jshop_android.screens.account.AccountScreen
 import com.jshop_android.screens.account.AccountViewModel
+import com.jshop_android.screens.cart.CartScreen
+import com.jshop_android.screens.cart.CartViewModel
 import com.jshop_android.screens.home.HomeScreen
 import com.jshop_android.screens.home.HomeViewModel
 
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun NavHost(navController: NavHostController) {
+fun NavHostView(navController: NavHostController) {
     val homeViewModel: HomeViewModel = HomeViewModel()
-    val accountViewModel: AccountViewModel = AccountViewModel(navController)
+    val accountViewModel: AccountViewModel = AccountViewModel()
+    val cartViewModel: CartViewModel = CartViewModel()
 
     NavHost(navController = navController, startDestination = NavRoute.HomeRoute.route) {
         composable(route = NavRoute.HomeRoute.route) {
@@ -25,7 +26,7 @@ fun NavHost(navController: NavHostController) {
             AccountScreen(accountViewModel)
         }
         composable(route = NavRoute.Cart.route) {
-            HomeScreen(homeViewModel = homeViewModel)
+            CartScreen(cartViewModel)
         }
     }
 }

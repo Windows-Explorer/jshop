@@ -4,17 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavController
 import com.jshop_android.common.interfaces.IEventHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class AccountViewModel @Inject constructor(
-    private val navController: NavController
-) : ViewModel(), IEventHandler<AccountEvent> {
-
+class AccountViewModel @Inject constructor() : ViewModel(), IEventHandler<AccountEvent> {
     private val _accountViewState: MutableLiveData<AccountViewState> =
         MutableLiveData(AccountViewState.Loading)
 

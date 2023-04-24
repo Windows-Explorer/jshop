@@ -8,6 +8,7 @@ import com.jshop_android.common.classes.Product
 import com.jshop_android.common.interfaces.IEventHandler
 import com.jshop_android.common.interfaces.IProduct
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -91,7 +92,7 @@ class HomeViewModel @Inject constructor() : ViewModel(), IEventHandler<HomeEvent
     }
 
     private fun unloadData() {
-        viewModelScope.launch {
+        GlobalScope.launch {
             _homeViewState.postValue(HomeViewState.Loading)
         }
     }

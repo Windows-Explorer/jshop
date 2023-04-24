@@ -1,5 +1,4 @@
-package com.jshop_android.screens.home.views
-
+package com.jshop_android.screens.cart.views
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.lazy.LazyColumn
@@ -8,33 +7,33 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.jshop_android.common.interfaces.IProduct
+import com.jshop_android.components.CartProductCard
 import com.jshop_android.components.ProductCard
 import com.jshop_android.m3_pullrefresh.PullRefreshIndicator
 import com.jshop_android.m3_pullrefresh.pullRefresh
 import com.jshop_android.m3_pullrefresh.rememberPullRefreshState
-import com.jshop_android.screens.home.HomeEvent
-import com.jshop_android.screens.home.HomeViewModel
-import com.jshop_android.screens.home.HomeViewState
+import com.jshop_android.screens.cart.CartEvent
+import com.jshop_android.screens.cart.CartViewModel
+import com.jshop_android.screens.cart.CartViewState
 
 @Composable
-fun HomeViewDisplay(homeViewModel: HomeViewModel, state: HomeViewState.Display) {
+fun CartViewDisplay(cartViewModel: CartViewModel, state: CartViewState.Display) {
     val refreshing = remember { mutableStateOf(false) }
     val refreshState = rememberPullRefreshState(
         refreshing.value,
         {
-            homeViewModel.obtainEvent(HomeEvent.ReloadScreen)
+            cartViewModel.obtainEvent(CartEvent.ReloadScreen)
         }
     )
-    val products: List<IProduct> = state.items
+    val cartProducts = state.cartProducts
 
     Box(modifier = Modifier.pullRefresh(state = refreshState)) {
         LazyColumn(
             modifier = Modifier.pullRefresh(refreshState)
         ) {
-            products.forEach { product ->
+            cartProducts.forEach { cartProduct ->
                 item {
-                    ProductCard(product = product)
+                    CartProductCard(cartProduct = cartProduct)
                 }
             }
         }

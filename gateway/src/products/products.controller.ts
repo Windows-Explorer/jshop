@@ -5,7 +5,7 @@ import { PRODUCTS_KAFKA_CLIENT_TOKEN } from "src/common/constants/inject-tokens.
 import { ProductsFindDto } from "src/common/dto/products-find.dto"
 import { IResult } from "src/common/dto/result.dto"
 
-@Controller("api/products")
+@Controller("products")
 export class ProductsController {
     constructor(@Inject(PRODUCTS_KAFKA_CLIENT_TOKEN) private readonly _client: ClientKafka) {}
 

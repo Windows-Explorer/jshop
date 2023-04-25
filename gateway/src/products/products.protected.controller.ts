@@ -9,7 +9,7 @@ import { PRODUCTS_KAFKA_CLIENT_TOKEN } from "src/common/constants/inject-tokens.
 import { IResult } from "src/common/dto/result.dto"
 import { AdminGuard } from "src/guards/admin.guard"
 
-@Controller("api/products")
+@Controller("products")
 export class ProductsProtectedController {
     constructor(@Inject(PRODUCTS_KAFKA_CLIENT_TOKEN) private readonly _client: ClientKafka) {}
     

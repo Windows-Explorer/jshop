@@ -10,7 +10,7 @@ data class CartProduct(
     override val image: String,
     override val cost: Long,
     override val type: String,
-    override val count: Int
+    override var count: Int = 1
 ) : ICartProduct {
     constructor(product: IProduct) : this(
         Long.MIN_VALUE,
@@ -18,8 +18,7 @@ data class CartProduct(
         product.description,
         product.image,
         product.cost,
-        product.type,
-        count = 0
+        product.type
     )
 
 }

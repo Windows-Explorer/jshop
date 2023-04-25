@@ -41,6 +41,9 @@ class CartViewModel @Inject constructor() : ViewModel(), IEventHandler<CartEvent
         when (event) {
             is CartEvent.EnterScreen -> getCart()
             is CartEvent.OutScreen -> unloadData()
+            is CartEvent.CartProductRemoved -> removeCartProduct(event, currentState)
+            is CartEvent.CartProductCountUpdated -> uploadCart(event)
+            is CartEvent.ReloadScreen -> reloadScreen(currentState)
             else -> processError()
         }
     }
@@ -67,6 +70,30 @@ class CartViewModel @Inject constructor() : ViewModel(), IEventHandler<CartEvent
     private fun unloadData() {
         GlobalScope.launch {
             _cartViewState.postValue(CartViewState.Loading)
+        }
+    }
+
+    private fun uploadCart(event: CartEvent.CartProductCountUpdated) {
+        viewModelScope.launch {
+            println(event.cartProduct)
+        }
+    }
+
+    private fun removeCartProduct(
+        event: CartEvent.CartProductRemoved,
+        state: CartViewState.Display
+    ) {
+        viewModelScope.launch {
+            state.cartProducts.removeAt(event.index)
+            reloadScreen(state = state)
+        }
+    }
+
+    private fun reloadScreen(state: CartViewState.Display) {
+        viewModelScope.launch {
+            _cartViewState.postValue(CartViewState.Loading)
+            delay(1000)
+            _cartViewState.postValue(CartViewState.Display(state.cartProducts))
         }
     }
 

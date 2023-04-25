@@ -6,6 +6,6 @@ sealed class CartViewState {
     object Loading : CartViewState()
     object Error : CartViewState()
     data class Display(
-        val cartProducts: List<ICartProduct>
+        val cartProducts: MutableList<ICartProduct>
     ) : CartViewState()
 }

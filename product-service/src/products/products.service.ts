@@ -6,9 +6,9 @@ import { PRODUCTS_COUNT_AT_PAGE } from "src/common/constants/products-count-at-p
 import { IFilter } from "src/common/interfaces/filter.interface"
 import { ILoggerOutput } from "src/common/interfaces/logger-output.interface"
 import { IPaginator } from "src/common/interfaces/paginator.interface"
-import { IProduct } from "src/common/interfaces/product.interface"
+import { IProduct } from "src/common/interfaces/data/product.interface"
 import { IProductsFilterPayload } from "src/common/interfaces/products-filter.interface"
-import { IProductsService } from "src/common/interfaces/products.service.interface"
+import { IProductsService } from "src/common/interfaces/services/products.service.interface"
 import { DeleteResult, FindManyOptions, Repository } from "typeorm"
 import { Product } from "./entities/product.entity"
 

@@ -1,4 +1,5 @@
-import { IResult } from "./result.interface";
+import { IResult } from "./data/result.interface"
+
 
 export interface IOutput {
     responseAsync<T>(statusCode: number, message: T ): Promise<IResult<T>>

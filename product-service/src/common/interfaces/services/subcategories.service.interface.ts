@@ -1,4 +1,4 @@
-import { ISubcategory } from "./subcategory.interface"
+import { ISubcategory } from "../subcategory.interface"
 
 export interface ISubcategoriesService {
     findAll(): Promise<ISubcategory[]>

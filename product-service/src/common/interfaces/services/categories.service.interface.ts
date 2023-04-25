@@ -1,5 +1,5 @@
 import { DeleteResult } from "typeorm"
-import { ICategory } from "./category.interface"
+import { ICategory } from "../data/category.interface"
 
 export interface ICategoriesService {
     findAll(): Promise<ICategory[]>

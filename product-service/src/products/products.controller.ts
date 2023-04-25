@@ -1,12 +1,11 @@
-import { Controller, HttpException, HttpStatus, Inject } from "@nestjs/common"
+import { Controller, HttpStatus, Inject } from "@nestjs/common"
 import { MessagePattern, Payload } from "@nestjs/microservices"
-import { LOGGER_TOKEN, PRODUCTS_SERVICE_TOKEN, RESULTER_TOKEN } from "src/common/constants/inject-tokens.constant"
+import { PRODUCTS_SERVICE_TOKEN, RESULTER_TOKEN } from "src/common/constants/inject-tokens.constant"
 import { FindDto } from "src/common/dto/find.dto"
-import { ILoggerOutput } from "src/common/interfaces/logger-output.interface"
-import { IProduct } from "src/common/interfaces/product.interface"
-import { IProductsService } from "src/common/interfaces/products.service.interface"
-import { IResult } from "src/common/interfaces/result.interface"
+import { IProduct } from "src/common/interfaces/data/product.interface"
+import { IResult } from "src/common/interfaces/data/result.interface"
 import { IOutput } from "src/common/interfaces/resulter.interface"
+import { IProductsService } from "src/common/interfaces/services/products.service.interface"
 import { DeleteResult } from "typeorm"
 
 

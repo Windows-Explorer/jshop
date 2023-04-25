@@ -4,8 +4,8 @@ import { Equal, FindManyOptions, Like, Not } from "typeorm"
 import { LOGGER_TOKEN } from "./constants/inject-tokens.constant"
 import { IFilter } from "./interfaces/filter.interface"
 import { ILoggerOutput } from "./interfaces/logger-output.interface"
-import { IProduct } from "./interfaces/product.interface"
 import { IProductsFilterPayload } from "./interfaces/products-filter.interface"
+import { IProduct } from "./interfaces/data/product.interface"
 
 @Injectable()
 export class Filter implements IFilter {

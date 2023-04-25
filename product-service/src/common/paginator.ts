@@ -5,7 +5,7 @@ import { LOGGER_TOKEN } from "./constants/inject-tokens.constant"
 import { PRODUCTS_COUNT_AT_PAGE } from "./constants/products-count-at-page.constant"
 import { ILoggerOutput } from "./interfaces/logger-output.interface"
 import { IPaginator } from "./interfaces/paginator.interface"
-import { IProduct } from "./interfaces/product.interface"
+import { IProduct } from "./interfaces/data/product.interface"
 
 @Injectable()
 export class Paginator implements IPaginator {

@@ -1,6 +1,6 @@
 import { Catch, RpcExceptionFilter, ArgumentsHost, HttpException, Inject } from "@nestjs/common"
 import { RESULTER_TOKEN } from "src/common/constants/inject-tokens.constant"
-import { IResult } from "src/common/interfaces/result.interface"
+import { IResult } from "src/common/interfaces/data/result.interface"
 import { IOutput } from "src/common/interfaces/resulter.interface"
 
 @Catch()

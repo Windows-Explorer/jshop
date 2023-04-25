@@ -1,8 +1,6 @@
-import { Product } from "src/products/entities/product.entity"
 import { DeleteResult } from "typeorm"
-import { IProduct } from "./product.interface"
-import { IProductsFilterPayload } from "./products-filter.interface"
-import { IResultAndCount } from "./result-and-count.interface"
+import { IProductsFilterPayload } from "../products-filter.interface"
+import { IProduct } from "../data/product.interface"
 
 export interface IProductsService {
     findById(productId: number): Promise<IProduct>

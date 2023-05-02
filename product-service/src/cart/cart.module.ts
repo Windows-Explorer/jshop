@@ -1,6 +1,5 @@
 import { Module } from "@nestjs/common"
 import { TypeOrmModule } from "@nestjs/typeorm"
-import { CartProduct } from "./entities/cart-product.entity"
 import { CART_SERVICE_TOKEN, RESULTER_TOKEN } from "src/common/constants/inject-tokens.constant"
 import { CartService } from "./cart.service"
 import { CartController } from "./cart.conrtoller"
@@ -11,7 +10,6 @@ import { RedisModule } from "@liaoliaots/nestjs-redis"
 
 @Module({
     imports: [
-        TypeOrmModule.forFeature([CartProduct]),
         RedisModule.forRootAsync({
             useFactory: async (configService: ConfigService) => ({
                 config: {

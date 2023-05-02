@@ -141,6 +141,7 @@ services:
       DATABASE_PASSWORD: "jshop_test_password"
       DATABASE_DATABASE: "jshop"
       DATABASE_HOST: db_host
+      DATABASE_PORT: 3306
       BROKER_HOST: kafka_host
       BROKER_PORT: 9093
       REDIS_HOST: redis_host

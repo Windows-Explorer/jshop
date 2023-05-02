@@ -29,8 +29,7 @@ import { CartModule } from "./cart/cart.module"
     }),
     ProductsModule,
     CartModule
-    // PaymentModule
   ]
 })
 
-export class AppModule {}
+export class AppModule { }

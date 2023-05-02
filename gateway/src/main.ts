@@ -8,7 +8,6 @@ async function bootstrap() {
   app.enableCors()
   console.log(app.get(ConfigService))
   await app.listen(3000)
-  console.log("Gateway is running")
 }
 
 bootstrap()

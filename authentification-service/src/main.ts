@@ -10,15 +10,15 @@ import { AllExceptionsFilter } from "./extentions/all.exception-filter"
 
 async function bootstrap() {
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(AppModule, {
-        transport: Transport.KAFKA,
-        options: {
-            client: {
-            brokers: [`${process.env.BROKER_HOST}:${process.env.BROKER_PORT}`],
-        },
-        consumer: {
-            groupId: "auth-consumer",
-            allowAutoTopicCreation: true
-        }
+    transport: Transport.KAFKA,
+    options: {
+      client: {
+        brokers: [`${process.env.BROKER_HOST}:${process.env.BROKER_PORT}`],
+      },
+      consumer: {
+        groupId: "auth-consumer",
+        allowAutoTopicCreation: true
+      }
     }
   })
   app.useGlobalFilters(new AllExceptionsFilter(new Resulter()))
@@ -27,7 +27,6 @@ async function bootstrap() {
   console.log(app.get(ConfigService))
 
   await app.listen()
-  console.log("Auth service is running")
 }
 
 bootstrap()

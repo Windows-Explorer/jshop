@@ -31,4 +31,4 @@ import { Resulter } from "./common/resulter"
   ]
 })
 
-export class AppModule {}
+export class AppModule { }

@@ -1,5 +1,9 @@
 import { Controller, Get } from "@nestjs/common"
 
-@Controller("/api")
+@Controller("/")
 export class AppController {
+    @Get("/")
+    async main(): Promise<string> {
+        return "hello there"
+    }
 }

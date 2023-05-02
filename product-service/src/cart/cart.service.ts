@@ -1,10 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common"
 import { ICartProduct } from "src/common/interfaces/data/cart-product.interface"
 import { ICartService } from "src/common/interfaces/services/cart.service.interface"
-import { DeleteResult, Repository } from "typeorm"
-import { InjectRepository } from "@nestjs/typeorm"
-import { Product } from "src/products/entities/product.entity"
-import { IProduct } from "src/common/interfaces/data/product.interface"
+import { DeleteResult } from "typeorm"
 import { InjectRedis } from "@liaoliaots/nestjs-redis"
 import Redis from "ioredis"
 

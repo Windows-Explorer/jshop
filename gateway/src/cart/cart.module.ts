@@ -35,7 +35,7 @@ export class CartModule {
 
     async onModuleInit() {
         this._client.subscribeToResponseOf("cart.findAll")
-        this._client.subscribeToResponseOf("cart.count")
+        this._client.subscribeToResponseOf("cart.save")
         this._client.subscribeToResponseOf("cart.remove")
 
         await this._client.connect()

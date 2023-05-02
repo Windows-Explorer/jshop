@@ -5,7 +5,6 @@ import { ProductsModule } from "./products/products.module"
 import { Product } from "./products/entities/product.entity"
 import { Category } from "./products/entities/category.entity"
 import { Subcategory } from "./products/entities/subcategory.entity"
-import { CartProduct } from "./cart/entities/cart-product.entity"
 import { CartModule } from "./cart/cart.module"
 
 @Module({
@@ -24,7 +23,7 @@ import { CartModule } from "./cart/cart.module"
         database: configService.get<string>("DATABASE_DATABASE"),
         password: configService.get<string>("DATABASE_PASSWORD"),
         username: configService.get<string>("DATABASE_USERNAME"),
-        entities: [Product, Category, Subcategory, CartProduct],
+        entities: [Product, Category, Subcategory],
         synchronize: true
       })
     }),

@@ -5,7 +5,7 @@ import { User } from "./entities/user.entity"
 import { UsersService } from "./users.service"
 
 @Module({
-  imports: [ TypeOrmModule.forFeature([ User ]) ],
+  imports: [TypeOrmModule.forFeature([User])],
   providers: [
     {
       provide: USERS_SERVICE_TOKEN,
@@ -13,7 +13,7 @@ import { UsersService } from "./users.service"
     }
   ],
   controllers: [],
-  exports: [ USERS_SERVICE_TOKEN ]
+  exports: [USERS_SERVICE_TOKEN]
 })
 
-export class UsersModule {}
+export class UsersModule { }

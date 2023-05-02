@@ -6,17 +6,17 @@ import { IResult } from "src/common/dto/result.dto"
 
 @Controller("api")
 export class CategoriesController {
-    constructor(@Inject(PRODUCTS_KAFKA_CLIENT_TOKEN) private readonly _client: ClientKafka) {}
+    constructor(@Inject(PRODUCTS_KAFKA_CLIENT_TOKEN) private readonly _client: ClientKafka) { }
 
     @Get("/categories")
-    async findAllCategories(@Res() response: Response): Promise<void> {
-        const result: IResult<any> = await this._client.send("products.categories.findAll", "").toPromise()
+    async findAllCategories(@Res() response: Response) {
+        const result = await this._client.send("products.categories.findAll", "").toPromise()
         response.status(result.statusCode).send(result.message)
     }
 
     @Get("/subcategories")
-    async findAllSubcategories(@Res() response: Response): Promise<void> {
-        const result: IResult<any> = await this._client.send("products.subcategories.findAll", "").toPromise()
+    async findAllSubcategories(@Res() response: Response) {
+        const result = await this._client.send("products.subcategories.findAll", "").toPromise()
         response.status(result.statusCode).send(result.message)
     }
 }

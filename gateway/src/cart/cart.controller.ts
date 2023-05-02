@@ -9,20 +9,20 @@ export class CartController {
     constructor(@Inject(CART_KAFKA_CLIENT_TOKEN) private readonly _client: ClientKafka) { }
 
     @Get("/")
-    async findAll(@Query("userId") userId: number, @Res() response: Response): Promise<void> {
-        const result: IResult<any> = await this._client.send("cart.findAll", userId).toPromise()
+    async findAll(@Query("userId") userId: number, @Res() response: Response) {
+        const result = await this._client.send("cart.findAll", userId).toPromise()
         response.status(result.statusCode).send(result.message)
     }
 
     @Get("/save")
-    async save(@Body() body: any, @Res() response: Response): Promise<void> {
-        const result: IResult<any> = await this._client.send("cart.save", body.cartProduct).toPromise()
+    async save(@Body() body: any, @Res() response: Response) {
+        const result = await this._client.send("cart.save", body.cartProduct).toPromise()
         response.status(result.statusCode).send(result.message)
     }
 
     @Get("/:id")
-    async remove(@Param("id") id: number, @Res() response: Response): Promise<void> {
-        const result: IResult<any> = await this._client.send("cart.remove", id).toPromise()
+    async remove(@Param("id") id: number, @Res() response: Response) {
+        const result = await this._client.send("cart.remove", id).toPromise()
         response.status(result.statusCode).send(result.message)
     }
 }

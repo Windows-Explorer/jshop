@@ -1,6 +1,20 @@
 version: '3'
 
 services:
+  redis:
+    image: "redis:alpine"
+    command: redis-server --requirepass sOmE_sEcUrE_pAsS
+    hostname: redis_host
+    ports:
+    - "6379:6379"
+    volumes:
+      - $PWD/redis-data:/var/lib/redis
+    environment:
+    - REDIS_REPLICATION_MODE=master
+    networks:
+      - default
+
+
   db:
     image: mariadb
     container_name: db
@@ -134,26 +148,6 @@ services:
       - db
     networks:
       - default
-
-  # card_microservice:
-  #   container_name: card_microservice
-  #   restart: always
-  #   hostname: card_microservice_host
-  #   build:
-  #     context: card-service
-  #     dockerfile: card.Dockerfile
-  #   environment:
-  #     DATABASE_USERNAME: "jshop_user"
-  #     DATABASE_PASSWORD: "jshop_test_password"
-  #     DATABASE_DATABASE: "jshop"
-  #     DATABASE_HOST: db_host
-  #     BROKER_HOST: kafka_host
-  #     BROKER_PORT: 9093
-  #   depends_on:
-  #     - kafka
-  #     - db
-  #   networks:
-  #     - default
 
   # frontend_nginx:
   #   container_name: frontend_nginx

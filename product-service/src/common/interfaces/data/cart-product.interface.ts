@@ -1,5 +1,6 @@
 import { IProduct } from "./product.interface"
 
-export interface ICartProduct extends IProduct {
+export interface ICartProduct {
+    product: IProduct
     count: number
 }

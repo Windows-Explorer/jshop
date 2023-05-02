@@ -3,7 +3,7 @@ version: '3'
 services:
   redis:
     image: "redis:alpine"
-    command: redis-server --requirepass sOmE_sEcUrE_pAsS
+    command: redis-server --requirepass 12341234
     hostname: redis_host
     ports:
     - "6379:6379"
@@ -143,6 +143,9 @@ services:
       DATABASE_HOST: db_host
       BROKER_HOST: kafka_host
       BROKER_PORT: 9093
+      REDIS_HOST: redis_host
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: 12341234
     depends_on:
       - kafka
       - db

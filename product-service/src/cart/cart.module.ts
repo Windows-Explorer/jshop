@@ -12,6 +12,7 @@ import { RedisModule } from "@liaoliaots/nestjs-redis"
     imports: [
         RedisModule.forRootAsync({
             imports: [ConfigModule],
+            inject: [ConfigService],
             useFactory: async (configService: ConfigService) => ({
                 config: {
                     host: configService.get<string>("REDIS_HOST"),

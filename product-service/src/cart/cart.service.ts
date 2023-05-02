@@ -11,7 +11,6 @@ import Redis from "ioredis"
 @Injectable()
 export class CartService implements ICartService {
     constructor(
-        @InjectRepository(Product) private readonly _productRepository: Repository<IProduct>,
         @InjectRedis() private readonly _redisClient: Redis
     ) { }
 

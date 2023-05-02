@@ -4,7 +4,6 @@ import { CART_SERVICE_TOKEN, RESULTER_TOKEN } from "src/common/constants/inject-
 import { CartService } from "./cart.service"
 import { CartController } from "./cart.conrtoller"
 import { Resulter } from "src/common/resulter"
-import { ClientsModule, Transport } from "@nestjs/microservices"
 import { ConfigModule, ConfigService } from "@nestjs/config"
 import { RedisModule } from "@liaoliaots/nestjs-redis"
 

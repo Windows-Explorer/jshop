@@ -21,8 +21,8 @@ export class CartController {
     }
 
     @Get("/:id")
-    async remove(@Param("id") id: number, @Res() response: Response) {
-        const result = await this._client.send("cart.remove", id).toPromise()
+    async remove(@Param("removableCartProduct") removableCartProduct: any, @Res() response: Response) {
+        const result = await this._client.send("cart.remove", removableCartProduct).toPromise()
         response.status(result.statusCode).send(result.message)
     }
 }

@@ -26,9 +26,9 @@ export class CartController {
         return result
     }
 
-    // @MessagePattern("cart.remove")
-    // async remove(@Payload() payload: number): Promise<IResult<DeleteResult>> {
-    //     const result = await this._output.responseAsync(HttpStatus.OK, await this._cartService.remove(payload))
-    //     return result
-    // }
+    @MessagePattern("cart.remove")
+    async remove(@Payload() payload: ICartProduct): Promise<IResult<string>> {
+        const result = await this._output.responseAsync(HttpStatus.OK, await this._cartService.remove(payload))
+        return result
+    }
 }

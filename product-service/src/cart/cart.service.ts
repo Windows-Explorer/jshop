@@ -1,7 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common"
 import { ICartProduct } from "src/common/interfaces/data/cart-product.interface"
 import { ICartService } from "src/common/interfaces/services/cart.service.interface"
-import { DeleteResult } from "typeorm"
 import { InjectRedis } from "@liaoliaots/nestjs-redis"
 import Redis from "ioredis"
 
@@ -41,7 +40,17 @@ export class CartService implements ICartService {
         throw new Error("Method not implemented.")
     }
 
-    async remove(userId: number, cartProductId: number): Promise<DeleteResult> {
-        throw new Error("Method not implemented.")
+    async remove(cartProduct: ICartProduct): Promise<string> {
+        try {
+            if (cartProduct.userId >= 0) {
+                const cartProducts: ICartProduct[] = await JSON.parse(await this._redisClient.get(cartProduct.userId.toString()))
+                const cartProductIndex = cartProducts.findIndex(async (value: ICartProduct) => value == cartProduct)
+                cartProducts.splice(cartProductIndex, 1)
+                return "removed"
+            }
+        }
+        catch (error) {
+            throw new HttpException(error, HttpStatus.BAD_REQUEST)
+        }
     }
 }

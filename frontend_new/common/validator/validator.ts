@@ -1,6 +1,27 @@
+import params from "~~/params"
 import { IValidator } from "../interfaces/validator.interfaces/validator.interface"
 
 export class Validator implements IValidator {
+    async isUsernameUnique(value: string): Promise<boolean> {
+        try {
+            const result: boolean = await (await fetch(`${params.api_host}/api/unique/username/${value}`)).json()
+            return !result
+        }
+        catch {
+            return false
+        }
+    }
+
+    async isEmailUnique(value: string): Promise<boolean> {
+        try {
+            const result: boolean = await (await fetch(`${params.api_host}/api/unique/email/${value}`)).json()
+            return !result
+        }
+        catch {
+            return false
+        }
+    }
+
     async isNumber(value: any): Promise<boolean> {
         try {
             if (Number(value)) return true

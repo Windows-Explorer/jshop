@@ -16,7 +16,7 @@ export default defineNuxtConfig({
         '@formkit/nuxt',
     ],
     formkit: {
-        configFile: "./formkit.config.ts"
+        configFile: "./formkit.config.ts",
     },
     vite: {
         css: {

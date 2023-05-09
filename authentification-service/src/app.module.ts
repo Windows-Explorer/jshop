@@ -5,8 +5,6 @@ import { User } from "./users/entities/user.entity"
 import { ConfigModule, ConfigService } from "@nestjs/config"
 import { UsersModule } from "./users/users.module"
 import { UniqueModule } from "./unique/unique.module"
-import { RESULTER_TOKEN } from "./common/constants/inject-tokens.constant"
-import { Resulter } from "./common/resulter"
 
 @Module({
   imports: [

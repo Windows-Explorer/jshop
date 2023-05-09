@@ -1,35 +1,35 @@
 import { Controller, HttpStatus, Inject } from "@nestjs/common"
 import { MessagePattern, Payload } from "@nestjs/microservices"
-import { IUsersService } from "src/common/interfaces/user.service.interface"
-import { RESULTER_TOKEN, USERS_SERVICE_TOKEN } from "src/common/constants/inject-tokens.constant"
+import { OUTPUT_TOKEN, UNIQUE_SERVICE_TOKEN } from "src/common/constants/inject-tokens.constant"
 import { IResult } from "src/common/interfaces/result.interface"
-import { IResulter } from "src/common/interfaces/resulter.interface"
+import { IOutput } from "src/common/interfaces/resulter.interface"
+import { IUniqueService } from "src/common/interfaces/services/unique.service.interface"
 
 @Controller("")
 export class UniqueController {
     constructor(
-        @Inject(USERS_SERVICE_TOKEN) private readonly _userService: IUsersService,
-        @Inject(RESULTER_TOKEN) private readonly _resulter: IResulter
-    ) {}
+        @Inject(UNIQUE_SERVICE_TOKEN) private readonly _uniqueService: IUniqueService,
+        @Inject(OUTPUT_TOKEN) private readonly _output: IOutput
+    ) { }
 
     @MessagePattern("unique.email")
-    async isEmailUnique(@Payload() uniqueDto: string): Promise<IResult<string>> {
+    async isEmailUnique(@Payload() email: string): Promise<IResult<boolean>> {
         try {
-            return await this._resulter.responseAsync(HttpStatus.OK, (await this._userService.findByEmail(uniqueDto)).email)
+            return await this._output.responseAsync(HttpStatus.OK, await this._uniqueService.isEmailUnique(email))
         }
         catch {
-            return await this._resulter.responseAsync(HttpStatus.OK, "")
+            return await this._output.responseAsync(HttpStatus.OK, false)
         }
     }
 
-    
+
     @MessagePattern("unique.username")
-    async isUsernameUnique(@Payload() uniqueDto: string): Promise<IResult<string>> {
+    async isUsernameUnique(@Payload() username: string): Promise<IResult<boolean>> {
         try {
-            return await this._resulter.responseAsync(HttpStatus.OK, (await this._userService.findByUsername(uniqueDto)).username)
+            return await this._output.responseAsync(HttpStatus.OK, await this._uniqueService.isUsernameUnique(username))
         }
         catch {
-            return await this._resulter.responseAsync(HttpStatus.OK, "")
+            return await this._output.responseAsync(HttpStatus.OK, false)
         }
     }
 }

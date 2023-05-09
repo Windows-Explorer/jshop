@@ -6,9 +6,9 @@ import { User } from "src/users/entities/user.entity"
 import { ITokenPayload } from "../common/interfaces/jwt-payload.interface"
 import { UserSignInDto } from "src/common/dto/user-signin.dto"
 import { ConfigService } from "@nestjs/config"
-import { IUsersService } from "../common/interfaces/user.service.interface"
+import { IUsersService } from "../common/interfaces/services/user.service.interface"
 import { CONFIG_SERVICE_TOKEN, JWT_SERVICE_TOKEN, USERS_SERVICE_TOKEN } from "src/common/constants/inject-tokens.constant"
-import { IAuthService } from "src/common/interfaces/auth.service.interface"
+import { IAuthService } from "src/common/interfaces/services/auth.service.interface"
 
 @Injectable()
 export class AuthService implements IAuthService {

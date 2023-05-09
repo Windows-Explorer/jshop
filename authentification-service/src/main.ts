@@ -3,7 +3,7 @@ import { ConfigService } from "@nestjs/config"
 import { NestFactory } from "@nestjs/core"
 import { MicroserviceOptions, Transport } from "@nestjs/microservices"
 import { AppModule } from "./app.module"
-import { Resulter } from "./common/resulter"
+import { Output } from "./common/output"
 import { AllExceptionsFilter } from "./extentions/all.exception-filter"
 
 
@@ -21,7 +21,7 @@ async function bootstrap() {
       }
     }
   })
-  app.useGlobalFilters(new AllExceptionsFilter(new Resulter()))
+  app.useGlobalFilters(new AllExceptionsFilter(new Output()))
   app.useGlobalPipes(new ValidationPipe())
 
   console.log(app.get(ConfigService))

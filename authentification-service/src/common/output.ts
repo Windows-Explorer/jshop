@@ -1,10 +1,9 @@
 import { Injectable } from "@nestjs/common"
-import { Observable } from "rxjs"
 import { IResult } from "src/common/interfaces/result.interface"
-import { IResulter } from "src/common/interfaces/resulter.interface"
+import { IOutput } from "src/common/interfaces/resulter.interface"
 
 @Injectable()
-export class Resulter implements IResulter {
+export class Output implements IOutput {
     public async responseAsync<T>(statusCode: number, message: T ): Promise<IResult<T>> {
         return { statusCode: statusCode, message: message }
     }

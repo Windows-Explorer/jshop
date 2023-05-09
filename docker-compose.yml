@@ -111,7 +111,7 @@ services:
       BROKER_PORT: 9093
     depends_on:
       - kafka
-      - db
+      - mariadb
     networks:
       - default
 

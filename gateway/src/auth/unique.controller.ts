@@ -5,12 +5,12 @@ import { AUTH_KAFKA_CLIENT_TOKEN } from "src/common/constants/inject-tokens.cons
 import { IResult } from "src/common/dto/result.dto"
 
 @Injectable()
-@Controller("api/unique")
+@Controller("unique")
 export class UniqueController {
     constructor(@Inject(AUTH_KAFKA_CLIENT_TOKEN) private readonly _client: ClientKafka) {}
 
     @Get("/email/:email")
-    async getUniqueEmail(@Param("email") email: string, @Res() response: Response): Promise<any> {
+    async getUniqueEmail(@Param("email") email: string, @Res() response: Response) {
         const result: IResult<any> = await this._client.send("unique.email", email).toPromise()
         response.status(result.statusCode).send(result.message)
     }

@@ -88,7 +88,6 @@ onMounted(async () => {
     width: 100%;
     z-index: 2;
     background-color: rgba($dark, 0.5);
-    backdrop-filter: blur(10px);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -110,12 +109,10 @@ onMounted(async () => {
 .sticky-header-enter-from,
 .sticky-header-leave-to {
     transform: translateY(-100%);
-    box-shadow: 0px 0px 0px black;
 }
 
 .sticky-header-enter-to,
 .sticky-header-leave-from {
     transform: translateY(0);
-    box-shadow: 0px 0px 20px black;
 }
 </style>

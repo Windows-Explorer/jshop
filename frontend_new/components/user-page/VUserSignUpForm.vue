@@ -88,7 +88,6 @@ const inputClasses = {
 }
 
 const validator = new Validator()
-const router = useRouter()
 const authStore = useAuthStore()
 
 async function uniqueUsername(): Promise<boolean> {
@@ -108,15 +107,14 @@ const user: Ref<IUserSignUp> = ref({
     password: ""
 })
 const confirmPassword: Ref<string> = ref("")
-
 const signUpForm: Ref<any> = ref(null)
+    
 async function submitSignUpForm() {
     signUpForm.value.node.submit()
 }
 
 async function onSubmit() {
     await authStore.signUp(user.value)
-    await router.push({ path: "/" })
 }
 
 </script>

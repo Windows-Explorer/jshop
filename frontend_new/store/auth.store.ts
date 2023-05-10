@@ -15,9 +15,11 @@ const useAuthStore = defineStore('auth', () => {
             body: JSON.stringify(user)
         })
         if (result.status === 200) {
+            const router = useRouter()
             const tokenString = await result.text()
             cookie.value = tokenString
             token.value = tokenString
+            router.push({ path: "/" })
         }
         else {
             cookie.value = ""

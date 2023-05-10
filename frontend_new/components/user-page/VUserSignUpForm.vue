@@ -64,7 +64,6 @@
             :classes="inputClasses"
             :prefix-icon="passwordIcon"
         />
-        {{ user }}
         <VButton label="Зарегистрироваться" style="background-color: #181818; box-shadow: none;" :size="16" />
     </FormKit>
 </template>

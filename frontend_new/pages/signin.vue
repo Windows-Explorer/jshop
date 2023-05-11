@@ -1,6 +1,6 @@
 <template>
     <div class="user-page-container">
-        <VUserSignUpForm />
+        <VUserSignInForm />
         <VFooter />
     </div>
 </template>

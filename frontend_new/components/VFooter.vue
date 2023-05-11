@@ -31,6 +31,18 @@
     </footer>
 </template>
 
+<script lang="ts" setup>
+import useAuthStore from '../store/auth.store'
+
+
+const authStore = useAuthStore()
+
+onBeforeRouteUpdate(async (to, from) => {
+  console.log("redirected")
+  authStore.verifyToken()
+})
+
+</script>
 
 <style lang="scss" scoped>
 .footer-container {

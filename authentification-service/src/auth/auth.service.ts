@@ -16,7 +16,7 @@ export class AuthService implements IAuthService {
         @Inject(USERS_SERVICE_TOKEN) private readonly _usersService: IUsersService,
         @Inject(JWT_SERVICE_TOKEN) private readonly _jwtService: JwtService,
         @Inject(CONFIG_SERVICE_TOKEN) private readonly _configService: ConfigService
-    ) {}
+    ) { }
 
     async signUp(userDto: UserCreateDto): Promise<string> {
         try {
@@ -30,7 +30,7 @@ export class AuthService implements IAuthService {
             })
             return await this.signUser(user)
         }
-        catch(error) {
+        catch (error) {
             throw new HttpException(error, HttpStatus.UNAUTHORIZED)
         }
     }
@@ -38,7 +38,7 @@ export class AuthService implements IAuthService {
 
     async signIn(userDto: UserSignInDto): Promise<string> {
         const user = await this._usersService.findByEmail(userDto.email)
-        if(user && (await bcrypt.compare(userDto.password, user.passwordHash))) {
+        if (user && (await bcrypt.compare(userDto.password, user.passwordHash))) {
             return await this.signUser(user)
         }
         throw new HttpException("Unauthorized", HttpStatus.UNAUTHORIZED)
@@ -56,12 +56,12 @@ export class AuthService implements IAuthService {
     }
 
     async verifyAdminToken(token: string): Promise<boolean> {
-            await this._jwtService.verifyAsync(token, { secret: this._configService.get<string>("JWT_SECRET") })
-            const decodedToken = await this._jwtService.decode(token)
-            if (typeof(decodedToken) !== "string" && decodedToken.role === "admin" ){
-                return true
-            }
-            return false
+        await this._jwtService.verifyAsync(token, { secret: this._configService.get<string>("JWT_SECRET") })
+        const decodedToken = await this._jwtService.decode(token)
+        if (typeof (decodedToken) !== "string" && decodedToken.role === "admin") {
+            return true
+        }
+        return false
     }
 
 

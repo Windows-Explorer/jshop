@@ -8,7 +8,6 @@
         }"
         :actions="false"
         :config="{ validationVisibility: 'blur' }"
-        submit-label="Зарегистрироваться"
         @submit="onSubmit"
     >
         <h2 class="form-main-label">Регистрация</h2>
@@ -17,7 +16,7 @@
             v-model="user.username"
             label="Имя пользователя"
             validation="validateUniqueUsername|*required|*length:5,16"
-            :validation-rules="{ validateUniqueUsername, validateUsernameLength }"
+            :validation-rules="{ validateUniqueUsername }"
             :validation-messages="{
                 required: 'Обязательное поле',
                 validateUniqueUsername: 'Имя пользователя занято',
@@ -64,6 +63,9 @@
             :classes="inputClasses"
             :prefix-icon="passwordIcon"
         />
+        <NuxtLink :to="{ path: '/signin' }" class="redirect-a">
+            <span>Уже есть аккаунт</span>
+        </NuxtLink>
         <VButton label="Зарегистрироваться" style="background-color: #181818; box-shadow: none;" :size="16" />
     </FormKit>
 </template>
@@ -73,7 +75,6 @@ import { Ref, ref } from "vue"
 import { IUserSignUp } from "../../common/interfaces/user.interface"
 import { Validator } from "../../common/validator/validator"
 import useAuthStore from "../../store/auth.store"
-import { FormKitNode } from "@formkit/core"
 
 const userIcon = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M4 22C4 17.5817 7.58172 14 12 14C16.4183 14 20 17.5817 20 22H18C18 18.6863 15.3137 16 12 16C8.68629 16 6 18.6863 6 22H4ZM12 13C8.685 13 6 10.315 6 7C6 3.685 8.685 1 12 1C15.315 1 18 3.685 18 7C18 10.315 15.315 13 12 13ZM12 11C14.21 11 16 9.21 16 7C16 4.79 14.21 3 12 3C9.79 3 8 4.79 8 7C8 9.21 9.79 11 12 11Z"></path></svg>'
 const emailIcon = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M3 3H21C21.5523 3 22 3.44772 22 4V20C22 20.5523 21.5523 21 21 21H3C2.44772 21 2 20.5523 2 20V4C2 3.44772 2.44772 3 3 3ZM20 7.23792L12.0718 14.338L4 7.21594V19H20V7.23792ZM4.51146 5L12.0619 11.662L19.501 5H4.51146Z"></path></svg>'
@@ -95,15 +96,9 @@ const authStore = useAuthStore()
 async function validateUniqueUsername(): Promise<boolean> {
     return await validator.isUsernameUnique(user.value.username)
 }
-
 async function validateUniqueEmail(): Promise<boolean> {
     return await validator.isEmailUnique(user.value.email)
 }
-
-async function validateUsernameLength(): Promise<boolean> {
-    return await validator.minLength(user.value.username, 4) && await validator.maxLength(user.value.username, 16)
-}
-
 async function validateConfirmPassword(): Promise<boolean> {
     return confirmPassword.value === user.value.password
 }
@@ -116,10 +111,6 @@ const user: Ref<IUserSignUp> = ref({
 })
 const confirmPassword: Ref<string> = ref("")
 const signUpForm: Ref<any> = ref(null)
-
-async function submitSignUpForm() {
-    signUpForm.value.node.submit()
-}
 
 async function onSubmit() {
     await authStore.signUp(user.value)

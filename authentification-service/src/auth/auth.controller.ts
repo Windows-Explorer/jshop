@@ -37,7 +37,7 @@ export class AuthController {
     }
 
     @MessagePattern("auth.verify")
-    async verifyToken(@Payload() token: any): Promise<IResult<string>> {
+    async verifyToken(@Payload() token: string): Promise<IResult<string>> {
         try {
             const result = await this._output.responseAsync(HttpStatus.OK, await this._authService.verifyToken(token))
             return result

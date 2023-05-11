@@ -1,8 +1,8 @@
 <template>
   <div>
-    <VHeaderMobile v-if="baseScreenWidth < 660" />
+    <VHeaderMobile v-if="baseScreenWidth < 770" />
     <VHeader v-else />
-    <VStickyHeaderMobile v-if="baseScreenWidth < 660" />
+    <VStickyHeaderMobile v-if="baseScreenWidth < 770" />
     <VStickyHeader v-else />
     <NuxtPage />
   </div>
@@ -22,8 +22,12 @@ const baseScreenWidth: WritableComputedRef<number> = computed(() => window.inner
   transition: all 0.0s;
 }
 
-.page-enter-from,
-.page-leave-to {
-  
+// .page-enter-from,
+// .page-leave-to {}
+
+.redirect-a {
+  color: $dark;
+  font-family: 'Nunito', serif;
+  font-size: smaller;
 }
 </style>

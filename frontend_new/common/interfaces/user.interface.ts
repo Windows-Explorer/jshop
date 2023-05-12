@@ -2,7 +2,6 @@ export interface IUserSignIn {
     id?: number,
     email: string,
     password: string
-
 }
 export interface IUserSignUp {
     id?: number,

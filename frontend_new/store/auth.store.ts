@@ -10,21 +10,26 @@ const useAuthStore = defineStore('auth', () => {
     const role: Ref<string> = ref(roleCookie.value || "")
 
     async function signUp(user: IUserSignUp) {
-        const result = await fetch(`${params.api_host}/auth/signup`, {
-            method: "POST",
-            headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(user)
-        })
-        if (result.status === 200) {
-            const router = useRouter()
-            const tokenString = await result.text()
-            await saveToken(tokenString)
-            router.push({ path: "/" })
+        try {
+            const result = await fetch(`${params.api_host}/auth/signup`, {
+                method: "POST",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(user)
+            })
+            if (result.status === 200) {
+                const router = useRouter()
+                const tokenString = await result.text()
+                await saveToken(tokenString)
+                router.push({ path: "/" })
+            }
+            else await removeToken()
         }
-        else await removeToken()
+        catch {
+            
+        }
     }
 
     async function signIn(user: IUserSignIn) {
@@ -104,7 +109,7 @@ const useAuthStore = defineStore('auth', () => {
         token.value = ""
     }
 
-    return { token, signUp, signIn, isAuthorized, verifyToken }
+    return { token, role, signUp, signIn, isAuthorized, verifyToken }
 })
 
 export default useAuthStore

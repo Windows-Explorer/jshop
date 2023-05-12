@@ -1,7 +1,16 @@
 import params from "~~/params"
-import { IValidator } from "../interfaces/validator.interfaces/validator.interface"
+import { IValidator } from "./interfaces/validator.interface"
 
 export class Validator implements IValidator {
+    async isPhoneNumber(value: string): Promise<boolean> {
+        try {
+            const phoneRegExp = /((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}/
+            return phoneRegExp.test(value)
+        }
+        catch {
+            return false
+        }
+    }
     async isUsernameUnique(value: string): Promise<boolean> {
         try {
             const result: boolean = await (await fetch(`${params.api_host}/api/unique/username/${value}`)).json()

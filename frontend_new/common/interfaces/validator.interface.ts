@@ -4,4 +4,5 @@ export interface IValidator {
     minLength(value: string, minLength: number): Promise<boolean>
     maxLength(value: string, maxLength: number): Promise<boolean>
     isRequired(value: any): Promise<boolean>
+    isPhoneNumber(value: string): Promise<boolean>
 }

@@ -40,6 +40,19 @@
             :prefix-icon="emailIcon"
         />
         <FormKit
+            type="text"
+            v-model="user.phoneNumber"
+            label="Номер телефона"
+            validation="validatePhoneNumber|*required"
+            :validation-rules="{ validatePhoneNumber }"
+            :validation-messages="{
+                validatePhoneNumber: 'Некорректный номер телефона',
+                required: 'Обязательное поле'
+            }"
+            :classes="inputClasses"
+            :prefix-icon="emailIcon"
+        />
+        <FormKit
             type="password"
             v-model="user.password"
             label="Пароль"
@@ -93,6 +106,9 @@ const inputClasses = {
 const validator = new Validator()
 const authStore = useAuthStore()
 
+async function validatePhoneNumber(): Promise<boolean> {
+    return await validator.isPhoneNumber(user.value.phoneNumber)
+}
 async function validateUniqueUsername(): Promise<boolean> {
     return await validator.isUsernameUnique(user.value.username)
 }

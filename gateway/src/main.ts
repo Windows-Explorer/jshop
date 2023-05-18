@@ -12,11 +12,10 @@ async function bootstrap() {
     .setTitle("API Swagger")
     .setDescription("API Gateway methods")
     .setVersion("0.1")
-    .addTag("API")
     .build()
 
   const document = SwaggerModule.createDocument(app, config)
-  SwaggerModule.setup("api", app, document)
+  SwaggerModule.setup("/", app, document)
 
   console.log(app.get(ConfigService))
   await app.listen(3000)

@@ -3,7 +3,6 @@ import { ClientKafka } from "@nestjs/microservices"
 import { Response } from "express"
 import { PRODUCTS_KAFKA_CLIENT_TOKEN } from "src/common/constants/inject-tokens.constants"
 import { ProductsFindDto } from "src/common/dto/products-find.dto"
-import { IResult } from "src/common/dto/result.dto"
 
 @Controller("products")
 export class ProductsController {

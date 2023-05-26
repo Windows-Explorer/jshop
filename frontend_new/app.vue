@@ -4,8 +4,8 @@
     <VHeader v-else />
     <VStickyHeaderMobile v-if="baseScreenWidth < 770" />
     <VStickyHeader v-else />
-    <button @click="openDialog()" style="margin-top: 100px;">Open Dialog</button>
-    <button @click="closeDialog()" style="margin-top: 100px;">Close Dialog</button>
+    <!-- <button @click="openDialog()" style="margin-top: 200px;">Open Dialog</button>
+    <button @click="closeDialog()" style="margin-top: 200px;">Close Dialog</button> -->
     <NuxtPage />
   </div>
 </template>
@@ -13,17 +13,21 @@
 
 <script lang="ts" setup>
 import { WritableComputedRef, computed } from "vue"
-import { DialogEmitter } from "./common/dialog-emitter"
 
-const baseScreenWidth: WritableComputedRef<number> = computed(() => window.innerWidth)
-const dialogEmitter = new DialogEmitter()
 
-async function openDialog() {
-  dialogEmitter.open()
-}
-async function closeDialog() {
-  dialogEmitter.close()
-}
+const baseScreenWidth: WritableComputedRef<number> = computed(() => 900)
+
+// const popupEmitter = usePopup()
+// const popup = popupEmitter.createPopup({
+//   title: "Title"
+// })
+
+// async function openDialog() {
+//   (await popup).value.open()
+// }
+// async function closeDialog() {
+//   (await popup).value.close()
+// }
 
 
 </script>

@@ -1,8 +1,8 @@
 import { ICartProduct } from "../data/cart-product.interface"
 
 export interface ICartService {
-    findAll(userId: number): Promise<ICartProduct[]>
+    findAll(userEmail: string): Promise<ICartProduct[]>
     save(cartProduct: ICartProduct): Promise<ICartProduct>
-    count(userId): Promise<{ count: number }>
+    count(userEmail: string): Promise<{ count: number }>
     remove(cartProduct: ICartProduct): Promise<string>
 }

@@ -1,16 +1,27 @@
-import { Body, Controller, Get, Inject, Param, Query, Res } from "@nestjs/common"
+import { Body, Controller, Get, Inject, Param, Query, Req, Res } from "@nestjs/common"
 import { ClientKafka } from "@nestjs/microservices"
-import { Response } from "express"
+import { Request, Response } from "express"
 import { CART_KAFKA_CLIENT_TOKEN } from "src/common/constants/inject-tokens.constants"
-import { IResult } from "src/common/dto/result.dto"
 
 @Controller("cart")
 export class CartController {
     constructor(@Inject(CART_KAFKA_CLIENT_TOKEN) private readonly _client: ClientKafka) { }
 
     @Get("/")
-    async findAll(@Query("userId") userId: number, @Res() response: Response) {
-        const result = await this._client.send("cart.findAll", userId).toPromise()
+    async findAll(@Res() response: Response, @Req() request: Request) {
+        const token = request.headers.authorization.replace("Bearer ", "")
+
+        let base64Url = token.split('.')[1]
+        let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
+        let jsonPayload = decodeURIComponent(window.atob(base64).split('').map((c) => {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+        }).join(''))
+
+        const JSONdataFromToken = await JSON.parse(jsonPayload)
+
+        const userEmail: string = JSONdataFromToken
+
+        const result = await this._client.send("cart.findAll", userEmail).toPromise()
         response.status(result.statusCode).send(result.message)
     }
 

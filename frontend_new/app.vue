@@ -4,8 +4,6 @@
     <VHeader v-else />
     <VStickyHeaderMobile v-if="baseScreenWidth < 770" />
     <VStickyHeader v-else />
-    <!-- <button @click="openDialog()" style="margin-top: 200px;">Open Dialog</button>
-    <button @click="closeDialog()" style="margin-top: 200px;">Close Dialog</button> -->
     <NuxtPage />
   </div>
 </template>
@@ -14,21 +12,8 @@
 <script lang="ts" setup>
 import { WritableComputedRef, computed } from "vue"
 
-
-const baseScreenWidth: WritableComputedRef<number> = computed(() => 900)
-
-// const popupEmitter = usePopup()
-// const popup = popupEmitter.createPopup({
-//   title: "Title"
-// })
-
-// async function openDialog() {
-//   (await popup).value.open()
-// }
-// async function closeDialog() {
-//   (await popup).value.close()
-// }
-
+const nuxtApp = useNuxtApp()
+const baseScreenWidth: WritableComputedRef<number> = computed(() => nuxtApp.$display.getWidth())
 
 </script>
 

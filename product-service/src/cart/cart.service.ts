@@ -10,12 +10,10 @@ export class CartService implements ICartService {
         @InjectRedis() private readonly _redisClient: Redis
     ) { }
 
-    async findAll(userId: number): Promise<ICartProduct[]> {
+    async findAll(userEmail: string): Promise<ICartProduct[]> {
         try {
-            if (userId >= 0) {
-                const result = await this._redisClient.get(userId.toString())
-                return JSON.parse(result)
-            }
+            const result = await this._redisClient.get(userEmail)
+            return JSON.parse(result)
         }
         catch (error) {
             throw new HttpException(error, HttpStatus.BAD_REQUEST)
@@ -25,9 +23,9 @@ export class CartService implements ICartService {
     async save(cartProduct: ICartProduct): Promise<ICartProduct> {
         try {
             if (cartProduct.count > 0 && cartProduct.product) {
-                const cartProducts: ICartProduct[] = await JSON.parse(await this._redisClient.get(cartProduct.userId.toString()))
+                const cartProducts: ICartProduct[] = await JSON.parse(await this._redisClient.get(cartProduct.userEmail))
                 cartProducts.push(cartProduct)
-                await this._redisClient.set(cartProduct.userId.toString(), JSON.stringify(cartProducts))
+                await this._redisClient.set(cartProduct.userEmail, JSON.stringify(cartProducts))
                 return cartProduct
             }
         }
@@ -36,14 +34,14 @@ export class CartService implements ICartService {
         }
     }
 
-    async count(userId: any): Promise<{ count: number }> {
+    async count(userEmail: string): Promise<{ count: number }> {
         throw new Error("Method not implemented.")
     }
 
     async remove(cartProduct: ICartProduct): Promise<string> {
         try {
-            if (cartProduct.userId >= 0) {
-                const cartProducts: ICartProduct[] = await JSON.parse(await this._redisClient.get(cartProduct.userId.toString()))
+            if (cartProduct.userEmail) {
+                const cartProducts: ICartProduct[] = await JSON.parse(await this._redisClient.get(cartProduct.userEmail))
                 const cartProductIndex = cartProducts.findIndex(async (value: ICartProduct) => value == cartProduct)
                 cartProducts.splice(cartProductIndex, 1)
                 return "removed"

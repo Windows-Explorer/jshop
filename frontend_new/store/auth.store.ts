@@ -109,7 +109,7 @@ const useAuthStore = defineStore('auth', () => {
         token.value = ""
     }
 
-    return { token, role, signUp, signIn, isAuthorized, verifyToken }
+    return { token, role, signUp, signIn, isAuthorized, verifyToken, getRoleFromToken }
 })
 
 export default useAuthStore

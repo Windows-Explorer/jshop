@@ -1,12 +1,6 @@
 <template>
-    <div class="home-page-container">
-        <section class="image-section">
-            <div class="section-content">
-                <div class="logo-container">
-                    <div class="logo"></div>
-                </div>
-            </div>
-        </section>
+    <div class="coffee-page-container">
+        <VCoffeeSection />
     </div>
 </template>
 

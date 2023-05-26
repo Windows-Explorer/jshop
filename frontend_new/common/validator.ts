@@ -13,7 +13,7 @@ export class Validator implements IValidator {
     }
     async isUsernameUnique(value: string): Promise<boolean> {
         try {
-            const result: boolean = await (await fetch(`${params.api_host}/api/unique/username/${value}`)).json()
+            const result: boolean = await (await fetch(`${params.api_host}/unique/username/${value}`)).json()
             return !result
         }
         catch {
@@ -23,7 +23,7 @@ export class Validator implements IValidator {
 
     async isEmailUnique(value: string): Promise<boolean> {
         try {
-            const result: boolean = await (await fetch(`${params.api_host}/api/unique/email/${value}`)).json()
+            const result: boolean = await (await fetch(`${params.api_host}/unique/email/${value}`)).json()
             return !result
         }
         catch {

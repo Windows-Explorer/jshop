@@ -15,7 +15,7 @@ export class CartController {
 
 
     @MessagePattern("cart.findAll")
-    async findAll(@Payload() payload: number): Promise<IResult<ICartProduct[]>> {
+    async findAll(@Payload() payload: string): Promise<IResult<ICartProduct[]>> {
         const result = await this._output.responseAsync(HttpStatus.OK, await this._cartService.findAll(payload))
         return result
     }

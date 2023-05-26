@@ -3,7 +3,7 @@ import { ClientKafka } from "@nestjs/microservices"
 import { Response } from "express"
 import { PRODUCTS_KAFKA_CLIENT_TOKEN } from "src/common/constants/inject-tokens.constants"
 
-@Controller("api")
+@Controller("products")
 export class CategoriesController {
     constructor(@Inject(PRODUCTS_KAFKA_CLIENT_TOKEN) private readonly _client: ClientKafka) { }
 

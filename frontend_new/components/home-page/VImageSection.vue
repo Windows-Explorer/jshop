@@ -21,12 +21,20 @@
                 <VLogo />
                 <span class="logo-text">Добро пожаловать</span>
                 <span class="logo-subtext">Beans Coffee Production</span>
-                <VButton label="В магазин" :size="16" />
+                <VButton label="В магазин" :size="16" @click="redirectToShopPage()" />
             </div>
         </div>
     </section>
 </template>
 
+<script lang="ts" setup>
+
+const router = useRouter()
+async function redirectToShopPage() {
+    router.push({ name: "coffee" })
+}
+
+</script>
 
 <style lang="scss" scoped>
 .image-section {

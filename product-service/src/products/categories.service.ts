@@ -32,7 +32,7 @@ export class CategoriesService implements ICategoriesService {
             return result
         }
         catch (error) {
-            this._logger.log(error, "CATEGORIES-SERVICE: save")
+            console.log(error)
             throw new HttpException(error, 500)
         }
     }

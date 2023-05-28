@@ -15,14 +15,14 @@ export class CategoriesProtectedController {
     @UseGuards(AdminGuard)
     @Post("/")
     async save(@Body() product: any, @Res() response: Response) {
-        const result = await this._client.send("categories.save", product).toPromise()
+        const result = await this._client.send("products.categories.save", product).toPromise()
         response.status(result.statusCode).send(result.message)
     }
 
     @UseGuards(AdminGuard)
     @Delete("/:id")
     async removeOne(@Param("id") id: number, @Res() response: Response) {
-        const result = await this._client.send("categories.remove", id).toPromise()
+        const result = await this._client.send("products.categories.remove", id).toPromise()
         response.status(result.statusCode).send(result.message)
     }
 }

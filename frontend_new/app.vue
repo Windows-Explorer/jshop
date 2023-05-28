@@ -5,7 +5,7 @@
       <VHeader v-else />
       <VStickyHeaderMobile v-if="baseScreenWidth < 770" />
       <VStickyHeader v-else />
-      <VAdminLayout v-if="role === 'user'" />
+      <VAdminLayout v-if="role === 'admin'" />
     </header>
     <NuxtPage />
   </div>

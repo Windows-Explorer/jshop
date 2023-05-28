@@ -12,10 +12,4 @@ export class CategoriesController {
         const result = await this._client.send("products.categories.findAll", "").toPromise()
         response.status(result.statusCode).send(result.message)
     }
-
-    @Get("/subcategories")
-    async findAllSubcategories(@Res() response: Response) {
-        const result = await this._client.send("products.subcategories.findAll", "").toPromise()
-        response.status(result.statusCode).send(result.message)
-    }
 }

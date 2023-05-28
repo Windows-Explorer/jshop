@@ -16,7 +16,8 @@
 h2 {
     font-family: 'Roboto Slab', serif;
     color: $primary;
-    margin: 0;
+    margin-bottom: 0px;
+    margin-top: 60px;
 }
 
 p {

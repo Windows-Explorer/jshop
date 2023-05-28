@@ -5,7 +5,7 @@
       <VHeader v-else />
       <VStickyHeaderMobile v-if="baseScreenWidth < 770" />
       <VStickyHeader v-else />
-      <VAdminLayout v-if="role === 'admin'" />
+      <VAdminLayout v-if="role === 'user'" />
     </header>
     <NuxtPage />
   </div>
@@ -43,8 +43,9 @@ const baseScreenWidth: WritableComputedRef<number> = computed(() => nuxtApp.$dis
 }
 
 header {
-  z-index: 2;
+  z-index: 4;
   width: 100%;
   position: absolute;
+  top: 0;
 }
 </style>

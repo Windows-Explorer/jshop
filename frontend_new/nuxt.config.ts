@@ -39,6 +39,8 @@ export default defineNuxtConfig({
         "~/components/about-page",
         "~/components/user-page",
         "~/components/coffee-page",
-        "~/components/admin"
+        "~/components/admin",
+        "~/components/admin/edit-products-page",
+        "~/components/admin/edit-categories-page"
     ]
 })

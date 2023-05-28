@@ -3,6 +3,7 @@
         form: 'sign-up-form',
         input: 'form-submit'
     }" :actions="false" :config="{ validationVisibility: 'blur' }" @submit="onSubmit">
+        <h2 class="form-main-label">Войти</h2>
         <FormKit type="email" v-model="user.email" label="Электронная почта" validation="required" :validation-messages="{
                 required: 'Обязательное поле'
             }" :classes="inputClasses" :prefix-icon="emailIcon" />

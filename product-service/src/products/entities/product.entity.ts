@@ -3,8 +3,6 @@ import { IsNumber, Length } from "class-validator"
 import { Category } from "./category.entity"
 import { ICategory } from "src/common/interfaces/data/category.interface"
 import { IProduct } from "src/common/interfaces/data/product.interface"
-import { ISubcategory } from "src/common/interfaces/data/subcategory.interface"
-import { Subcategory } from "./subcategory.entity"
 
 @Entity()
 export class Product implements IProduct {
@@ -32,8 +30,4 @@ export class Product implements IProduct {
 
     @ManyToOne(() => Category, (type: ICategory) => type.id, { eager: true, cascade: true })
     category: ICategory
-
-    @ManyToOne(() => Subcategory, (type: ISubcategory) => type.id, { eager: true, cascade: true, nullable: true })
-    subcategory?: ISubcategory
-
 }

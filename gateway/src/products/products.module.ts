@@ -6,6 +6,7 @@ import { PRODUCTS_KAFKA_CLIENT_TOKEN } from "src/common/constants/inject-tokens.
 import { CategoriesController } from "./categories.controller"
 import { ProductsController } from "./products.controller"
 import { ProductsProtectedController } from "./products.protected.controller"
+import { CategoriesProtectedController } from "./categories.protected.controller"
 
 @Module({
   imports: [
@@ -30,7 +31,7 @@ import { ProductsProtectedController } from "./products.protected.controller"
       }
     ])
   ],
-  controllers: [ProductsController, ProductsProtectedController, CategoriesController]
+  controllers: [ProductsController, ProductsProtectedController, CategoriesController, CategoriesProtectedController]
 })
 export class ProductsModule {
   constructor(@Inject(PRODUCTS_KAFKA_CLIENT_TOKEN) private readonly _client: ClientKafka) { }

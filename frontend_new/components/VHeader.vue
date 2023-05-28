@@ -101,7 +101,6 @@ onMounted(async () => {
     flex-wrap: wrap;
     align-items: center;
     justify-content: flex-start;
-    position: absolute;
     top: 0;
     flex-direction: column;
     z-index: 2;

@@ -14,7 +14,7 @@ const useProductsStore = defineStore("products", () => {
             }
         }
         catch (error) {
-
+            console.log(error)
         }
     }
 
@@ -35,7 +35,7 @@ const useProductsStore = defineStore("products", () => {
             }
         }
         catch (error) {
-
+            console.log(error)
         }
     }
 

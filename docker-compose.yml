@@ -34,7 +34,6 @@ services:
     ports:
       - 8080:80
     environment:
-      PMA_USER: jshop_user
       PMA_HOST: mariadb_host
       PMA_PORT: 3306
     networks:

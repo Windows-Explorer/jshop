@@ -88,7 +88,6 @@ onMounted(async () => {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    position: absolute;
     top: 0;
     flex-direction: column;
 }

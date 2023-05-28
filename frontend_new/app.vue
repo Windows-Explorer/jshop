@@ -1,9 +1,12 @@
 <template>
   <div>
-    <VHeaderMobile v-if="baseScreenWidth < 770" />
-    <VHeader v-else />
-    <VStickyHeaderMobile v-if="baseScreenWidth < 770" />
-    <VStickyHeader v-else />
+    <header>
+      <VHeaderMobile v-if="baseScreenWidth < 770" />
+      <VHeader v-else />
+      <VStickyHeaderMobile v-if="baseScreenWidth < 770" />
+      <VStickyHeader v-else />
+      <VAdminLayout v-if="role === 'admin'" />
+    </header>
     <NuxtPage />
   </div>
 </template>
@@ -11,9 +14,16 @@
 
 <script lang="ts" setup>
 import { WritableComputedRef, computed } from "vue"
+import useAuthStore from "./store/auth.store"
+import { storeToRefs } from "pinia"
 
 const nuxtApp = useNuxtApp()
+const authStore = useAuthStore()
+
+const { role } = storeToRefs(authStore)
+
 const baseScreenWidth: WritableComputedRef<number> = computed(() => nuxtApp.$display.getWidth())
+
 
 </script>
 
@@ -30,5 +40,11 @@ const baseScreenWidth: WritableComputedRef<number> = computed(() => nuxtApp.$dis
   color: $dark;
   font-family: 'Nunito', serif;
   font-size: smaller;
+}
+
+header {
+  z-index: 2;
+  width: 100%;
+  position: absolute;
 }
 </style>

@@ -4,7 +4,6 @@ import { ConfigModule, ConfigService } from "@nestjs/config"
 import { ProductsModule } from "./products/products.module"
 import { Product } from "./products/entities/product.entity"
 import { Category } from "./products/entities/category.entity"
-import { Subcategory } from "./products/entities/subcategory.entity"
 import { CartModule } from "./cart/cart.module"
 
 @Module({
@@ -23,7 +22,7 @@ import { CartModule } from "./cart/cart.module"
         database: configService.get<string>("DATABASE_DATABASE"),
         password: configService.get<string>("DATABASE_PASSWORD"),
         username: configService.get<string>("DATABASE_USERNAME"),
-        entities: [Product, Category, Subcategory],
+        entities: [Product, Category],
         synchronize: true
       })
     }),

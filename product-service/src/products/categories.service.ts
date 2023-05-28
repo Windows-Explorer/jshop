@@ -13,14 +13,14 @@ export class CategoriesService implements ICategoriesService {
     constructor(
         @InjectRepository(Category) private readonly _categoryRepository: Repository<ICategory>,
         @Inject(LOGGER_TOKEN) private readonly _logger: ILoggerOutput
-    ){}
+    ) { }
 
     async findAll(): Promise<ICategory[]> {
         try {
-            const result = await this._categoryRepository.find({ relations: ["subcategories"]})
+            const result = await this._categoryRepository.find({ relations: ["subcategories"] })
             return result
         }
-        catch(error) {
+        catch (error) {
             this._logger.log(error, "CATEGORIES-SERVICE: findAll")
             throw new HttpException(error, 500)
         }
@@ -31,18 +31,27 @@ export class CategoriesService implements ICategoriesService {
             const result = await this._categoryRepository.save(category)
             return result
         }
-        catch(error) {
+        catch (error) {
             this._logger.log(error, "CATEGORIES-SERVICE: save")
+            throw new HttpException(error, 500)
+        }
+    }
+
+    async remove(id: number): Promise<DeleteResult> {
+        try {
+            const result = this._categoryRepository.delete(id)
+            return result
+        } catch (error) {
             throw new HttpException(error, 500)
         }
     }
 
     async deleteAll(): Promise<DeleteResult> {
         try {
-            const result = await this._categoryRepository.delete({ id: Not(-1)})
+            const result = await this._categoryRepository.delete({ id: Not(-1) })
             return result
         }
-        catch(error) {
+        catch (error) {
             this._logger.log(error, "CATEGORIES-SERVICE: deleteAll")
             throw new HttpException(error, 500)
         }

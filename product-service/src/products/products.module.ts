@@ -9,14 +9,12 @@ import { CategoriesController } from "./categories.controller"
 import { CategoriesService } from "./categories.service"
 import { Category } from "./entities/category.entity"
 import { Product } from "./entities/product.entity"
-import { Subcategory } from "./entities/subcategory.entity"
 import { ProductsController } from "./products.controller"
 import { ProductsService } from "./products.service"
-import { SubcategoriesService } from "./subcategories.service"
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Product, Category, Subcategory])
+    TypeOrmModule.forFeature([Product, Category])
   ],
   providers: [
     { provide: PRODUCTS_SERVICE_TOKEN, useClass: ProductsService },
@@ -25,7 +23,6 @@ import { SubcategoriesService } from "./subcategories.service"
     { provide: PAGINATOR_TOKEN, useClass: Paginator },
     { provide: LOGGER_TOKEN, useClass: Logger },
     { provide: CATEGORIES_SERVICE_TOKEN, useClass: CategoriesService },
-    { provide: SUBCATEGORIES_SERVICE_TOKEN, useClass: SubcategoriesService },
   ],
   controllers: [ProductsController, CategoriesController]
 })

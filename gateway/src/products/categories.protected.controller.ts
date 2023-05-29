@@ -1,14 +1,11 @@
 import { Body, Controller, Inject, Param, Post, Res, UseGuards } from "@nestjs/common"
-import { Delete, UploadedFile, UseInterceptors } from "@nestjs/common/decorators"
+import { Delete } from "@nestjs/common/decorators"
 import { ClientKafka } from "@nestjs/microservices"
-import { FileInterceptor } from "@nestjs/platform-express"
 import { Response } from "express"
-import { diskStorage } from "multer"
-import { IMAGES_DIRECTORY_PATH } from "src/common/constants/file-directories.constants"
 import { PRODUCTS_KAFKA_CLIENT_TOKEN } from "src/common/constants/inject-tokens.constants"
 import { AdminGuard } from "src/guards/admin.guard"
 
-@Controller("products/categories")
+@Controller("categories")
 export class CategoriesProtectedController {
     constructor(@Inject(PRODUCTS_KAFKA_CLIENT_TOKEN) private readonly _client: ClientKafka) { }
 

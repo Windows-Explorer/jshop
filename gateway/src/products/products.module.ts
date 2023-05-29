@@ -39,9 +39,9 @@ export class ProductsModule {
   async onModuleInit() {
     this._client.subscribeToResponseOf("products.findAll")
     this._client.subscribeToResponseOf("products.count")
-    this._client.subscribeToResponseOf("products.categories.findAll")
-    this._client.subscribeToResponseOf("products.categories.save")
-    this._client.subscribeToResponseOf("products.categories.remove")
+    this._client.subscribeToResponseOf("categories.findAll")
+    this._client.subscribeToResponseOf("categories.save")
+    this._client.subscribeToResponseOf("categories.remove")
     this._client.subscribeToResponseOf("products.findById")
     this._client.subscribeToResponseOf("products.save")
     this._client.subscribeToResponseOf("products.saveMany")

@@ -16,10 +16,9 @@ export class CategoriesController {
         @Inject(LOGGER_TOKEN) private readonly _logger: ILoggerOutput
     ) { }
 
-    @MessagePattern("products.categories.findAll")
+    @MessagePattern("categories.findAll")
     async findAll(): Promise<IResult<ICategory[]>> {
         try {
-            console.log("AAAAA")
             const result = await this._output.responseAsync(HttpStatus.OK, await this._categoriesService.findAll())
             return result
         }
@@ -29,13 +28,13 @@ export class CategoriesController {
         }
     }
 
-    @MessagePattern("products.categories.save")
+    @MessagePattern("categories.save")
     async save(@Payload() category: ICategory): Promise<IResult<ICategory>> {
         const result = await this._output.responseAsync(HttpStatus.OK, await this._categoriesService.save(category))
         return result
     }
 
-    @MessagePattern("products.categories.remove")
+    @MessagePattern("categories.remove")
     async remove(@Payload() id: number): Promise<IResult<DeleteResult>> {
         const result = await this._output.responseAsync(HttpStatus.OK, await this._categoriesService.remove(id))
         return result

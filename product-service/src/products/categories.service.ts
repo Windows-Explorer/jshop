@@ -5,7 +5,6 @@ import { ICategoriesService } from "src/common/interfaces/services/categories.se
 import { ILoggerOutput } from "src/common/interfaces/logger-output.interface"
 import { DeleteResult, Not, Repository } from "typeorm"
 import { Category } from "./entities/category.entity"
-import { notEqual } from "assert"
 import { ICategory } from "src/common/interfaces/data/category.interface"
 
 @Injectable()

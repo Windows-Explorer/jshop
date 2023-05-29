@@ -1,5 +1,5 @@
 import { IsNotEmpty, IsNumber } from "class-validator"
-import { Column, Entity, JoinColumn, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm"
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm"
 import { ICategory } from "src/common/interfaces/data/category.interface"
 
 @Entity()

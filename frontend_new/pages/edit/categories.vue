@@ -2,9 +2,13 @@
     <div class="edit-categories-container">
         <div class="content">
             <VButton class="add-button" label="Добавить" :size="14" @click="showDialog = true" />
-            <VEditableCategoryCard v-for="(category, index) in categories" :key="index" :category="category" />
+            <div class="list">
+                <VEditableCategoryCard v-for="(category, index) in categories" :key="index" :category="category" />
+            </div>
         </div>
-        <VAddCategoryDialog :show="showDialog" @dialog-closed="showDialog = false"/>
+        <VAddCategoryDialog :show="showDialog" @dialog-closed="showDialog = false"
+            v-on:dialog-closed="categoriesStore.getCategories()" />
+        <VFooter />
     </div>
 </template>
 
@@ -28,14 +32,28 @@ onMounted(async () => {
     box-shadow: none;
     background-color: $primary;
     color: $dark;
+    align-self: flex-start;
 }
+
 .edit-product-container {
     height: 100vh;
     background-color: transparent;
 }
+
 .content {
-    margin-top: 160px;
-    background-color: $secondary;
+    background-color: $dark;
     padding: 16px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 32px;
+}
+
+.list {
+    padding: 16px 32px;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    background-color: $primary;
 }
 </style>

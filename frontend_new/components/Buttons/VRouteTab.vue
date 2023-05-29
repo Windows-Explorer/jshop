@@ -43,7 +43,7 @@ const props = defineProps({
 .tab {
     flex-grow: 0;
     width: auto;
-    padding: 8px;
+    padding: 2px 6px;
     user-select: none;
     font-family: 'Nunito', serif;
     text-transform: uppercase;

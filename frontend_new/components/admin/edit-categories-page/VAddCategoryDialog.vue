@@ -14,6 +14,7 @@
 </template>
 
 <script lang="ts" setup>
+import { PropType } from 'nuxt/dist/app/compat/capi'
 import { ICategory } from '~/common/interfaces/data/category.interface'
 import useCategoriesStore from '~/store/categories.store'
 
@@ -23,12 +24,30 @@ const props = defineProps({
     show: {
         type: Boolean,
         required: true
+    },
+    category: {
+        type: Object as PropType<ICategory>,
+        required: false,
+        default: {
+            id: undefined,
+            name: "",
+            description: ""
+        }
     }
 })
 
 const category: Ref<ICategory> = ref({
+    id: undefined,
     name: "",
     description: ""
+})
+
+async function fillInputs()  {
+    category.value = props.category
+}
+
+onMounted(async () => {
+    fillInputs()
 })
 
 const categoriesStore = useCategoriesStore()

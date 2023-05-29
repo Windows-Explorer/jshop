@@ -45,7 +45,7 @@ const baseScreenWidth: WritableComputedRef<number> = computed(() => nuxtApp.$dis
 header {
   z-index: 4;
   width: 100%;
-  position: absolute;
+  padding-block: 10px;
   top: 0;
 }
 </style>

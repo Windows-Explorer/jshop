@@ -10,7 +10,6 @@ const useCategoriesStore = defineStore("categories", () => {
     async function getCategories() {
         try {
             const result = await fetch(`${params.api_host}/categories`)
-            console.log(result)
             if (result.ok) {
                 categories.value = await result.json()
             }
@@ -41,7 +40,27 @@ const useCategoriesStore = defineStore("categories", () => {
         }
     }
 
-    return { categories, getCategories, saveCategory }
+    async function removeCategory(id: number) {
+        try {
+            const authStore = useAuthStore()
+            const result = await fetch(`${params.api_host}/categories/${id}`, {
+                method: "DELETE",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${authStore.token}`
+                }
+            })
+            if (result.ok) {
+                console.log("removed")
+            }
+        }
+        catch (error) {
+            console.log(error)
+        }
+    }
+
+    return { categories, getCategories, saveCategory, removeCategory }
 })
 
 export default useCategoriesStore

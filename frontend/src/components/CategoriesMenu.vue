@@ -30,7 +30,6 @@
 </template>
 
 <script lang="ts" setup>
-import { ISubcategory } from "../common/interfaces/subcategory.interface"
 import { PropType } from "vue"
 import { ICategory } from "../common/interfaces/category.interface"
 

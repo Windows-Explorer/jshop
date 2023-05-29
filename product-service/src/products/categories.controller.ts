@@ -1,6 +1,6 @@
 import { Controller, HttpException, HttpStatus, Inject } from "@nestjs/common"
 import { MessagePattern, Payload } from "@nestjs/microservices"
-import { RESULTER_TOKEN, LOGGER_TOKEN, CATEGORIES_SERVICE_TOKEN, SUBCATEGORIES_SERVICE_TOKEN } from "src/common/constants/inject-tokens.constant"
+import { RESULTER_TOKEN, LOGGER_TOKEN, CATEGORIES_SERVICE_TOKEN } from "src/common/constants/inject-tokens.constant"
 import { ICategory } from "src/common/interfaces/data/category.interface"
 import { IResult } from "src/common/interfaces/data/result.interface"
 import { ILoggerOutput } from "src/common/interfaces/logger-output.interface"
@@ -19,8 +19,8 @@ export class CategoriesController {
     @MessagePattern("products.categories.findAll")
     async findAll(): Promise<IResult<ICategory[]>> {
         try {
+            console.log("AAAAA")
             const result = await this._output.responseAsync(HttpStatus.OK, await this._categoriesService.findAll())
-            console.log(result)
             return result
         }
         catch (error) {

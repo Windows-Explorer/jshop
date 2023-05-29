@@ -7,7 +7,7 @@ import { PRODUCTS_KAFKA_CLIENT_TOKEN } from "src/common/constants/inject-tokens.
 export class CategoriesController {
     constructor(@Inject(PRODUCTS_KAFKA_CLIENT_TOKEN) private readonly _client: ClientKafka) { }
 
-    @Get("/categories")
+    @Get("/dolboebizm")
     async findAll(@Res() response: Response) {
         const result = await this._client.send("products.categories.findAll", "").toPromise()
         response.status(result.statusCode).send(result.message)

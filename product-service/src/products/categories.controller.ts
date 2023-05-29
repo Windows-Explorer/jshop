@@ -17,9 +17,10 @@ export class CategoriesController {
     ) { }
 
     @MessagePattern("products.categories.findAll")
-    async findAllCategories(): Promise<IResult<ICategory[]>> {
+    async findAll(): Promise<IResult<ICategory[]>> {
         try {
             const result = await this._output.responseAsync(HttpStatus.OK, await this._categoriesService.findAll())
+            console.log(result)
             return result
         }
         catch (error) {

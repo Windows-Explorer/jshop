@@ -8,7 +8,7 @@ export class CategoriesController {
     constructor(@Inject(PRODUCTS_KAFKA_CLIENT_TOKEN) private readonly _client: ClientKafka) { }
 
     @Get("/categories")
-    async findAllCategories(@Res() response: Response) {
+    async findAll(@Res() response: Response) {
         const result = await this._client.send("products.categories.findAll", "").toPromise()
         response.status(result.statusCode).send(result.message)
     }

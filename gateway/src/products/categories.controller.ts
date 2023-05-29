@@ -10,7 +10,7 @@ export class CategoriesController {
     @Get("/")
     async findAll(@Res() response: Response) {
         console.log("dolboebizm has been called")
-        const result = await this._client.send("products.categories.findAll", "").toPromise()
+        const result = await this._client.send("categories.findAll", "").toPromise()
         console.log(result)
         response.status(result.statusCode).send(result.message)
     }

@@ -9,7 +9,7 @@ const useCategoriesStore = defineStore("categories", () => {
 
     async function getCategories() {
         try {
-            const result = await fetch(`${params.api_host}/products/categories`)
+            const result = await fetch(`${params.api_host}/categories`)
             console.log(result)
             if (result.ok) {
                 categories.value = await result.json()
@@ -23,7 +23,7 @@ const useCategoriesStore = defineStore("categories", () => {
     async function saveCategory(category: ICategory) {
         try {
             const authStore = useAuthStore()
-            const result = await fetch(`${params.api_host}/products/categories`, {
+            const result = await fetch(`${params.api_host}/categories`, {
                 method: "POST",
                 headers: {
                     "Accept": "application/json",

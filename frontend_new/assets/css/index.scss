@@ -20,7 +20,7 @@ body,
     display: flex;
     justify-content: center;
     align-items: center;
-
+background-color: rgba(0, 0, 0, 0.4);
 }
 
 .dialog {
@@ -28,8 +28,16 @@ body,
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background-color: $primary;
+    padding: 32px;
+    gap: 16px;
 
-    .submit {
-        box-shadow: none;
+    input{
+        padding: 12px 16px;
+        font-size: large;
+    }
+
+    h2 {
+        font-family: 'Nunito', sans-serif;
     }
 }

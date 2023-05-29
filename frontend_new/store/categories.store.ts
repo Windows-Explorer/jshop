@@ -10,6 +10,7 @@ const useCategoriesStore = defineStore("categories", () => {
     async function getCategories() {
         try {
             const result = await fetch(`${params.api_host}/products/categories`)
+            console.log(result)
             if (result.ok) {
                 categories.value = await result.json()
             }

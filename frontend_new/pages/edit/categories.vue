@@ -1,10 +1,10 @@
 <template>
     <div class="edit-categories-container">
         <div class="content">
-            <VButton class="add-button" label="Добавить" :size="14" />
+            <VButton class="add-button" label="Добавить" :size="14" @click="showDialog = true" />
             <VEditableCategoryCard v-for="(category, index) in categories" :key="index" :category="category" />
         </div>
-        <VAddCategoryDialog :show="showDialog" />
+        <VAddCategoryDialog :show="showDialog" @dialog-closed="showDialog = false"/>
     </div>
 </template>
 
@@ -15,7 +15,7 @@ import useCategoriesStore from '~/store/categories.store'
 const categoriesStore = useCategoriesStore()
 const { categories } = storeToRefs(categoriesStore)
 
-const showDialog: Ref<boolean> = ref(true)
+const showDialog: Ref<boolean> = ref(false)
 
 onMounted(async () => {
     categoriesStore.getCategories()

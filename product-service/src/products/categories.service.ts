@@ -17,7 +17,7 @@ export class CategoriesService implements ICategoriesService {
 
     async findAll(): Promise<ICategory[]> {
         try {
-            const result = await this._categoryRepository.find({ relations: ["subcategories"] })
+            const result = await this._categoryRepository.find()
             return result
         }
         catch (error) {

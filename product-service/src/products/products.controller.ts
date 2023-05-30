@@ -17,8 +17,8 @@ export class ProductsController {
     ) { }
 
     @MessagePattern("products.findAll")
-    async findAll(@Payload() payload: FindDto): Promise<IResult<IProduct[]>> {
-        const result = await this._output.responseAsync(HttpStatus.OK, await this._productsService.findAll(payload.page, payload.filter))
+    async findAll(): Promise<IResult<IProduct[]>> {
+        const result = await this._output.responseAsync(HttpStatus.OK, await this._productsService.findAll())
         return result
     }
 

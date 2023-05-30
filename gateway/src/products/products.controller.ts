@@ -9,18 +9,8 @@ export class ProductsController {
     constructor(@Inject(PRODUCTS_KAFKA_CLIENT_TOKEN) private readonly _client: ClientKafka) { }
 
     @Get("/")
-    async findAll(
-        @Res() response: Response,
-        @Query("page") page: number,
-        @Query("title") title: string,
-        @Query("cost") cost: number,
-        @Query("category") category: string,
-        @Query("subcategory") subcategory: string
-    ) {
-        if (!page) page = 0
-        const request: ProductsFindDto = { page: page, filter: { title, cost, category, subcategory } }
-
-        const result = await this._client.send("products.findAll", request).toPromise()
+    async findAll(@Res() response: Response) {
+        const result = await this._client.send("products.findAll", "").toPromise()
         response.status(result.statusCode).send(result.message)
     }
 

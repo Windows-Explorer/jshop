@@ -19,14 +19,14 @@ export class ProductsService implements IProductsService {
         @Inject(FILTER_TOKEN) private readonly _filter: IFilter,
         @Inject(PAGINATOR_TOKEN) private readonly _paginator: IPaginator,
         @Inject(LOGGER_TOKEN) private readonly _logger: ILoggerOutput
-    ){}
+    ) { }
 
     async count(page: number, filter: IProductsFilterPayload): Promise<{ count: number }> {
         try {
             const filteredOptions: FindManyOptions = await this._filter.filter(filter)
             const paginatedOptions: FindManyOptions = await this._paginator.paginateFromPageNumber(page, filteredOptions)
             const count: number = await this._productsRepository.count(paginatedOptions)
-            return { count: count / PRODUCTS_COUNT_AT_PAGE}
+            return { count: count / PRODUCTS_COUNT_AT_PAGE }
         }
         catch (error) {
             this._logger.log(error, "PRODUCTS-SERVICE: count")
@@ -38,14 +38,14 @@ export class ProductsService implements IProductsService {
         return await this._productsRepository.findOne({ where: { id: productId } })
     }
 
-    async findAll(page: number, filter: IProductsFilterPayload): Promise<IProduct[]> {
+    async findAll(): Promise<IProduct[]> {
         try {
-            const filteredOptions: FindManyOptions = await this._filter.filter(filter)
-            const paginatedOptions: FindManyOptions = await this._paginator.paginateFromPageNumber(page, filteredOptions)
-            const result = await this._productsRepository.find(paginatedOptions)
+            // const filteredOptions: FindManyOptions = await this._filter.filter(filter)
+            // const paginatedOptions: FindManyOptions = await this._paginator.paginateFromPageNumber(page, filteredOptions)
+            const result = await this._productsRepository.find()
             return result
         }
-        catch(error) {
+        catch (error) {
             this._logger.log(error, "PRODUCTS-SERVICE: findAll")
             throw new HttpException(error, 500)
         }

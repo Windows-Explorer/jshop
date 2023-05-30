@@ -3,9 +3,12 @@
         <div class="category-content-container">
             <h2 class="category-title">{{ props.category.name }}</h2>
             <span class="category-description">{{ props.category.description }}</span>
-            <VButton class="edit-button" label="Редактировать" :size="12" style="box-shadow: none;"
-                @click="showDialog = true" />
-            <VButton class="remove-button" label="Удалить" :size="12" style="box-shadow: none;" @click="removeCategory()" />
+            <div class="actions">
+                <VButton class="edit-button" label="Редактировать" :size="12" style="box-shadow: none;"
+                    @click="showDialog = true" />
+                <VButton class="remove-button" label="Удалить" :size="12" style="box-shadow: none;"
+                    @click="removeCategory()" />
+            </div>
             <VAddCategoryDialog :show="showDialog" :category="props.category" v-on:dialog-closed="showDialog = false" />
         </div>
     </div>
@@ -42,12 +45,23 @@ async function removeCategory() {
     background-color: $accent;
 }
 
+.actions {
+    display: flex;
+    gap: 12px;
+}
+
 .category-card {
     display: flex;
     margin-block: 10px;
     border: 1px solid rgba(0, 0, 0, 0.1);
     padding: 4px 20px;
     border-radius: 4px;
+    font-family: 'Nunito', sans-serif;
+    color: $dark;
+}
+
+.category-title {
+    font-size: large;
 }
 
 .category-content-container {

@@ -18,9 +18,11 @@ const useProductsStore = defineStore("products", () => {
         }
     }
 
-    async function saveProduct(product: IProduct) {
+    async function saveProduct(product: IProduct, imageFile: File) {
         try {
+            product.image = `${params.api_host}/images/${imageFile.name}`
             const authStore = useAuthStore()
+
             const result = await fetch(`${params.api_host}/products`, {
                 method: "POST",
                 headers: {
@@ -31,7 +33,20 @@ const useProductsStore = defineStore("products", () => {
                 body: JSON.stringify(product)
             })
             if (result.ok) {
-                console.log("saved")
+                const formData: FormData = new FormData()
+                formData.append("file", imageFile)
+
+                const imageUploadResult = await fetch(`${params.api_host}/products/image`, {
+                    method: "POST",
+                    headers: {
+                        // 'Content-Type': 'multipart/form-data',
+                        "Authorization": `Bearer ${authStore.token}`
+                    },
+                    body: formData
+                })
+                if (imageUploadResult.ok) {
+                    console.log("saved")
+                }
             }
         }
         catch (error) {
@@ -39,7 +54,27 @@ const useProductsStore = defineStore("products", () => {
         }
     }
 
-    return { products, getProducts, saveProduct }
+    async function removeProduct(id: number) {
+        try {
+            const authStore = useAuthStore()
+            const result = await fetch(`${params.api_host}/products/${id}`, {
+                method: "DELETE",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${authStore.token}`
+                }
+            })
+            if (result.ok) {
+                console.log("removed")
+            }
+        }
+        catch (error) {
+            console.log(error)
+        }
+    }
+
+    return { products, getProducts, saveProduct, removeProduct }
 })
 
 export default useProductsStore

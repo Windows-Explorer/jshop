@@ -1,5 +1,4 @@
 import { ICategory } from "./category.interface"
-import { ISubcategory } from "./subcategory.interface"
 
 export interface IProduct {
     id?: number
@@ -8,5 +7,4 @@ export interface IProduct {
     image?: string
     cost: number
     category: ICategory
-    subcategory?: ISubcategory
 }

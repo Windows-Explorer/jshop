@@ -9,7 +9,7 @@
                 <VButton class="remove-button" label="Удалить" :size="12" style="box-shadow: none;"
                     @click="removeProduct()" />
             </div>
-            <VAddProductDialog :show="showDialog" :product="props.product" v-on:dialog-closed="showDialog = false" title="Добавить продукт" />
+            <VAddProductDialog :show="showDialog" :product="props.product" v-on:dialog-closed="showDialog = false" title="Редактировать продукт" />
         </div>
     </div>
 </template>

@@ -30,13 +30,22 @@ export class CategoriesController {
 
     @MessagePattern("categories.save")
     async save(@Payload() category: ICategory): Promise<IResult<ICategory>> {
-        const result = await this._output.responseAsync(HttpStatus.OK, await this._categoriesService.save(category))
-        return result
+        try {
+            const result = await this._output.responseAsync(HttpStatus.OK, await this._categoriesService.save(category))
+            return result
+        }
+        catch (error) {
+            throw new HttpException(error, 500)
+        }
     }
 
     @MessagePattern("categories.remove")
     async remove(@Payload() id: number): Promise<IResult<DeleteResult>> {
-        const result = await this._output.responseAsync(HttpStatus.OK, await this._categoriesService.remove(id))
-        return result
+        try {
+            const result = await this._output.responseAsync(HttpStatus.OK, await this._categoriesService.remove(id))
+            return result
+        } catch (error) {
+            throw new HttpException(error, 500)
+        }
     }
 }

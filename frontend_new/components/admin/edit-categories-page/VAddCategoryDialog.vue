@@ -1,7 +1,7 @@
 <template>
     <Teleport to="body">
         <Transition name="dialog">
-            <div class="wrapper" v-if="props.show" @click="emits('dialogClosed')">
+            <div class="wrapper" v-if="props.show" @click="closeDialog()">
                 <div class="dialog" @click.stop>
                     <h2>Добавить категорию</h2>
                     <input type="text" v-model="category.name" placeholder="Название">
@@ -42,8 +42,19 @@ const category: Ref<ICategory> = ref({
     description: ""
 })
 
-async function fillInputs()  {
+async function fillInputs() {
     category.value = props.category
+}
+async function resetInputs() {
+    category.value = {
+        id: undefined,
+        name: "",
+        description: ""
+    }
+}
+async function closeDialog() {
+    resetInputs()
+    emits('dialogClosed')
 }
 
 onMounted(async () => {

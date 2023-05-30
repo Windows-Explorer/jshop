@@ -19,6 +19,5 @@ definePageMeta({
     align-content: center;
     flex-wrap: nowrap;
     background-color: $primary;
-    margin-top: 80px;
 }
 </style>

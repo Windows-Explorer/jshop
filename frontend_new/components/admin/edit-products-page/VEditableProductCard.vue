@@ -9,7 +9,8 @@
                 <VButton class="remove-button" label="Удалить" :size="12" style="box-shadow: none;"
                     @click="removeProduct()" />
             </div>
-            <VAddProductDialog :show="showDialog" :product="props.product" v-on:dialog-closed="showDialog = false" title="Редактировать продукт" />
+            <VAddProductDialog :show="showDialog" :product="props.product" v-on:dialog-closed="showDialog = false"
+                title="Редактировать продукт" />
         </div>
     </div>
 </template>
@@ -50,7 +51,7 @@ async function removeProduct() {
     gap: 12px;
 }
 
-.category-card {
+.product-card {
     display: flex;
     margin-block: 10px;
     border: 1px solid rgba(0, 0, 0, 0.1);
@@ -60,11 +61,11 @@ async function removeProduct() {
     color: $dark;
 }
 
-.category-title {
+.product-title {
     font-size: large;
 }
 
-.category-content-container {
+.product-content-container {
     display: flex;
     flex-direction: row;
     justify-content: space-between;

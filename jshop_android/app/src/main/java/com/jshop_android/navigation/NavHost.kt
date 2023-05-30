@@ -4,12 +4,12 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.jshop_android.screens.account.AccountScreen
-import com.jshop_android.screens.account.AccountViewModel
-import com.jshop_android.screens.cart.CartScreen
-import com.jshop_android.screens.cart.CartViewModel
-import com.jshop_android.screens.home.HomeScreen
-import com.jshop_android.screens.home.HomeViewModel
+import com.jshop_android.activities.mainActivity.screens.account.AccountScreen
+import com.jshop_android.activities.mainActivity.screens.account.AccountViewModel
+import com.jshop_android.activities.mainActivity.screens.cart.CartScreen
+import com.jshop_android.activities.mainActivity.screens.cart.CartViewModel
+import com.jshop_android.activities.mainActivity.screens.home.HomeScreen
+import com.jshop_android.activities.mainActivity.screens.home.HomeViewModel
 
 
 @Composable

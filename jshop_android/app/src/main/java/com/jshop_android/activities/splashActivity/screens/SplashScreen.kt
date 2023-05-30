@@ -1,4 +1,4 @@
-package com.jshop_android.screens
+package com.jshop_android.activities.mainActivity.screens
 
 import androidx.compose.animation.*
 import androidx.compose.animation.core.tween

@@ -1,4 +1,4 @@
-package com.jshop_android.screens.cart.views
+package com.jshop_android.activities.mainActivity.screens.cart.views
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
@@ -20,9 +20,9 @@ import com.jshop_android.components.CartProductCard
 import com.jshop_android.m3_pullrefresh.PullRefreshIndicator
 import com.jshop_android.m3_pullrefresh.pullRefresh
 import com.jshop_android.m3_pullrefresh.rememberPullRefreshState
-import com.jshop_android.screens.cart.CartEvent
-import com.jshop_android.screens.cart.CartViewModel
-import com.jshop_android.screens.cart.CartViewState
+import com.jshop_android.activities.mainActivity.screens.cart.CartEvent
+import com.jshop_android.activities.mainActivity.screens.cart.CartViewModel
+import com.jshop_android.activities.mainActivity.screens.cart.CartViewState
 
 
 @OptIn(ExperimentalMaterial3Api::class)

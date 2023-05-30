@@ -1,4 +1,4 @@
-package com.jshop_android.screens.cart
+package com.jshop_android.activities.mainActivity.screens.cart
 
 import com.jshop_android.common.interfaces.ICartProduct
 

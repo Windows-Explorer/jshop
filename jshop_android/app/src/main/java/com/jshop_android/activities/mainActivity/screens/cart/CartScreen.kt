@@ -1,12 +1,12 @@
-package com.jshop_android.screens.cart
+package com.jshop_android.activities.mainActivity.screens.cart
 
 import androidx.compose.animation.Crossfade
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.livedata.observeAsState
 import com.jshop_android.components.Loading
-import com.jshop_android.screens.cart.views.CartViewDisplay
-import com.jshop_android.screens.home.views.HomeViewError
+import com.jshop_android.activities.mainActivity.screens.cart.views.CartViewDisplay
+import com.jshop_android.activities.mainActivity.screens.home.views.HomeViewError
 
 @Composable
 fun CartScreen(cartViewModel: CartViewModel) {

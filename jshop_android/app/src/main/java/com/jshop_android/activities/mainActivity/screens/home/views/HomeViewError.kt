@@ -1,4 +1,4 @@
-package com.jshop_android.screens.home.views
+package com.jshop_android.activities.mainActivity.screens.home.views
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border

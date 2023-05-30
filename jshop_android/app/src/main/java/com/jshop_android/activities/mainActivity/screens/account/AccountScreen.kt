@@ -1,4 +1,4 @@
-package com.jshop_android.screens.account
+package com.jshop_android.activities.mainActivity.screens.account
 
 import androidx.compose.animation.Crossfade
 import androidx.compose.runtime.Composable

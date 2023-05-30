@@ -1,4 +1,4 @@
-package com.jshop_android.screens.home
+package com.jshop_android.activities.mainActivity.screens.home
 
 import com.jshop_android.common.interfaces.IProduct
 

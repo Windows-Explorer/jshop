@@ -1,4 +1,4 @@
-package com.jshop_android.screens.cart
+package com.jshop_android.activities.mainActivity.screens.cart
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.jshop_android.common.classes.CartProduct
 import com.jshop_android.common.interfaces.ICartProduct
 import com.jshop_android.common.interfaces.IEventHandler
-import com.jshop_android.screens.home.generateProducts
+import com.jshop_android.activities.mainActivity.screens.home.generateProducts
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay

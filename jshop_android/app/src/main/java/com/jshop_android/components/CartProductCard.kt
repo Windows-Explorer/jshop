@@ -22,8 +22,8 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.jshop_android.R
 import com.jshop_android.common.interfaces.ICartProduct
-import com.jshop_android.screens.cart.CartEvent
-import com.jshop_android.screens.cart.CartViewModel
+import com.jshop_android.activities.mainActivity.screens.cart.CartEvent
+import com.jshop_android.activities.mainActivity.screens.cart.CartViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

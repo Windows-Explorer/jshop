@@ -5,8 +5,6 @@ import androidx.compose.material.icons.rounded.AccountCircle
 import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material.icons.rounded.ShoppingCart
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.lifecycle.ViewModel
-import com.jshop_android.screens.home.HomeViewModel
 
 sealed class NavigationItem(
     var route: String,

@@ -1,18 +1,16 @@
 package com.jshop_android.navigation
 
-import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.slideIn
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
-import com.jshop_android.screens.account.AccountScreen
-import com.jshop_android.screens.account.AccountViewModel
-import com.jshop_android.screens.home.HomeScreen
-import com.jshop_android.screens.home.HomeViewModel
+import com.jshop_android.activities.mainActivity.screens.account.AccountScreen
+import com.jshop_android.activities.mainActivity.screens.account.AccountViewModel
+import com.jshop_android.activities.mainActivity.screens.home.HomeScreen
+import com.jshop_android.activities.mainActivity.screens.home.HomeViewModel
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable

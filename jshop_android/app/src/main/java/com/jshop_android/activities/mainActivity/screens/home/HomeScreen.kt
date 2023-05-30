@@ -1,11 +1,11 @@
-package com.jshop_android.screens.home
+package com.jshop_android.activities.mainActivity.screens.home
 
 import androidx.compose.animation.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import com.jshop_android.components.Loading
-import com.jshop_android.screens.home.views.HomeViewDisplay
-import com.jshop_android.screens.home.views.HomeViewError
+import com.jshop_android.activities.mainActivity.screens.home.views.HomeViewDisplay
+import com.jshop_android.activities.mainActivity.screens.home.views.HomeViewError
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable()

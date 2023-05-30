@@ -1,4 +1,4 @@
-package com.jshop_android.screens.home
+package com.jshop_android.activities.mainActivity.screens.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

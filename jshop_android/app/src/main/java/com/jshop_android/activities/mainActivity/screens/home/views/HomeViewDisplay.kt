@@ -1,4 +1,4 @@
-package com.jshop_android.screens.home.views
+package com.jshop_android.activities.mainActivity.screens.home.views
 
 
 import androidx.compose.foundation.layout.Box
@@ -13,9 +13,9 @@ import com.jshop_android.components.ProductCard
 import com.jshop_android.m3_pullrefresh.PullRefreshIndicator
 import com.jshop_android.m3_pullrefresh.pullRefresh
 import com.jshop_android.m3_pullrefresh.rememberPullRefreshState
-import com.jshop_android.screens.home.HomeEvent
-import com.jshop_android.screens.home.HomeViewModel
-import com.jshop_android.screens.home.HomeViewState
+import com.jshop_android.activities.mainActivity.screens.home.HomeEvent
+import com.jshop_android.activities.mainActivity.screens.home.HomeViewModel
+import com.jshop_android.activities.mainActivity.screens.home.HomeViewState
 
 @Composable
 fun HomeViewDisplay(homeViewModel: HomeViewModel, state: HomeViewState.Display) {

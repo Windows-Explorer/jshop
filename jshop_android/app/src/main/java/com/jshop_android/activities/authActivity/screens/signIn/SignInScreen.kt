@@ -1,36 +1,34 @@
 package com.jshop_android.activities.authActivity.screens.signIn
 
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.jshop_android.common.classes.UserSignIn
 import com.jshop_android.components.BeansLogo
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable()
-fun SignInScreen() {
+fun SignInScreen(signInViewModel: SignInViewModel) {
+    val viewState = signInViewModel.signInViewState.observeAsState()
+
     var email by remember { mutableStateOf(TextFieldValue("")) }
     var password by remember { mutableStateOf(TextFieldValue("")) }
-
-    val systemUiController = rememberSystemUiController()
-    systemUiController.setStatusBarColor(
-        color = MaterialTheme.colorScheme.secondary,
-        darkIcons = !isSystemInDarkTheme()
-    )
 
     Surface(
         modifier = Modifier
@@ -51,7 +49,8 @@ fun SignInScreen() {
                 label = {
                     Text(
                         text = "Электронная почта",
-                        fontSize = 16.sp
+                        fontSize = 16.sp,
+                        style = MaterialTheme.typography.displayMedium
                     )
                 },
                 leadingIcon = {
@@ -79,14 +78,16 @@ fun SignInScreen() {
             )
             Spacer(modifier = Modifier.padding(12.dp))
             TextField(
-                value = email,
+                visualTransformation = PasswordVisualTransformation(),
+                value = password,
                 onValueChange = {
                     password = it
                 },
                 label = {
                     Text(
                         text = "Пароль",
-                        fontSize = 16.sp
+                        fontSize = 16.sp,
+                        style = MaterialTheme.typography.displayMedium
                     )
                 },
                 leadingIcon = {
@@ -113,9 +114,61 @@ fun SignInScreen() {
             )
             Spacer(modifier = Modifier.padding(12.dp))
             Button(
-                onClick = { /*TODO*/ },
+                onClick = {
+                    signInViewModel.obtainEvent(
+                        SignInEvent.SignIn(
+                            UserSignIn(
+                                email.text,
+                                password.text
+                            )
+                        )
+                    )
+                },
+                enabled = viewState.value == SignInViewState.Display
             ) {
-                Text(text = "ВОЙТИ", fontSize = 16.sp, style = MaterialTheme.typography.labelLarge)
+                when (viewState.value) {
+                    is SignInViewState.Loading -> CircularProgressIndicator(
+                        color = MaterialTheme.colorScheme.secondary,
+                        modifier = Modifier.size(18.dp)
+                    )
+                    else -> Text(
+                        text = "ВОЙТИ",
+                        fontSize = 18.sp,
+                        style = MaterialTheme.typography.labelLarge
+                    )
+                }
+                if (viewState.value == SignInViewState.Error) {
+                    AlertDialog(
+                        onDismissRequest = {
+                            signInViewModel.obtainEvent(SignInEvent.DialogDismissed)
+                        }
+                    ) {
+                        Card(
+                            shape = RoundedCornerShape(16.dp),
+                            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondary)
+                        ) {
+                            Column(
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                verticalArrangement = Arrangement.Center,
+                                modifier = Modifier.padding(32.dp)
+                            ) {
+                                Text(
+                                    text = "Не удалось войти",
+                                    fontSize = 16.sp,
+                                    style = MaterialTheme.typography.labelLarge,
+                                    color = MaterialTheme.colorScheme.primary
+                                )
+                                Spacer(modifier = Modifier.padding(12.dp))
+                                Text(
+                                    text = "Электронная почта или пароль введены неверно",
+                                    fontSize = 14.sp,
+                                    style = MaterialTheme.typography.displayMedium,
+                                    color = MaterialTheme.colorScheme.primary
+                                )
+                            }
+                        }
+                    }
+                }
             }
         }
     }

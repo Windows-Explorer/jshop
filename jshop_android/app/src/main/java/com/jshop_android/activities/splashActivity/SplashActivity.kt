@@ -10,14 +10,12 @@ import androidx.lifecycle.lifecycleScope
 import com.jshop_android.activities.authActivity.AuthActivity
 import com.jshop_android.activities.mainActivity.screens.SplashScreen
 import com.jshop_android.ui.theme.Jshop_androidTheme
-import kotlinx.coroutines.delay
 
 class SplashActivity : ComponentActivity() {
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         lifecycleScope.launchWhenCreated {
-            delay(5000)
             val intent = Intent(this@SplashActivity, AuthActivity::class.java)
             startActivity(intent)
             finish()

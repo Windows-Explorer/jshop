@@ -23,7 +23,7 @@ export class CartService implements ICartService {
     async save(cart: ICartProduct[]): Promise<ICartProduct[]> {
         try {
             await this._redisClient.set(cart[0].userEmail, JSON.stringify(cart))
-            return await JSON.parse(await this._redisClient.get(cartProduct.userEmail))
+            return await JSON.parse(await this._redisClient.get(cart[0].userEmail))
 //             if (cartProduct.count > 0 && cartProduct.product) {
 //                 const cartProducts: ICartProduct[] = await JSON.parse(await this._redisClient.get(cartProduct.userEmail))
 //                 cartProducts.push(cartProduct)

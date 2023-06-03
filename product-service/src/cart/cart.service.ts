@@ -33,6 +33,7 @@ export class CartService implements ICartService {
             else {
                 cart.push({ product: product, count: 1 })
             }
+            console.log(cart)
             await this._redisClient.set(userEmail, cart.toString())
             return cart
         }

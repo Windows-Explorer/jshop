@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Inject, Param, Query, Req, Res } from "@nestjs/common"
+import { Body, Controller, Get, Post, Delete, Inject, Param, Query, Req, Res } from "@nestjs/common"
 import { ClientKafka } from "@nestjs/microservices"
 import { Request, Response } from "express"
 import { CART_KAFKA_CLIENT_TOKEN } from "src/common/constants/inject-tokens.constants"
@@ -25,13 +25,13 @@ export class CartController {
         response.status(result.statusCode).send(result.message)
     }
 
-    @Get("/save")
+    @Post("/save")
     async save(@Body() body: any, @Res() response: Response) {
         const result = await this._client.send("cart.save", body.cartProduct).toPromise()
         response.status(result.statusCode).send(result.message)
     }
 
-    @Get("/:id")
+    @Delete("/:id")
     async remove(@Param("removableCartProduct") removableCartProduct: any, @Res() response: Response) {
         const result = await this._client.send("cart.remove", removableCartProduct).toPromise()
         response.status(result.statusCode).send(result.message)

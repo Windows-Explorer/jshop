@@ -26,12 +26,12 @@ export class CartService implements ICartService {
         try {
             let cart: ICartProduct[] = await JSON.parse(await this._redisClient.get(userEmail))
             if (cart === null) cart = []
-            const index = cart.map(value => value.product).findIndex(el => el === product)
+            const index = cart.findIndex(el => el.product === product)
             if (index != -1) {
-                cart[index].count += 1
+                cart.push({ product: product, count: 1 })
             }
             else {
-                cart.push({ product: product, count: 1 })
+                cart[index].count++
             }
             console.log(cart)
             await this._redisClient.set(userEmail, cart.toString())

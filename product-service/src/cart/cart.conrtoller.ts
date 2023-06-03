@@ -21,7 +21,7 @@ export class CartController {
     }
 
     @MessagePattern("cart.save")
-    async save(@Payload() payload: ICartProduct): Promise<IResult<ICartProduct>> {
+    async save(@Payload() payload: ICartProduct[]): Promise<IResult<ICartProduct[]>> {
         const result = await this._output.responseAsync(HttpStatus.OK, await this._cartService.save(payload))
         return result
     }

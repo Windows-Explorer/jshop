@@ -20,14 +20,15 @@ export class CartService implements ICartService {
         }
     }
 
-    async save(cartProduct: ICartProduct): Promise<ICartProduct> {
+    async save(cart: ICartProduct[]): Promise<ICartProduct[]> {
         try {
-            if (cartProduct.count > 0 && cartProduct.product) {
-                const cartProducts: ICartProduct[] = await JSON.parse(await this._redisClient.get(cartProduct.userEmail))
-                cartProducts.push(cartProduct)
-                await this._redisClient.set(cartProduct.userEmail, JSON.stringify(cartProducts))
-                return cartProduct
-            }
+            await this._redisClient.set(cart[0].userEmail, JSON.stringify(cart))
+//             if (cartProduct.count > 0 && cartProduct.product) {
+//                 const cartProducts: ICartProduct[] = await JSON.parse(await this._redisClient.get(cartProduct.userEmail))
+//                 cartProducts.push(cartProduct)
+//                 await this._redisClient.set(cartProduct.userEmail, JSON.stringify(cartProducts))
+//                 return cartProduct
+//             }
         }
         catch (error) {
             throw new HttpException(error, HttpStatus.BAD_REQUEST)

@@ -28,7 +28,7 @@ export class CartService implements ICartService {
             if (cart === null) cart = []
             const index = cart.map(value => value.product).findIndex(el => el === product)
             if (index != -1) {
-                cart[index].count++
+                cart[index].count += 1
             }
             else {
                 cart.push({ product: product, count: 1 })

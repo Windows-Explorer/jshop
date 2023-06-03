@@ -27,7 +27,7 @@ export class CartService implements ICartService {
             let cart: ICartProduct[] = await JSON.parse(await this._redisClient.get(userEmail))
             if (cart === null) cart = []
             const index = cart.findIndex(el => el.product === product)
-            if (index != -1) {
+            if (index === -1) {
                 cart.push({ product: product, count: 1 })
             }
             else {

@@ -1,8 +1,9 @@
 import { ICartProduct } from "../data/cart-product.interface"
+import { IProduct } from "../data/product.interface"
 
 export interface ICartService {
-    findAll(userEmail: string): Promise<ICartProduct[]>
-    save(cart: ICartProduct[]): Promise<ICartProduct[]>
-    count(userEmail: string): Promise<{ count: number }>
-    remove(cartProduct: ICartProduct): Promise<string>
+    getCart(userEmail: string): Promise<ICartProduct[]>
+    addProductToCart(userEmail: string, product: IProduct): Promise<ICartProduct[]>
+    removeProductFromCart(userEmail: string, product: IProduct): Promise<ICartProduct[]>
+    clearCart(userEmail: string): Promise<ICartProduct[]>
 }

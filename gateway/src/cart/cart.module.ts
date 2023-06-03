@@ -34,9 +34,10 @@ export class CartModule {
     constructor(@Inject(CART_KAFKA_CLIENT_TOKEN) private readonly _client: ClientKafka) { }
 
     async onModuleInit() {
-        this._client.subscribeToResponseOf("cart.findAll")
-        this._client.subscribeToResponseOf("cart.save")
-        this._client.subscribeToResponseOf("cart.remove")
+        this._client.subscribeToResponseOf("cart.getCart")
+        this._client.subscribeToResponseOf("cart.addProductToCart")
+        this._client.subscribeToResponseOf("cart.removeProductFromCart")
+        this._client.subscribeToResponseOf("cart.clearCart")
 
         await this._client.connect()
     }

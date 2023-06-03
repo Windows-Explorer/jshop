@@ -13,7 +13,7 @@ export class CartController {
 
         let base64Url = token.split('.')[1]
         let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
-        let jsonPayload = decodeURIComponent(window.atob(base64).split('').map((c) => {
+        let jsonPayload = decodeURIComponent(atob(base64).split('').map((c) => {
             return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
         }).join(''))
 
@@ -27,6 +27,7 @@ export class CartController {
 
     @Post("/save")
     async save(@Body() body: any, @Res() response: Response) {
+        
         const result = await this._client.send("cart.save", body.cartProduct).toPromise()
         response.status(result.statusCode).send(result.message)
     }

@@ -29,7 +29,7 @@ export class CartController {
 
     @Post("/addproducttocart")
     async addProductToCart(@Res() response: Response, @Req() request: Request, @Body() product: any) {
-        const userEmail = getEmailFromToken(request)
+        const userEmail = await getEmailFromToken(request)
         console.log(product)
         const result = await this._client.send("cart.addProductToCart", { userEmail: userEmail, product: product }).toPromise()
         response.status(result.statusCode).send(result.message)
@@ -37,14 +37,15 @@ export class CartController {
 
     @Post("/removeproductfromcart")
     async removeProductFromCart(@Res() response: Response, @Req() request: Request, @Body() product: any) {
-        const userEmail = getEmailFromToken(request)
+        const userEmail = await getEmailFromToken(request)
         const result = await this._client.send("cart.removeProductFromCart", { userEmail: userEmail, product: product }).toPromise()
         response.status(result.statusCode).send(result.message)
     }
 
     @Get("/clearCart")
     async clearCart(@Res() response: Response, @Req() request: Request) {
-        const userEmail = getEmailFromToken(request)
-        const result = await this._client.send("cart.clearCart", userEmail)
+        const userEmail = await getEmailFromToken(request)
+        const result = await this._client.send("cart.clearCart", userEmail).toPromise()
+        response.status(result.statusCode).send(result.message)
     }
 }

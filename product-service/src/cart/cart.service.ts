@@ -13,8 +13,9 @@ export class CartService implements ICartService {
 
     async getCart(userEmail: string): Promise<ICartProduct[]> {
         try {
-            const result = await JSON.parse(await this._redisClient.get(userEmail)) || []
-            return result
+            let cart = await JSON.parse(await this._redisClient.get(userEmail))
+            if (cart === null) cart = []
+            return cart
         }
         catch (error) {
             throw new HttpException(error, HttpStatus.BAD_REQUEST)
@@ -23,7 +24,8 @@ export class CartService implements ICartService {
 
     async addProductToCart(userEmail: string, product: IProduct): Promise<ICartProduct[]> {
         try {
-            const cart: ICartProduct[] = await JSON.parse(await this._redisClient.get(userEmail)) || []
+            let cart: ICartProduct[] = await JSON.parse(await this._redisClient.get(userEmail))
+            if (cart === null) cart = []
             const index = cart.map(value => value.product).findIndex(el => el === product)
             if (index != -1) {
                 cart[index].count++
@@ -41,7 +43,8 @@ export class CartService implements ICartService {
 
     async removeProductFromCart(userEmail: string, product: IProduct): Promise<ICartProduct[]> {
         try {
-            const cart: ICartProduct[] = await JSON.parse(await this._redisClient.get(userEmail)) || []
+            let cart: ICartProduct[] = await JSON.parse(await this._redisClient.get(userEmail))
+            if (cart === null) cart = []
             const index = cart.map(value => value.product).findIndex(el => el === product)
             if (index != -1) {
                 cart.splice(index, 1)

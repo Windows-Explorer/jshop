@@ -1,4 +1,4 @@
-package com.jshop_android.activities.authActivity.screens.signIn
+package com.jshop_android.activities.authActivities.signInActivity.viewmodel
 
 import android.content.Context
 import android.content.Intent
@@ -6,10 +6,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.jshop_android.activities.authActivities.signUpActivity.SignUpActivity
 import com.jshop_android.activities.mainActivity.MainActivity
 import com.jshop_android.common.classes.UserSignIn
 import com.jshop_android.common.constants.ParamsAPI
 import com.jshop_android.common.interfaces.IEventHandler
+import com.jshop_android.common.notIncrementedEvent
 import com.jshop_android.common.store.UserStore
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.ktor.client.*
@@ -28,6 +30,7 @@ class SignInViewModel @Inject() constructor(context: Context) : ViewModel(),
         MutableLiveData(SignInViewState.Display)
 
     val signInViewState: LiveData<SignInViewState> = _signInViewState
+
     private val userStore = UserStore(context)
     private val currentActivity = context
 
@@ -42,35 +45,25 @@ class SignInViewModel @Inject() constructor(context: Context) : ViewModel(),
 
     private fun reduce(event: SignInEvent, currentState: SignInViewState.Loading) {
         when (event) {
-            is SignInEvent.EnterScreen -> println(SignInEvent.EnterScreen)
-            is SignInEvent.OutScreen -> println(SignInEvent.OutScreen)
-            else -> println("Not incremented event")
+            else -> notIncrementedEvent(event, currentState)
         }
     }
 
     private fun reduce(event: SignInEvent, currentState: SignInViewState.Error) {
         when (event) {
-            is SignInEvent.DialogDismissed -> dismissDialog()
-            else -> println("${currentState.toString()}: Event ${event.toString()} is not incremented")
+            else -> notIncrementedEvent(event, currentState)
         }
     }
 
     private fun reduce(event: SignInEvent, currentState: SignInViewState.Display) {
         when (event) {
-            is SignInEvent.EnterScreen -> println(SignInEvent.EnterScreen)
-            is SignInEvent.OutScreen -> println(SignInEvent.OutScreen)
             is SignInEvent.SignIn -> signIn(event.user)
-            else -> println("Not incremented event")
+            is SignInEvent.RedirectToSignUp -> redirectToSignUp()
+            else -> notIncrementedEvent(event, currentState)
         }
     }
 
-    private fun dismissDialog() {
-        viewModelScope.launch {
-            _signInViewState.postValue(SignInViewState.Display)
-        }
-    }
-
-    private fun signIn(user: UserSignIn) {
+    private fun signIn(userSignIn: UserSignIn) {
         viewModelScope.launch {
             val client = HttpClient() {
                 install(ContentNegotiation) {
@@ -80,7 +73,7 @@ class SignInViewModel @Inject() constructor(context: Context) : ViewModel(),
             _signInViewState.postValue(SignInViewState.Loading)
             val response: HttpResponse = client.post("${ParamsAPI.API_host}/auth/signin") {
                 contentType(ContentType.Application.Json)
-                setBody(user)
+                setBody(userSignIn)
             }
             if (response.status.value == 200 || response.status.value == 201) {
                 userStore.saveToken(response.bodyAsText())
@@ -90,6 +83,13 @@ class SignInViewModel @Inject() constructor(context: Context) : ViewModel(),
             } else {
                 _signInViewState.postValue(SignInViewState.Error)
             }
+        }
+    }
+
+    private fun redirectToSignUp() {
+        viewModelScope.launch {
+            val intent = Intent(currentActivity, SignUpActivity::class.java)
+            currentActivity.startActivity(intent)
         }
     }
 }

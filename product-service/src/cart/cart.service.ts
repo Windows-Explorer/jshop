@@ -35,7 +35,7 @@ export class CartService implements ICartService {
                 cart.push({ product: product, count: 1 })
             }
             console.log(cart)
-            await this._redisClient.set(userEmail, cart.toString())
+            await this._redisClient.set(userEmail, JSON.stringify(cart))
             return cart
         }
         catch (error) {
@@ -51,7 +51,7 @@ export class CartService implements ICartService {
             if (index != -1) {
                 cart.splice(index, 1)
             }
-            await this._redisClient.set(userEmail, cart.toString())
+            await this._redisClient.set(userEmail, JSON.stringify(cart))
             return cart
         }
         catch (error) {

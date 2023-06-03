@@ -30,6 +30,7 @@ export class CartController {
     @Post("/addproducttocart")
     async addProductToCart(@Res() response: Response, @Req() request: Request, @Body() product: any) {
         const userEmail = getEmailFromToken(request)
+        console.log(product)
         const result = await this._client.send("cart.addProductToCart", { userEmail: userEmail, product: product }).toPromise()
         response.status(result.statusCode).send(result.message)
     }

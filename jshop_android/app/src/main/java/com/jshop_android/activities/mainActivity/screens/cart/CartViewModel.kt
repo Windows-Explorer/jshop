@@ -58,6 +58,7 @@ class CartViewModel @Inject constructor(context: Context) : ViewModel(), IEventH
     private fun getCart() {
         viewModelScope.launch {
             _cartViewState.postValue(CartViewState.Loading)
+            println("hello there")
             _cartViewState.postValue(CartViewState.Display(cartStore.getCart().toMutableList()))
         }
     }

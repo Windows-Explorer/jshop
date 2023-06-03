@@ -2,7 +2,6 @@ package com.jshop_android.common.store
 
 import android.content.Context
 import android.util.Log
-import com.auth0.android.jwt.JWT
 import com.jshop_android.common.classes.CartProduct
 import com.jshop_android.common.classes.Product
 import com.jshop_android.common.constants.ParamsAPI
@@ -35,7 +34,7 @@ class CartStore(private val context: Context) {
             }
             Log.i("CARTSTORE", "getCart: ${response.bodyAsText()}")
             if (response.status.value == 200 || response.status.value == 201) {
-                return response.body<List<CartProduct>>()
+                return response.body<MutableList<CartProduct>>()
             } else {
                 return mutableListOf()
             }
@@ -45,45 +44,22 @@ class CartStore(private val context: Context) {
         }
     }
 
-
     suspend fun addProductToCart(product: Product) {
         try {
             val token = userStore.getToken.first()
-            val jwt = JWT(token)
-            val userEmail = jwt.getClaim("email").toString()
-
-            val cart: MutableList<CartProduct> = getCart().toMutableList()
-
-            if (product in cart.map { it.product }) {
-                cart[cart.map { it.product }.indexOf(product)].count++
-            } else {
-                val cartProduct = CartProduct(
-                    userEmail = userEmail,
-                    product = product,
-                    count = 1
-                )
-                cart.add(cartProduct)
-            }
-            saveCart(cart)
-        } catch (exception: Exception) {
-            Log.e("CARTSTORE", exception.message.toString())
-        }
-    }
-
-    private suspend fun saveCart(cart: List<CartProduct>) {
-        try {
-            val token = userStore.getToken.first()
-            val response = client.post("${ParamsAPI.API_host}/cart/save") {
+            val response = client.post("${ParamsAPI.API_host}/cart/addproducttocart") {
                 contentType(ContentType.Application.Json)
-                setBody(cart)
                 headers {
-                    append(HttpHeaders.Authorization, "Bearer ${token}")
                     append(HttpHeaders.Accept, "application/json")
+                    append(HttpHeaders.Authorization, "Bearer ${token}")
                 }
+                setBody(product)
             }
-            Log.i("CARTSTORE", "saveCart: ${response.bodyAsText()}")
+            Log.i("CARTSTORE", "addProductToCart: ${response.bodyAsText()}")
+
         } catch (exception: Exception) {
             Log.e("CARTSTORE", exception.message.toString())
         }
     }
+
 }

@@ -28,7 +28,7 @@ export class CartController {
     @Post("/save")
     async save(@Body() body: any, @Res() response: Response) {
         
-        const result = await this._client.send("cart.save", body.cartProduct).toPromise()
+        const result = await this._client.send("cart.save", body).toPromise()
         response.status(result.statusCode).send(result.message)
     }
 

@@ -4,6 +4,7 @@ package com.jshop_android.activities.mainActivity.screens.home.views
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -36,7 +37,7 @@ fun HomeViewDisplay(homeViewModel: HomeViewModel, state: HomeViewState.Display) 
             modifier = Modifier
                 .pullRefresh(refreshState)
                 .background(color = MaterialTheme.colorScheme.background)
-                .fillMaxHeight()
+                .fillMaxSize()
         ) {
             products.forEach { product ->
                 item {

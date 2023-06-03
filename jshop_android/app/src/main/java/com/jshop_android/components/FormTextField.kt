@@ -22,8 +22,8 @@ fun FormTextField(
     label: String,
     leadingIcon: @Composable() (() -> Unit)?,
     keyboardOptions: KeyboardOptions,
-    isError: Boolean,
-    enabled: Boolean
+    isError: Boolean = false,
+    enabled: Boolean = true
 ) {
     TextField(
         visualTransformation = visualTransformation,

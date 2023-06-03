@@ -32,7 +32,7 @@ fun BottomNavigationBar(navController: NavController) {
                     BadgedBox(
                         badge = {
                             if (item.badge.isNotEmpty()) {
-                                var badgeText = remember { mutableStateOf(item.badge) }
+                                val badgeText = remember { mutableStateOf(item.badge) }
 
                                 Badge(
                                     containerColor = MaterialTheme.colorScheme.tertiary

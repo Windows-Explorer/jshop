@@ -1,41 +1,33 @@
 package com.jshop_android.activities.mainActivity.screens.home
 
+import android.annotation.SuppressLint
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jshop_android.common.classes.Product
 import com.jshop_android.common.interfaces.IEventHandler
-import com.jshop_android.common.interfaces.IProduct
+import com.jshop_android.common.notIncrementedEvent
+import com.jshop_android.common.store.CartStore
+import com.jshop_android.common.store.ProductsStore
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-
-fun generateProducts(): List<IProduct> {
-    val list = mutableListOf<IProduct>()
-    for (i in 0..3) {
-        list.add(
-            Product(
-                type = "Type",
-                title = "Title",
-                cost = i.toLong(),
-                description = "description",
-                image = "https://mykaleidoscope.ru/x/uploads/posts/2022-10/1666372248_54-mykaleidoscope-ru-p-kofe-i-shokolad-kartinki-krasivo-59.jpg",
-            )
-        )
-    }
-    return list
-}
-
 @HiltViewModel
-class HomeViewModel @Inject constructor() : ViewModel(), IEventHandler<HomeEvent> {
+class HomeViewModel @Inject constructor(context: Context) : ViewModel(), IEventHandler<HomeEvent> {
     private val _homeViewState: MutableLiveData<HomeViewState> =
         MutableLiveData(HomeViewState.Loading)
 
     val homeViewState: LiveData<HomeViewState> = _homeViewState
+    private val productsStore = ProductsStore()
+    private val cartStore = CartStore(context)
+
+    @SuppressLint("StaticFieldLeak")
+    private val currentActivity = context
 
     override fun obtainEvent(event: HomeEvent) {
         when (val currentState = homeViewState.value) {
@@ -48,52 +40,39 @@ class HomeViewModel @Inject constructor() : ViewModel(), IEventHandler<HomeEvent
 
     private fun reduce(event: HomeEvent, currentState: HomeViewState.Loading) {
         when (event) {
-            HomeEvent.EnterScreen -> getData()
-            HomeEvent.ReloadScreen -> getData()
-            else -> processError()
+            is HomeEvent.EnterScreen -> getProducts()
+            is HomeEvent.ReloadScreen -> getProducts()
+            else -> notIncrementedEvent(event, currentState)
         }
     }
 
     private fun reduce(event: HomeEvent, currentState: HomeViewState.Display) {
         when (event) {
-            HomeEvent.EnterScreen -> getData()
-            HomeEvent.ReloadScreen -> reloadScreen()
-            HomeEvent.OutScreen -> unloadData()
-            else -> processError()
+            is HomeEvent.EnterScreen -> getProducts()
+            is HomeEvent.ReloadScreen -> getProducts()
+            is HomeEvent.AddProductToCart -> addProductToCart(event.product)
+            else -> notIncrementedEvent(event, currentState)
         }
     }
 
     private fun reduce(event: HomeEvent, currentState: HomeViewState.Error) {
         when (event) {
-            HomeEvent.ReloadScreen -> getData()
-            else -> processError()
+            HomeEvent.ReloadScreen -> getProducts()
+            else -> notIncrementedEvent(event, currentState)
         }
     }
 
-    private fun processError() {
-        viewModelScope.launch {
-            _homeViewState.postValue(HomeViewState.Error)
-        }
-    }
-
-    private fun getData() {
-        viewModelScope.launch {
-            delay(1000)
-            _homeViewState.postValue(HomeViewState.Display(generateProducts()))
-        }
-    }
-
-    private fun reloadScreen() {
-        viewModelScope.launch {
+    private fun getProducts() {
+        viewModelScope.launch(Dispatchers.IO) {
             _homeViewState.postValue(HomeViewState.Loading)
             delay(1000)
-            _homeViewState.postValue(HomeViewState.Display(generateProducts()))
+            _homeViewState.postValue(HomeViewState.Display(productsStore.getProducts()))
         }
     }
 
-    private fun unloadData() {
-        GlobalScope.launch {
-            _homeViewState.postValue(HomeViewState.Loading)
+    private fun addProductToCart(product: Product) {
+        viewModelScope.launch(Dispatchers.IO) {
+            cartStore.addProductToCart(product)
         }
     }
 }

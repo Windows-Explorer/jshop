@@ -1,6 +1,5 @@
 package com.jshop_android.components
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -10,22 +9,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.jshop_android.activities.mainActivity.screens.home.HomeEvent
+import com.jshop_android.activities.mainActivity.screens.home.HomeViewModel
 import com.jshop_android.common.classes.Product
-import com.jshop_android.common.interfaces.IProduct
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProductCard(product: IProduct) {
+fun ProductCard(product: Product, homeViewModel: HomeViewModel) {
     ElevatedCard(
         modifier = Modifier.padding(10.dp),
         colors = CardDefaults.cardColors(
@@ -61,7 +59,9 @@ fun ProductCard(product: IProduct) {
                     .clip(RoundedCornerShape(16.dp))
             )
             Spacer(modifier = Modifier.size(ButtonDefaults.IconSpacing))
-            ElevatedButton(onClick = { /*TODO*/ }) {
+            ElevatedButton(onClick = {
+                homeViewModel.obtainEvent(HomeEvent.AddProductToCart(product))
+            }) {
                 Icon(
                     Icons.Rounded.AddCircle,
                     contentDescription = "Add to cart",

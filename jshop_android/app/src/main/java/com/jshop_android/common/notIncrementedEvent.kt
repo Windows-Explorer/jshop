@@ -1,4 +1,5 @@
 package com.jshop_android.common
 
-class notIncrementedEvent {
+fun notIncrementedEvent(event: Any, state: Any) {
+    println("${state.toString()}: Event ${event.toString()} is not incremented")
 }

@@ -21,13 +21,13 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.jshop_android.R
-import com.jshop_android.common.interfaces.ICartProduct
 import com.jshop_android.activities.mainActivity.screens.cart.CartEvent
 import com.jshop_android.activities.mainActivity.screens.cart.CartViewModel
+import com.jshop_android.common.classes.CartProduct
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CartProductCard(cartProduct: ICartProduct, cartViewModel: CartViewModel, index: Int) {
+fun CartProductCard(cartProduct: CartProduct, cartViewModel: CartViewModel, index: Int) {
     var text = remember { mutableStateOf(cartProduct.count) }
     var dismissState = rememberDismissState()
 
@@ -40,7 +40,7 @@ fun CartProductCard(cartProduct: ICartProduct, cartViewModel: CartViewModel, ind
             Spacer(modifier = Modifier.size(ButtonDefaults.IconSpacing))
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
-                    .data(cartProduct.image)
+                    .data(cartProduct.product.image)
                     .crossfade(true)
                     .build(),
                 contentDescription = "Product Image",
@@ -57,7 +57,7 @@ fun CartProductCard(cartProduct: ICartProduct, cartViewModel: CartViewModel, ind
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
-                    text = cartProduct.title,
+                    text = cartProduct.product.title,
                     style = MaterialTheme.typography.labelLarge,
                     fontSize = 32.sp,
                     textAlign = TextAlign.Center,

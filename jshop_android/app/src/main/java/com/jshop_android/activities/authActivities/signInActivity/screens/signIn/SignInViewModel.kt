@@ -1,5 +1,6 @@
-package com.jshop_android.activities.authActivities.signInActivity.viewmodel
+package com.jshop_android.activities.authActivities.signInActivity.screens.signIn
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import androidx.lifecycle.LiveData
@@ -8,6 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jshop_android.activities.authActivities.signUpActivity.SignUpActivity
 import com.jshop_android.activities.mainActivity.MainActivity
+import com.jshop_android.common.CustomDispatchers
 import com.jshop_android.common.classes.UserSignIn
 import com.jshop_android.common.constants.ParamsAPI
 import com.jshop_android.common.interfaces.IEventHandler
@@ -20,6 +22,7 @@ import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -32,6 +35,8 @@ class SignInViewModel @Inject() constructor(context: Context) : ViewModel(),
     val signInViewState: LiveData<SignInViewState> = _signInViewState
 
     private val userStore = UserStore(context)
+
+    @SuppressLint("StaticFieldLeak")
     private val currentActivity = context
 
     override fun obtainEvent(event: SignInEvent) {
@@ -51,6 +56,8 @@ class SignInViewModel @Inject() constructor(context: Context) : ViewModel(),
 
     private fun reduce(event: SignInEvent, currentState: SignInViewState.Error) {
         when (event) {
+            is SignInEvent.SignIn -> signIn(event.user)
+            is SignInEvent.RedirectToSignUp -> redirectToSignUp()
             else -> notIncrementedEvent(event, currentState)
         }
     }
@@ -64,14 +71,14 @@ class SignInViewModel @Inject() constructor(context: Context) : ViewModel(),
     }
 
     private fun signIn(userSignIn: UserSignIn) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             val client = HttpClient() {
                 install(ContentNegotiation) {
                     json()
                 }
             }
             _signInViewState.postValue(SignInViewState.Loading)
-            val response: HttpResponse = client.post("${ParamsAPI.API_host}/auth/signin") {
+            val response = client.post("${ParamsAPI.API_host}/auth/signin") {
                 contentType(ContentType.Application.Json)
                 setBody(userSignIn)
             }
@@ -87,8 +94,9 @@ class SignInViewModel @Inject() constructor(context: Context) : ViewModel(),
     }
 
     private fun redirectToSignUp() {
-        viewModelScope.launch {
+        viewModelScope.launch(CustomDispatchers.navigationThreadContext) {
             val intent = Intent(currentActivity, SignUpActivity::class.java)
+            obtainEvent(SignInEvent.OutScreen)
             currentActivity.startActivity(intent)
         }
     }

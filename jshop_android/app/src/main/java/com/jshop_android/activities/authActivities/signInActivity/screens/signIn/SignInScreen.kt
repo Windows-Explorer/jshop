@@ -1,8 +1,11 @@
 package com.jshop_android.activities.authActivities.signInActivity.screens.signIn
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
@@ -17,14 +20,11 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.jshop_android.activities.authActivities.signInActivity.viewmodel.SignInEvent
-import com.jshop_android.activities.authActivities.signInActivity.viewmodel.SignInViewModel
-import com.jshop_android.activities.authActivities.signInActivity.viewmodel.SignInViewState
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.jshop_android.common.classes.UserSignIn
 import com.jshop_android.components.BeansLogo
 import com.jshop_android.components.FormTextField
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable()
 fun SignInScreen(signInViewModel: SignInViewModel) {
     val viewState = signInViewModel.signInViewState.observeAsState()
@@ -37,9 +37,17 @@ fun SignInScreen(signInViewModel: SignInViewModel) {
             .fillMaxSize()
             .padding(16.dp)
     ) {
+        val systemUiController = rememberSystemUiController()
+        systemUiController.setStatusBarColor(
+            color = MaterialTheme.colorScheme.secondary,
+            darkIcons = !isSystemInDarkTheme()
+        )
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+            verticalArrangement = Arrangement.Center,
+            modifier = Modifier
+                .verticalScroll(rememberScrollState())
+                .fillMaxSize()
         ) {
             BeansLogo()
             Spacer(modifier = Modifier.padding(24.dp))
@@ -78,9 +86,12 @@ fun SignInScreen(signInViewModel: SignInViewModel) {
                 enabled = viewState.value != SignInViewState.Loading
             )
             Spacer(modifier = Modifier.padding(12.dp))
-            ClickableText(text = AnnotatedString("Регистрация"), onClick = {
-                signInViewModel.obtainEvent(SignInEvent.RedirectToSignUp)
-            })
+            ClickableText(
+                text = AnnotatedString("Регистрация"),
+                onClick = {
+                    signInViewModel.obtainEvent(SignInEvent.RedirectToSignUp)
+                }
+            )
             Spacer(modifier = Modifier.padding(12.dp))
             Button(
                 onClick = {

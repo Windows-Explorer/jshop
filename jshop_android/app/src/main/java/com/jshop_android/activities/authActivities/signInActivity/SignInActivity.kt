@@ -22,11 +22,6 @@ class SignInActivity : ComponentActivity() {
         setContent {
             Jshop_androidTheme {
                 MaterialTheme() {
-                    val systemUiController = rememberSystemUiController()
-                    systemUiController.setStatusBarColor(
-                        color = MaterialTheme.colorScheme.secondary,
-                        darkIcons = !isSystemInDarkTheme()
-                    )
                     SignInScreen(signInViewModel)
                 }
             }

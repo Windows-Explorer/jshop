@@ -1,6 +1,7 @@
 package com.jshop_android.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -14,9 +15,9 @@ import com.jshop_android.activities.mainActivity.screens.home.HomeViewModel
 
 @Composable
 fun NavHostView(navController: NavHostController) {
-    val homeViewModel: HomeViewModel = HomeViewModel()
-    val accountViewModel: AccountViewModel = AccountViewModel()
-    val cartViewModel: CartViewModel = CartViewModel()
+    val homeViewModel = HomeViewModel(LocalContext.current)
+    val accountViewModel = AccountViewModel()
+    val cartViewModel = CartViewModel(LocalContext.current)
 
     NavHost(navController = navController, startDestination = NavRoute.HomeRoute.route) {
         composable(route = NavRoute.HomeRoute.route) {

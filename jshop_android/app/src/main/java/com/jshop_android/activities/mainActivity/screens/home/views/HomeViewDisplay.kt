@@ -1,21 +1,24 @@
 package com.jshop_android.activities.mainActivity.screens.home.views
 
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.jshop_android.common.interfaces.IProduct
+import com.jshop_android.activities.mainActivity.screens.home.HomeEvent
+import com.jshop_android.activities.mainActivity.screens.home.HomeViewModel
+import com.jshop_android.activities.mainActivity.screens.home.HomeViewState
+import com.jshop_android.common.classes.Product
 import com.jshop_android.components.ProductCard
 import com.jshop_android.m3_pullrefresh.PullRefreshIndicator
 import com.jshop_android.m3_pullrefresh.pullRefresh
 import com.jshop_android.m3_pullrefresh.rememberPullRefreshState
-import com.jshop_android.activities.mainActivity.screens.home.HomeEvent
-import com.jshop_android.activities.mainActivity.screens.home.HomeViewModel
-import com.jshop_android.activities.mainActivity.screens.home.HomeViewState
 
 @Composable
 fun HomeViewDisplay(homeViewModel: HomeViewModel, state: HomeViewState.Display) {
@@ -26,15 +29,18 @@ fun HomeViewDisplay(homeViewModel: HomeViewModel, state: HomeViewState.Display) 
             homeViewModel.obtainEvent(HomeEvent.ReloadScreen)
         }
     )
-    val products: List<IProduct> = state.items
+    val products: List<Product> = state.items
 
     Box(modifier = Modifier.pullRefresh(state = refreshState)) {
         LazyColumn(
-            modifier = Modifier.pullRefresh(refreshState)
+            modifier = Modifier
+                .pullRefresh(refreshState)
+                .background(color = MaterialTheme.colorScheme.background)
+                .fillMaxHeight()
         ) {
             products.forEach { product ->
                 item {
-                    ProductCard(product = product)
+                    ProductCard(product = product, homeViewModel = homeViewModel)
                 }
             }
         }

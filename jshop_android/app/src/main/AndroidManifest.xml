@@ -25,7 +25,11 @@
         </activity>
         <activity android:name=".activities.mainActivity.MainActivity" />
         <activity
-            android:name=".activities.authActivity.AuthActivity"
+            android:name=".activities.authActivities.signInActivity.SignInActivity"
+            android:noHistory="true"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".activities.authActivities.signUpActivity.SignUpActivity"
             android:noHistory="true"
             android:windowSoftInputMode="adjustResize" />
     </application>

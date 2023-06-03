@@ -1,4 +1,4 @@
-package com.jshop_android.activities.authActivities.signInActivity.viewmodel
+package com.jshop_android.activities.authActivities.signInActivity.screens.signIn
 
 sealed class SignInViewState {
     object Loading: SignInViewState()

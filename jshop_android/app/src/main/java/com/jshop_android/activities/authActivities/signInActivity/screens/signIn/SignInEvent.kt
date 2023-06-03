@@ -1,4 +1,4 @@
-package com.jshop_android.activities.authActivities.signInActivity.viewmodel
+package com.jshop_android.activities.authActivities.signInActivity.screens.signIn
 
 import com.jshop_android.common.classes.UserSignIn
 

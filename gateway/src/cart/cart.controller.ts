@@ -12,7 +12,6 @@ async function getEmailFromToken(request: Request): Promise<string> {
     }).join(''))
     const JSONdataFromToken = await JSON.parse(jsonPayload)
     const userEmail: string = JSONdataFromToken.email
-    console.log(userEmail)
     return userEmail
 }
 
@@ -30,7 +29,6 @@ export class CartController {
     @Post("/addproducttocart")
     async addProductToCart(@Res() response: Response, @Req() request: Request, @Body() product: any) {
         const userEmail = await getEmailFromToken(request)
-        console.log(product)
         const result = await this._client.send("cart.addProductToCart", { userEmail: userEmail, product: product }).toPromise()
         response.status(result.statusCode).send(result.message)
     }

@@ -14,7 +14,6 @@ export class CartService implements ICartService {
     async getCart(userEmail: string): Promise<ICartProduct[]> {
         try {
             let cart = await JSON.parse(await this._redisClient.get(userEmail))
-            console.log(cart)
             return cart
         }
         catch (error) {
@@ -27,14 +26,12 @@ export class CartService implements ICartService {
             let cart: ICartProduct[] = await JSON.parse(await this._redisClient.get(userEmail))
             if (cart === null) cart = []
             const index = cart.findIndex(el => el.product.id === product.id)
-            console.log(index)
             if (index >= 0) {
                 cart[index].count++
             }
             else {
                 cart.push({ product: product, count: 1 })
             }
-            console.log(cart)
             await this._redisClient.set(userEmail, JSON.stringify(cart))
             return cart
         }
@@ -47,8 +44,8 @@ export class CartService implements ICartService {
         try {
             let cart: ICartProduct[] = await JSON.parse(await this._redisClient.get(userEmail))
             if (cart === null) cart = []
-            const index = cart.map(value => value.product).findIndex(el => el === product)
-            if (index != -1) {
+            const index = cart.findIndex(el => el.product.id === product.id)
+            if (index >= 0) {
                 cart.splice(index, 1)
             }
             await this._redisClient.set(userEmail, JSON.stringify(cart))

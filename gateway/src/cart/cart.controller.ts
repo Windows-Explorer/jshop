@@ -11,7 +11,7 @@ async function getEmailFromToken(request: Request): Promise<string> {
         return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
     }).join(''))
     const JSONdataFromToken = await JSON.parse(jsonPayload)
-    const userEmail: string = JSONdataFromToken
+    const userEmail: string = JSONdataFromToken.email
     console.log(userEmail)
     return userEmail
 }

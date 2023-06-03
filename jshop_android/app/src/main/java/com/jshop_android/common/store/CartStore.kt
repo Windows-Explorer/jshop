@@ -33,6 +33,7 @@ class CartStore(private val context: Context) {
                     append(HttpHeaders.Authorization, "Bearer ${token}")
                 }
             }
+            Log.i("CARTSTORE", "getCart: ${response.bodyAsText()}")
             if (response.status.value == 200 || response.status.value == 201) {
                 return response.body<List<CartProduct>>()
             } else {

@@ -13,6 +13,7 @@ export class CartService implements ICartService {
     async findAll(userEmail: string): Promise<ICartProduct[]> {
         try {
             const result = await this._redisClient.get(userEmail)
+            console.log(JSON.parse(result))
             return JSON.parse(result)
         }
         catch (error) {

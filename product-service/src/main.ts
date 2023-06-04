@@ -20,7 +20,7 @@ async function bootstrap() {
       }
     }
   })
-  app.useGlobalFilters(new AllExceptionsFilter(new Resulter()))
+  // app.useGlobalFilters(new AllExceptionsFilter(new Resulter()))
   app.useGlobalPipes(new ValidationPipe())
 
   console.log(app.get(ConfigService))

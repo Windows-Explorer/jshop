@@ -5,14 +5,13 @@ import { Observable } from "rxjs"
 @Catch()
 export class NoExceptionFilter implements BaseRpcExceptionFilter {
     handleUnknownError(exception: any, status: string): Observable<never> {
-        throw new Error("Method not implemented.");
+        throw new Error("Method not implemented.")
     }
     isError(exception: any): exception is Error {
-        throw new Error("Method not implemented.");
+        throw new Error("Method not implemented.")
     }
     catch(exception: any, host: ArgumentsHost): Observable<any> {
-        console.log("Capturando el error RPCException en filter");
-        throw "El error esta capturado";
-        //return throwError(exception.getError());
+        console.log("Capturando el error RPCException en filter")
+        throw (exception.getError())
     }
 }

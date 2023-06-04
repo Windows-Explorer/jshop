@@ -7,7 +7,6 @@ import { Resulter } from "./common/resulter"
 import { AllExceptionsFilter } from "./extentions/all.exception-filter"
 
 
-
 async function bootstrap() {
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(AppModule, {
     transport: Transport.KAFKA,

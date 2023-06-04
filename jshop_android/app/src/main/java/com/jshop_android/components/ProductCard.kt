@@ -1,5 +1,6 @@
 package com.jshop_android.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -23,40 +24,47 @@ import com.jshop_android.common.classes.Product
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProductCard(product: Product, homeViewModel: HomeViewModel) {
+fun ProductCard(product: Product, homeViewModel: HomeViewModel, isLoading: Boolean) {
     ElevatedCard(
-        modifier = Modifier.padding(10.dp),
-        colors = CardDefaults.cardColors(
+        modifier = Modifier.padding(10.dp), colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.secondary,
             contentColor = MaterialTheme.colorScheme.primary
         )
     ) {
-        Text(
-            text = product.title,
-            style = MaterialTheme.typography.labelLarge,
-            fontSize = 48.sp,
-            textAlign = TextAlign.Center,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(10.dp)
-        )
         Column(
             modifier = Modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            Spacer(modifier = Modifier.size(24.dp))
             AsyncImage(
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(product.image)
-                    .crossfade(true)
-                    .build(),
+                model = ImageRequest.Builder(LocalContext.current).data(product.image)
+                    .crossfade(true).build(),
                 contentDescription = "Product Image",
-                contentScale = ContentScale.Crop,
+                contentScale = ContentScale.FillHeight,
                 placeholder = painterResource(id = com.jshop_android.R.drawable.icon_beans),
                 modifier = Modifier
-                    .width(300.dp)
-                    .height(400.dp)
+                    .width(200.dp)
+                    .height(200.dp)
                     .clip(RoundedCornerShape(16.dp))
+                    .background(color = MaterialTheme.colorScheme.background)
+                    .padding(16.dp)
+            )
+            Spacer(modifier = Modifier.size(ButtonDefaults.IconSpacing))
+            Text(
+                text = product.title,
+                style = MaterialTheme.typography.labelLarge,
+                fontSize = 32.sp,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.fillMaxWidth()
+            )
+            Spacer(modifier = Modifier.size(ButtonDefaults.IconSpacing))
+            Text(
+                text = product.description,
+                style = MaterialTheme.typography.displayMedium,
+                fontSize = 16.sp,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.fillMaxWidth()
             )
             Spacer(modifier = Modifier.size(ButtonDefaults.IconSpacing))
             ElevatedButton(onClick = {
@@ -69,12 +77,12 @@ fun ProductCard(product: Product, homeViewModel: HomeViewModel) {
                 )
                 Spacer(modifier = Modifier.size(ButtonDefaults.IconSpacing))
                 Text(
-                    text = "Добавить",
+                    text = "Добавить в корзину",
                     style = MaterialTheme.typography.displayMedium,
                     fontSize = 16.sp
                 )
             }
-            Spacer(modifier = Modifier.size(16.dp))
+            Spacer(modifier = Modifier.size(24.dp))
         }
     }
 }

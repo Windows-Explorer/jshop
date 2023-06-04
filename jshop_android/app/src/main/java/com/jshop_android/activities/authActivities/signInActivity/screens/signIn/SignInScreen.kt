@@ -122,4 +122,13 @@ fun SignInScreen(signInViewModel: SignInViewModel) {
             }
         }
     }
+    LaunchedEffect(key1 = viewState, block = {
+        signInViewModel.obtainEvent(SignInEvent.EnterScreen)
+    })
+
+    DisposableEffect(key1 = viewState) {
+        onDispose {
+            signInViewModel.obtainEvent(SignInEvent.OutScreen)
+        }
+    }
 }

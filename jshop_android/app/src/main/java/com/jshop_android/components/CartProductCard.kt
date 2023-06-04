@@ -27,10 +27,9 @@ import com.jshop_android.common.classes.CartProduct
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CartProductCard(cartProduct: CartProduct, cartViewModel: CartViewModel, index: Int) {
-    var text = remember { mutableStateOf(cartProduct.count) }
-    var dismissState = rememberDismissState()
-
+fun CartProductCard(cartProduct: CartProduct, cartViewModel: CartViewModel) {
+    val text = remember { mutableStateOf(cartProduct.count) }
+    val dismissState = rememberDismissState()
 
     ElevatedCard(colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondary)) {
         Row(
@@ -39,10 +38,8 @@ fun CartProductCard(cartProduct: CartProduct, cartViewModel: CartViewModel, inde
         ) {
             Spacer(modifier = Modifier.size(ButtonDefaults.IconSpacing))
             AsyncImage(
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(cartProduct.product.image)
-                    .crossfade(true)
-                    .build(),
+                model = ImageRequest.Builder(LocalContext.current).data(cartProduct.product.image)
+                    .crossfade(true).build(),
                 contentDescription = "Product Image",
                 contentScale = ContentScale.Crop,
                 placeholder = painterResource(id = R.drawable.icon_beans),
@@ -66,8 +63,7 @@ fun CartProductCard(cartProduct: CartProduct, cartViewModel: CartViewModel, inde
                         .padding(10.dp)
                 )
                 Spacer(modifier = Modifier.padding(ButtonDefaults.IconSpacing))
-                TextField(
-                    value = text.value.toString(),
+                TextField(value = text.value.toString(),
                     onValueChange = { newValue ->
                         try {
                             text.value = newValue.toInt()
@@ -76,20 +72,14 @@ fun CartProductCard(cartProduct: CartProduct, cartViewModel: CartViewModel, inde
                         }
                     },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                    keyboardActions = KeyboardActions(
-                        onDone = {
-                            if (text.value == 0) {
-                                cartViewModel.obtainEvent(CartEvent.CartProductRemoved(index))
-                            }
-                            cartProduct.count = text.value
-                            cartViewModel.obtainEvent(
-                                CartEvent.CartProductCountUpdated(cartProduct)
-                            )
-                        },
-                        onGo = {
-                            text.value = 1
+                    keyboardActions = KeyboardActions(onDone = {
+                        if (text.value == 0) {
+                            cartViewModel.obtainEvent(CartEvent.CartProductRemoved(cartProduct))
                         }
-                    ),
+                        cartProduct.count = text.value
+                    }, onGo = {
+                        text.value = 1
+                    }),
                     label = {
                         Text(text = "Количество")
                     },

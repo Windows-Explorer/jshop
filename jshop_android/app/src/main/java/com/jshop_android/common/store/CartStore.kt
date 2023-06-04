@@ -34,7 +34,7 @@ class CartStore(private val context: Context) {
             }
             Log.i("CARTSTORE", "getCart: ${response.bodyAsText()}")
             if (response.status.value == 200 || response.status.value == 201) {
-                return response.body<MutableList<CartProduct>>()
+                return response.body<List<CartProduct>>()
             } else {
                 return mutableListOf()
             }
@@ -62,4 +62,20 @@ class CartStore(private val context: Context) {
         }
     }
 
+    suspend fun removeProductFromCart(product: Product) {
+        try {
+            val token = userStore.getToken.first()
+            val response = client.post("${ParamsAPI.API_host}/cart/removeproductfromcart") {
+                contentType(ContentType.Application.Json)
+                headers {
+                    append(HttpHeaders.Accept, "application/json")
+                    append(HttpHeaders.Authorization, "Bearer ${token}")
+                }
+                setBody(product)
+            }
+            Log.i("CARTSTORE", "removeProductFromCart: ${response.bodyAsText()}")
+        } catch (exception: Exception) {
+            Log.e("CARTSTORE", exception.message.toString())
+        }
+    }
 }

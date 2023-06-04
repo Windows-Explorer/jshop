@@ -6,11 +6,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.jshop_android.common.classes.Product
 import com.jshop_android.common.interfaces.IEventHandler
 import com.jshop_android.common.notIncrementedEvent
 import com.jshop_android.common.store.CartStore
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -44,6 +45,7 @@ class CartViewModel @Inject constructor(context: Context) : ViewModel(), IEventH
     private fun reduce(event: CartEvent, currentState: CartViewState.Display) {
         when (event) {
             is CartEvent.EnterScreen -> getCart()
+            is CartEvent.CartProductRemoved -> removeProductFromCart(event.cartProduct.product)
             else -> notIncrementedEvent(event, currentState)
         }
     }
@@ -56,9 +58,16 @@ class CartViewModel @Inject constructor(context: Context) : ViewModel(), IEventH
     }
 
     private fun getCart() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             _cartViewState.postValue(CartViewState.Loading)
-            println("hello there")
+            _cartViewState.postValue(CartViewState.Display(cartStore.getCart().toMutableList()))
+        }
+    }
+
+    private fun removeProductFromCart(product: Product) {
+        viewModelScope.launch(Dispatchers.IO) {
+            _cartViewState.postValue(CartViewState.Loading)
+            cartStore.removeProductFromCart(product)
             _cartViewState.postValue(CartViewState.Display(cartStore.getCart().toMutableList()))
         }
     }

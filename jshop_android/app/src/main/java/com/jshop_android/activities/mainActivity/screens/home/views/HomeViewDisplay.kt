@@ -41,7 +41,7 @@ fun HomeViewDisplay(homeViewModel: HomeViewModel, state: HomeViewState.Display) 
         ) {
             products.forEach { product ->
                 item {
-                    ProductCard(product = product, homeViewModel = homeViewModel)
+                    ProductCard(product = product, homeViewModel = homeViewModel, isLoading = false)
                 }
             }
         }

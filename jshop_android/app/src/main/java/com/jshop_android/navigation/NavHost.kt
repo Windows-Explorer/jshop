@@ -16,7 +16,7 @@ import com.jshop_android.activities.mainActivity.screens.home.HomeViewModel
 @Composable
 fun NavHostView(navController: NavHostController) {
     val homeViewModel = HomeViewModel(LocalContext.current)
-    val accountViewModel = AccountViewModel()
+    val accountViewModel = AccountViewModel(LocalContext.current)
     val cartViewModel = CartViewModel(LocalContext.current)
 
     NavHost(navController = navController, startDestination = NavRoute.HomeRoute.route) {

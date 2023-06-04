@@ -16,13 +16,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.jshop_android.activities.mainActivity.screens.cart.CartEvent
+import com.jshop_android.activities.mainActivity.screens.cart.CartViewModel
+import com.jshop_android.activities.mainActivity.screens.cart.CartViewState
 import com.jshop_android.components.CartProductCard
 import com.jshop_android.m3_pullrefresh.PullRefreshIndicator
 import com.jshop_android.m3_pullrefresh.pullRefresh
 import com.jshop_android.m3_pullrefresh.rememberPullRefreshState
-import com.jshop_android.activities.mainActivity.screens.cart.CartEvent
-import com.jshop_android.activities.mainActivity.screens.cart.CartViewModel
-import com.jshop_android.activities.mainActivity.screens.cart.CartViewState
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -32,7 +32,10 @@ fun CartViewDisplay(cartViewModel: CartViewModel, state: CartViewState.Display) 
     val refreshState = rememberPullRefreshState(refreshing.value, {
         cartViewModel.obtainEvent(CartEvent.ReloadScreen)
     })
-    val cartProducts = remember { mutableStateOf(state.cartProducts) }
+    
+//    BottomSheetScaffold(sheetContent = ) {
+//
+//    }
 
     Box(modifier = Modifier.pullRefresh(state = refreshState)) {
         LazyColumn(
@@ -43,7 +46,7 @@ fun CartViewDisplay(cartViewModel: CartViewModel, state: CartViewState.Display) 
                     val dismissState = rememberDismissState()
 
                     if (dismissState.isDismissed(DismissDirection.StartToEnd)) {
-                        cartViewModel.obtainEvent(CartEvent.CartProductRemoved(index))
+                        cartViewModel.obtainEvent(CartEvent.CartProductRemoved(cartProduct))
                     }
 
                     SwipeToDismiss(state = dismissState, background = {
@@ -77,8 +80,7 @@ fun CartViewDisplay(cartViewModel: CartViewModel, state: CartViewState.Display) 
                     }, directions = setOf(DismissDirection.StartToEnd), dismissContent = {
                         CartProductCard(
                             cartProduct = cartProduct,
-                            cartViewModel = cartViewModel,
-                            index = index
+                            cartViewModel = cartViewModel
                         )
                     })
                     Spacer(modifier = Modifier.size(ButtonDefaults.IconSpacing))

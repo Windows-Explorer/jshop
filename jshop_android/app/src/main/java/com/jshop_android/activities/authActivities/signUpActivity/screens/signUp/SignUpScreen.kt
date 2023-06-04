@@ -182,4 +182,13 @@ fun SignUpScreen(signUpViewModel: SignUpViewModel) {
             }
         }
     }
+    LaunchedEffect(key1 = viewState, block = {
+        signUpViewModel.obtainEvent(SignUpEvent.EnterScreen)
+    })
+
+    DisposableEffect(key1 = viewState) {
+        onDispose {
+            signUpViewModel.obtainEvent(SignUpEvent.OutScreen)
+        }
+    }
 }

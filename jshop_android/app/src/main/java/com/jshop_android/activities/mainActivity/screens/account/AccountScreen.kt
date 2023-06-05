@@ -2,6 +2,8 @@ package com.jshop_android.activities.mainActivity.screens.account
 
 import androidx.compose.animation.Crossfade
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.livedata.observeAsState
 import com.jshop_android.activities.mainActivity.screens.account.views.AccountViewDisplay
 import com.jshop_android.activities.mainActivity.screens.home.views.ErrorView
@@ -20,6 +22,16 @@ fun AccountScreen(accountViewModel: AccountViewModel) {
             )
             is AccountViewState.Error -> ErrorView()
             else -> ErrorView()
+        }
+    }
+
+    LaunchedEffect(key1 = viewState, block = {
+        accountViewModel.obtainEvent(AccountEvent.EnterScreen)
+    })
+
+    DisposableEffect(key1 = viewState) {
+        onDispose {
+            accountViewModel.obtainEvent(AccountEvent.OutScreen)
         }
     }
 }

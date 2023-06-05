@@ -1,4 +1,4 @@
-package com.jshop_android.navigation
+package com.jshop_android.activities.mainActivity.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext

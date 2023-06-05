@@ -1,4 +1,4 @@
-package com.jshop_android.navigation
+package com.jshop_android.activities.mainActivity.navigation
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.AccountCircle
@@ -28,6 +28,6 @@ sealed class NavigationItem(
         route = NavRoute.Cart.route,
         icon = Icons.Rounded.ShoppingCart,
         title = "Корзина",
-        badge = "0"
+//        badge = "0"
     )
 }

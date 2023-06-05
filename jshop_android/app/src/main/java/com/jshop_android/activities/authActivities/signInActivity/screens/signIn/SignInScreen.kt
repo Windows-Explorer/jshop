@@ -14,10 +14,12 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -35,7 +37,6 @@ fun SignInScreen(signInViewModel: SignInViewModel) {
     Surface(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp)
     ) {
         val systemUiController = rememberSystemUiController()
         systemUiController.setStatusBarColor(
@@ -110,7 +111,8 @@ fun SignInScreen(signInViewModel: SignInViewModel) {
                 when (viewState.value) {
                     is SignInViewState.Loading -> CircularProgressIndicator(
                         color = MaterialTheme.colorScheme.secondary,
-                        modifier = Modifier.size(18.dp)
+                        modifier = Modifier.size(18.dp),
+                        strokeWidth = 2.dp
                     )
                     else -> Text(
                         text = "ВОЙТИ",
@@ -131,4 +133,10 @@ fun SignInScreen(signInViewModel: SignInViewModel) {
             signInViewModel.obtainEvent(SignInEvent.OutScreen)
         }
     }
+}
+
+@Composable
+@Preview
+fun SignInScreenPreview() {
+    SignInScreen(signInViewModel = SignInViewModel(LocalContext.current))
 }

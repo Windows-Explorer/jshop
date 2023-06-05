@@ -1,5 +1,6 @@
 package com.jshop_android.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
@@ -16,6 +17,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
@@ -31,39 +33,59 @@ fun CartProductCard(cartProduct: CartProduct, cartViewModel: CartViewModel) {
     val text = remember { mutableStateOf(cartProduct.count) }
     val dismissState = rememberDismissState()
 
+
     ElevatedCard(colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondary)) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ) {
-            Spacer(modifier = Modifier.size(ButtonDefaults.IconSpacing))
+            Spacer(modifier = Modifier.size(8.dp))
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current).data(cartProduct.product.image)
                     .crossfade(true).build(),
                 contentDescription = "Product Image",
-                contentScale = ContentScale.Crop,
+                contentScale = ContentScale.FillHeight,
                 placeholder = painterResource(id = R.drawable.icon_beans),
                 modifier = Modifier
-                    .width((300 / 3).dp)
-                    .height((400 / 3).dp)
+                    .width(120.dp)
+                    .height(120.dp)
                     .clip(RoundedCornerShape(16.dp))
+                    .background(color = MaterialTheme.colorScheme.background)
+                    .padding(16.dp)
             )
+            Spacer(modifier = Modifier.size(8.dp))
             Column(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier.fillMaxWidth()
             ) {
+                Spacer(modifier = Modifier.size(16.dp))
                 Text(
                     text = cartProduct.product.title,
                     style = MaterialTheme.typography.labelLarge,
-                    fontSize = 32.sp,
+                    color = MaterialTheme.colorScheme.primary,
+                    fontSize = 24.sp,
                     textAlign = TextAlign.Center,
+                    lineHeight = 28.sp,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(10.dp)
+                        .padding(10.dp),
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis
                 )
-                Spacer(modifier = Modifier.padding(ButtonDefaults.IconSpacing))
-                TextField(value = text.value.toString(),
+                Text(
+                    text = "Всего: ${cartProduct.product.cost * cartProduct.count} руб.",
+                    style = MaterialTheme.typography.displayMedium,
+                    color = MaterialTheme.colorScheme.primary,
+                    fontSize = 24.sp,
+                    textAlign = TextAlign.Left,
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis
+                )
+                TextField(
+                    value = text.value.toString(),
                     onValueChange = { newValue ->
                         try {
                             text.value = newValue.toInt()
@@ -89,9 +111,9 @@ fun CartProductCard(cartProduct: CartProduct, cartViewModel: CartViewModel) {
                         focusedContainerColor = MaterialTheme.colorScheme.secondary
                     )
                 )
-                Spacer(modifier = Modifier.size(ButtonDefaults.IconSpacing))
+                Spacer(modifier = Modifier.size(16.dp))
             }
-            Spacer(modifier = Modifier.size(ButtonDefaults.IconSpacing))
+            Spacer(modifier = Modifier.size(8.dp))
         }
     }
 }

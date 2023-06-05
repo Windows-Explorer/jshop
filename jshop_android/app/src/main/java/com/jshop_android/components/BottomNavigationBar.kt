@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.jshop_android.navigation.NavigationItem
+import com.jshop_android.activities.mainActivity.navigation.NavigationItem
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

@@ -1,4 +1,4 @@
-package com.jshop_android.common.store
+package com.jshop_android.store
 
 import android.content.Context
 import android.util.Log

@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.sp
 
 @Composable()
 @Preview
-fun HomeViewError() {
+fun ErrorView() {
     Surface(
         modifier = Modifier
             .fillMaxSize()

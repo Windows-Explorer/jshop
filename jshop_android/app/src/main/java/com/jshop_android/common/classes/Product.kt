@@ -8,5 +8,5 @@ data class Product(
     val image: String,
     val cost: Int,
     val isTop: Boolean,
-    val category: Category
+    val category: Category?
 )

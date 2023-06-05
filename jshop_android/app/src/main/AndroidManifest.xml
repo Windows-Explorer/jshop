@@ -25,6 +25,9 @@
         </activity>
         <activity android:name=".activities.mainActivity.MainActivity" />
         <activity
+            android:name=".activities.productActivity.ProductActivity"
+            android:parentActivityName=".activities.mainActivity.MainActivity" />
+        <activity
             android:name=".activities.authActivities.signInActivity.SignInActivity"
             android:noHistory="true"
             android:windowSoftInputMode="adjustResize" />

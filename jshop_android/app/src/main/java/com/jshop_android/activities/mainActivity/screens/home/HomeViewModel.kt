@@ -9,8 +9,8 @@ import androidx.lifecycle.viewModelScope
 import com.jshop_android.common.classes.Product
 import com.jshop_android.common.interfaces.IEventHandler
 import com.jshop_android.common.notIncrementedEvent
-import com.jshop_android.common.store.CartStore
-import com.jshop_android.common.store.ProductsStore
+import com.jshop_android.store.CartStore
+import com.jshop_android.store.ProductsStore
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -65,7 +65,6 @@ class HomeViewModel @Inject constructor(context: Context) : ViewModel(), IEventH
     private fun getProducts() {
         viewModelScope.launch(Dispatchers.IO) {
             _homeViewState.postValue(HomeViewState.Loading)
-            delay(1000)
             _homeViewState.postValue(HomeViewState.Display(productsStore.getProducts()))
         }
     }

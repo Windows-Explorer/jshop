@@ -2,11 +2,15 @@ package com.jshop_android.activities.mainActivity.screens.home.views
 
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -33,15 +37,29 @@ fun HomeViewDisplay(homeViewModel: HomeViewModel, state: HomeViewState.Display) 
     val products: List<Product> = state.items
 
     Box(modifier = Modifier.pullRefresh(state = refreshState)) {
-        LazyColumn(
-            modifier = Modifier
-                .pullRefresh(refreshState)
-                .background(color = MaterialTheme.colorScheme.background)
-                .fillMaxSize()
-        ) {
-            products.forEach { product ->
-                item {
-                    ProductCard(product = product, homeViewModel = homeViewModel, isLoading = false)
+        if (state.items.isEmpty()) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(color = MaterialTheme.colorScheme.secondary)
+                    .pullRefresh(refreshState)
+                    .verticalScroll(rememberScrollState()),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(text = "Пусто", style = MaterialTheme.typography.labelLarge)
+            }
+        } else {
+            LazyColumn(
+                modifier = Modifier
+                    .pullRefresh(refreshState)
+                    .background(color = MaterialTheme.colorScheme.background)
+                    .fillMaxSize()
+            ) {
+                products.forEach { product ->
+                    item {
+                        ProductCard(product = product, homeViewModel = homeViewModel)
+                    }
                 }
             }
         }

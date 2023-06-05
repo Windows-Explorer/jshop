@@ -14,7 +14,7 @@ import com.jshop_android.common.classes.UserSignIn
 import com.jshop_android.common.constants.ParamsAPI
 import com.jshop_android.common.interfaces.IEventHandler
 import com.jshop_android.common.notIncrementedEvent
-import com.jshop_android.common.store.UserStore
+import com.jshop_android.store.UserStore
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.ktor.client.*
 import io.ktor.client.plugins.contentnegotiation.*

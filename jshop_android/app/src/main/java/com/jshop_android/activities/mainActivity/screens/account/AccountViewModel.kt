@@ -10,7 +10,7 @@ import androidx.lifecycle.viewModelScope
 import com.jshop_android.activities.authActivities.signInActivity.SignInActivity
 import com.jshop_android.common.interfaces.IEventHandler
 import com.jshop_android.common.notIncrementedEvent
-import com.jshop_android.common.store.UserStore
+import com.jshop_android.store.UserStore
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

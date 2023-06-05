@@ -11,7 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import com.jshop_android.activities.authActivities.signInActivity.SignInActivity
 import com.jshop_android.activities.mainActivity.MainActivity
 import com.jshop_android.activities.mainActivity.screens.SplashScreen
-import com.jshop_android.common.store.UserStore
+import com.jshop_android.store.UserStore
 import com.jshop_android.ui.theme.Jshop_androidTheme
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
@@ -28,11 +28,9 @@ class SplashActivity : ComponentActivity() {
             userStore.verifyToken()
             if (token != "") {
                 val intent = Intent(this@SplashActivity, MainActivity::class.java)
-                delay(2000)
                 startActivity(intent)
             } else {
                 val intent = Intent(this@SplashActivity, SignInActivity::class.java)
-                delay(2000)
                 startActivity(intent)
             }
             finish()

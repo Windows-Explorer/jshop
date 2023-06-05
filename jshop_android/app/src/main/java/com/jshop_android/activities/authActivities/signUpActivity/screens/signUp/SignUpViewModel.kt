@@ -15,7 +15,7 @@ import com.jshop_android.common.classes.UserSignUp
 import com.jshop_android.common.constants.ParamsAPI
 import com.jshop_android.common.interfaces.IEventHandler
 import com.jshop_android.common.notIncrementedEvent
-import com.jshop_android.common.store.UserStore
+import com.jshop_android.store.UserStore
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.ktor.client.*
 import io.ktor.client.plugins.contentnegotiation.*
@@ -80,7 +80,7 @@ class SignUpViewModel @Inject() constructor(context: Context) : ViewModel(),
     private fun signUp(userSignUp: UserSignUp) {
         viewModelScope.launch(Dispatchers.IO) {
             _signUpViewState.postValue(SignUpViewState.Loading)
-            if (true) {
+            if (validateForm(userSignUp)) {
                 val client = HttpClient() {
                     install(ContentNegotiation) {
                         json()

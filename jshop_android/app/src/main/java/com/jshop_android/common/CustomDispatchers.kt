@@ -7,4 +7,5 @@ import kotlinx.coroutines.newSingleThreadContext
 object CustomDispatchers {
     val validationThreadContext = newSingleThreadContext("ValidationThread")
     val navigationThreadContext = newSingleThreadContext("NavigationThread")
+    val retardedThreadContext = newSingleThreadContext("RetardedThread")
 }

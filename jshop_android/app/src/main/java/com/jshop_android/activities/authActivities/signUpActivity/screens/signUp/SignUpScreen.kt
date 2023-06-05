@@ -16,10 +16,12 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -53,14 +55,11 @@ fun SignUpScreen(signUpViewModel: SignUpViewModel) {
     }
 
     Surface(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)
+        modifier = Modifier.fillMaxSize()
     ) {
         val systemUiController = rememberSystemUiController()
         systemUiController.setStatusBarColor(
-            color = MaterialTheme.colorScheme.secondary,
-            darkIcons = !isSystemInDarkTheme()
+            color = MaterialTheme.colorScheme.secondary, darkIcons = !isSystemInDarkTheme()
         )
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -81,8 +80,7 @@ fun SignUpScreen(signUpViewModel: SignUpViewModel) {
                 label = "Имя пользователя",
                 leadingIcon = {
                     Icon(
-                        imageVector = Icons.Default.AccountBox,
-                        contentDescription = "accountIcon"
+                        imageVector = Icons.Default.AccountBox, contentDescription = "accountIcon"
                     )
                 },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
@@ -98,8 +96,7 @@ fun SignUpScreen(signUpViewModel: SignUpViewModel) {
                 label = "Электронная почта",
                 leadingIcon = {
                     Icon(
-                        imageVector = Icons.Default.Email,
-                        contentDescription = "emailIcon"
+                        imageVector = Icons.Default.Email, contentDescription = "emailIcon"
                     )
                 },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
@@ -115,8 +112,7 @@ fun SignUpScreen(signUpViewModel: SignUpViewModel) {
                 label = "Номер телефона",
                 leadingIcon = {
                     Icon(
-                        imageVector = Icons.Default.Phone,
-                        contentDescription = "phoneIcon"
+                        imageVector = Icons.Default.Phone, contentDescription = "phoneIcon"
                     )
                 },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
@@ -135,8 +131,7 @@ fun SignUpScreen(signUpViewModel: SignUpViewModel) {
                 label = "Пароль",
                 leadingIcon = {
                     Icon(
-                        imageVector = Icons.Default.Lock,
-                        contentDescription = "lockIcon"
+                        imageVector = Icons.Default.Lock, contentDescription = "lockIcon"
                     )
                 },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
@@ -144,12 +139,9 @@ fun SignUpScreen(signUpViewModel: SignUpViewModel) {
                 enabled = viewState.value != SignUpViewState.Loading
             )
             Spacer(modifier = Modifier.padding(12.dp))
-            ClickableText(
-                text = AnnotatedString("Уже есть аккаунт"),
-                onClick = {
-                    signUpViewModel.obtainEvent(SignUpEvent.RedirectToSignIn)
-                }
-            )
+            ClickableText(text = AnnotatedString("Уже есть аккаунт"), onClick = {
+                signUpViewModel.obtainEvent(SignUpEvent.RedirectToSignIn)
+            })
             Spacer(modifier = Modifier.padding(12.dp))
             Button(
                 onClick = {
@@ -170,7 +162,8 @@ fun SignUpScreen(signUpViewModel: SignUpViewModel) {
                 when (viewState.value) {
                     is SignUpViewState.Loading -> CircularProgressIndicator(
                         color = MaterialTheme.colorScheme.secondary,
-                        modifier = Modifier.size(18.dp)
+                        modifier = Modifier.size(18.dp),
+                        strokeWidth = 2.dp
                     )
                     else -> Text(
                         text = "РЕГИСТРАЦИЯ",
@@ -191,4 +184,10 @@ fun SignUpScreen(signUpViewModel: SignUpViewModel) {
             signUpViewModel.obtainEvent(SignUpEvent.OutScreen)
         }
     }
+}
+
+@Preview
+@Composable
+fun SignUpScreenPreview() {
+    SignUpScreen(signUpViewModel = SignUpViewModel(LocalContext.current))
 }

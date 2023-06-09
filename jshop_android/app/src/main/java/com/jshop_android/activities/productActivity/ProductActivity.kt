@@ -31,7 +31,7 @@ class ProductActivity : ComponentActivity() {
                         }
                     ) { padding ->
                         Surface(modifier = Modifier.padding(padding)) {
-                            ProductScreen(productViewModel = productViewModel,)
+                            ProductScreen(productViewModel = productViewModel)
                         }
                     }
                 }

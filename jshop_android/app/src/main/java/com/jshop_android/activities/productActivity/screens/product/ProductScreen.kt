@@ -6,7 +6,7 @@ import com.jshop_android.activities.productActivity.screens.product.ProductViewM
 import com.jshop_android.common.classes.Product
 
 @Composable
-fun ProductScreen(productViewModel: ProductViewModel, product: Product) {
+fun ProductScreen(productViewModel: ProductViewModel) {
     val viewState = productViewModel.productViewState.observeAsState()
 
 

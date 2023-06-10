@@ -8,16 +8,13 @@ import { ParamsAPI } from "./params"
 async function main() {
     const generator = new ContentGenerator(10)
     const authService = new AuthService()
-
     const userSignUp: IUserSignUp = {
         username: "admin",
         email: "admin@admin.admin",
         password: "12341234",
         phoneNumber: "+79999999999",
     }
-
     await generator.fillProducts()
-
     const token = await authService.getToken(userSignUp)
     console.log(token)
     generator.categories.forEach(async (category: ICategory) => {
@@ -46,4 +43,4 @@ async function main() {
     })
 }
 
-main().then().catch()
+main()

@@ -11,7 +11,6 @@ import com.jshop_android.components.LoadingView
 @Composable()
 fun HomeScreen(homeViewModel: HomeViewModel) {
     val viewState = homeViewModel.homeViewState.observeAsState()
-
     Crossfade(targetState = viewState.value) { state ->
         when (state) {
             is HomeViewState.Loading -> LoadingView()
@@ -24,11 +23,9 @@ fun HomeScreen(homeViewModel: HomeViewModel) {
             else -> ErrorView()
         }
     }
-
     LaunchedEffect(key1 = viewState, block = {
         homeViewModel.obtainEvent(HomeEvent.EnterScreen)
     })
-
     DisposableEffect(key1 = viewState) {
         onDispose {
             homeViewModel.obtainEvent(HomeEvent.OutScreen)

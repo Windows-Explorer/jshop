@@ -1,17 +1,11 @@
-# образ для frontend
-FROM node:18-alpine
-
-# Создать директорию внутри контейнера
+FROM node:18.16-alpine
 WORKDIR /usr/src/frontend
 
-# Установить зависимости
-COPY ./package*.json ./
-RUN npm install
+#COPY . .
+#RUN npm install
+#RUN npm run generate
+#RUN npm run build
 
-# Скопировать приложение из текущей директории в WORKDIR-директорию
-COPY . .
-
-# Скомпилировать приложение
-RUN npm run build
+COPY .output .output
 
 CMD ["node", ".output/server/index.mjs"]

@@ -13,7 +13,6 @@ import com.jshop_android.store.CartStore
 import com.jshop_android.store.ProductsStore
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,7 +20,6 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(context: Context) : ViewModel(), IEventHandler<HomeEvent> {
     private val _homeViewState: MutableLiveData<HomeViewState> =
         MutableLiveData(HomeViewState.Loading)
-
     val homeViewState: LiveData<HomeViewState> = _homeViewState
     private val productsStore = ProductsStore()
     private val cartStore = CartStore(context)
@@ -45,7 +43,6 @@ class HomeViewModel @Inject constructor(context: Context) : ViewModel(), IEventH
             else -> notIncrementedEvent(event, currentState)
         }
     }
-
     private fun reduce(event: HomeEvent, currentState: HomeViewState.Display) {
         when (event) {
             is HomeEvent.EnterScreen -> getProducts()
@@ -54,14 +51,12 @@ class HomeViewModel @Inject constructor(context: Context) : ViewModel(), IEventH
             else -> notIncrementedEvent(event, currentState)
         }
     }
-
     private fun reduce(event: HomeEvent, currentState: HomeViewState.Error) {
         when (event) {
             HomeEvent.ReloadScreen -> getProducts()
             else -> notIncrementedEvent(event, currentState)
         }
     }
-
     private fun getProducts() {
         viewModelScope.launch(Dispatchers.IO) {
             _homeViewState.postValue(HomeViewState.Loading)

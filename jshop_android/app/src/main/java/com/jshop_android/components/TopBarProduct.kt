@@ -22,7 +22,7 @@ import kotlinx.coroutines.DelicateCoroutinesApi
 
 @OptIn(ExperimentalMaterial3Api::class, DelicateCoroutinesApi::class)
 @Composable
-fun TopBarProduct(title: String) {
+fun TopBarProduct() {
     TopAppBar(
         title = {
             Row(
@@ -42,7 +42,7 @@ fun TopBarProduct(title: String) {
                 )
                 Spacer(modifier = Modifier.size(ButtonDefaults.IconSpacing))
                 Text(
-                    text = title,
+                    text = "Beans",
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                     fontSize = 24.sp,
@@ -53,4 +53,10 @@ fun TopBarProduct(title: String) {
         modifier = Modifier.shadow(elevation = 4.dp),
         windowInsets = TopAppBarDefaults.windowInsets
     )
+}
+
+@Composable
+@Preview(showBackground = true)
+fun TopBarProductPreview() {
+    TopBarProduct()
 }

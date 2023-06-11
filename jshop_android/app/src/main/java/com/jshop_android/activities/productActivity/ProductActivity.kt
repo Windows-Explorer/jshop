@@ -20,7 +20,7 @@ class ProductActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         val productId: Int = intent.getIntExtra("productId", 0)
-        val productViewModel = ProductViewModel(this)
+        val productViewModel = ProductViewModel(this, productId)
 
         setContent {
             Jshop_androidTheme {

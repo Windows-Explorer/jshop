@@ -35,4 +35,24 @@ class ProductsStore {
             return mutableListOf()
         }
     }
+    suspend fun getById(id: Int): Product? {
+        try {
+            val client = HttpClient() {
+                install(ContentNegotiation) {
+                    json()
+                }
+            }
+            val response = client.get("${ParamsAPI.API_host}/products/${id}") {
+                contentType(ContentType.Application.Json)
+            }
+            if (response.status.value == 200 || response.status.value == 201) {
+                return response.body<Product>()
+            } else {
+                return null
+            }
+        } catch (exception: Exception) {
+            Log.e("PRODUCTSSTORE", exception.message.toString())
+            return null
+        }
+    }
 }

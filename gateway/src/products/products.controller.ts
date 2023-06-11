@@ -2,7 +2,6 @@ import { Controller, Get, Inject, Param, Query, Res } from "@nestjs/common"
 import { ClientKafka } from "@nestjs/microservices"
 import { Response } from "express"
 import { PRODUCTS_KAFKA_CLIENT_TOKEN } from "src/common/constants/inject-tokens.constants"
-import { ProductsFindDto } from "src/common/dto/products-find.dto"
 
 @Controller("products")
 export class ProductsController {
@@ -11,22 +10,6 @@ export class ProductsController {
     @Get("/")
     async findAll(@Res() response: Response) {
         const result = await this._client.send("products.findAll", "").toPromise()
-        response.status(result.statusCode).send(result.message)
-    }
-
-    @Get("/count")
-    async count(
-        @Res() response: Response,
-        @Query("page") page: number,
-        @Query("title") title: string,
-        @Query("cost") cost: number,
-        @Query("category") category: string,
-        @Query("subcategory") subcategory: string
-    ) {
-        if (!page) page = 0
-        const request: ProductsFindDto = { page: page, filter: { title, cost, category, subcategory } }
-
-        const result = await this._client.send("products.count", request).toPromise()
         response.status(result.statusCode).send(result.message)
     }
 

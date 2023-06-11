@@ -22,19 +22,8 @@ import kotlinx.coroutines.DelicateCoroutinesApi
 
 @OptIn(ExperimentalMaterial3Api::class, DelicateCoroutinesApi::class)
 @Composable
-fun TopBarProduct() {
+fun TopBarProduct(title: String) {
     TopAppBar(
-// Нужно вызывать ивент нажатия назад
-//        navigationIcon = {
-//            IconButton(onClick = {
-//                goBack()
-//            }) {
-//                Icon(
-//                    imageVector = Icons.Rounded.ArrowBack,
-//                    contentDescription = "Localized description"
-//                )
-//            }
-//        },
         title = {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -53,7 +42,7 @@ fun TopBarProduct() {
                 )
                 Spacer(modifier = Modifier.size(ButtonDefaults.IconSpacing))
                 Text(
-                    text = "Beans",
+                    text = title,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                     fontSize = 24.sp,
@@ -64,10 +53,4 @@ fun TopBarProduct() {
         modifier = Modifier.shadow(elevation = 4.dp),
         windowInsets = TopAppBarDefaults.windowInsets
     )
-}
-
-@Composable
-@Preview(showBackground = true)
-fun TopBarProductPreview() {
-    TopBarProduct()
 }

@@ -22,12 +22,6 @@ export class ProductsController {
         return result
     }
 
-    @MessagePattern("products.count")
-    async count(@Payload() payload: FindDto): Promise<IResult<{ count: number }>> {
-        const result = await this._output.responseAsync(HttpStatus.OK, await this._productsService.count(payload.page, payload.filter))
-        return result
-    }
-
     @MessagePattern("products.findById")
     async findById(@Payload() id: number): Promise<IResult<IProduct>> {
         const result = await this._output.responseAsync(HttpStatus.OK, await this._productsService.findById(id))

@@ -80,7 +80,7 @@ class SignUpViewModel @Inject() constructor(context: Context) : ViewModel(),
     private fun signUp(userSignUp: UserSignUp) {
         viewModelScope.launch(Dispatchers.IO) {
             _signUpViewState.postValue(SignUpViewState.Loading)
-            if (validateForm(userSignUp)) {
+            if (true) {
                 val client = HttpClient() {
                     install(ContentNegotiation) {
                         json()

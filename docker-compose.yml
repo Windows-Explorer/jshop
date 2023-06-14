@@ -151,7 +151,7 @@ services:
       NITRO_PORT: 9000;
       NITRO_HOST: "0.0.0.0"
     ports:
-      - "3000:80"
+      - "9000:80"
     networks:
       - default
 

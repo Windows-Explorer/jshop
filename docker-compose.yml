@@ -19,6 +19,8 @@ services:
     container_name: mariadb
     restart: always
     hostname: mariadb_host
+    volumes:
+      - ./data:/var/lib/mysql
     environment:
       MARIADB_ROOT_PASSWORD: root
       MARIADB_DATABASE: jshop

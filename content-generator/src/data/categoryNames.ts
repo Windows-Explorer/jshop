@@ -1,3 +1,3 @@
 export const categoryNames: string[] = [
-    "Чай", "Кофе"
+    "Чаич", "Кофе"
 ]

@@ -4,8 +4,6 @@ import { ICategory } from "src/common/interfaces/data/category.interface"
 
 @Entity()
 export class Category implements ICategory {
-
-    @IsNumber()
     @PrimaryGeneratedColumn()
     id: number
 

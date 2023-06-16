@@ -20,7 +20,6 @@ export class ContentGenerator {
         for (let index = 0; index < categoryNames.length; index++) {
             const descriptionResponse = await (await fetch("https://fish-text.ru/get?number=1")).json()
             const category: ICategory = {
-                id: index,
                 description: descriptionResponse.text,
                 name: categoryNames[index]
             }

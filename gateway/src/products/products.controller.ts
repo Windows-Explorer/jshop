@@ -9,6 +9,7 @@ export class ProductsController {
 
     @Get("/")
     async findAll(@Res() response: Response, @Query() categoryName: string) {
+        console.log(categoryName)
         let payload = {
             categoryName: categoryName
         }

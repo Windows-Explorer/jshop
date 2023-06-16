@@ -9,7 +9,10 @@ export class ProductsController {
 
     @Get("/")
     async findAll(@Res() response: Response, @Query() categoryName: string) {
-        const result = await this._client.send("products.findAll", categoryName).toPromise()
+        let payload = {
+            categoryName: categoryName
+        }
+        const result = await this._client.send("products.findAll", payload).toPromise()
         response.status(result.statusCode).send(result.message)
     }
 

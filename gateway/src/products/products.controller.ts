@@ -8,14 +8,20 @@ export class ProductsController {
     constructor(@Inject(PRODUCTS_KAFKA_CLIENT_TOKEN) private readonly _client: ClientKafka) { }
 
     @Get("/")
-    async findAll(@Res() response: Response) {
-        const result = await this._client.send("products.findAll", "").toPromise()
+    async findAll(@Res() response: Response, @Query() categoryName: string) {
+        let payload: string = categoryName || ""
+
+        const result = await this._client.send("products.findAll", payload).toPromise()
         response.status(result.statusCode).send(result.message)
     }
 
     @Get("/:id")
-    async findById(@Param("id") id: number, @Res() response: Response) {
-        const result = await this._client.send("products.findById", id).toPromise()
+    async findById(@Res() response: Response, @Query() categoryName: string, @Param("id") id: number) {
+        const payload = {
+            categoryName: categoryName || "",
+            id: id
+        }
+        const result = await this._client.send("products.findById", payload).toPromise()
         response.status(result.statusCode).send(result.message)
     }
 }

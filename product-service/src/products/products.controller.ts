@@ -1,7 +1,6 @@
 import { Controller, HttpStatus, Inject } from "@nestjs/common"
 import { MessagePattern, Payload } from "@nestjs/microservices"
 import { PRODUCTS_SERVICE_TOKEN, RESULTER_TOKEN } from "src/common/constants/inject-tokens.constant"
-import { FindDto } from "src/common/dto/find.dto"
 import { IProduct } from "src/common/interfaces/data/product.interface"
 import { IResult } from "src/common/interfaces/data/result.interface"
 import { IOutput } from "src/common/interfaces/resulter.interface"
@@ -17,14 +16,14 @@ export class ProductsController {
     ) { }
 
     @MessagePattern("products.findAll")
-    async findAll(): Promise<IResult<IProduct[]>> {
-        const result = await this._output.responseAsync(HttpStatus.OK, await this._productsService.findAll())
+    async findAll(@Payload() payload: string): Promise<IResult<IProduct[]>> {
+        const result = await this._output.responseAsync(HttpStatus.OK, await this._productsService.findAll(payload))
         return result
     }
 
     @MessagePattern("products.findById")
-    async findById(@Payload() id: number): Promise<IResult<IProduct>> {
-        const result = await this._output.responseAsync(HttpStatus.OK, await this._productsService.findById(id))
+    async findById(@Payload() payload: { categoryName: string, id: number }): Promise<IResult<IProduct>> {
+        const result = await this._output.responseAsync(HttpStatus.OK, await this._productsService.findById(payload.id, payload.categoryName))
         return result
     }
 

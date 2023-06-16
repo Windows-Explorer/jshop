@@ -1,31 +1,45 @@
 import { Inject, Injectable } from "@nestjs/common"
 import { HttpException } from "@nestjs/common/exceptions"
 import { InjectRepository } from "@nestjs/typeorm"
-import { FILTER_TOKEN, LOGGER_TOKEN, PAGINATOR_TOKEN } from "src/common/constants/inject-tokens.constant"
-import { PRODUCTS_COUNT_AT_PAGE } from "src/common/constants/products-count-at-page.constant"
-import { IFilter } from "src/common/interfaces/filter.interface"
+import { LOGGER_TOKEN } from "src/common/constants/inject-tokens.constant"
 import { ILoggerOutput } from "src/common/interfaces/logger-output.interface"
-import { IPaginator } from "src/common/interfaces/paginator.interface"
 import { IProduct } from "src/common/interfaces/data/product.interface"
-import { IProductsFilterPayload } from "src/common/interfaces/products-filter.interface"
 import { IProductsService } from "src/common/interfaces/services/products.service.interface"
-import { DeleteResult, FindManyOptions, Repository } from "typeorm"
+import { DeleteResult, Equal, Repository } from "typeorm"
 import { Product } from "./entities/product.entity"
+import { Category } from "./entities/category.entity"
+import { ICategory } from "src/common/interfaces/data/category.interface"
 
 @Injectable()
 export class ProductsService implements IProductsService {
     constructor(
         @InjectRepository(Product) private readonly _productsRepository: Repository<IProduct>,
+        @InjectRepository(Category) private readonly _categoryRepository: Repository<ICategory>,
         @Inject(LOGGER_TOKEN) private readonly _logger: ILoggerOutput
     ) { }
 
-    async findById(productId: number): Promise<IProduct> {
-        return await this._productsRepository.findOne({ where: { id: productId } })
+    async findById(productId: number, categoryName?: string): Promise<IProduct> {
+        let result: IProduct
+        if (categoryName && categoryName.length > 0) {
+            const currentCategory = await this._categoryRepository.findOne({ where: { name: Equal(categoryName) } })
+            result = await this._productsRepository.findOne({ where: { category: currentCategory } })
+        }
+        else {
+            result = await this._productsRepository.findOne({ where: { id: productId } })
+        }
+        return result
     }
 
-    async findAll(): Promise<IProduct[]> {
+    async findAll(categoryName?: string): Promise<IProduct[]> {
         try {
-            const result = await this._productsRepository.find()
+            let result: IProduct[] = []
+            if (categoryName && categoryName.length > 0) {
+                const currentCategory = await this._categoryRepository.findOne({ where: { name: Equal(categoryName) } })
+                result = await this._productsRepository.find({ where: { category: currentCategory } })
+            }
+            else {
+                result = await this._productsRepository.find()
+            }
             return result
         }
         catch (error) {

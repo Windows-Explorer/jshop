@@ -32,7 +32,6 @@ export class ProductsService implements IProductsService {
 
     async findAll(categoryName?: string): Promise<IProduct[]> {
         try {
-            console.log(categoryName)
             let result: IProduct[] = []
             if (categoryName && categoryName.length > 0) {
                 const currentCategory = await this._categoryRepository.findOne({ where: { name: Equal(categoryName) } })

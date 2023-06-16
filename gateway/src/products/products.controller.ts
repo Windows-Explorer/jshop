@@ -8,17 +8,13 @@ export class ProductsController {
     constructor(@Inject(PRODUCTS_KAFKA_CLIENT_TOKEN) private readonly _client: ClientKafka) { }
 
     @Get("/")
-    async findAll(@Res() response: Response, @Query() categoryName: string) {
-        console.log(categoryName)
-        let payload = {
-            categoryName: categoryName
-        }
-        const result = await this._client.send("products.findAll", payload).toPromise()
+    async findAll(@Res() response: Response, @Query("categoryName") categoryName: string) {
+        const result = await this._client.send("products.findAll", categoryName).toPromise()
         response.status(result.statusCode).send(result.message)
     }
 
     @Get("/:id")
-    async findById(@Res() response: Response, @Query() categoryName: string, @Param("id") id: number) {
+    async findById(@Res() response: Response, @Query("categoryName") categoryName: string, @Param("id") id: number) {
         const payload = {
             categoryName: categoryName,
             id: id

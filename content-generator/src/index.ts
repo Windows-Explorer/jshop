@@ -27,7 +27,7 @@ async function main() {
             },
             body: JSON.stringify(category)
         })
-        console.log(`Categories: ${response.status} ${response.statusText} ${await response.text()}`)
+        console.log(`Categories: ${response.status} ${await response.text()}`)
     })
     generator.products.forEach(async (product: IProduct) => {
         const response = await fetch(`${ParamsAPI.api_host}/products`, {
@@ -39,7 +39,7 @@ async function main() {
             },
             body: JSON.stringify(product)
         })
-        console.log(`Products: ${response.status} ${response.statusText} ${await response.text()}`)
+        console.log(`Products: ${response.status} ${await response.text()}`)
     })
 }
 

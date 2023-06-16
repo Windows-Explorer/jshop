@@ -1,5 +1,5 @@
-import BeautifulDom from "beautiful-dom";
-import { categoryNames } from "./data/categoryNames";
+import BeautifulDom from "beautiful-dom"
+import { categoryNames } from "./data/categoryNames"
 import { ICategory } from "./interfaces/category.interface"
 import { IProduct } from "./interfaces/product.interface"
 import { loremIpsum } from "lorem-ipsum"
@@ -18,8 +18,9 @@ export class ContentGenerator {
     private async fillCategories() {
         this.categories = []
         for (let index = 0; index < categoryNames.length; index++) {
-            const descriptionResponse = await (await fetch("https://fish-text.ru/get?number=2")).json()
+            const descriptionResponse = await (await fetch("https://fish-text.ru/get?number=1")).json()
             const category: ICategory = {
+                id: index,
                 description: descriptionResponse.text,
                 name: categoryNames[index]
             }
@@ -35,17 +36,17 @@ export class ContentGenerator {
         const maxCost = 3000
         const minCost = 1000
         for (let index = 0; index < this.productsCount; index++) {
-            const descriptionResponse = await (await fetch("https://fish-text.ru/get?number=2")).json()
+            const descriptionResponse = await (await fetch("https://fish-text.ru/get?number=1")).json()
             const product: IProduct = {
                 title: loremIpsum({
-                    count: 2,
+                    count: 1,
                     format: "plain",
                     suffix: ""
                 }),
                 cost: Math.floor(Math.random() * (maxCost - minCost + 1)) + minCost,
                 description: descriptionResponse.text,
-                category: this.categories[Math.floor(Math.random() * (this.categories.length + 1))],
-                image: this.images[Math.floor(Math.random() * (this.images.length + 1))]
+                category: this.categories[Math.floor(Math.random() * (this.categories.length))],
+                image: this.images[Math.floor(Math.random() * (this.images.length))]
             }
             console.log(product)
             this.products.push(product)

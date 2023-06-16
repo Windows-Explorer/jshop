@@ -10,7 +10,7 @@ export class Category implements ICategory {
     id: number
 
     @IsNotEmpty()
-    @Column({ length: 255, type: "varchar", unique: true, nullable: false })
+    @Column({ length: 1024, type: "varchar", unique: true, nullable: false })
     name: string
 
     @IsNotEmpty()

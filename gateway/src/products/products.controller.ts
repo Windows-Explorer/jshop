@@ -9,16 +9,14 @@ export class ProductsController {
 
     @Get("/")
     async findAll(@Res() response: Response, @Query() categoryName: string) {
-        let payload: string = categoryName || ""
-
-        const result = await this._client.send("products.findAll", payload).toPromise()
+        const result = await this._client.send("products.findAll", categoryName).toPromise()
         response.status(result.statusCode).send(result.message)
     }
 
     @Get("/:id")
     async findById(@Res() response: Response, @Query() categoryName: string, @Param("id") id: number) {
         const payload = {
-            categoryName: categoryName || "",
+            categoryName: categoryName,
             id: id
         }
         const result = await this._client.send("products.findById", payload).toPromise()

@@ -34,6 +34,7 @@ export class ProductsService implements IProductsService {
         try {
             let result: IProduct[] = []
             if (categoryName && categoryName.length > 0) {
+                console.log(categoryName)
                 const currentCategory = await this._categoryRepository.findOne({ where: { name: Equal(categoryName) } })
                 result = await this._productsRepository.find({ where: { category: currentCategory } })
             }

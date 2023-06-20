@@ -8,9 +8,14 @@ export class AllExceptionsFilter implements RpcExceptionFilter<any> {
   constructor(@Inject(RESULTER_TOKEN) private readonly _resulter: IOutput) { }
   catch(exception: HttpException, host: ArgumentsHost): any {
 
-    
-      const result: IResult<any> = this._resulter.response(exception.getStatus(), exception.message)
+    const status = exception.getStatus()
+    if (status) {
+      const result: IResult<any> = this._resulter.response(status, exception.message)
       return result
-    
+    }
+    else {
+      const result: IResult<any> = this._resulter.response(500, exception.message)
+      return result
+    }
   }
 }

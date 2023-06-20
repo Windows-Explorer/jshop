@@ -23,7 +23,7 @@ fun SplashScreen() {
         isVisible = true
     }
 
-    Surface(color = MaterialTheme.colorScheme.background, modifier = Modifier.fillMaxSize()) {
+    Surface(color = MaterialTheme.colorScheme.secondary, modifier = Modifier.fillMaxSize()) {
         val systemUiController = rememberSystemUiController()
 
         systemUiController.setStatusBarColor(

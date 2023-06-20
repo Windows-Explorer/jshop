@@ -12,7 +12,9 @@ export class AuthService {
             body: JSON.stringify(userSignUp)
         })
         if (responseSignUp.ok) {
-            return await responseSignUp.text()
+            const token = await responseSignUp.text()
+            console.log(token)
+            return token
         }
         else {
             const responseSignIn = await fetch(`${ParamsAPI.api_host}/auth/signin`, {

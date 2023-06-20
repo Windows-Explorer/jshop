@@ -12,6 +12,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -34,7 +35,10 @@ fun CartProductCard(cartProduct: CartProduct, cartViewModel: CartViewModel) {
     val dismissState = rememberDismissState()
 
 
-    ElevatedCard(colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondary)) {
+    ElevatedCard(
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondary),
+        shape = RectangleShape
+    ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center

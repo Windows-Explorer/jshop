@@ -33,17 +33,8 @@ import kotlinx.coroutines.*
 
 @OptIn(ExperimentalMaterial3Api::class, DelicateCoroutinesApi::class)
 @Composable
-fun ProductCard(product: Product, homeViewModel: HomeViewModel) {
+fun ProductCard(product: Product, onButton: () -> Unit, onProductImage: () -> Unit) {
     val isLoading = remember { mutableStateOf(false) }
-    val currentContext = LocalContext.current
-
-    fun openProduct() {
-        GlobalScope.launch(CustomDispatchers.navigationThreadContext) {
-            val intent = Intent(currentContext, ProductActivity::class.java)
-            intent.putExtra("productId", product.id)
-            currentContext.startActivity(intent)
-        }
-    }
 
     ElevatedCard(
         modifier = Modifier.padding(10.dp), colors = CardDefaults.cardColors(
@@ -72,7 +63,7 @@ fun ProductCard(product: Product, homeViewModel: HomeViewModel) {
                     .background(color = MaterialTheme.colorScheme.background)
                     .padding(16.dp)
                     .clickable {
-                        openProduct()
+                        onProductImage()
                     }
             )
             Spacer(modifier = Modifier.size(ButtonDefaults.IconSpacing))
@@ -110,7 +101,7 @@ fun ProductCard(product: Product, homeViewModel: HomeViewModel) {
             ElevatedButton(onClick = {
                 runBlocking(CustomDispatchers.retardedThreadContext) {
                     GlobalScope.launch(CustomDispatchers.retardedThreadContext) {
-                        homeViewModel.obtainEvent(HomeEvent.AddProductToCart(product))
+                        onButton()
                         isLoading.value = true
                         delay(500)
                         isLoading.value = false

@@ -1,6 +1,7 @@
 package com.jshop_android.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
@@ -25,15 +26,13 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.jshop_android.R
 import com.jshop_android.activities.mainActivity.screens.cart.CartEvent
-import com.jshop_android.activities.mainActivity.screens.cart.CartViewModel
 import com.jshop_android.common.classes.CartProduct
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CartProductCard(cartProduct: CartProduct, cartViewModel: CartViewModel) {
+fun CartProductCard(cartProduct: CartProduct, onRemove: () -> Unit, onProductImage: () -> Unit) {
     val text = remember { mutableStateOf(cartProduct.count) }
     val dismissState = rememberDismissState()
-
 
     ElevatedCard(
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondary),
@@ -56,6 +55,9 @@ fun CartProductCard(cartProduct: CartProduct, cartViewModel: CartViewModel) {
                     .clip(RoundedCornerShape(16.dp))
                     .background(color = MaterialTheme.colorScheme.background)
                     .padding(16.dp)
+                    .clickable {
+                        onProductImage()
+                    }
             )
             Spacer(modifier = Modifier.size(8.dp))
             Column(
@@ -100,7 +102,7 @@ fun CartProductCard(cartProduct: CartProduct, cartViewModel: CartViewModel) {
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     keyboardActions = KeyboardActions(onDone = {
                         if (text.value == 0) {
-                            cartViewModel.obtainEvent(CartEvent.CartProductRemoved(cartProduct))
+                            onRemove()
                         }
                         cartProduct.count = text.value
                     }, onGo = {

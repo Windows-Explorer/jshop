@@ -55,7 +55,8 @@ fun BeansLogo(size: Dp = 160.dp, labelSize: TextUnit = 36.sp, subLabel: TextUnit
                 style = MaterialTheme.typography.labelLarge,
                 fontSize = labelSize,
                 textAlign = TextAlign.Center,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                color = MaterialTheme.colorScheme.primary
             )
             Text(
                 text = "Coffee Production",
@@ -64,7 +65,8 @@ fun BeansLogo(size: Dp = 160.dp, labelSize: TextUnit = 36.sp, subLabel: TextUnit
                 style = MaterialTheme.typography.displayMedium,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 10.dp)
+                    .padding(top = 10.dp),
+                color = MaterialTheme.colorScheme.primary
             )
             Text(
                 text = "EST. 2003",
@@ -73,7 +75,8 @@ fun BeansLogo(size: Dp = 160.dp, labelSize: TextUnit = 36.sp, subLabel: TextUnit
                 style = MaterialTheme.typography.displayMedium,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 10.dp)
+                    .padding(top = 10.dp),
+                color = MaterialTheme.colorScheme.primary
             )
         }
     }

@@ -6,7 +6,7 @@
         <div class="product-content-container">
             <h2 class="product-title">{{ props.product.title }}</h2>
             <span class="product-description">{{ props.product.description }}</span>
-            <span class="product-cost">${{ props.product.cost }}</span>
+            <span class="product-cost">{{ props.product.cost }} руб.</span>
             <VButton class="add-cart-button" label="Добавить в корзину" :size="16" @click="addToCart()" />
         </div>
     </div>
@@ -15,9 +15,13 @@
 <script lang="ts" setup>
 import { PropType } from "vue"
 import { IProduct } from '~/common/interfaces/data/product.interface'
+import useAuthStore from "~/store/auth.store"
 import useCartStore from "~/store/cart.store"
 
 const cartStore = useCartStore()
+const authStore = useAuthStore()
+const router = useRouter()
+
 const props = defineProps({
     product: {
         type: Object as PropType<IProduct>,
@@ -26,7 +30,12 @@ const props = defineProps({
 })
 
 async function addToCart() {
-    cartStore.addProductToCart(props.product)
+    if (authStore.token) {
+        cartStore.addProductToCart(props.product)
+    }
+    else {
+        router.push({ name: "signin" })
+    }
 }
 
 </script>

@@ -1,7 +1,6 @@
 package com.jshop_android.components
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.size
@@ -16,7 +15,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.jshop_android.R
 import kotlinx.coroutines.DelicateCoroutinesApi
 
@@ -28,13 +26,6 @@ fun TopBarProduct() {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                val systemUiController = rememberSystemUiController()
-
-                systemUiController.setStatusBarColor(
-                    color = MaterialTheme.colorScheme.secondary,
-                    darkIcons = !isSystemInDarkTheme()
-                )
-
                 Image(
                     imageVector = ImageVector.vectorResource(id = R.drawable.icon_beans),
                     contentDescription = "Coffee Beans Icon",

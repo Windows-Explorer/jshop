@@ -17,9 +17,7 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jshop_android.activities.mainActivity.screens.cart.CartEvent
@@ -71,7 +69,10 @@ fun CartViewDisplay(cartViewModel: CartViewModel, state: CartViewState.Display) 
                     modifier = Modifier.fillMaxWidth()
                 )
                 Spacer(modifier = Modifier.padding(16.dp))
-                Button(onClick = { }, enabled = state.cartProducts.isNotEmpty()) {
+                Button(
+                    onClick = { },
+                    enabled = state.cartProducts.isNotEmpty() && !isLoading.value
+                ) {
                     Text(
                         text = "Оформить",
                         fontSize = 24.sp,
@@ -171,7 +172,21 @@ fun CartViewDisplay(cartViewModel: CartViewModel, state: CartViewState.Display) 
                                 }
                             }, directions = setOf(DismissDirection.StartToEnd), dismissContent = {
                                 CartProductCard(
-                                    cartProduct = cartProduct, cartViewModel = cartViewModel
+                                    cartProduct = cartProduct,
+                                    onRemove = {
+                                        cartViewModel.obtainEvent(
+                                            CartEvent.CartProductRemoved(
+                                                cartProduct
+                                            )
+                                        )
+                                    },
+                                    onProductImage = {
+                                        cartViewModel.obtainEvent(
+                                            CartEvent.ProductClicked(
+                                                cartProduct.product
+                                            )
+                                        )
+                                    }
                                 )
                             })
                         }

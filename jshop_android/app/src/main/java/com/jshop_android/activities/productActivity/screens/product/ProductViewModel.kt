@@ -5,20 +5,22 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jshop_android.activities.mainActivity.screens.home.HomeViewState
 import com.jshop_android.common.classes.Product
 import com.jshop_android.common.interfaces.IEventHandler
 import com.jshop_android.common.notIncrementedEvent
+import com.jshop_android.store.CartStore
 import com.jshop_android.store.ProductsStore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class ProductViewModel @Inject constructor(context: Context, val productId: Int) : ViewModel(),
+class ProductViewModel @Inject constructor(context: Context, private val productId: Int) :
+    ViewModel(),
     IEventHandler<ProductEvent> {
     private val _productViewState: MutableLiveData<ProductViewState> =
         MutableLiveData(ProductViewState.Loading)
     val productViewState: LiveData<ProductViewState> = _productViewState
+    private val cartStore = CartStore(context)
 
     private val currentActivity = context
 
@@ -49,10 +51,12 @@ class ProductViewModel @Inject constructor(context: Context, val productId: Int)
     private fun reduce(event: ProductEvent, currentState: ProductViewState.Display) {
         when (event) {
             is ProductEvent.EnterScreen -> getProductById()
+            is ProductEvent.AddProductToCart -> addProductToCart(event.product)
             is ProductEvent.OutScreen -> _productViewState.postValue(ProductViewState.Loading)
             else -> notIncrementedEvent(event, currentState)
         }
     }
+
     private fun getProductById() {
         viewModelScope.launch(Dispatchers.IO) {
             _productViewState.postValue(ProductViewState.Loading)
@@ -60,6 +64,12 @@ class ProductViewModel @Inject constructor(context: Context, val productId: Int)
             if (product != null) {
                 _productViewState.postValue(ProductViewState.Display(product))
             } else _productViewState.postValue(ProductViewState.Error)
+        }
+    }
+
+    private fun addProductToCart(product: Product) {
+        viewModelScope.launch(Dispatchers.IO) {
+            cartStore.addProductToCart(product)
         }
     }
 }

@@ -2,7 +2,6 @@ package com.jshop_android.activities.mainActivity.screens
 
 import androidx.compose.animation.*
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -25,11 +24,7 @@ fun SplashScreen() {
 
     Surface(color = MaterialTheme.colorScheme.secondary, modifier = Modifier.fillMaxSize()) {
         val systemUiController = rememberSystemUiController()
-
-        systemUiController.setStatusBarColor(
-            color = MaterialTheme.colorScheme.secondary,
-            darkIcons = !isSystemInDarkTheme()
-        )
+        systemUiController.setSystemBarsColor(color = MaterialTheme.colorScheme.secondary)
         Column(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally

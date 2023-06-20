@@ -2,10 +2,13 @@ package com.jshop_android.activities.mainActivity.screens.home
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.jshop_android.activities.productActivity.ProductActivity
+import com.jshop_android.common.CustomDispatchers
 import com.jshop_android.common.classes.Product
 import com.jshop_android.common.interfaces.IEventHandler
 import com.jshop_android.common.notIncrementedEvent
@@ -13,6 +16,7 @@ import com.jshop_android.store.CartStore
 import com.jshop_android.store.ProductsStore
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -48,6 +52,7 @@ class HomeViewModel @Inject constructor(context: Context) : ViewModel(), IEventH
             is HomeEvent.EnterScreen -> getProducts()
             is HomeEvent.ReloadScreen -> getProducts()
             is HomeEvent.AddProductToCart -> addProductToCart(event.product)
+            is HomeEvent.ProductClicked -> openProductActivity(event.product.id)
             else -> notIncrementedEvent(event, currentState)
         }
     }
@@ -67,6 +72,14 @@ class HomeViewModel @Inject constructor(context: Context) : ViewModel(), IEventH
     private fun addProductToCart(product: Product) {
         viewModelScope.launch(Dispatchers.IO) {
             cartStore.addProductToCart(product)
+        }
+    }
+
+    private fun openProductActivity(productId: Int) {
+        viewModelScope.launch(CustomDispatchers.navigationThreadContext) {
+            val intent = Intent(currentActivity, ProductActivity::class.java)
+            intent.putExtra("productId", productId)
+            currentActivity.startActivity(intent)
         }
     }
 }

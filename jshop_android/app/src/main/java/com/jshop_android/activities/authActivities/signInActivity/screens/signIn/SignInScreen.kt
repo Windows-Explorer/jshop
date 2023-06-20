@@ -29,6 +29,9 @@ import com.jshop_android.components.FormTextField
 
 @Composable()
 fun SignInScreen(signInViewModel: SignInViewModel) {
+    val systemUiController = rememberSystemUiController()
+    systemUiController.setSystemBarsColor(color = MaterialTheme.colorScheme.secondary)
+
     val viewState = signInViewModel.signInViewState.observeAsState()
 
     var email by remember { mutableStateOf(TextFieldValue("")) }
@@ -38,11 +41,6 @@ fun SignInScreen(signInViewModel: SignInViewModel) {
         modifier = Modifier
             .fillMaxSize()
     ) {
-        val systemUiController = rememberSystemUiController()
-        systemUiController.setStatusBarColor(
-            color = MaterialTheme.colorScheme.secondary,
-            darkIcons = !isSystemInDarkTheme()
-        )
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
@@ -116,7 +114,7 @@ fun SignInScreen(signInViewModel: SignInViewModel) {
                     )
                     else -> Text(
                         text = "ВОЙТИ",
-                        fontSize = 18.sp,
+                        fontSize = 16.sp,
                         style = MaterialTheme.typography.labelLarge
                     )
                 }

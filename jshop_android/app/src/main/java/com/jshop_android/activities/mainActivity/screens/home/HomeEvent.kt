@@ -6,6 +6,6 @@ sealed class HomeEvent {
     object EnterScreen : HomeEvent()
     object OutScreen : HomeEvent()
     object ReloadScreen : HomeEvent()
-    object ProductClicked : HomeEvent()
+    data class ProductClicked(val product: Product) : HomeEvent()
     data class AddProductToCart(val product: Product) : HomeEvent()
 }

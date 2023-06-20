@@ -2,10 +2,13 @@ package com.jshop_android.activities.mainActivity.screens.cart
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.jshop_android.activities.productActivity.ProductActivity
+import com.jshop_android.common.CustomDispatchers
 import com.jshop_android.common.classes.CartProduct
 import com.jshop_android.common.classes.Product
 import com.jshop_android.common.interfaces.IEventHandler
@@ -49,6 +52,7 @@ class CartViewModel @Inject constructor(context: Context) : ViewModel(), IEventH
             is CartEvent.EnterScreen -> getCart()
             is CartEvent.ReloadScreen -> getCart()
             is CartEvent.CartProductRemoved -> removeProductFromCart(event.cartProduct.product)
+            is CartEvent.ProductClicked -> openProductActivity(event.product.id)
             else -> notIncrementedEvent(event, currentState)
         }
     }
@@ -70,7 +74,6 @@ class CartViewModel @Inject constructor(context: Context) : ViewModel(), IEventH
 
     private fun removeProductFromCart(product: Product) {
         viewModelScope.launch(Dispatchers.IO) {
-//            _cartViewState.postValue(CartViewState.Loading)
             cartStore.removeProductFromCart(product)
             val cart = cartStore.getCart().toMutableList()
             _cartViewState.postValue(CartViewState.Display(cart, calculateTotalCost(cart)))
@@ -85,5 +88,13 @@ class CartViewModel @Inject constructor(context: Context) : ViewModel(), IEventH
             }
             return@async totalCost
         }.await()
+    }
+
+    private fun openProductActivity(productId: Int) {
+        viewModelScope.launch(CustomDispatchers.navigationThreadContext) {
+            val intent = Intent(currentActivity, ProductActivity::class.java)
+            intent.putExtra("productId", productId)
+            currentActivity.startActivity(intent)
+        }
     }
 }

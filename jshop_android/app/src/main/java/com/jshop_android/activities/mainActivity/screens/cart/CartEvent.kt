@@ -8,5 +8,6 @@ sealed class CartEvent {
     object OutScreen : CartEvent()
     object ReloadScreen : CartEvent()
     object CartUpdated : CartEvent()
+    data class ProductClicked(val product: Product) : CartEvent()
     data class CartProductRemoved(val cartProduct: CartProduct) : CartEvent()
 }

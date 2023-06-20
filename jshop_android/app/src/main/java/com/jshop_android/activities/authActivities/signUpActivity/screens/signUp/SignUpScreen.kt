@@ -1,6 +1,5 @@
 package com.jshop_android.activities.authActivities.signUpActivity.screens.signUp
 
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.ClickableText
@@ -32,6 +31,9 @@ import com.jshop_android.components.FormTextField
 
 @Composable
 fun SignUpScreen(signUpViewModel: SignUpViewModel) {
+    val systemUiController = rememberSystemUiController()
+    systemUiController.setSystemBarsColor(color = MaterialTheme.colorScheme.secondary)
+
     val viewState = signUpViewModel.signUpViewState.observeAsState()
 
     var username by remember { mutableStateOf(TextFieldValue("")) }
@@ -57,10 +59,6 @@ fun SignUpScreen(signUpViewModel: SignUpViewModel) {
     Surface(
         modifier = Modifier.fillMaxSize()
     ) {
-        val systemUiController = rememberSystemUiController()
-        systemUiController.setStatusBarColor(
-            color = MaterialTheme.colorScheme.secondary, darkIcons = !isSystemInDarkTheme()
-        )
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
@@ -156,7 +154,7 @@ fun SignUpScreen(signUpViewModel: SignUpViewModel) {
                         )
                     )
                 },
-                modifier = Modifier.width(200.dp),
+                modifier = Modifier.width(212.dp),
                 enabled = viewState.value != SignUpViewState.Loading
             ) {
                 when (viewState.value) {
@@ -167,7 +165,7 @@ fun SignUpScreen(signUpViewModel: SignUpViewModel) {
                     )
                     else -> Text(
                         text = "РЕГИСТРАЦИЯ",
-                        fontSize = 18.sp,
+                        fontSize = 16.sp,
                         style = MaterialTheme.typography.labelLarge
                     )
                 }
@@ -184,10 +182,4 @@ fun SignUpScreen(signUpViewModel: SignUpViewModel) {
             signUpViewModel.obtainEvent(SignUpEvent.OutScreen)
         }
     }
-}
-
-@Preview
-@Composable
-fun SignUpScreenPreview() {
-    SignUpScreen(signUpViewModel = SignUpViewModel(LocalContext.current))
 }

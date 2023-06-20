@@ -7,7 +7,7 @@
 </template>
 
 <script setup lang="ts">
-import { storeToRefs } from 'pinia';
+import { storeToRefs } from 'pinia'
 import useCategoriesStore from '~/store/categories.store'
 import useProductsStore from '~/store/products.store'
 import useSubcategoriesStore from '~/store/subcategories.store'

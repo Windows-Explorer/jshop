@@ -81,20 +81,36 @@ fun HomeViewDisplay(homeViewModel: HomeViewModel, state: HomeViewState.Display) 
                     .pullRefresh(refreshState)
                     .background(color = MaterialTheme.colorScheme.background)
                     .fillMaxSize()
-                    .padding(top = 50.dp)
+                    .padding(top = 54.dp)
             ) {
                 when (currentTab.value) {
                     0 -> products.forEach { product ->
                         if (product.category?.name == "JustTea") {
                             item {
-                                ProductCard(product = product, homeViewModel = homeViewModel)
+                                ProductCard(
+                                    product = product,
+                                    onButton = {
+                                        homeViewModel.obtainEvent(HomeEvent.AddProductToCart(product))
+                                    },
+                                    onProductImage = {
+                                        homeViewModel.obtainEvent(HomeEvent.ProductClicked(product))
+                                    }
+                                )
                             }
                         }
                     }
                     1 -> products.forEach { product ->
                         if (product.category?.name == "Coffee") {
                             item {
-                                ProductCard(product = product, homeViewModel = homeViewModel)
+                                ProductCard(
+                                    product = product,
+                                    onButton = {
+                                        homeViewModel.obtainEvent(HomeEvent.AddProductToCart(product))
+                                    },
+                                    onProductImage = {
+                                        homeViewModel.obtainEvent(HomeEvent.ProductClicked(product))
+                                    }
+                                )
                             }
                         }
                     }

@@ -13,7 +13,7 @@ export class AllExceptionsFilter implements RpcExceptionFilter<any> {
       return result
     }
     catch (error) {
-      const result: IResult<any> = this._resulter.response(500, "Internal error")
+      const result: IResult<any> = this._resulter.response(500, error)
       return result
     }
   }
